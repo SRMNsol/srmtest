@@ -12,7 +12,7 @@ class DashboardControllerProvider implements ControllerProviderInterface
         $controllers = $app['controllers_factory'];
 
         $controllers->get('/', function (Application $app) {
-            return $app['twig']->render('dashboard.html.twig');
+            return $app->render('dashboard.html.twig');
         });
 
         return $controllers;

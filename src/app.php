@@ -2,7 +2,7 @@
 
 require __DIR__ . '/../vendor/autoload.php';
 
-use Silex\Application;
+use App\Application;
 use Igorw\Silex\ConfigServiceProvider;
 
 $app = new Application();
