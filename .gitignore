@@ -1,0 +1,5 @@
+*.swp
+*.swo
+composer.lock
+vendor
+!.gitignore
