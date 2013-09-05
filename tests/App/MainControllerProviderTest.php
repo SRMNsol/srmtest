@@ -1,19 +1,19 @@
 <?php
 
 use App\Tests\WebTestCase;
-use App\Controller\DashboardControllerProvider;
+use App\MainControllerProvider;
 
-class DashboardControllerProviderTest extends WebTestCase
+class MainControllerProviderTest extends WebTestCase
 {
     public function createApplication()
     {
         $app = parent::createApplication();
-        $app->mount('/', new DashboardControllerProvider());
+        $app->mount('/', new MainControllerProvider());
 
         return $app;
     }
 
-    public function testDashboardPageResponseIsOk()
+    public function testLoadingDashboardIsOk()
     {
         $client = $this->createClient();
         $crawler = $client->request('GET', '/');

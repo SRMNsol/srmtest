@@ -4,6 +4,7 @@ namespace App\Tests;
 
 use Silex\WebTestCase as SilexWebTestCase;
 use Silex\Provider\TwigServiceProvider;
+use Silex\Provider\ServiceControllerServiceProvider;
 
 class WebTestCase extends SilexWebTestCase
 {
@@ -17,6 +18,8 @@ class WebTestCase extends SilexWebTestCase
         $app->register(new TwigServiceProvider(), array(
             'twig.path' => $app['template_path']
         ));
+
+        $app->register(new ServiceControllerServiceProvider());
 
         return $app;
     }

@@ -2,10 +2,10 @@
 
 require __DIR__ . '/../vendor/autoload.php';
 
-use App\Application;
+use App\Application as CustomApp;
 use Igorw\Silex\ConfigServiceProvider;
 
-$app = new Application();
+$app = new CustomApp();
 
 $app->register(new ConfigServiceProvider(__DIR__ . "/../config/prod.yml", array(
     'root_path' => realpath(__DIR__ . '/..'),
