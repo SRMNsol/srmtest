@@ -11,6 +11,10 @@
         "symfony/browser-kit": "~2.3",
         "monolog/monolog": "~1.6"
     },
+    "scripts": {
+      "post-install-cmd": "App\\Setup\\WritePermissions::checkPaths",
+      "post-update-cmd": "App\\Setup\\WritePermissions::checkPaths"
+    },
     "autoload": {
       "psr-0": {
         "App": "src/"
