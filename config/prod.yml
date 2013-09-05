@@ -3,3 +3,4 @@ debug: false
 template_path: %root_path%/views
 log_path: %root_path%/data/log
 cache_path: %root_path%/data/cache
+assets_path: %root_path%/web/assets
