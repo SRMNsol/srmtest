@@ -4,7 +4,7 @@ namespace App\Popshops;
 
 use Guzzle\Http\Client as HttpClient;
 use Guzzle\Cache\CacheAdapterInterface;
-use Guzzle\Plugin\Cache\CachePlugin;
+
 use Symfony\Component\DomCrawler\Crawler;
 
 class Client
@@ -16,17 +16,14 @@ class Client
         $this->client = $client;
     }
 
-    public static function create($publicKey, CacheAdapterInterface $cacheAdapter = null)
+    public static function create($publicKey, array $plugins = [])
     {
-        $client = new HttpClient('http://api.popshops.com/{version}/{publicKey}', array(
-            'version' => 'v2',
+        $client = new HttpClient('http://api.popshops.com/v2/{publicKey}', [
             'publicKey' => $publicKey,
-            'params.cache.override_ttl' => 3600,
-            'params.cache.revalidate' => 'skip'
-        ));
+        ]);
 
-        if (isset($cacheAdapter)) {
-            $client->addSubscriber(new CachePlugin($cacheAdapter));
+        foreach ($plugins as $plugin) {
+            $client->addSubscriber($plugin);
         }
 
         return new self($client);
@@ -34,7 +31,7 @@ class Client
 
     protected function request($path, array $params = null)
     {
-        $response = $this->client->get($path, $params)->send();
+        $response = $this->client->get($path)->send();
 
         return new Crawler($response->getBody(true));
     }
