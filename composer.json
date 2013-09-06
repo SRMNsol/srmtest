@@ -10,7 +10,10 @@
         "twbs/bootstrap": "~3.0",
         "symfony/browser-kit": "~2.3",
         "monolog/monolog": "~1.6",
-        "mheap/silex-assetic": "~1.0"
+        "mheap/silex-assetic": "~1.0",
+        "guzzle/guzzle": "~3.7",
+        "symfony/css-selector": "~2.3",
+        "zendframework/zend-cache": "~2.2"
     },
     "scripts": {
       "post-install-cmd": "App\\Setup\\WritePermissions::checkPaths",

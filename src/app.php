@@ -16,5 +16,7 @@ if (getenv('APP_ENV') === 'dev') {
 }
 
 // services
+$app->register(new App\CacheProvider());
+$app->register(new App\PopshopsProvider());
 
 return $app;

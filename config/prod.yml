@@ -4,3 +4,7 @@ template_path: %root_path%/views
 log_path: %root_path%/data/log
 cache_path: %root_path%/data/cache
 assets_path: %root_path%/web/assets
+
+# popshops
+popshops.public_key: 7otijzbtj2q6uv4hhlwcz58ua
+popshops.default_catalog_key: 6jp9a505fv2kpxvaenimr8m0j
