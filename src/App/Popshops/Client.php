@@ -3,8 +3,6 @@
 namespace App\Popshops;
 
 use Guzzle\Http\Client as HttpClient;
-use Guzzle\Cache\CacheAdapterInterface;
-
 use Symfony\Component\DomCrawler\Crawler;
 
 class Client
