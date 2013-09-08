@@ -41,17 +41,29 @@ class TemplatingProvider implements ServiceProviderInterface
         $app['assetic.asset_manager'] = $app->share($app->extend('assetic.asset_manager', function($am, $app) {
             $fm = $app['assetic.filter_manager'];
 
-            $am->set('styles', new AssetCache(
+            $am->set('bootstrap_css', new AssetCache(
                 new FileAsset($app['twbs_dir'] . '/less/bootstrap.less', [$fm->get('lessphp')]),
                 new FilesystemCache($app['cache_dir'] . '/assetic')
             ));
-            $am->get('styles')->setTargetPath('assets/css/styles.css');
+            $am->get('bootstrap_css')->setTargetPath('assets/css/bootstrap.css');
 
-            $am->set('scripts', new AssetCache(
+            $am->set('bootstrap_js', new AssetCache(
                 new GlobAsset($app['twbs_dir'] . '/js/*.js'),
                 new FilesystemCache($app['cache_dir'] . '/assetic')
             ));
-            $am->get('scripts')->setTargetPath('assets/js/scripts.js');
+            $am->get('bootstrap_js')->setTargetPath('assets/js/bootstrap.js');
+
+            $am->set('custom_css', new AssetCache(
+                new FileAsset($app['assets_dir'] . '/less/custom.less', [$fm->get('lessphp')]),
+                new FilesystemCache($app['cache_dir'] . '/assetic')
+            ));
+            $am->get('custom_css')->setTargetPath('assets/css/custom.css');
+
+            $am->set('custom_js', new AssetCache(
+                new GlobAsset($app['assets_dir'] . '/js/*.js'),
+                new FilesystemCache($app['cache_dir'] . '/assetic')
+            ));
+            $am->get('custom_js')->setTargetPath('assets/js/custom.js');
 
             return $am;
         }));

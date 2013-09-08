@@ -4,12 +4,17 @@
     <meta charset="utf-8">
     <title>{% block title %}Admin{% endblock %}</title>
 
-    {% stylesheets '@styles' filter="?yui_css" output="assets/css/styles.css" %}
+    {% stylesheets "@bootstrap_css" "@custom_css" filter="?yui_css" output="assets/css/styles-combined.min.css" %}
     <link href="{{ asset_url }}" type="text/css" rel="stylesheet">
     {% endstylesheets %}
   </head>
 
   <body>
     {% block content %}{% endblock %}
+
+    <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+    {% javascripts "@custom_js" "@bootstrap_js" filter="?yui_js" output="assets/js/scripts-combined.min.js" %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
   </body>
 </html>

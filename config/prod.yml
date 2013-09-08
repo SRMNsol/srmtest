@@ -3,6 +3,7 @@ debug: false
 template_dir: %root_dir%/views
 log_dir: %root_dir%/data/log
 cache_dir: %root_dir%/data/cache
+assets_dir: %root_dir%/assets
 web_dir: %root_dir%/web
 
 # popshops
