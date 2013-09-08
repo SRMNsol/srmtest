@@ -8,7 +8,7 @@ use Igorw\Silex\ConfigServiceProvider;
 $app = new CustomApp();
 
 $app->register(new ConfigServiceProvider(__DIR__ . "/../config/prod.yml", array(
-    'root_path' => realpath(__DIR__ . '/..'),
+    'root_dir' => realpath(__DIR__ . '/..'),
 )));
 
 if (getenv('APP_ENV') === 'dev') {

@@ -15,10 +15,7 @@ class WebTestCase extends SilexWebTestCase
         $app['exception_handler']->disable();
         $app['session.test'] = true;
 
-        $app->register(new TwigServiceProvider(), array(
-            'twig.path' => $app['template_path']
-        ));
-
+        $app->register(new TwigServiceProvider(), ['twig.path' => $app['template_dir']]);
         $app->register(new ServiceControllerServiceProvider());
 
         return $app;

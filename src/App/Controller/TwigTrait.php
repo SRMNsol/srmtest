@@ -15,7 +15,7 @@ trait TwigTrait
         return $this;
     }
 
-    public function render($template, $params = array())
+    public function render($template, $params = [])
     {
         return $this->twig->render($template, $params);
     }

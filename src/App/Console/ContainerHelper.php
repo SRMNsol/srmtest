@@ -23,6 +23,11 @@ class ContainerHelper extends Helper
         return $this->container[$name];
     }
 
+    public function getContainer()
+    {
+        return $this->container;
+    }
+
     public function getName()
     {
         return 'container';

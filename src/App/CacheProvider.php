@@ -12,9 +12,7 @@ class CacheProvider implements ServiceProviderInterface
     public function register(SilexApp $app)
     {
         $app['cache.filesystem'] = $app->share(function () use ($app) {
-            $storage = new FilesystemCache(array(
-                'cacheDir' => $app['cache_path'],
-            ));
+            $storage = new FilesystemCache(['cacheDir' => $app['cache_dir']]);
 
             return $storage;
         });

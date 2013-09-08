@@ -13,7 +13,8 @@
         "mheap/silex-assetic": "~1.0",
         "guzzle/guzzle": "~3.7",
         "symfony/css-selector": "~2.3",
-        "zendframework/zend-cache": "~2.2"
+        "zendframework/zend-cache": "~2.2",
+        "leafo/lessphp": "~0.4"
     },
     "scripts": {
       "post-install-cmd": "App\\Setup\\WritePermissions::checkPaths",
