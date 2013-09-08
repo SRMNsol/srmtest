@@ -27,6 +27,7 @@ class TemplatingProvider implements ServiceProviderInterface
         $app['assetic.path_to_web'] = $app['web_dir'];
         $app['assetic.options'] = [
             'debug' => $app['debug'],
+            'formulae_cache_dir' => $app['cache_dir'] . '/assetic',
             'auto_dump_assets' => true,
         ];
 
