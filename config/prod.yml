@@ -3,12 +3,11 @@ debug: false
 template_dir: %root_dir%/views
 log_dir: %root_dir%/data/log
 cache_dir: %root_dir%/data/cache
-assets_dir: %root_dir%/web/assets
+web_dir: %root_dir%/web
 
 # popshops
 popshops.public_key: 7otijzbtj2q6uv4hhlwcz58ua
 popshops.default_catalog_key: 6jp9a505fv2kpxvaenimr8m0j
 
 # resources
-twbs.resources_dir: %root_dir%/vendor/twbs/bootstrap
-
+twbs_dir: %root_dir%/vendor/twbs/bootstrap

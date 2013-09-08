@@ -24,8 +24,11 @@ class TemplatingProvider implements ServiceProviderInterface
         $app->register(new UrlGeneratorServiceProvider());
         $app->register(new AsseticServiceProvider());
 
-        $app['assetic.path_to_web'] = $app['assets_dir'];
-        $app['assetic.options'] = ['auto_dump_assets' => true];
+        $app['assetic.path_to_web'] = $app['web_dir'];
+        $app['assetic.options'] = [
+            'debug' => $app['debug'],
+            'auto_dump_assets' => true,
+        ];
 
         $app['assetic.filter_manager'] = $app->share($app->extend('assetic.filter_manager', function($fm, $app) {
             $fm->set('yui_css', new CssCompressorFilter('/usr/share/yui-compressor/yui-compressor.jar'));
@@ -38,16 +41,16 @@ class TemplatingProvider implements ServiceProviderInterface
             $fm = $app['assetic.filter_manager'];
 
             $am->set('styles', new AssetCache(
-                new FileAsset($app['twbs.resources_dir'] . '/less/bootstrap.less', [$fm->get('lessphp'), $fm->get('yui_css')]),
+                new FileAsset($app['twbs_dir'] . '/less/bootstrap.less', [$fm->get('lessphp')]),
                 new FilesystemCache($app['cache_dir'] . '/assetic')
             ));
-            $am->get('styles')->setTargetPath('css/styles.min.css');
+            $am->get('styles')->setTargetPath('assets/css/styles.css');
 
             $am->set('scripts', new AssetCache(
-                new GlobAsset($app['twbs.resources_dir'] . '/js/*.js', $fm->get('yui_js')),
+                new GlobAsset($app['twbs_dir'] . '/js/*.js'),
                 new FilesystemCache($app['cache_dir'] . '/assetic')
             ));
-            $am->get('scripts')->setTargetPath('js/scripts.min.js');
+            $am->get('scripts')->setTargetPath('assets/js/scripts.js');
 
             return $am;
         }));
