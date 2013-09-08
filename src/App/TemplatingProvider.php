@@ -25,7 +25,7 @@ class TemplatingProvider implements ServiceProviderInterface
         $app->register(new AsseticServiceProvider());
 
         $app['assetic.path_to_web'] = $app['assets_dir'];
-        $app['assetic.options'] = ['debug' => $app['debug']];
+        $app['assetic.options'] = ['auto_dump_assets' => true];
 
         $app['assetic.filter_manager'] = $app->share($app->extend('assetic.filter_manager', function($fm, $app) {
             $fm->set('yui_css', new CssCompressorFilter('/usr/share/yui-compressor/yui-compressor.jar'));

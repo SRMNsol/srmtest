@@ -3,6 +3,10 @@
   <head>
     <meta charset="utf-8">
     <title>{% block title %}Admin{% endblock %}</title>
+
+    {% stylesheets '@styles' %}
+    <link href="{{ asset_url }}" type="text/css" rel="stylesheet">
+    {% endstylesheets %}
   </head>
 
   <body>

@@ -12,7 +12,7 @@ use Silex\Provider\ServiceControllerServiceProvider;
 $app->register(new App\TemplatingProvider());
 $app->register(new SessionServiceProvider());
 $app->register(new MonologServiceProvider(), array(
-    'monolog.logfile' => $app['log_path'] . '/app.log',
+    'monolog.logfile' => $app['log_dir'] . '/app.log',
 ));
 $app->register(new FormServiceProvider());
 $app->register(new ValidatorServiceProvider());

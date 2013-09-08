@@ -25,7 +25,6 @@ class AssetDumpCommand extends Command
         $app->register(new TemplatingProvider());
 
         $dumper = $app['assetic.dumper'];
-        $dumper->setTwig($app['twig'], $app['twig.loader.filesystem']);
 
         $output->write('Building assets ... ');
         $dumper->dumpAssets();
