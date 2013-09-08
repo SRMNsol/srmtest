@@ -30,5 +30,15 @@ class AssetDumpCommand extends Command
         $output->write('Building assets ... ');
         $dumper->dumpAssets();
         $output->writeln('Done');
+
+        $output->write('Copying fonts ... ');
+        $dest = $app['assetic.path_to_web'] . '/fonts';
+        if (!file_exists($dest) || !is_dir($dest)) {
+            mkdir($dest);
+        }
+        foreach (glob($app['twbs.resources_dir'] . '/fonts/glyphicons-halflings-regular.*') as $font) {
+            copy($font, $dest . '/' . basename($font));
+        }
+        $output->writeln('Done');
     }
 }

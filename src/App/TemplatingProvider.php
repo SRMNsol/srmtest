@@ -36,13 +36,18 @@ class TemplatingProvider implements ServiceProviderInterface
 
         $app['assetic.asset_manager'] = $app->share($app->extend('assetic.asset_manager', function($am, $app) {
             $fm = $app['assetic.filter_manager'];
-            $lessFilters = [$fm->get('lessphp'), $fm->get('yui_css')];
 
             $am->set('styles', new AssetCache(
-                new FileAsset($app['twbs.resources_dir'] . '/less/bootstrap.less', $lessFilters),
+                new FileAsset($app['twbs.resources_dir'] . '/less/bootstrap.less', [$fm->get('lessphp'), $fm->get('yui_css')]),
                 new FilesystemCache($app['cache_dir'] . '/assetic')
             ));
-            $am->get('styles')->setTargetPath('css/styles.css');
+            $am->get('styles')->setTargetPath('css/styles.min.css');
+
+            $am->set('scripts', new AssetCache(
+                new GlobAsset($app['twbs.resources_dir'] . '/js/*.js', $fm->get('yui_js')),
+                new FilesystemCache($app['cache_dir'] . '/assetic')
+            ));
+            $am->get('scripts')->setTargetPath('js/scripts.min.js');
 
             return $am;
         }));
