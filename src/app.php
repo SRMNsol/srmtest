@@ -7,15 +7,15 @@ use Igorw\Silex\ConfigServiceProvider;
 
 $app = new CustomApp();
 
-$app->register(new ConfigServiceProvider(__DIR__ . "/../config/prod.yml", array(
-    'root_dir' => realpath(__DIR__ . '/..'),
-)));
+$app->register(new ConfigServiceProvider(__DIR__ . "/../config/global.yml", ['root_dir' => realpath(__DIR__ . '/..')]));
 
-if (getenv('APP_ENV') === 'dev') {
+try {
     $app->register(new ConfigServiceProvider(__DIR__ . '/../config/dev.yml'));
+} catch (InvalidArgumentException $e) {
+    // no local config
 }
 
-// services
+    // services
 $app->register(new App\CacheProvider());
 $app->register(new App\PopshopsProvider());
 

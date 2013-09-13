@@ -27,7 +27,7 @@ class Client
         return new self($client);
     }
 
-    protected function request($path, array $params = null)
+    protected function request($path)
     {
         $response = $this->client->get($path)->send();
 
@@ -36,7 +36,7 @@ class Client
 
     public function getMerchants($catalogKey = null)
     {
-        $crawler = $this->request('merchants.xml');
+        $crawler = $this->request(['merchants.xml{?catalog_key}', ['catalog_key' => $catalogKey]]);
 
         return $crawler->filter('merchant')->each(function (Crawler $node, $i) {
             $merchant = new Merchant();

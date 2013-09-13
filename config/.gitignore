@@ -1,1 +1,3 @@
-dev.yml
+*
+!.gitignore
+!global.yml

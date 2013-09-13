@@ -19,9 +19,11 @@ class MerchantCommand extends Command
 
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $client = $this->getHelperSet()->get('container')->get('popshops.client');
+        $app = $this->getHelperSet()->get('container')->getContainer();
+        $popshops = $app['popshops.client'];
+        $catalogKey = $app['popshops.default_catalog_key'];
 
-        $merchants = $client->getMerchants();
+        $merchants = $popshops->getMerchants($catalogKey);
         if (count($merchants) > 0) {
             $table = $this->getHelperSet()->get('table');
             $table->setHeaders(array('Id', 'Merchant'));
