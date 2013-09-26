@@ -41,12 +41,12 @@ class MerchantCommand extends Command
             );
         }
 
-        $merchants = $popshops->getMerchants($catalogs[$catalog]);
-        if (count($merchants) > 0) {
+        $result = $popshops->getMerchants($catalogs[$catalog]);
+        if (count($result->getMerchants()) > 0) {
             $table = $this->getHelperSet()->get('table');
             $table->setHeaders(['Id', 'Merchant']);
 
-            foreach ($merchants as $merchant) {
+            foreach ($result->getMerchants() as $merchant) {
                 $table->addRow(array(
                     $merchant->getId(),
                     $merchant->getName(),

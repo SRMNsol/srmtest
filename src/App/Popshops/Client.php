@@ -16,9 +16,7 @@ class Client
 
     public static function create($publicKey, array $plugins = [])
     {
-        $client = new HttpClient('http://api.popshops.com/v2/{publicKey}', [
-            'publicKey' => $publicKey,
-        ]);
+        $client = new HttpClient('http://api.popshops.com/v2/{publicKey}', ['publicKey' => $publicKey]);
 
         foreach ($plugins as $plugin) {
             $client->addSubscriber($plugin);
@@ -38,15 +36,28 @@ class Client
     {
         $crawler = $this->request(['merchants.xml{?catalog_key}', ['catalog_key' => $catalogKey]]);
 
-        return $crawler->filter('merchant')->each(function (Crawler $node, $i) {
-            $merchant = new Merchant();
-            $merchant->setId($node->attr('id'));
-            $merchant->setName($node->attr('name'));
-            $merchant->setLogoUrl($node->attr('logo_url'));
-            $merchant->setUrl($node->attr('url'));
-            $merchant->setProductCount($node->attr('product_count'));
+        $result = new MerchantResultSet();
 
-            return $merchant;
-        });
+        list($catalogKey, $totalCount) = $crawler->filter('merchants')->extract(['catalog_key', 'total_count']);
+        $result->setCatalogKey($catalogKey);
+        $result->setTotalCount($totalCount);
+
+        foreach ($crawler->filter('merchant') as $node) {
+            $merchant = new Merchant();
+            $merchant->setId($node->getAttribute('id'));
+            $merchant->setName($node->getAttribute('name'));
+            $merchant->setLogoUrl($node->getAttribute('logo_url'));
+            $merchant->setUrl($node->getAttribute('url'));
+            $merchant->setProductCount($node->getAttribute('product_count'));
+
+            $result->getMerchants()->add($merchant);
+        }
+
+        return $result;
+    }
+
+    public function findProducts($catalogKey, $keywords)
+    {
+
     }
 }
