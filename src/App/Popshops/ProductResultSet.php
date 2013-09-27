@@ -6,9 +6,10 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 class ProductResultSet
 {
+    use ItemCountTrait;
+
     protected $keywords;
     protected $limit;
-    protected $totalCount = 0;
     protected $products;
     protected $priceRanges;
     protected $merchantTypes;

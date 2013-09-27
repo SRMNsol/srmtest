@@ -4,7 +4,7 @@ namespace App\Popshops;
 
 class PriceRange
 {
-    use FilterTrait;
+    use ItemCountTrait;
 
     protected $minPrice;
     protected $maxPrice;

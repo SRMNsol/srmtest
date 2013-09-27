@@ -4,7 +4,7 @@ namespace App\Popshops;
 
 class MerchantType
 {
-    use FilterTrait;
+    use ItemCountTrait;
 
     protected $id;
     protected $name;

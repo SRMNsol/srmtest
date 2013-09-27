@@ -2,7 +2,7 @@
 
 namespace App\Popshops;
 
-trait FilterTrait
+trait ItemCountTrait
 {
     protected $itemCount;
 

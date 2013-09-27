@@ -4,7 +4,7 @@ namespace App\Popshops;
 
 class Network
 {
-    use FilterTrait;
+    use ItemCountTrait;
 
     protected $id;
     protected $name;
