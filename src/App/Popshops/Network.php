@@ -2,14 +2,12 @@
 
 namespace App\Popshops;
 
-class Merchant
+class Network
 {
     use FilterTrait;
 
     protected $id;
     protected $name;
-    protected $logoUrl;
-    protected $url;
 
     public function getId()
     {
@@ -31,30 +29,6 @@ class Merchant
     public function setName($name)
     {
         $this->name = $name;
-
-        return $this;
-    }
-
-    public function getLogoUrl()
-    {
-        return $this->logoUrl;
-    }
-
-    public function setLogoUrl($url)
-    {
-        $this->logoUrl = $url;
-
-        return $this;
-    }
-
-    public function getUrl()
-    {
-        return $this->url;
-    }
-
-    public function setUrl($url)
-    {
-        $this->url = $url;
 
         return $this;
     }
