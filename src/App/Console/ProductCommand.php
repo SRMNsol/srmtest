@@ -58,6 +58,8 @@ class ProductCommand extends Command
 
             $table->render($output);
 
+            $output->writeln('Keywords: ' . $result->getKeywords());
+            $output->writeln('Limit/offset: ' . $result->getLimit() . '/' . $result->getOffset());
             $output->writeln('Total results: ' . $result->getItemCount());
 
             return;

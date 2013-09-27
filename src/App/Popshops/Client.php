@@ -38,20 +38,19 @@ class Client
 
         $result = new MerchantResultSet();
 
-        $attrs = $crawler->filter('merchants')->extract(['catalog_key', 'total_count']);
-        $result->setCatalogKey($attrs[0][0]);
-        $result->setItemCount($attrs[0][1]);
+        $result->setCatalogKey($crawler->filter('merchants')->attr('catalog_key'));
+        $result->setItemCount($crawler->filter('merchants')->attr('total_count'));
 
-        foreach ($crawler->filter('merchant') as $node) {
+        $crawler->filter('merchant')->each(function (Crawler $node, $i) use ($result) {
             $merchant = new Merchant();
-            $merchant->setId($node->getAttribute('id'));
-            $merchant->setName($node->getAttribute('name'));
-            $merchant->setLogoUrl($node->getAttribute('logo_url'));
-            $merchant->setUrl($node->getAttribute('url'));
-            $merchant->setItemCount($node->getAttribute('product_count'));
+            $merchant->setId($node->attr('id'));
+            $merchant->setName($node->attr('name'));
+            $merchant->setLogoUrl($node->attr('logo_url'));
+            $merchant->setUrl($node->attr('url'));
+            $merchant->setItemCount($node->attr('product_count'));
 
             $result->getMerchants()->add($merchant);
-        }
+        });
 
         return $result;
     }
@@ -62,40 +61,38 @@ class Client
 
         $result = new ProductResultSet();
 
-        $attrs = $crawler->filter('search_results')->extract(['keywords', 'product_limit', 'product_offset']);
-        $result->setLimit($attrs[0][1]);
-        $result->setOffset($attrs[0][2]);
+        $result->setKeywords($crawler->filter('search_results')->attr('keywords'));
+        $result->setLimit($crawler->filter('search_results')->attr('product_limit'));
+        $result->setOffset($crawler->filter('search_results')->attr('product_offset'));
+        $result->setItemCount($crawler->filter('products')->attr('total_count'));
 
-        $attrs = $crawler->filter('products')->extract(['total_count']);
-        $result->setItemCount($attrs[0]);
-
-        foreach ($crawler->filter('merchant') as $node) {
+        $crawler->filter('merchant')->each(function (Crawler $node, $i) use ($result) {
             $merchant = new Merchant();
-            $merchant->setId($node->getAttribute('id'));
-            $merchant->setNetworkMerchantId($node->getAttribute('network_id') . '-' . $node->getAttribute('network_merchant_id'));
-            $merchant->setName($node->getAttribute('name'));
-            $merchant->setLogoUrl($node->getAttribute('logo_url'));
-            $merchant->setUrl($node->getAttribute('url'));
-            $merchant->setItemCount($node->getAttribute('product_count'));
+            $merchant->setId($node->attr('id'));
+            $merchant->setNetworkMerchantId($node->attr('network_id') . '-' . $node->attr('network_merchant_id'));
+            $merchant->setName($node->attr('name'));
+            $merchant->setLogoUrl($node->attr('logo_url'));
+            $merchant->setUrl($node->attr('url'));
+            $merchant->setItemCount($node->attr('product_count'));
 
-            $result->getMerchants()->set($node->getAttribute('id'), $merchant);
-        }
+            $result->getMerchants()->set($node->attr('id'), $merchant);
+        });
 
-        foreach ($crawler->filter('product') as $node) {
+        $crawler->filter('product')->each(function (Crawler $node, $i) use ($result) {
             $product = new Product();
-            $product->setUrl($node->getAttribute('url'));
-            $product->setName($node->getAttribute('name'));
-            $product->setDescription($node->getAttribute('description'));
-            $product->setLargeImageUrl($node->getAttribute('large_image_url'));
-            $product->setMerchantPrice($node->getAttribute('merchant_price'));
-            $product->setRetailPrice($node->getAttribute('retail_price'));
+            $product->setUrl($node->attr('url'));
+            $product->setName($node->attr('name'));
+            $product->setDescription($node->attr('description'));
+            $product->setLargeImageUrl($node->attr('large_image_url'));
+            $product->setMerchantPrice($node->attr('merchant_price'));
+            $product->setRetailPrice($node->attr('retail_price'));
 
-            if ($result->getMerchants()->containsKey($node->getAttribute('merchant_id'))) {
-                $product->setMerchant($result->getMerchants()->get($node->getAttribute('merchant_id')));
+            if ($result->getMerchants()->containsKey($node->attr('merchant_id'))) {
+                $product->setMerchant($result->getMerchants()->get($node->attr('merchant_id')));
             }
 
             $result->getProducts()->add($product);
-        }
+        });
 
         return $result;
     }

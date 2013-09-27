@@ -28,6 +28,18 @@ class ProductResultSet
         $this->networks = new ArrayCollection();
     }
 
+    public function getKeywords()
+    {
+        return $this->keywords;
+    }
+
+    public function setKeywords($keywords)
+    {
+        $this->keywords = $keywords;
+
+        return $this;
+    }
+
     public function getLimit()
     {
         return $this->limit;
