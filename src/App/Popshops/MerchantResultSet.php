@@ -6,9 +6,10 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 class MerchantResultSet
 {
+    use ItemCountTrait;
+
     protected $merchants;
     protected $catalogKey;
-    protected $totalCount = 0;
 
     public function __construct()
     {
@@ -28,18 +29,6 @@ class MerchantResultSet
     public function setCatalogKey($catalogKey)
     {
         $this->catalogKey = $catalogKey;
-
-        return $this;
-    }
-
-    public function getTotalCount()
-    {
-        return $this->totalCount;
-    }
-
-    public function setTotalCount($count)
-    {
-        $this->totalCount = $count;
 
         return $this;
     }

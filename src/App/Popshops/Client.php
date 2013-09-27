@@ -38,9 +38,9 @@ class Client
 
         $result = new MerchantResultSet();
 
-        list($catalogKey, $totalCount) = $crawler->filter('merchants')->extract(['catalog_key', 'total_count']);
-        $result->setCatalogKey($catalogKey);
-        $result->setTotalCount($totalCount);
+        $attrs = $crawler->filter('merchants')->extract(['catalog_key', 'total_count']);
+        $result->setCatalogKey($attrs[0][0]);
+        $result->setItemCount($attrs[0][1]);
 
         foreach ($crawler->filter('merchant') as $node) {
             $merchant = new Merchant();
@@ -48,7 +48,7 @@ class Client
             $merchant->setName($node->getAttribute('name'));
             $merchant->setLogoUrl($node->getAttribute('logo_url'));
             $merchant->setUrl($node->getAttribute('url'));
-            $merchant->setProductCount($node->getAttribute('product_count'));
+            $merchant->setItemCount($node->getAttribute('product_count'));
 
             $result->getMerchants()->add($merchant);
         }

@@ -54,6 +54,10 @@ class MerchantCommand extends Command
             }
 
             $table->render($output);
+
+            $output->writeln('Catalog key: ' . $result->getCatalogKey());
+            $output->writeln('Total merchants: ' . $result->getItemCount());
+
             return;
         }
 
