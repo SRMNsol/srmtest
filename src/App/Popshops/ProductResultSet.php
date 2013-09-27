@@ -10,6 +10,7 @@ class ProductResultSet
 
     protected $keywords;
     protected $limit;
+    protected $offset;
     protected $products;
     protected $priceRanges;
     protected $merchantTypes;
@@ -23,6 +24,30 @@ class ProductResultSet
         $this->merchantTypes = new ArrayCollection();
         $this->brands = new ArrayCollection();
         $this->networks = new ArrayCollection();
+    }
+
+    public function getLimit()
+    {
+        return $this->limit;
+    }
+
+    public function setLimit($limit)
+    {
+        $this->limit = $limit;
+
+        return $this;
+    }
+
+    public function getOffset()
+    {
+        return $this->offset;
+    }
+
+    public function setOffset($offset)
+    {
+        $this->offset = $offset;
+
+        return $this;
     }
 
     public function getProducts()

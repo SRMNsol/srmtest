@@ -58,6 +58,26 @@ class Client
 
     public function findProducts($catalogKey, $keywords)
     {
+        $crawler = $this->request(['products.xml{?catalog_key,keywords}', ['catalog_key' => $catalogKey, 'keywords' => $keywords]]);
 
+        $result = new ProductResultSet();
+
+        $attrs = $crawler->filter('search_results')->extract(['keywords', 'product_limit', 'product_offset']);
+        $result->setLimit($attrs[0][1]);
+        $result->setOffset($attrs[0][2]);
+
+        foreach ($crawler->filter('product') as $node) {
+            $product = new Product();
+            $product->setUrl($node->getAttribute('url'));
+            $product->setName($node->getAttribute('name'));
+            $product->setDescription($node->getAttribute('description'));
+            $product->setLargeImageUrl($node->getAttribute('large_image_url'));
+            $product->setMerchantPrice($node->getAttribute('merchant_price'));
+            $product->setRetailPrice($node->getAttribute('retail_price'));
+
+            $result->getProducts()->add($product);
+        }
+
+        return $result;
     }
 }

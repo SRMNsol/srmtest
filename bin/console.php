@@ -21,8 +21,9 @@ $console->setHelperSet(new HelperSet([
 ]));
 
 $console->addCommands([
-    new App\Console\MerchantCommand(),
     new App\Console\AssetDumpCommand(),
+    new App\Console\MerchantCommand(),
+    new App\Console\ProductCommand(),
 ]);
 
 $console->run();
