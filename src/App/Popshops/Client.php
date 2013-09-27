@@ -41,7 +41,7 @@ class Client
         $result->setCatalogKey($crawler->filter('merchants')->attr('catalog_key'));
         $result->setItemCount($crawler->filter('merchants')->attr('total_count'));
 
-        $crawler->filter('merchant')->each(function (Crawler $node, $i) use ($result) {
+        $crawler->filter('merchants merchant')->each(function (Crawler $node, $i) use ($result) {
             $merchant = new Merchant();
             $merchant->setId($node->attr('id'));
             $merchant->setName($node->attr('name'));
@@ -66,7 +66,7 @@ class Client
         $result->setOffset($crawler->filter('search_results')->attr('product_offset'));
         $result->setItemCount($crawler->filter('products')->attr('total_count'));
 
-        $crawler->filter('merchant')->each(function (Crawler $node, $i) use ($result) {
+        $crawler->filter('merchants merchant')->each(function (Crawler $node, $i) use ($result) {
             $merchant = new Merchant();
             $merchant->setId($node->attr('id'));
             $merchant->setNetworkMerchantId($node->attr('network_id') . '-' . $node->attr('network_merchant_id'));
@@ -78,7 +78,7 @@ class Client
             $result->getMerchants()->set($node->attr('id'), $merchant);
         });
 
-        $crawler->filter('product')->each(function (Crawler $node, $i) use ($result) {
+        $crawler->filter('products product')->each(function (Crawler $node, $i) use ($result) {
             $product = new Product();
             $product->setUrl($node->attr('url'));
             $product->setName($node->attr('name'));
@@ -92,6 +92,39 @@ class Client
             }
 
             $result->getProducts()->add($product);
+        });
+
+        $crawler->filter('price_ranges price_range')->each(function (Crawler $node, $i) use ($result) {
+            $priceRange = new PriceRange();
+            $priceRange->setMinPrice($node->attr('min'));
+            $priceRange->setMaxPrice($node->attr('max'));
+            $priceRange->setItemCount($node->attr('product_count'));
+
+            $result->getPriceRanges()->add($priceRange);
+        });
+
+        $crawler->filter('brands brand')->each(function (Crawler $node, $i) use ($result) {
+            $brand = new Brand();
+            $brand->setId($node->attr('id'));
+            $brand->setName($node->attr('name'));
+            $brand->setItemCount($node->attr('product_count'));
+
+            $result->getBrands()->add($brand);
+        });
+
+        $crawler->filter('merchant_types merchant_type')->each(function (Crawler $node, $i) use ($result) {
+            $merchantType = new MerchantType();
+            $merchantType->setId($node->attr('id'));
+            $merchantType->setName($node->attr('name'));
+            $merchantType->setItemCount($node->attr('product_count'));
+
+            $result->getMerchantTypes()->add($merchantType);
+        });
+
+        $crawler->filter('suggested_merchants merchant')->each(function (Crawler $node, $i) use ($result) {
+            if ($result->getMerchants()->containsKey($node->attr('id'))) {
+                $result->getSuggestedMerchants()->add($result->getMerchants()->get($node->attr('id')));
+            }
         });
 
         return $result;

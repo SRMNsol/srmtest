@@ -16,6 +16,7 @@ class ProductResultSet
     protected $merchants;
     protected $merchantTypes;
     protected $brands;
+    protected $suggestedMerchants;
     protected $networks;
 
     public function __construct()
@@ -25,6 +26,7 @@ class ProductResultSet
         $this->merchants = new ArrayCollection();
         $this->merchantTypes = new ArrayCollection();
         $this->brands = new ArrayCollection();
+        $this->suggestedMerchants= new ArrayCollection();
         $this->networks = new ArrayCollection();
     }
 
@@ -87,6 +89,11 @@ class ProductResultSet
     public function getBrands()
     {
         return $this->brands;
+    }
+
+    public function getSuggestedMerchants()
+    {
+        return $this->suggestedMerchants;
     }
 
     public function getNetworks()
