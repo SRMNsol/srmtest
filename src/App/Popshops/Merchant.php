@@ -7,6 +7,8 @@ class Merchant
     use ItemCountTrait;
 
     protected $id;
+    protected $networkMerchantId;
+    protected $merchantType;
     protected $name;
     protected $logoUrl;
     protected $url;
@@ -19,6 +21,30 @@ class Merchant
     public function setId($id)
     {
         $this->id = $id;
+
+        return $this;
+    }
+
+    public function getNetworkMerchantId()
+    {
+        return $this->networkMerchantId;
+    }
+
+    public function setNetworkMerchantId($id)
+    {
+        $this->networkMerchantId = $id;
+
+        return $this;
+    }
+
+    public function getMerchantType()
+    {
+        return $this->merchantType;
+    }
+
+    public function setMerchantType(MerchantType $type)
+    {
+        $this->merchantType = $type;
 
         return $this;
     }

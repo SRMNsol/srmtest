@@ -46,16 +46,19 @@ class ProductCommand extends Command
         $result = $popshops->findProducts($catalogs[$catalog], $keywords);
         if (count($result->getProducts()) > 0) {
             $table = $this->getHelperSet()->get('table');
-            $table->setHeaders(['Name', 'Price']);
+            $table->setHeaders(['Name', 'Merchant', 'Price']);
 
             foreach ($result->getProducts() as $product) {
                 $table->addRow(array(
                     $product->getName(),
+                    $product->getMerchant() ? $product->getMerchant()->getName() : null,
                     number_format($product->getMerchantPrice(), 2),
                 ));
             }
 
             $table->render($output);
+
+            $output->writeln('Total results: ' . $result->getItemCount());
 
             return;
         }

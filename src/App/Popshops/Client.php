@@ -66,6 +66,21 @@ class Client
         $result->setLimit($attrs[0][1]);
         $result->setOffset($attrs[0][2]);
 
+        $attrs = $crawler->filter('products')->extract(['total_count']);
+        $result->setItemCount($attrs[0]);
+
+        foreach ($crawler->filter('merchant') as $node) {
+            $merchant = new Merchant();
+            $merchant->setId($node->getAttribute('id'));
+            $merchant->setNetworkMerchantId($node->getAttribute('network_id') . '-' . $node->getAttribute('network_merchant_id'));
+            $merchant->setName($node->getAttribute('name'));
+            $merchant->setLogoUrl($node->getAttribute('logo_url'));
+            $merchant->setUrl($node->getAttribute('url'));
+            $merchant->setItemCount($node->getAttribute('product_count'));
+
+            $result->getMerchants()->set($node->getAttribute('id'), $merchant);
+        }
+
         foreach ($crawler->filter('product') as $node) {
             $product = new Product();
             $product->setUrl($node->getAttribute('url'));
@@ -74,6 +89,10 @@ class Client
             $product->setLargeImageUrl($node->getAttribute('large_image_url'));
             $product->setMerchantPrice($node->getAttribute('merchant_price'));
             $product->setRetailPrice($node->getAttribute('retail_price'));
+
+            if ($result->getMerchants()->containsKey($node->getAttribute('merchant_id'))) {
+                $product->setMerchant($result->getMerchants()->get($node->getAttribute('merchant_id')));
+            }
 
             $result->getProducts()->add($product);
         }

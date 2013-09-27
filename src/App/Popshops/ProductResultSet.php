@@ -13,6 +13,7 @@ class ProductResultSet
     protected $offset;
     protected $products;
     protected $priceRanges;
+    protected $merchants;
     protected $merchantTypes;
     protected $brands;
     protected $networks;
@@ -21,6 +22,7 @@ class ProductResultSet
     {
         $this->products = new ArrayCollection();
         $this->priceRanges = new ArrayCollection();
+        $this->merchants = new ArrayCollection();
         $this->merchantTypes = new ArrayCollection();
         $this->brands = new ArrayCollection();
         $this->networks = new ArrayCollection();
@@ -58,6 +60,11 @@ class ProductResultSet
     public function getPriceRanges()
     {
         return $this->priceRanges;
+    }
+
+    public function getMerchants()
+    {
+        return $this->merchants;
     }
 
     public function getMerchantTypes()
