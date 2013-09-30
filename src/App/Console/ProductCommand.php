@@ -51,7 +51,7 @@ class ProductCommand extends Command
             $table->setHeaders(['Name', 'Merchant', 'Price']);
             $table->setRows($result->getProducts()->map(function ($product) {
                 return [
-                    $product->getName(),
+                    substr($product->getName(), 0, 100),
                     $product->getMerchant() ? $product->getMerchant()->getName() : null,
                     number_format($product->getMerchantPrice(), 2),
                 ];
