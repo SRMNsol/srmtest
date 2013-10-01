@@ -55,11 +55,11 @@ class DealCommand extends Command
             $table = $this->getHelperSet()->get('table');
 
             $table->setHeaders(['Name', 'Type', 'Merchant']);
-            $table->setRows($result->getProducts()->map(function ($deal) {
+            $table->setRows($result->getDeals()->map(function ($deal) {
                 return [
                     substr($deal->getName(), 0, 100),
-                    isset($deal->getDealType()) ? $deal->getDealType()->getName() : null,
-                    isset($deal->getMerchant()) ? $deal->getMerchant()->getName() : null,
+                    $deal->getDealType() ? $deal->getDealType()->getName() : null,
+                    $deal->getMerchant() ? $deal->getMerchant()->getName() : null,
                 ];
 
             })->toArray());
