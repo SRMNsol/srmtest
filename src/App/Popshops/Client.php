@@ -4,6 +4,7 @@ namespace App\Popshops;
 
 use Guzzle\Http\Client as HttpClient;
 use Symfony\Component\DomCrawler\Crawler;
+use Doctrine\Common\Collections\ArrayCollection;
 
 class Client
 {
@@ -128,5 +129,78 @@ class Client
         });
 
         return $result;
+    }
+
+    public function getDealTypes()
+    {
+        $crawler = $this->request('deal_types.xml');
+
+        $result = new ArrayCollection();
+
+        $crawler->filter('deal_type')->each(function (Crawler $node, $i) use ($result) {
+            $dealType = new DealType();
+            $dealType->setId($node->attr('id'));
+            $dealType->setName($node->attr('name'));
+            $dealType->setItemCount($node->attr('deal_count'));
+
+            $result->add($dealType);
+        });
+
+        return $result;
+    }
+
+    public function findDeals($catalogKey, $dealType = null, $keywords = null)
+    {
+        $crawler = $this->request(['deals.xml{?catalog_key,deal_type_id,keywords}', [
+            'catalog_key' => $catalogKey,
+            'deal_type_id' => $dealType instanceof DealType ? $dealType->getId() : null,
+            'keywords' => $keywords,
+        ]]);
+
+        $result = new DealResultSet();
+        $result->setLimit($crawler->filter('search_results')->attr('deal_limit'));
+        $result->setOffset($crawler->filter('search_results')->attr('deal_offset'));
+        $result->setItemCount($crawler->filter('deals')->attr('total_count'));
+
+        $crawler->filter('deal_types deal_type')->each(function (Crawler $node, $i) use ($result) {
+            $dealType = new DealType();
+            $dealType->setId($node->attr('id'));
+            $dealType->setName($node->attr('name'));
+            $dealType->setItemCount($node->attr('deal_count'));
+
+            $result->getDealTypes()->add($node->attr('id'), $dealType);
+        });
+
+        $crawler->filter('deals deal')->each(function (Crawler $node, $i) use ($result) {
+            $deal = new Deal();
+            $deal->setName($node->attr('name'));
+            $deal->setItemCount($node->attr('deal_count'));
+            if ($result->getDealTypes()->containsKey($node->attr('deal_type_id'))) {
+                $deal->addDealType($result->getDealTypes()->get($node->attr('deal_type_id')));
+            }
+
+            $result->getDeals()->add($deal);
+        });
+
+        $crawler->filter('merchants merchant')->each(function (Crawler $node, $i) use ($result) {
+            $merchant = new Merchant();
+            $merchant->setId($node->attr('id'));
+            $merchant->setNetworkMerchantId($node->attr('network_id') . '-' . $node->attr('network_merchant_id'));
+            $merchant->setName($node->attr('name'));
+            $merchant->setLogoUrl($node->attr('logo_url'));
+            $merchant->setUrl($node->attr('url'));
+            $merchant->setItemCount($node->attr('product_count'));
+
+            $result->getMerchants()->set($node->attr('id'), $merchant);
+        });
+
+        $crawler->filter('merchant_types merchant_type')->each(function (Crawler $node, $i) use ($result) {
+            $merchantType = new MerchantType();
+            $merchantType->setId($node->attr('id'));
+            $merchantType->setName($node->attr('name'));
+            $merchantType->setItemCount($node->attr('product_count'));
+
+            $result->getMerchantTypes()->add($merchantType);
+        });
     }
 }

@@ -24,6 +24,7 @@ $console->addCommands([
     new App\Console\AssetDumpCommand(),
     new App\Console\MerchantCommand(),
     new App\Console\ProductCommand(),
+    new App\Console\DealCommand(),
 ]);
 
 $console->run();
