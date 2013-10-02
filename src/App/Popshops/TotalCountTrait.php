@@ -4,7 +4,7 @@ namespace App\Popshops;
 
 trait TotalCountTrait
 {
-    protected $totalCount;
+    protected $totalCount = 0;
 
     public function getTotalCount()
     {
@@ -13,7 +13,7 @@ trait TotalCountTrait
 
     public function setTotalCount($count)
     {
-        $this->totalCount = $count;
+        $this->totalCount = (int) $count;
 
         return $this;
     }

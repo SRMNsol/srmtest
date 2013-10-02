@@ -4,7 +4,7 @@ namespace App\Popshops;
 
 trait ProductCountTrait
 {
-    protected $productCount;
+    protected $productCount = 0;
 
     public function getProductCount()
     {
@@ -13,7 +13,7 @@ trait ProductCountTrait
 
     public function setProductCount($count)
     {
-        $this->productCount = $count;
+        $this->productCount = (int) $count;
 
         return $this;
     }
