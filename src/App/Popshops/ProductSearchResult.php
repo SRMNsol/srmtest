@@ -4,10 +4,8 @@ namespace App\Popshops;
 
 use Doctrine\Common\Collections\ArrayCollection;
 
-class ProductResultSet
+class ProductSearchResult
 {
-    use ItemCountTrait;
-
     protected $keywords;
     protected $limit;
     protected $offset;
@@ -21,7 +19,7 @@ class ProductResultSet
 
     public function __construct()
     {
-        $this->products = new ArrayCollection();
+        $this->products = new ProductCollection();
         $this->priceRanges = new ArrayCollection();
         $this->merchants = new ArrayCollection();
         $this->merchantTypes = new ArrayCollection();

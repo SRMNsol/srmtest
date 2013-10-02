@@ -4,22 +4,11 @@ namespace App\Popshops;
 
 use Doctrine\Common\Collections\ArrayCollection;
 
-class MerchantResultSet
+class MerchantCollection extends ArrayCollection
 {
-    use ItemCountTrait;
+    use TotalCountTrait;
 
-    protected $merchants;
     protected $catalogKey;
-
-    public function __construct()
-    {
-        $this->merchants = new ArrayCollection();
-    }
-
-    public function getMerchants()
-    {
-        return $this->merchants;
-    }
 
     public function getCatalogKey()
     {

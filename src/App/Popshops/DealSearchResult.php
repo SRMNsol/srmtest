@@ -4,9 +4,9 @@ namespace App\Popshops;
 
 use Doctrine\Common\Collections\ArrayCollection;
 
-class DealResultSet
+class DealSearchResult
 {
-    use ItemCountTrait;
+    use DealCountTrait;
 
     protected $keywords;
     protected $limit;
@@ -19,7 +19,7 @@ class DealResultSet
 
     public function __construct()
     {
-        $this->deals = new ArrayCollection();
+        $this->deals = new DealCollection();
         $this->dealTypes = new ArrayCollection();
         $this->merchants = new ArrayCollection();
         $this->merchantTypes = new ArrayCollection();
@@ -65,6 +65,11 @@ class DealResultSet
     public function getDeals()
     {
         return $this->deals;
+    }
+
+    public function getDealTypes()
+    {
+        return $this->dealTypes;
     }
 
     public function getMerchants()

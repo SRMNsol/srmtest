@@ -2,12 +2,26 @@
 
 namespace App\Popshops;
 
-class Deal
+use Symfony\Component\DomCrawler\Crawler;
+use Doctrine\Common\Collections\ArrayCollection;
+
+class Deal implements DomCrawlerInterface
 {
-    use ItemCountTrait;
+    use MerchantTrait;
+    use DealCountTrait;
 
     protected $name;
-    protected $dealType;
+    protected $dealTypes;
+    protected $merchant;
+
+    public function __construct(Crawler $node = null)
+    {
+        $this->dealTypes = new ArrayCollection();
+
+        if (isset($node)) {
+            $this->populateFromCrawler($node);
+        }
+    }
 
     public function getName()
     {
@@ -21,14 +35,15 @@ class Deal
         return $this;
     }
 
-    public function getDealType()
+    public function getDealTypes()
     {
-        return $this->dealType;
+        return $this->dealTypes;
     }
 
-    public function setDealType(DealType $type)
+    public function populateFromCrawler(Crawler $node)
     {
-        $this->dealType = $type;
+        $this->setName($node->attr('name'));
+        $this->setDealCount($node->attr('deal_count'));
 
         return $this;
     }

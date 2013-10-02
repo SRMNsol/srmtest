@@ -62,32 +62,32 @@ class ProductCommand extends Command
             if ($input->getOption('print-filters')) {
                 $table->setHeaders(['Price Min', 'Price Max', 'Count']);
                 $table->setRows($result->getPriceRanges()->map(function ($priceRange) {
-                    return [$priceRange->getMinPrice(), $priceRange->getMaxPrice(), $priceRange->getItemCount()];
+                    return [$priceRange->getMinPrice(), $priceRange->getMaxPrice(), $priceRange->getProductCount()];
                 })->toArray());
                 $table->render($output);
 
                 $table->setHeaders(['Brand', 'Count']);
                 $table->setRows($result->getBrands()->map(function ($brand) {
-                    return [$brand->getName(), $brand->getItemCount()];
+                    return [$brand->getName(), $brand->getProductCount()];
                 })->toArray());
                 $table->render($output);
 
                 $table->setHeaders(['Merchant Type', 'Count']);
                 $table->setRows($result->getMerchantTypes()->map(function ($merchantType) {
-                    return [$merchantType->getName(), $merchantType->getItemCount()];
+                    return [$merchantType->getName(), $merchantType->getProductCount()];
                 })->toArray());
                 $table->render($output);
 
                 $table->setHeaders(['Suggested Merchant', 'Count']);
                 $table->setRows($result->getSuggestedMerchants()->map(function ($merchant) {
-                    return [$merchant->getName(), $merchant->getItemCount()];
+                    return [$merchant->getName(), $merchant->getProductCount()];
                 })->toArray());
                 $table->render($output);
             }
 
             $output->writeln('Keywords: ' . $result->getKeywords());
             $output->writeln('Limit/offset: ' . $result->getLimit() . '/' . $result->getOffset());
-            $output->writeln('Total results: ' . $result->getItemCount());
+            $output->writeln('Total results: ' . $result->getProducts()->getTotalCount());
 
             return;
         }

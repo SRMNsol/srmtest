@@ -2,16 +2,26 @@
 
 namespace App\Popshops;
 
-class Product
+use Symfony\Component\DomCrawler\Crawler;
+
+class Product implements DomCrawlerInterface
 {
+    use MerchantTrait;
+    use NetworkTrait;
+
     protected $url;
     protected $name;
     protected $description;
-    protected $merchant;
-    protected $network;
     protected $largeImageUrl;
     protected $merchantPrice = 0.00;
     protected $retailPrice = 0.00;
+
+    public function __construct(Crawler $node = null)
+    {
+        if (isset($node)) {
+            $this->populateFromCrawler($node);
+        }
+    }
 
     public function getUrl()
     {
@@ -49,30 +59,6 @@ class Product
         return $this;
     }
 
-    public function getMerchant()
-    {
-        return $this->merchant;
-    }
-
-    public function setMerchant(Merchant $merchant)
-    {
-        $this->merchant = $merchant;
-
-        return $this;
-    }
-
-    public function getNetwork()
-    {
-        return $this->network;
-    }
-
-    public function setNetwork(Network $network)
-    {
-        $this->network = $network;
-
-        return $this;
-    }
-
     public function getLargeImageUrl()
     {
         return $this->largeImageUrl;
@@ -103,6 +89,18 @@ class Product
     public function setRetailPrice($price)
     {
         $this->retailPrice = $price;
+
+        return $this;
+    }
+
+    public function populateFromCrawler(Crawler $node)
+    {
+        $this->setUrl($node->attr('url'));
+        $this->setName($node->attr('name'));
+        $this->setDescription($node->attr('description'));
+        $this->setLargeImageUrl($node->attr('large_image_url'));
+        $this->setMerchantPrice($node->attr('merchant_price'));
+        $this->setRetailPrice($node->attr('retail_price'));
 
         return $this;
     }

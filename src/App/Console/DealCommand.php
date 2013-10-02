@@ -16,6 +16,7 @@ class DealCommand extends Command
             ->setName('popshops:deals')
             ->setDescription('Find deals')
             ->addArgument('catalog', InputArgument::OPTIONAL, 'Specify the catalog name')
+            ->addArgument('deal-type', InputArgument::OPTIONAL, 'Specify the deal type name')
             ->addArgument('keywords', InputArgument::OPTIONAL, 'Specify the product search keywords');
     }
 
@@ -44,7 +45,9 @@ class DealCommand extends Command
 
         $keywords = $input->getArgument('keywords');
         $dealTypes = $popshops->getDealTypes()->filter(function ($dealType) use ($input) {
-            if ($dealType->getId() === $input->getArgument('deal-type')) {
+            $name = $dealType->getName();
+            $type = $input->getArgument('deal-type');
+            if (preg_match('/' . preg_quote($type) . '/i', $name)) {
                 return $dealType;
             }
         });
@@ -56,18 +59,18 @@ class DealCommand extends Command
 
             $table->setHeaders(['Name', 'Type', 'Merchant']);
             $table->setRows($result->getDeals()->map(function ($deal) {
+                $test = $deal->getDealTypes()->first();
                 return [
                     substr($deal->getName(), 0, 100),
-                    $deal->getDealType() ? $deal->getDealType()->getName() : null,
+                    count($deal->getDealTypes()) > 0 ? $deal->getDealTypes()->first()->getName() : null,
                     $deal->getMerchant() ? $deal->getMerchant()->getName() : null,
                 ];
-
             })->toArray());
             $table->render($output);
 
             $output->writeln('Keywords: ' . $result->getKeywords());
             $output->writeln('Limit/offset: ' . $result->getLimit() . '/' . $result->getOffset());
-            $output->writeln('Total results: ' . $result->getItemCount());
+            $output->writeln('Total results: ' . $result->getDeals()->getTotalCount());
 
             return;
         }

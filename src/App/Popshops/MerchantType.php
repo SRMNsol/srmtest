@@ -2,12 +2,21 @@
 
 namespace App\Popshops;
 
-class MerchantType
+use Symfony\Component\DomCrawler\Crawler;
+
+class MerchantType implements DomCrawlerInterface
 {
-    use ItemCountTrait;
+    use ProductCountTrait;
 
     protected $id;
     protected $name;
+
+    public function __construct(Crawler $node = null)
+    {
+        if (isset($node)) {
+            $this->populateFromCrawler($node);
+        }
+    }
 
     public function getId()
     {
@@ -29,6 +38,15 @@ class MerchantType
     public function setName($name)
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function populateFromCrawler(Crawler $node)
+    {
+        $this->setId($node->attr('id'));
+        $this->setName($node->attr('name'));
+        $this->setProductCount($node->attr('product_count'));
 
         return $this;
     }

@@ -2,12 +2,21 @@
 
 namespace App\Popshops;
 
-class PriceRange
+use Symfony\Component\DomCrawler\Crawler;
+
+class PriceRange implements DomCrawlerInterface
 {
-    use ItemCountTrait;
+    use ProductCountTrait;
 
     protected $minPrice;
     protected $maxPrice;
+
+    public function __construct(Crawler $node = null)
+    {
+        if (isset($node)) {
+            $this->populateFromCrawler($node);
+        }
+    }
 
     public function getMinPrice()
     {
@@ -29,6 +38,15 @@ class PriceRange
     public function setMaxPrice($price)
     {
         $this->maxPrice = $price;
+
+        return $this;
+    }
+
+    public function populateFromCrawler(Crawler $node)
+    {
+        $this->setMinPrice($node->attr('min'));
+        $this->setMaxPrice($node->attr('max'));
+        $this->setProductCount($node->attr('product_count'));
 
         return $this;
     }

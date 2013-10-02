@@ -37,88 +37,56 @@ class Client
     {
         $crawler = $this->request(['merchants.xml{?catalog_key}', ['catalog_key' => $catalogKey]]);
 
-        $result = new MerchantResultSet();
+        $collection = new MerchantCollection();
 
-        $result->setCatalogKey($crawler->filter('merchants')->attr('catalog_key'));
-        $result->setItemCount($crawler->filter('merchants')->attr('total_count'));
+        $collection->setCatalogKey($crawler->filter('merchants')->attr('catalog_key'));
+        $collection->setTotalCount($crawler->filter('merchants')->attr('total_count'));
 
-        $crawler->filter('merchants merchant')->each(function (Crawler $node, $i) use ($result) {
-            $merchant = new Merchant();
-            $merchant->setId($node->attr('id'));
-            $merchant->setName($node->attr('name'));
-            $merchant->setLogoUrl($node->attr('logo_url'));
-            $merchant->setUrl($node->attr('url'));
-            $merchant->setItemCount($node->attr('product_count'));
-
-            $result->getMerchants()->add($merchant);
+        $crawler->filter('merchants merchant')->each(function (Crawler $node, $i) use ($collection) {
+            $merchant = new Merchant($node);
+            $collection->set($merchant->getId(), $merchant);
         });
 
-        return $result;
+        return $collection;
     }
 
     public function findProducts($catalogKey, $keywords)
     {
         $crawler = $this->request(['products.xml{?catalog_key,keywords}', ['catalog_key' => $catalogKey, 'keywords' => $keywords]]);
 
-        $result = new ProductResultSet();
-
+        $result = new ProductSearchResult();
         $result->setKeywords($crawler->filter('search_results')->attr('keywords'));
         $result->setLimit($crawler->filter('search_results')->attr('product_limit'));
         $result->setOffset($crawler->filter('search_results')->attr('product_offset'));
-        $result->setItemCount($crawler->filter('products')->attr('total_count'));
+        $result->getProducts()->setTotalCount($crawler->filter('products')->attr('total_count'));
 
         $crawler->filter('merchants merchant')->each(function (Crawler $node, $i) use ($result) {
-            $merchant = new Merchant();
-            $merchant->setId($node->attr('id'));
-            $merchant->setNetworkMerchantId($node->attr('network_id') . '-' . $node->attr('network_merchant_id'));
-            $merchant->setName($node->attr('name'));
-            $merchant->setLogoUrl($node->attr('logo_url'));
-            $merchant->setUrl($node->attr('url'));
-            $merchant->setItemCount($node->attr('product_count'));
-
-            $result->getMerchants()->set($node->attr('id'), $merchant);
+            $merchant = new Merchant($node);
+            $result->getMerchants()->set($merchant->getId(), $merchant);
         });
 
-        $crawler->filter('products product')->each(function (Crawler $node, $i) use ($result) {
-            $product = new Product();
-            $product->setUrl($node->attr('url'));
-            $product->setName($node->attr('name'));
-            $product->setDescription($node->attr('description'));
-            $product->setLargeImageUrl($node->attr('large_image_url'));
-            $product->setMerchantPrice($node->attr('merchant_price'));
-            $product->setRetailPrice($node->attr('retail_price'));
+        $merchants = $this->getMerchants($catalogKey);
 
-            if ($result->getMerchants()->containsKey($node->attr('merchant_id'))) {
-                $product->setMerchant($result->getMerchants()->get($node->attr('merchant_id')));
+        $crawler->filter('products product')->each(function (Crawler $node, $i) use ($merchants, $result) {
+            $product = new Product($node);
+            if ($merchants->containsKey($node->attr('merchant_id'))) {
+                $product->setMerchant($merchants->get($node->attr('merchant_id')));
             }
-
             $result->getProducts()->add($product);
         });
 
         $crawler->filter('price_ranges price_range')->each(function (Crawler $node, $i) use ($result) {
-            $priceRange = new PriceRange();
-            $priceRange->setMinPrice($node->attr('min'));
-            $priceRange->setMaxPrice($node->attr('max'));
-            $priceRange->setItemCount($node->attr('product_count'));
-
+            $priceRange = new PriceRange($node);
             $result->getPriceRanges()->add($priceRange);
         });
 
         $crawler->filter('brands brand')->each(function (Crawler $node, $i) use ($result) {
-            $brand = new Brand();
-            $brand->setId($node->attr('id'));
-            $brand->setName($node->attr('name'));
-            $brand->setItemCount($node->attr('product_count'));
-
+            $brand = new Brand($node);
             $result->getBrands()->add($brand);
         });
 
         $crawler->filter('merchant_types merchant_type')->each(function (Crawler $node, $i) use ($result) {
-            $merchantType = new MerchantType();
-            $merchantType->setId($node->attr('id'));
-            $merchantType->setName($node->attr('name'));
-            $merchantType->setItemCount($node->attr('product_count'));
-
+            $merchantType = new MerchantType($node);
             $result->getMerchantTypes()->add($merchantType);
         });
 
@@ -135,18 +103,14 @@ class Client
     {
         $crawler = $this->request('deal_types.xml');
 
-        $result = new ArrayCollection();
+        $collection = new DealTypeCollection();
 
-        $crawler->filter('deal_type')->each(function (Crawler $node, $i) use ($result) {
-            $dealType = new DealType();
-            $dealType->setId($node->attr('id'));
-            $dealType->setName($node->attr('name'));
-            $dealType->setItemCount($node->attr('deal_count'));
-
-            $result->add($dealType);
+        $crawler->filter('deal_type')->each(function (Crawler $node, $i) use ($collection) {
+            $dealType = new DealType($node);
+            $collection->set($dealType->getId(), $dealType);
         });
 
-        return $result;
+        return $collection;
     }
 
     public function findDeals($catalogKey, $dealType = null, $keywords = null)
@@ -157,50 +121,42 @@ class Client
             'keywords' => $keywords,
         ]]);
 
-        $result = new DealResultSet();
+        $result = new DealSearchResult();
         $result->setLimit($crawler->filter('search_results')->attr('deal_limit'));
         $result->setOffset($crawler->filter('search_results')->attr('deal_offset'));
-        $result->setItemCount($crawler->filter('deals')->attr('total_count'));
+        $result->getDeals()->setTotalCount($crawler->filter('deals')->attr('total_count'));
 
         $crawler->filter('deal_types deal_type')->each(function (Crawler $node, $i) use ($result) {
-            $dealType = new DealType();
-            $dealType->setId($node->attr('id'));
-            $dealType->setName($node->attr('name'));
-            $dealType->setItemCount($node->attr('deal_count'));
-
-            $result->getDealTypes()->add($node->attr('id'), $dealType);
+            $dealType = new DealType($node);
+            $result->getDealTypes()->set($dealType->getId(), $dealType);
         });
 
-        $crawler->filter('deals deal')->each(function (Crawler $node, $i) use ($result) {
-            $deal = new Deal();
-            $deal->setName($node->attr('name'));
-            $deal->setItemCount($node->attr('deal_count'));
-            if ($result->getDealTypes()->containsKey($node->attr('deal_type_id'))) {
-                $deal->addDealType($result->getDealTypes()->get($node->attr('deal_type_id')));
-            }
+        $dealTypes = $this->getDealTypes();
+        $merchants = $this->getMerchants($catalogKey);
 
+        $crawler->filter('deals deal')->each(function (Crawler $node, $i) use ($dealTypes, $merchants, $result) {
+            $deal = new Deal($node);
+            foreach (explode(',', $node->attr('deal_type_ids')) as $dealTypeId) {
+                if ($dealTypes->containsKey($dealTypeId)) {
+                    $deal->getDealTypes()->add($dealTypes->get($dealTypeId));
+                }
+            }
+            if ($merchants->containsKey($node->attr('merchant_id'))) {
+                $deal->setMerchant($merchants->get($node->attr('merchant_id')));
+            }
             $result->getDeals()->add($deal);
         });
 
         $crawler->filter('merchants merchant')->each(function (Crawler $node, $i) use ($result) {
-            $merchant = new Merchant();
-            $merchant->setId($node->attr('id'));
-            $merchant->setNetworkMerchantId($node->attr('network_id') . '-' . $node->attr('network_merchant_id'));
-            $merchant->setName($node->attr('name'));
-            $merchant->setLogoUrl($node->attr('logo_url'));
-            $merchant->setUrl($node->attr('url'));
-            $merchant->setItemCount($node->attr('product_count'));
-
-            $result->getMerchants()->set($node->attr('id'), $merchant);
+            $merchant = new Merchant($node);
+            $result->getMerchants()->set($merchant->getId(), $merchant);
         });
 
         $crawler->filter('merchant_types merchant_type')->each(function (Crawler $node, $i) use ($result) {
-            $merchantType = new MerchantType();
-            $merchantType->setId($node->attr('id'));
-            $merchantType->setName($node->attr('name'));
-            $merchantType->setItemCount($node->attr('product_count'));
-
-            $result->getMerchantTypes()->add($merchantType);
+            $merchantType = new MerchantType($node);
+            $result->getMerchantTypes()->set($merchantType->getId(), $merchantType);
         });
+
+        return $result;
     }
 }
