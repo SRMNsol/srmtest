@@ -11,10 +11,12 @@ class Deal implements DomCrawlerInterface
     use DealCountTrait;
 
     protected $name;
+    protected $description;
     protected $url;
     protected $specific = false;
     protected $startOn;
     protected $endOn;
+    protected $code;
     protected $dealTypes;
 
     public function __construct(Crawler $node = null)
@@ -34,6 +36,18 @@ class Deal implements DomCrawlerInterface
     public function setName($name)
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    public function setDescription($desc)
+    {
+        $this->description = $desc;
 
         return $this;
     }
@@ -86,6 +100,18 @@ class Deal implements DomCrawlerInterface
         return $this;
     }
 
+    public function getCode()
+    {
+        return $this->code;
+    }
+
+    public function setCode($code)
+    {
+        $this->code = $code;
+
+        return $this;
+    }
+
     public function getDealTypes()
     {
         return $this->dealTypes;
@@ -94,9 +120,10 @@ class Deal implements DomCrawlerInterface
     public function populateFromCrawler(Crawler $node)
     {
         $this->setName($node->attr('name'));
-        $this->setDealCount($node->attr('deal_count'));
+        $this->setDescription($node->attr('description'));
         $this->setUrl($node->attr('url'));
         $this->setSpecific($node->attr('specific'));
+        $this->setDealCount($node->attr('deal_count'));
 
         if ($startOn = \DateTime::createFromFormat('m/d/Y', $node->attr('start_on'))) {
             $this->setStartOn($startOn);
@@ -105,6 +132,8 @@ class Deal implements DomCrawlerInterface
         if ($endOn = \DateTime::createFromFormat('m/d/Y', $node->attr('end_on'))) {
             $this->setEndOn($endOn);
         }
+
+        $this->setCode($node->attr('code'));
 
         return $this;
     }

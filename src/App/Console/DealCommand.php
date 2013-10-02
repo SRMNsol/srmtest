@@ -15,8 +15,8 @@ class DealCommand extends Command
         $this
             ->setName('popshops:deals')
             ->setDescription('Find deals')
-            ->addArgument('catalog', InputArgument::OPTIONAL, 'Specify the catalog name')
-            ->addArgument('deal-type', InputArgument::OPTIONAL, 'Specify the deal type name')
+            ->addOption('catalog', null, InputOption::VALUE_REQUIRED, 'Specify the catalog name')
+            ->addOption('deal-type', null, InputOption::VALUE_REQUIRED, 'Specify the deal type name')
             ->addArgument('keywords', InputArgument::OPTIONAL, 'Specify the product search keywords');
     }
 
@@ -25,7 +25,7 @@ class DealCommand extends Command
         $app = $this->getHelperSet()->get('container')->getContainer();
         $popshops = $app['popshops.client'];
         $catalogs = $app['popshops.catalog_keys'];
-        $catalog = 'all_stores';
+        $catalog = $input->getOption('catalog');
 
         if (!isset($catalogs[$catalog])) {
             $dialog = $this->getHelperSet()->get('dialog');
@@ -46,25 +46,26 @@ class DealCommand extends Command
         $keywords = $input->getArgument('keywords');
         $dealTypes = $popshops->getDealTypes()->filter(function ($dealType) use ($input) {
             $name = $dealType->getName();
-            $type = $input->getArgument('deal-type');
+            $type = $input->getOption('deal-type');
             if (preg_match('/' . preg_quote($type) . '/i', $name)) {
                 return $dealType;
             }
         });
-        $dealType = count($dealTypes) > 0 ? $dealTypes->first() : null;
+        $dealType = count($dealTypes) > 0 ? $dealTypes->current() : null;
 
         $result = $popshops->findDeals($catalogs[$catalog], $dealType, $keywords);
         if (count($result->getDeals()) > 0) {
             $table = $this->getHelperSet()->get('table');
 
-            $table->setHeaders(['Name', 'Type', 'Merchant', 'Ends']);
+            $table->setHeaders(['Name', 'Type', 'Merchant', 'Ends', 'Code']);
             $table->setRows($result->getDeals()->map(function ($deal) {
                 $test = $deal->getDealTypes()->first();
                 return [
                     substr($deal->getName(), 0, 80),
-                    count($deal->getDealTypes()) > 0 ? $deal->getDealTypes()->first()->getName() : null,
+                    count($deal->getDealTypes()) > 0 ? $deal->getDealTypes()->current()->getName() : null,
                     $deal->getMerchant() ? $deal->getMerchant()->getName() : null,
                     $deal->getEndOn() ? $deal->getEndOn()->format('m/d/Y') : null,
+                    $deal->getCode(),
                 ];
             })->toArray());
             $table->render($output);
