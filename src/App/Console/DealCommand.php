@@ -57,13 +57,14 @@ class DealCommand extends Command
         if (count($result->getDeals()) > 0) {
             $table = $this->getHelperSet()->get('table');
 
-            $table->setHeaders(['Name', 'Type', 'Merchant']);
+            $table->setHeaders(['Name', 'Type', 'Merchant', 'Ends']);
             $table->setRows($result->getDeals()->map(function ($deal) {
                 $test = $deal->getDealTypes()->first();
                 return [
-                    substr($deal->getName(), 0, 100),
+                    substr($deal->getName(), 0, 80),
                     count($deal->getDealTypes()) > 0 ? $deal->getDealTypes()->first()->getName() : null,
                     $deal->getMerchant() ? $deal->getMerchant()->getName() : null,
+                    $deal->getEndOn() ? $deal->getEndOn()->format('m/d/Y') : null,
                 ];
             })->toArray());
             $table->render($output);

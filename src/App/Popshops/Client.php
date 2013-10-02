@@ -127,25 +127,22 @@ class Client
             $result->getDealTypes()->set($dealType->getId(), $dealType);
         });
 
-        $dealTypes = $this->getDealTypes();
-        $merchants = $this->getMerchants($catalogKey);
-
-        $crawler->filter('deals deal')->each(function (Crawler $node, $i) use ($dealTypes, $merchants, $result) {
-            $deal = new Deal($node);
-            foreach (explode(',', $node->attr('deal_type_ids')) as $dealTypeId) {
-                if ($dealTypes->containsKey($dealTypeId)) {
-                    $deal->getDealTypes()->add($dealTypes->get($dealTypeId));
-                }
-            }
-            if ($merchants->containsKey($node->attr('merchant_id'))) {
-                $deal->setMerchant($merchants->get($node->attr('merchant_id')));
-            }
-            $result->getDeals()->add($deal);
-        });
-
         $crawler->filter('merchants merchant')->each(function (Crawler $node, $i) use ($result) {
             $merchant = new Merchant($node);
             $result->getMerchants()->set($merchant->getId(), $merchant);
+        });
+
+        $crawler->filter('deals deal')->each(function (Crawler $node, $i) use ($result) {
+            $deal = new Deal($node);
+            foreach (explode(',', $node->attr('deal_type_ids')) as $dealTypeId) {
+                if ($result->getDealTypes()->containsKey($dealTypeId)) {
+                    $deal->getDealTypes()->add($result->getDealTypes()->get($dealTypeId));
+                }
+            }
+            if ($result->getMerchants()->containsKey($node->attr('merchant_id'))) {
+                $deal->setMerchant($result->getMerchants()->get($node->attr('merchant_id')));
+            }
+            $result->getDeals()->add($deal);
         });
 
         $crawler->filter('merchant_types merchant_type')->each(function (Crawler $node, $i) use ($result) {
