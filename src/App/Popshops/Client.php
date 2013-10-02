@@ -33,9 +33,12 @@ class Client
         return new Crawler($response->getBody(true));
     }
 
-    public function getMerchants($catalogKey = null)
+    public function getMerchants($catalogKey = null, $merchantId = null)
     {
-        $crawler = $this->request(['merchants.xml{?catalog_key}', ['catalog_key' => $catalogKey]]);
+        $crawler = $this->request(['merchants.xml{?catalog_key,merchant_id}', [
+            'catalog_key' => $catalogKey,
+            'merchant_id' => $merchantId
+        ]]);
 
         $collection = new MerchantCollection();
 
@@ -52,7 +55,11 @@ class Client
 
     public function findProducts($catalogKey, $keywords)
     {
-        $crawler = $this->request(['products.xml{?catalog_key,keywords}', ['catalog_key' => $catalogKey, 'keywords' => $keywords]]);
+        $crawler = $this->request(['products.xml{?catalog_key,keywords,include_product_groups}', [
+            'catalog_key' => $catalogKey,
+            'keywords' => $keywords,
+            'include_product_groups' => 1,
+        ]]);
 
         $result = new ProductSearchResult();
         $result->setKeywords($crawler->filter('search_results')->attr('keywords'));
@@ -62,16 +69,11 @@ class Client
 
         $crawler->filter('merchants merchant')->each(function (Crawler $node, $i) use ($result) {
             $merchant = new Merchant($node);
-            $result->getMerchants()->set($merchant->getId(), $merchant);
+            $result->getMerchants()->add($merchant);
         });
 
-        $merchants = $this->getMerchants($catalogKey);
-
-        $crawler->filter('products product')->each(function (Crawler $node, $i) use ($merchants, $result) {
+        $crawler->filter('products product')->each(function (Crawler $node, $i) use ($result) {
             $product = new Product($node);
-            if ($merchants->containsKey($node->attr('merchant_id'))) {
-                $product->setMerchant($merchants->get($node->attr('merchant_id')));
-            }
             $result->getProducts()->add($product);
         });
 
@@ -88,12 +90,6 @@ class Client
         $crawler->filter('merchant_types merchant_type')->each(function (Crawler $node, $i) use ($result) {
             $merchantType = new MerchantType($node);
             $result->getMerchantTypes()->add($merchantType);
-        });
-
-        $crawler->filter('suggested_merchants merchant')->each(function (Crawler $node, $i) use ($result) {
-            if ($result->getMerchants()->containsKey($node->attr('id'))) {
-                $result->getSuggestedMerchants()->add($result->getMerchants()->get($node->attr('id')));
-            }
         });
 
         return $result;

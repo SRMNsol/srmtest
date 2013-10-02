@@ -48,12 +48,12 @@ class ProductCommand extends Command
         if (count($result->getProducts()) > 0) {
             $table = $this->getHelperSet()->get('table');
 
-            $table->setHeaders(['Name', 'Merchant', 'Price']);
+            $table->setHeaders(['Name', 'Merchants', 'Price']);
             $table->setRows($result->getProducts()->map(function ($product) {
                 return [
                     substr($product->getName(), 0, 100),
-                    $product->getMerchant() ? $product->getMerchant()->getName() : null,
-                    number_format($product->getMerchantPrice(), 2),
+                    $product->getMerchantCount(),
+                    number_format($product->getLowestPrice(), 2),
                 ];
 
             })->toArray());
@@ -75,12 +75,6 @@ class ProductCommand extends Command
                 $table->setHeaders(['Merchant Type', 'Count']);
                 $table->setRows($result->getMerchantTypes()->map(function ($merchantType) {
                     return [$merchantType->getName(), $merchantType->getProductCount()];
-                })->toArray());
-                $table->render($output);
-
-                $table->setHeaders(['Suggested Merchant', 'Count']);
-                $table->setRows($result->getSuggestedMerchants()->map(function ($merchant) {
-                    return [$merchant->getName(), $merchant->getProductCount()];
                 })->toArray());
                 $table->render($output);
             }

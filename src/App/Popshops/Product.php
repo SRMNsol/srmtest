@@ -6,6 +6,7 @@ use Symfony\Component\DomCrawler\Crawler;
 
 class Product implements DomCrawlerInterface
 {
+    use ProductGroupTrait;
     use MerchantTrait;
     use NetworkTrait;
 
@@ -93,6 +94,11 @@ class Product implements DomCrawlerInterface
         return $this;
     }
 
+    public function getLowestPrice()
+    {
+        return $this->merchantCount > 1 ? $this->minPrice : $this->merchantPrice;
+    }
+
     public function populateFromCrawler(Crawler $node)
     {
         $this->setUrl($node->attr('url'));
@@ -101,6 +107,14 @@ class Product implements DomCrawlerInterface
         $this->setLargeImageUrl($node->attr('large_image_url'));
         $this->setMerchantPrice($node->attr('merchant_price'));
         $this->setRetailPrice($node->attr('retail_price'));
+
+        if ($node->attr('product_group_id')) {
+            $this->setMerchantCount($node->attr('product_group_merchant_count'));
+            $this->setMinPrice($node->attr('product_group_min_price'));
+            $this->setMaxPrice($node->attr('product_group_max_price'));
+        } else {
+            $this->setMerchantCount(1);
+        }
 
         return $this;
     }
