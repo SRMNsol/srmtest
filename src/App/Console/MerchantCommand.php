@@ -15,7 +15,7 @@ class MerchantCommand extends Command
         $this
             ->setName('popshops:merchants')
             ->setDescription('List merchants')
-            ->addArgument('catalog', InputArgument::OPTIONAL, 'Specify the catalog name from the configured catalog in config/global.yml or config/local.yml if exists (popshops.catalog_keys) ');
+            ->addOption('catalog', null, InputOption::VALUE_REQUIRED, 'Specify the catalog name from the configured catalog in config/global.yml or config/local.yml if exists (popshops.catalog_keys) ');
     }
 
     public function execute(InputInterface $input, OutputInterface $output)
@@ -23,7 +23,7 @@ class MerchantCommand extends Command
         $app = $this->getHelperSet()->get('container')->getContainer();
         $popshops = $app['popshops.client'];
         $catalogs = $app['popshops.catalog_keys'];
-        $catalog = $input->getArgument('catalog');
+        $catalog = $input->getOption('catalog');
 
         if (!isset($catalogs[$catalog])) {
             $dialog = $this->getHelperSet()->get('dialog');

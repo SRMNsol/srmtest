@@ -16,7 +16,7 @@ class ProductCommand extends Command
             ->setName('popshops:products')
             ->setDescription('Find products on main catalog')
             ->addArgument('keywords', InputArgument::OPTIONAL, 'Specify the product search keywords')
-            ->addOption('print-filters', null, InputOption::VALUE_NONE, 'If set, will print all available filters' );
+            ->addOption('filters', null, InputOption::VALUE_NONE, 'If set, will print all available filters' );
     }
 
     public function execute(InputInterface $input, OutputInterface $output)
@@ -48,7 +48,7 @@ class ProductCommand extends Command
         if (count($result->getProducts()) > 0) {
             $table = $this->getHelperSet()->get('table');
 
-            $table->setHeaders(['Name', 'Merchants', 'Price']);
+            $table->setHeaders(['Name', 'Merchants', 'Lowest']);
             $table->setRows($result->getProducts()->map(function ($product) {
                 return [
                     substr($product->getName(), 0, 100),
@@ -59,7 +59,7 @@ class ProductCommand extends Command
             })->toArray());
             $table->render($output);
 
-            if ($input->getOption('print-filters')) {
+            if ($input->getOption('filters')) {
                 $table->setHeaders(['Price Min', 'Price Max', 'Count']);
                 $table->setRows($result->getPriceRanges()->map(function ($priceRange) {
                     return [$priceRange->getMinPrice(), $priceRange->getMaxPrice(), $priceRange->getProductCount()];
