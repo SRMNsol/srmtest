@@ -15,7 +15,8 @@ class MerchantCommand extends Command
         $this
             ->setName('popshops:merchants')
             ->setDescription('List merchants')
-            ->addOption('catalog', null, InputOption::VALUE_REQUIRED, 'Specify the catalog name from the configured catalog in config/global.yml or config/local.yml if exists (popshops.catalog_keys) ');
+            ->addOption('catalog', null, InputOption::VALUE_REQUIRED, 'Specify the catalog name from the configured catalog in config/global.yml or config/local.yml if exists (popshops.catalog_keys) ')
+            ->addOption('prefix', null, InputOption::VALUE_REQUIRED, 'Specify the merchants name prefix');
     }
 
     public function execute(InputInterface $input, OutputInterface $output)
@@ -41,7 +42,7 @@ class MerchantCommand extends Command
             );
         }
 
-        $result = $popshops->getMerchants($catalogs[$catalog]);
+        $result = $popshops->getMerchants($catalogs[$catalog])->filterByNamePrefix($input->getOption('prefix'));
         $deals = $popshops->findDeals($catalogs[$catalog]);
 
         if (count($result) > 0) {
@@ -64,7 +65,7 @@ class MerchantCommand extends Command
 
             $output->writeln('Catalog key: ' . $result->getCatalogKey());
             $output->writeln('Total merchants: ' . $result->getTotalCount());
-            $output->writeln('Total deals: ' . array_sum($deals->getMerchants()->map(function ($merchant) {
+            $output->writeln('Total deals: ' . array_sum($result->map(function ($merchant) {
                 return $merchant->getDealCount();
             })->toArray()));
 
