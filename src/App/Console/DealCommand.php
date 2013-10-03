@@ -47,7 +47,7 @@ class DealCommand extends Command
         $dealTypes = $popshops->getDealTypes()->filter(function ($dealType) use ($input) {
             $name = $dealType->getName();
             $type = $input->getOption('deal-type');
-            if (preg_match('/' . preg_quote($type) . '/i', $name)) {
+            if (isset($type) && preg_match('/' . preg_quote($type) . '/i', $name)) {
                 return $dealType;
             }
         });
