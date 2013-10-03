@@ -42,18 +42,13 @@ class MerchantCommand extends Command
             );
         }
 
-        $result = $popshops->getMerchants($catalogs[$catalog])->filterByNamePrefix($input->getOption('prefix'));
-        $deals = $popshops->findDeals($catalogs[$catalog]);
+        $result = $popshops->getMerchantsAndDeals($catalogs[$catalog])->filterByNamePrefix($input->getOption('prefix'));
 
         if (count($result) > 0) {
             $table = $this->getHelperSet()->get('table');
             $table->setHeaders(['Id', 'Merchant', 'Deals']);
 
             foreach ($result as $merchant) {
-                if ($dealMerchant = $deals->getMerchants()->get($merchant->getId())) {
-                    $merchant->setDealCount($dealMerchant->getDealCount());
-                }
-
                 $table->addRow(array(
                     $merchant->getId(),
                     $merchant->getName(),

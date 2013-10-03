@@ -33,11 +33,10 @@ class Client
         return new Crawler($response->getBody(true));
     }
 
-    public function getMerchants($catalogKey = null, $merchantId = null)
+    public function getMerchants($catalogKey = null)
     {
-        $crawler = $this->request(['merchants.xml{?catalog_key,merchant_id}', [
+        $crawler = $this->request(['merchants.xml{?catalog_key}', [
             'catalog_key' => $catalogKey,
-            'merchant_id' => $merchantId
         ]]);
 
         $collection = new MerchantCollection();
@@ -151,5 +150,16 @@ class Client
         });
 
         return $result;
+    }
+
+    public function getMerchantsAndDeals($catalogKey)
+    {
+        $merchants = $this->getMerchants($catalogKey);
+        $this->findDeals($catalogKey)->getMerchants()->forAll(function ($id, $relMerchant) use ($merchants) {
+            $merchants[$relMerchant->getId()]->setDealCount($relMerchant->getDealCount());
+            return true;
+        });
+
+        return $merchants;
     }
 }
