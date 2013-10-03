@@ -42,14 +42,21 @@ class MerchantCommand extends Command
         }
 
         $result = $popshops->getMerchants($catalogs[$catalog]);
+        $deals = $popshops->findDeals($catalogs[$catalog]);
+
         if (count($result) > 0) {
             $table = $this->getHelperSet()->get('table');
-            $table->setHeaders(['Id', 'Merchant']);
+            $table->setHeaders(['Id', 'Merchant', 'Deals']);
 
             foreach ($result as $merchant) {
+                if ($dealMerchant = $deals->getMerchants()->get($merchant->getId())) {
+                    $merchant->setDealCount($dealMerchant->getDealCount());
+                }
+
                 $table->addRow(array(
                     $merchant->getId(),
                     $merchant->getName(),
+                    $merchant->getDealCount(),
                 ));
             }
 
@@ -57,6 +64,9 @@ class MerchantCommand extends Command
 
             $output->writeln('Catalog key: ' . $result->getCatalogKey());
             $output->writeln('Total merchants: ' . $result->getTotalCount());
+            $output->writeln('Total deals: ' . array_sum($deals->getMerchants()->map(function ($merchant) {
+                return $merchant->getDealCount();
+            })->toArray()));
 
             return;
         }
