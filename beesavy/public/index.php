@@ -1,4 +1,9 @@
 <?php
+/**
+ * Integrate composer
+ */
+require __DIR__ . '/../../vendor/autoload.php';
+
 /*
 |---------------------------------------------------------------
 | PHP ERROR REPORTING LEVEL
@@ -23,7 +28,7 @@
 | NO TRAILING SLASH!
 |
 */
-	$system_folder = realpath(__DIR__ . "/../system");
+    $system_folder = realpath(__DIR__ . "/../system");
 
 /*
 |---------------------------------------------------------------
@@ -40,14 +45,13 @@
 | NO TRAILING SLASH!
 |
 */
-	$application_folder = "application";
+    $application_folder = "application";
 
 /*
 |===============================================================
 | END OF USER CONFIGURABLE SETTINGS
 |===============================================================
 */
-
 
 /*
 |---------------------------------------------------------------
@@ -60,17 +64,13 @@
 | full server path.
 |
 */
-if (strpos($system_folder, '/') === FALSE)
-{
-	if (function_exists('realpath') AND @realpath(dirname(__FILE__)) !== FALSE)
-	{
-		$system_folder = realpath(dirname(__FILE__)).'/'.$system_folder;
-	}
-}
-else
-{
-	// Swap directory separators to Unix style for consistency
-	$system_folder = str_replace("\\", "/", $system_folder);
+if (strpos($system_folder, '/') === FALSE) {
+    if (function_exists('realpath') AND @realpath(dirname(__FILE__)) !== FALSE) {
+        $system_folder = realpath(dirname(__FILE__)).'/'.$system_folder;
+    }
+} else {
+    // Swap directory separators to Unix style for consistency
+    $system_folder = str_replace("\\", "/", $system_folder);
 }
 
 /*
@@ -90,18 +90,14 @@ define('SELF', pathinfo(__FILE__, PATHINFO_BASENAME));
 define('FCPATH', str_replace(SELF, '', __FILE__));
 define('BASEPATH', $system_folder.'/');
 
-if (is_dir($application_folder))
-{
-	define('APPPATH', $application_folder.'/');
-}
-else
-{
-	if ($application_folder == '')
-	{
-		$application_folder = 'application';
-	}
+if (is_dir($application_folder)) {
+    define('APPPATH', $application_folder.'/');
+} else {
+    if ($application_folder == '') {
+        $application_folder = 'application';
+    }
 
-	define('APPPATH', BASEPATH.$application_folder.'/');
+    define('APPPATH', BASEPATH.$application_folder.'/');
 }
 
 /*
