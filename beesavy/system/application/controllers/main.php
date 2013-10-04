@@ -40,14 +40,16 @@ class Main extends Controller
         $data['coupons'] = $coupon;
         $data['home'] = $home['vars'];
         $data['referral'] = $this->input->get('referral');
-        if(!$data['referral'])
+        if(!$data['referral']) {
             $data['referral'] = $this->db_session->userdata('referral');
+        }
         if (isset($data['id'])) {
-        $data['user_id'] = $data['id'];
-        unset($data['id']);
+            $data['user_id'] = $data['id'];
+            unset($data['id']);
         }
         $this->parser->parse($home['page'], $data);
     }
+
     public function test()
     {
         $id = 86558;
@@ -62,6 +64,7 @@ class Main extends Controller
         $data['deals'] = $deals;
         $this->parser->parse('/home/deal', $data);
     }
+
     public function signin()
     {
         $data = $this->blocks->getBlocks();
@@ -77,13 +80,16 @@ class Main extends Controller
 
         $this->parser->parse('/home/signin', $data);
     }
+
     public function joinnow()
     {
         $data = $this->blocks->getBlocks();
         $data['email'] = $this->input->get('email');
         $data['referral'] = $this->input->get('referral');
-        if(!$data['referral'])
+        if(!$data['referral']) {
             $data['referral'] = $this->db_session->userdata('referral');
+        }
+
         if ($this->input->get('errors')) {
             $data['codes'] = explode(",",$this->input->get('errors'));
         } else {
@@ -92,6 +98,7 @@ class Main extends Controller
         $data['errors'] = $this->code->get_errors($data['codes']);
         $this->parser->parse('/home/joinnow', $data);
     }
+
     public function forgot($success= False, $email = "")
     {
         if ($this->user->login_status()) {
@@ -108,8 +115,9 @@ class Main extends Controller
         }
         $data['errors'] = $this->code->get_errors($data['codes']);
         $data['referral'] = $this->input->get('referral');
-        if(!$data['referral'])
+        if(!$data['referral']) {
             $data['referral'] = $this->db_session->userdata('referral');
+        }
         $this->parser->parse('/home/forgot', $data);
     }
 }
