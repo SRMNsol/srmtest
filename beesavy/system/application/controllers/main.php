@@ -10,7 +10,7 @@ class Main extends Controller
         parent::Controller();
         $this->load->library('beesavy');
         $this->load->model('user');
-        $this->load->helper('silex');
+        $this->load->helper('bridge');
         $this->container = silex();
     }
 
@@ -20,7 +20,7 @@ class Main extends Controller
         $home = $this->user->get_home(0);
         $num_stores = $home['vars']['stores'];
         $num_deals = $home['vars']['deals'];
-        $store = $this->cache->library('beesavy', 'get_hot_stores_rand', array($num_stores), 3600);
+        //$store = $this->cache->library('beesavy', 'get_hot_stores_rand', array($num_stores), 3600);
         $deals = $this->cache->library('beesavy', 'get_daily_rand', array($num_deals), 1);
         $this->beesavy->abreviate($deals, 'name', 25);
         $coupon = $this->cache->library('beesavy', 'get_hot_coupons', array(5), 3600);
@@ -36,7 +36,12 @@ class Main extends Controller
         }
         $data = array_merge($home['vars'], $data);
         $this->beesavy->abreviate($coupon, 'name', 20);
-        $data['stores'] = $store['stores'];
+
+        $client = $this->container['popshops.client'];
+        $catalogKey = $this->container['popshops.catalog_keys']['all_stores'];
+
+        $data['stores'] = random_slice(serialize_merchants($client->getMerchantsAndDeals($catalogKey)), $num_stores);
+        //$data['stores'] = $store['stores'];
         $data['coupons'] = $coupon;
         $data['home'] = $home['vars'];
         $data['referral'] = $this->input->get('referral');
