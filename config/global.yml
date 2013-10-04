@@ -1,14 +1,17 @@
 # app
 debug: false
+
+# resources
 template_dir: %root_dir%/views
-log_dir: %root_dir%/data/log
-cache_dir: %root_dir%/data/cache
-assets_dir: %root_dir%/assets
-web_dir: %root_dir%/web
+log_dir:      %root_dir%/data/log
+cache_dir:    %root_dir%/data/cache
+assets_dir:   %root_dir%/assets
+web_dir:      %root_dir%/web
+twbs_dir:     %root_dir%/vendor/twbs/bootstrap
 
 # popshops
 popshops.public_key: 7otijzbtj2q6uv4hhlwcz58ua
-popshops.default_catalog_key: 6jp9a505fv2kpxvaenimr8m0j
-
-# resources
-twbs_dir: %root_dir%/vendor/twbs/bootstrap
+popshops.catalog_keys:
+  all_stores:  74762wn6w9utgw6khg2ta92gz
+  hot_coupons: b0oe38oleq6ginsuaf78sj258
+  hot_deals:   3lmudy8xyefrwgs3u67li8uft

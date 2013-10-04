@@ -14,28 +14,56 @@ class MerchantCommand extends Command
     {
         $this
             ->setName('popshops:merchants')
-            ->setDescription('List merchants');
+            ->setDescription('List merchants')
+            ->addOption('catalog', null, InputOption::VALUE_REQUIRED, 'Specify the catalog name from the configured catalog in config/global.yml or config/local.yml if exists (popshops.catalog_keys) ')
+            ->addOption('prefix', null, InputOption::VALUE_REQUIRED, 'Specify the merchants name prefix');
     }
 
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $app = $this->getHelperSet()->get('container')->getContainer();
         $popshops = $app['popshops.client'];
-        $catalogKey = $app['popshops.default_catalog_key'];
+        $catalogs = $app['popshops.catalog_keys'];
+        $catalog = $input->getOption('catalog');
 
-        $merchants = $popshops->getMerchants($catalogKey);
-        if (count($merchants) > 0) {
+        if (!isset($catalogs[$catalog])) {
+            $dialog = $this->getHelperSet()->get('dialog');
+            $catalog = $dialog->askAndValidate(
+                $output,
+                'Please specify the catalog (' . implode(', ', array_keys($catalogs)) . '): ',
+                function ($answer) use ($catalogs) {
+                    if (!isset($catalogs[$answer])) {
+                        throw new \RunTimeException('Invalid catalog name');
+                    }
+
+                    return $answer;
+                },
+                3
+            );
+        }
+
+        $result = $popshops->getMerchantsAndDeals($catalogs[$catalog])->filterByNamePrefix($input->getOption('prefix'));
+
+        if (count($result) > 0) {
             $table = $this->getHelperSet()->get('table');
-            $table->setHeaders(array('Id', 'Merchant'));
+            $table->setHeaders(['Id', 'Merchant', 'Deals']);
 
-            foreach ($merchants as $merchant) {
+            foreach ($result as $merchant) {
                 $table->addRow(array(
                     $merchant->getId(),
                     $merchant->getName(),
+                    $merchant->getDealCount(),
                 ));
             }
 
             $table->render($output);
+
+            $output->writeln('Catalog key: ' . $result->getCatalogKey());
+            $output->writeln('Total merchants: ' . $result->getTotalCount());
+            $output->writeln('Total deals: ' . array_sum($result->map(function ($merchant) {
+                return $merchant->getDealCount();
+            })->toArray()));
+
             return;
         }
 
