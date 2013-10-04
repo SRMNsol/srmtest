@@ -55,7 +55,7 @@ function serialize_deals(\App\Popshops\DealCollection $deals)
             'merchant_name' => $deal->getMerchant()->getName(),
             'merchant_logo' => $deal->getMerchant()->getLogoUrl(),
             'end_date' => $deal->getEndOn()->format('m/d/Y'),
-            'restrictions' => null,
+            'restrictions' => $deal->getDescription(),
             'code_prefix' => 'Coupon: ',
             'cashback_text' => '0%',
             'linkstore' => '/stores/details/' . $deal->getMerchant()->getId(),
