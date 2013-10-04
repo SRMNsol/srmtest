@@ -60,6 +60,7 @@ function serialize_deals(\App\Popshops\DealCollection $deals)
             'cashback_text' => '0%',
             'linkstore' => '/stores/details/' . $deal->getMerchant()->getId(),
             'name-abrv' => truncate_str($deal->getName()),
+            'exp_date_short' => $deal->getEndOn()->diff(new DateTime())->format('Expires in %a days'),
         ];
     })->toArray());
 }

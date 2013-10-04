@@ -11,27 +11,17 @@ class Main extends Controller
         $this->load->library('beesavy');
         $this->load->model('user');
         $this->load->helper('bridge');
+        $this->load->helper('escape');
         $this->container = silex();
     }
 
     public function index()
     {
-        $hot_product = array();
         $home = $this->user->get_home(0);
         $num_stores = $home['vars']['stores'];
         $num_deals = $home['vars']['deals'];
-        $deals = $this->cache->library('beesavy', 'get_daily_rand', array($num_deals), 1);
-        $this->beesavy->abreviate($deals, 'name', 25);
-        $deal_keys = array('deal_first', 'deal_second', 'deal_third');
-        $i = 0;
+
         $data = $this->blocks->getBlocks();
-        foreach ($deal_keys as $index=>$key) {
-            if (array_key_exists($index, $deals)) {
-                $data[$key] = array($deals[$index]);
-            } else {
-                $data[$key] = array();
-            }
-        }
         $data = array_merge($home['vars'], $data);
 
         $client = $this->container['popshops.client'];
@@ -39,6 +29,7 @@ class Main extends Controller
 
         $data['stores'] = random_slice(serialize_merchants($client->getMerchantsAndDeals($catalogs['all_stores'])), $num_stores);
         $data['coupons'] = random_slice(serialize_deals($client->findDeals($catalogs['hot_coupons'])->getDeals()), 5);
+        $data['deals'] = random_slice(serialize_deals($client->findDeals($catalogs['hot_deals'])->getDeals()), 2);
         $data['home'] = $home['vars'];
         $data['referral'] = $this->input->get('referral');
         if(!$data['referral']) {

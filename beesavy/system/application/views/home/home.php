@@ -6,7 +6,7 @@
 <script>
 </script>
 <div id="container">
-<!-- Header -->      
+<!-- Header -->
 {banner}
 <!-- /Header -->
 <!-- Navigation bar -->
@@ -26,16 +26,16 @@
             <h3>Find the best price on any product, get cash back from over 1,500 trusted online retailers, and find exclusive money-saving coupons at BeeSavy!	</h3>
             </div>
             <div class="slide-link">
-              <div class="slide-LearnMore"><a href="/info/lm_overview" class="slide-LearnMore">Learn More</a></div> 
+              <div class="slide-LearnMore"><a href="/info/lm_overview" class="slide-LearnMore">Learn More</a></div>
               <div class="or">or</div>
               <div class="slide-signup"><div class="SlideSignUp"><a href="/main/joinnow" class="BtnSlideSignUpBg BtnSlideSignUp"></a></div></div>
-            </div>   
+            </div>
           </div>
-        </div>               
+        </div>
           </div>
 		</div>
-        
-        
+
+
             <div class="panel">
         <div class="panel-wrapper">
           <div class="slide-container">
@@ -46,15 +46,15 @@
             <h3>Stores pay BeeSavy a sales commission for sending shoppers their way, and BeeSavy uses the commission to pay you cash back. We just need an email address so we can notify you when your cash back has been credited.</h3>
             </div>
             <div class="slide-link">
-              <div class="slide-LearnMore"><a href="/info/lm_cashback" class="slide-LearnMore">Learn More</a></div> 
+              <div class="slide-LearnMore"><a href="/info/lm_cashback" class="slide-LearnMore">Learn More</a></div>
               <div class="or">or</div>
               <div class="slide-signup"><div class="SlideSignUp"><a href="/main/joinnow" class="BtnSlideSignUpBg BtnSlideSignUp"></a></div></div>
-            </div>   
+            </div>
           </div>
         </div>
             </div>
           </div>
-            
+
             <div class="panel">
         <div class="panel-wrapper">
         <div class="slide-container">
@@ -65,16 +65,16 @@
             <h3>With one search, BeeSavy compares prices from trusted stores, finds you the best coupons, and gets you cash back!</h3>
             </div>
             <div class="slide-link">
-              <div class="slide-LearnMore"><a href="/info/lm_compare" class="slide-LearnMore">Learn More</a></div> 
+              <div class="slide-LearnMore"><a href="/info/lm_compare" class="slide-LearnMore">Learn More</a></div>
               <div class="or">or</div>
               <div class="slide-signup"><div class="SlideSignUp"><a href="/main/joinnow" class="BtnSlideSignUpBg BtnSlideSignUp"></a></div></div>
-            </div>   
+            </div>
           </div>
           </div>
         </div>
             </div>
-            
-            
+
+
             <div class="panel">
         <div class="panel-wrapper">
         <div class="slide-container">
@@ -85,16 +85,16 @@
             <h3>BeeSavy not only scours the web for the best coupons, we also work directly with retailers to get you exclusive coupons you won't find anywhere else.</h3>
             </div>
             <div class="slide-link">
-              <div class="slide-LearnMore"><a href="/info/lm_coupon" class="slide-LearnMore">Learn More</a></div> 
+              <div class="slide-LearnMore"><a href="/info/lm_coupon" class="slide-LearnMore">Learn More</a></div>
               <div class="or">or</div>
               <div class="slide-signup"><div class="SlideSignUp"><a href="/main/joinnow" class="BtnSlideSignUpBg BtnSlideSignUp"></a></div></div>
-            </div>   
+            </div>
           </div>
           </div>
         </div>
             </div>
-            
-            
+
+
             <div class="panel">
         <div class="panel-wrapper">
         <div class="slide-container">
@@ -105,16 +105,16 @@
             <h3>Other sites pay you a small, one-time commission for referring friends.  BeeSavy pays you great commission on all of your referrals forever.  We even pay you on all of their referrals up to seven (7) levels deep!</h3>
             </div>
             <div class="slide-link">
-              <div class="slide-LearnMore"><a href="/info/lm_referral" class="slide-LearnMore">Learn More</a></div> 
+              <div class="slide-LearnMore"><a href="/info/lm_referral" class="slide-LearnMore">Learn More</a></div>
               <div class="or">or</div>
               <div class="slide-signup"><div class="SlideSignUp"><a href="/main/joinnow" class="BtnSlideSignUpBg BtnSlideSignUp"></a></div></div>
-            </div>   
+            </div>
           </div>
           </div>
         </div>
             </div>
-            
-            
+
+
             <div class="panel">
         <div class="panel-wrapper">
         <div class="slide-container">
@@ -134,19 +134,19 @@
 
                 <tr><td><font size=2>* Required Field </font></td><td valign=top align=right><div class="StartSaving"><div class="BtnStartSavingBg BtnStartSaving"><INPUT type="submit" name="" value=""/></div></div></td></tr>
                 </table>
-                
-                </dd></dl></form>	
-            </div>	
+
+                </dd></dl></form>
+            </div>
             <div style="float:left;margin-top:15px;width:430px;border:0px solid #00F;margin-left:-60px;"><div style="float:left;margin-top:-8px;"><img src="images/lock.gif" alt="** PLEASE DESCRIBE THIS IMAGE **" /></div>
             <div>BeeSavy will always be free and your E-mail address will never be shared with anyone</div></div>
             </div>
           </div>
           </div>
         </div>
-            </div>          
-            
-            
-            
+            </div>
+
+
+
         </div>
         <div id="coda-nav-1" class="coda-nav" style="width: 930px;">
             <ul style="width: 930px;">
@@ -178,10 +178,10 @@
         </div>
     </div>
 </div>
-<!-- /Slide Nav -->       
-              
-               		
-<!-- Content -->               
+<!-- /Slide Nav -->
+
+
+<!-- Content -->
  <div style="width:930px;height:330px;margin-top:0px;margin-left:0px;border:0px solid #00F;float:left;">
     <!-- Daily Deals -->
     <div id="hot-products-container" class="home-daily-deals">
@@ -190,99 +190,76 @@
       <div id="hot-products" class="biggerTitle">Daily Deals</div>
       <div class="seeAll"><a href="/main/deal">See All Deals »</a></div>
       </div>
-<?php if(empty($deal_first)){
-    echo "<p style='font-size:1.5em;text-align:center;padding-top:20px;'>Currently gathering daily deals</p>";
-} else { ?> 
-      {deal_first}
-      <div class="HomeDailyDeals">
-        <div class="ProductName"><a class="title" href="{link}" onclick="window.open(this.href); return false;" rel="nofollow"> <strong>{merchant_name}</strong> </a> </div>
-<div class="DealsCt">
-<div class="DealsLogo"><img src="{merchant_thumb}" 
-onload="
-        var width=100;
-    var height=34; 
-    var ratio= Math.min(width/this.width, height/this.height);
-    var nwidth=ratio*this.width; 
-    var nheight=ratio*this.height; 
-    this.width=nwidth; 
-    this.height=nheight;" 
- onerror="this.src='/images/no-image-100px.gif'"
-alt="** PLEASE DESCRIBE THIS IMAGE **"/>
-</div>
-<div class="DealsText">
-    <p><a class="title" href="{link}">{short_name}</a></p>
-</div>
-</div>
-<DIV class="savings-container">
-    <DIV class=percent>{cashback_text}</DIV>
-    <DIV class=savings>Back</DIV>
-</DIV>
-<div style="clear:both;line-height:1px;">&nbsp;</div>
-<div class="expdate">{exp_date_short}</div>{code}
-<div style="clear:both;line-height:1px;">&nbsp;</div>
-</div>
-      {/deal_first}
-		<div style="background:#c7c7c7;height:2px;width:200px;margin-left:55px;margin-top:5px;margin-bottom:5px;"></div>
-	  {deal_second}
-      <div class="HomeDailyDeals">
-      
-        <div class="ProductName"><a class="title" href="{link}" onclick="window.open(this.href); return false;" rel="nofollow"> <strong>{merchant_name}</strong> </a> </div>
-<div class="DealsCt">
-<div class="DealsLogo"><img src="{merchant_thumb}" 
-onload="
-        var width=100;
-    var height=32; 
-    var ratio= Math.min(width/this.width, height/this.height);
-    var nwidth=ratio*this.width; 
-    var nheight=ratio*this.height; 
-    this.width=nwidth; 
-    this.height=nheight;" 
-         onerror="this.src='/images/no-image-100px.gif'"
-alt="** PLEASE DESCRIBE THIS IMAGE **"/>
-</div>
-<div class="DealsText">
-    <p><a class="title" href="{link}">{short_name}</a></p>
-</div>
-</div>
-<DIV class="savings-container">
-    <DIV class=percent>{cashback_text}</DIV>
-    <div class=savings>back</div>
-</DIV>
-<div style="clear:both;line-height:1px;">&nbsp;</div>
-<div class="expdate">{exp_date_short}</div>{code}
-<div style="clear:both;line-height:1px;">&nbsp;</div>
-</div>
-      {/deal_second}
-<? } ?>
-      
+    <?php if (empty($deals)) : ?>
+    <p style='font-size:1.5em;text-align:center;padding-top:20px;'>Currently gathering daily deals</p>
+    <?php else : ?>
+        <?php foreach ($deals as $deal) : ?>
+        <div class="HomeDailyDeals">
+            <div class="ProductName"><a class="title" href="<?php echo escape($deal['link'], 'html_attr') ?>" onclick="window.open(this.href); return false;" rel="nofollow"> <strong><?php echo escape($deal['merchant_name']) ?></strong> </a></div>
+            <div class="DealsCt">
+                <div class="DealsLogo"><img
+                    src="<?php echo escape($deal['merchant_logo']) ?>"
+                    onload="
+                        var width=100;
+                        var height=34;
+                        var ratio= Math.min(width/this.width, height/this.height);
+                        var nwidth=ratio*this.width;
+                        var nheight=ratio*this.height;
+                        this.width=nwidth;
+                        this.height=nheight;
+                    "
+                    onerror="this.src='/images/no-image-100px.gif'"
+                    alt="** PLEASE DESCRIBE THIS IMAGE **"
+                />
+            </div>
+
+            <div class="DealsText">
+                <p><a class="title" href="<?php echo escape($deal['link'], 'html_attr') ?>"><?php echo escape($deal['name-abrv']) ?></a></p>
+            </div>
+        </div>
+        <div class="savings-container">
+            <div class=percent><?php echo escape($deal['cashback_text']) ?></div>
+                <div class=savings>Back</div>
+            </div>
+            <div style="clear:both;line-height:1px;">&nbsp;</div>
+            <div class="expdate"><?php echo escape($deal['exp_date_short']) ?></div>
+            <?php if ($deal['code']) : ?>
+            <div class="btnCouponCode"><a class="BtnBlackTxt" href="<?php echo escape($deal['link'], 'html_attr') ?>">Coupon: <?php echo escape($deal['code']) ?></a></div>
+            <?php endif ?>
+            <div style="clear:both;line-height:1px;">&nbsp;</div>
+        </div>
+        <div style="background:#c7c7c7;height:2px;width:200px;margin-left:55px;margin-top:5px;margin-bottom:5px;"></div>
+        <?php endforeach ?>
+    <?php endif ?>
+
     </div>
     <!-- /Daily Deals -->
-   
+
     <!-- Top Stores -->
     <div id="top-stores-container">
        <div style="width:100%;height:35px;">
        <div id="top-stores" class="h1">Top Stores</div>
 	   <div class="seeAll"><a href="/stores/search">See All Stores »</a></div>
        </div>
-       {stores}	
+       {stores}
  	      <div class="store">
-                  <div class="logo"><a href="/stores/details/{id}"><img class="cdn-image" 
+                  <div class="logo"><a href="/stores/details/{id}"><img class="cdn-image"
 onload="
         var width=100;
-    var height=32; 
+    var height=32;
     var ratio= Math.min(width/this.width, height/this.height);
-    var nwidth=ratio*this.width; 
-    var nheight=ratio*this.height; 
-    this.width=nwidth; 
-    this.height=nheight;" 
+    var nwidth=ratio*this.width;
+    var nheight=ratio*this.height;
+    this.width=nwidth;
+    this.height=nheight;"
          onerror="this.src='/images/no-image-100px.gif'"
 src="{logo_thumb}" alt="{name}"/></a></div>
 		          <div class="cashback"><a href="/stores/details/{id}">{cashback_text} Cash Back</a></div>
 	          </div>
-	   {/stores}    	
+	   {/stores}
     </div>
     <!-- /Top stores -->
-    
+
     <!-- Hot Coupons -->
     <div id="hot-coupons-container">
     	<div style="width:100%;height:35px;">
@@ -294,15 +271,15 @@ src="{logo_thumb}" alt="{name}"/></a></div>
             <div class="descimg"><a href="{linkstore}"><img src="{logo_thumb}"
 onload="
         var width=100;
-    var height=34; 
+    var height=34;
     var ratio= Math.min(width/this.width, height/this.height);
-    var nwidth=ratio*this.width; 
-    var nheight=ratio*this.height; 
-    this.width=nwidth; 
-    this.height=nheight;" 
+    var nwidth=ratio*this.width;
+    var nheight=ratio*this.height;
+    this.width=nwidth;
+    this.height=nheight;"
  onerror="this.src='/images/no-image-100px.gif'"
  alt="** PLEASE DESCRIBE THIS IMAGE **"/></a></div>
-	        <div class="desc"> <a class="title" href="{linkstore}" rel="nofollow"> {name-abrv} </a> <br/>{code_prefix}<font class="code" color=black ref=""  rel="nofollow">{code}</font> 
+	        <div class="desc"> <a class="title" href="{linkstore}" rel="nofollow"> {name-abrv} </a> <br/>{code_prefix}<font class="code" color=black ref=""  rel="nofollow">{code}</font>
 			</div>
 	        <div style="clear: both;"></div>
       </div>
@@ -311,7 +288,7 @@ onload="
 </div>
 </div>
     <!-- /Hot Couppons -->
-<!-- /Content -->  
+<!-- /Content -->
     <script type="text/javascript">
 $(document).ready(function() {
 	    $("div.couponList").mouseover(function () {
@@ -328,7 +305,7 @@ $(document).ready(function() {
     	var element = $(this);
 		element.find('.ShopCashBack-Bt').addClass('BtnSCBOrangeBg').removeClass('BtnSCBOrangeRBg');
     });
-		
+
     $("div.ShopByStore").mouseover(function () {
         var element = $(this);
 		element.find('.nav-ShopByStore-Bt').addClass('BtnSBSOrangeRBg').removeClass('BtnSBSOrangeBg');
@@ -336,7 +313,7 @@ $(document).ready(function() {
     	var element = $(this);
 		element.find('.nav-ShopByStore-Bt').addClass('BtnSBSOrangeBg').removeClass('BtnSBSOrangeRBg');
     });
-	
+
 	    $("div.FindCoupons").mouseover(function () {
         var element = $(this);
 		element.find('.nav-FindCoupons-Bt').addClass('BtnFCOrangeRBg').removeClass('BtnFCOrangeBg');
@@ -344,8 +321,8 @@ $(document).ready(function() {
     	var element = $(this);
 		element.find('.nav-FindCoupons-Bt').addClass('BtnFCOrangeBg').removeClass('BtnFCOrangeRBg');
     });
-	
-	
+
+
 
         $("div.LogIn").mouseover(function () {
         var element = $(this);
@@ -354,7 +331,7 @@ $(document).ready(function() {
         var element = $(this);
         element.find('.BtnLogInRBg').addClass('BtnLogInBg').removeClass('BtnLogInRBg');
     });
-    
+
         $("div.SlideSignUp").mouseover(function () {
         var element = $(this);
         element.find('.BtnSlideSignUp').addClass('BtnSlideSignUpRBg').removeClass('BtnSlideSignUpBg');
@@ -362,7 +339,7 @@ $(document).ready(function() {
         var element = $(this);
         element.find('.BtnSlideSignUpRBg').addClass('BtnSlideSignUpBg').removeClass('BtnSlideSignUpRBg');
     });
-    
+
             $("div.StartSaving").mouseover(function () {
         var element = $(this);
         element.find('.BtnStartSaving').addClass('BtnStartSavingRBg').removeClass('BtnStartSavingBg');
@@ -389,11 +366,11 @@ $(document).ready(function() {
     });
 });
 </script>
-<!-- footer -->  
-<!-- /Content -->  
-<!-- footer -->  
+<!-- footer -->
+<!-- /Content -->
+<!-- footer -->
     <div style="clear: both;"></div>
-    
+
 	<div id="ftr" >
     <p id="links" style="height: 20px; line-height: 20px;">Copyright &copy; 2011 - <?php echo date('Y'); ?> BeeSavy, LLC. &nbsp;All Rights Reserved. &nbsp;<a href="/stores/storelist">All Stores</a> | <a href="/info/terms">Terms of Service</a> | <a href="/info/privacy">Privacy Policy</a> | <a href="/info/contact">Contact Us</a></p>
 		<a href="http://twitter.com/beesavy" target="_blank" class="socialMedia twitter">Follow Us On Twitter</a>
