@@ -17,7 +17,7 @@ function silex()
 /**
  * Serialize merchants into array
  */
-function serialize_merchants(\App\Popshops\MerchantCollection $merchants)
+function serialize_merchants(\Doctrine\Common\Collections\Collection $merchants)
 {
     return array_values($merchants->map(function (\App\Popshops\Merchant $merchant) {
         return [
@@ -38,7 +38,7 @@ function serialize_merchants(\App\Popshops\MerchantCollection $merchants)
 /**
  * Serialize deals into array
  */
-function serialize_deals(\App\Popshops\DealCollection $deals)
+function serialize_deals(\Doctrine\Common\Collections\Collection $deals)
 {
     return array_values($deals->map(function (\App\Popshops\Deal $deal) {
         return [
@@ -61,6 +61,7 @@ function serialize_deals(\App\Popshops\DealCollection $deals)
             'linkstore' => '/stores/details/' . $deal->getMerchant()->getId(),
             'name-abrv' => truncate_str($deal->getName()),
             'exp_date_short' => $deal->getEndOn()->diff(new DateTime())->format('Expires in %a days'),
+            'expiration' => $deal->getEndOn()->format('M d, Y'),
         ];
     })->toArray());
 }
