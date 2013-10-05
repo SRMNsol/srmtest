@@ -44,4 +44,13 @@ class MerchantCollection extends ArrayCollection
             }
         });
     }
+
+    public function slice($offset, $length = null)
+    {
+        $collection = new static(parent::slice($offset, $length));
+        $collection->setCatalogKey($this->catalogKey);
+        $collection->setTotalCount($collection->count());
+
+        return $collection;
+    }
 }

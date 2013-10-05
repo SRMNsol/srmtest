@@ -26,6 +26,7 @@ function serialize_merchants(\Doctrine\Common\Collections\Collection $merchants)
             'logo' => $merchant->getLogoUrl(),
             'logo_thumb' => $merchant->getLogoUrl(),
             'description' => '',
+            'description-abrv' => '',
             'cashback_percent' => 0,
             'cashback_flat' => 0,
             'cashback_text' => '0%',
