@@ -50,10 +50,10 @@ class Main extends Controller
 
     public function deal()
     {
-        $deals = $this->beesavy->get_daily_rand(24);
-        $this->beesavy->abreviate($deals, 'name', 25);
+        $client = $this->container['popshops.client'];
+        $catalogs = $this->container['popshops.catalog_keys'];
         $data = $this->blocks->getBlocks();
-        $data['deals'] = $deals;
+        $data['deals'] = random_slice(serialize_deals($client->findDeals($catalogs['hot_deals'])->getDeals()), 24);
         $this->parser->parse('/home/deal', $data);
     }
 
