@@ -37,6 +37,19 @@ function serialize_merchants(\Doctrine\Common\Collections\Collection $merchants)
 }
 
 /**
+ * serialize merchant types to array
+ */
+function serialize_merchant_types(Doctrine\Common\Collections\Collection $merchantTypes)
+{
+    return array_values($merchantTypes->map(function (App\Popshops\MerchantType $merchantType) {
+        return [
+            'id' => $merchantType->getId(),
+            'name' => $merchantType->getName(),
+        ];
+    })->toArray());
+}
+
+/**
  * Serialize deals into array
  */
 function serialize_deals(\Doctrine\Common\Collections\Collection $deals)

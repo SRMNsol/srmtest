@@ -10,76 +10,23 @@
 <!-- /Navigation bar -->
 
 <!-- content -->
-		<!-- page Title -->
-          <div class="BGNoCol">
-		<div id="pageTitle" >
-		<div id="pageTitleLeft"></div>
-		<h1>Cash Back Stores</h1>
-		<div id="pageTitleRight"></div>
+    <!-- page Title -->
+    <div class="BGNoCol">
+        <div id="pageTitle" >
+            <div id="pageTitleLeft"></div>
+            <h1>Cash Back Stores</h1>
+            <div id="pageTitleRight"></div>
             <div id="titleNav" class="small">
             <a class="pad" href="/stores/search">ALL</a>
-<?php if($category){?>
-                <a href="/stores/search?q=0">#</a>
-                <a class="uppercase" href="/stores/search?q=a&category={category}">a</a>
-                <a class="uppercase" href="/stores/search?q=b&category={category}">b</a>
-                <a class="uppercase" href="/stores/search?q=c&category={category}">c</a>
-                <a class="uppercase" href="/stores/search?q=d&category={category}">d</a>
-                <a class="uppercase" href="/stores/search?q=e&category={category}">e</a>
-                <a class="uppercase" href="/stores/search?q=f&category={category}">f</a>
-                <a class="uppercase" href="/stores/search?q=g&category={category}">g</a>
-                <a class="uppercase" href="/stores/search?q=h&category={category}">h</a>
-                <a class="uppercase" href="/stores/search?q=i&category={category}">i</a>
-                <a class="uppercase" href="/stores/search?q=j&category={category}">j</a>
-                <a class="uppercase" href="/stores/search?q=k&category={category}">k</a>
-                <a class="uppercase" href="/stores/search?q=l&category={category}">l</a>
-                <a class="uppercase" href="/stores/search?q=m&category={category}">m</a>
-                <a class="uppercase" href="/stores/search?q=n&category={category}">n</a>
-                <a class="uppercase" href="/stores/search?q=o&category={category}">o</a>
-                <a class="uppercase" href="/stores/search?q=p&category={category}">p</a>
-                <a class="uppercase" href="/stores/search?q=q&category={category}">q</a>
-                <a class="uppercase" href="/stores/search?q=r&category={category}">r</a>
-                <a class="uppercase" href="/stores/search?q=s&category={category}">s</a>
-                <a class="uppercase" href="/stores/search?q=t&category={category}">t</a>
-                <a class="uppercase" href="/stores/search?q=u&category={category}">u</a>
-                <a class="uppercase" href="/stores/search?q=v&category={category}">v</a>
-                <a class="uppercase" href="/stores/search?q=w&category={category}">w</a>
-                <a class="uppercase" href="/stores/search?q=x&category={category}">x</a>
-                <a class="uppercase" href="/stores/search?q=y&category={category}">y</a>
-                <a class="uppercase" href="/stores/search?q=z&category={category}">z</a>
-<? }else{ ?>
-                <a href="/stores/search?q=0">#</a>
-                <a class="uppercase" href="/stores/search?q=a">a</a>
-                <a class="uppercase" href="/stores/search?q=b">b</a>
-                <a class="uppercase" href="/stores/search?q=c">c</a>
-                <a class="uppercase" href="/stores/search?q=d">d</a>
-                <a class="uppercase" href="/stores/search?q=e">e</a>
-                <a class="uppercase" href="/stores/search?q=f">f</a>
-                <a class="uppercase" href="/stores/search?q=g">g</a>
-                <a class="uppercase" href="/stores/search?q=h">h</a>
-                <a class="uppercase" href="/stores/search?q=i">i</a>
-                <a class="uppercase" href="/stores/search?q=j">j</a>
-                <a class="uppercase" href="/stores/search?q=k">k</a>
-                <a class="uppercase" href="/stores/search?q=l">l</a>
-                <a class="uppercase" href="/stores/search?q=m">m</a>
-                <a class="uppercase" href="/stores/search?q=n">n</a>
-                <a class="uppercase" href="/stores/search?q=o">o</a>
-                <a class="uppercase" href="/stores/search?q=p">p</a>
-                <a class="uppercase" href="/stores/search?q=q">q</a>
-                <a class="uppercase" href="/stores/search?q=r">r</a>
-                <a class="uppercase" href="/stores/search?q=s">s</a>
-                <a class="uppercase" href="/stores/search?q=t">t</a>
-                <a class="uppercase" href="/stores/search?q=u">u</a>
-                <a class="uppercase" href="/stores/search?q=v">v</a>
-                <a class="uppercase" href="/stores/search?q=w">w</a>
-                <a class="uppercase" href="/stores/search?q=x">x</a>
-                <a class="uppercase" href="/stores/search?q=y">y</a>
-                <a class="uppercase" href="/stores/search?q=z">z</a>
-<? } ?>
-
+            <a href="/stores/search?q=0">#</a>
+            <?php for ($ord = ord('a'); $ord <= ord('z'); $ord++) : ?>
+            <?php $chr = chr($ord) ?>
+            <?php $url = "/stores/search/?q=$chr" . ($category ? "&category=$category" : "") ?>
+            <a class="uppercase" href="<?php echo escape($url, 'html_attr') ?>"><?php echo $chr ?></a>
+            <?php endfor ?>
+        </div>
     </div>
-	</div>
-
-   		<!-- /page Title -->
+    <!-- /page Title -->
 
 
    		<!-- Left side -->
@@ -115,25 +62,16 @@
     	<div class="child">
 
 
-                    		<div class="holder osX">
-						<div id="pane1" class="scroll-pane">
+        <div class="holder osX">
+            <div id="pane1" class="scroll-pane">
                 <ul class="bullets">
                     <li><a href="/stores/search">ALL</a></li>
-                        <li><a href="/stores/search?category=1">Books &amp; Magazines</a></li>
-                        <li><a href="/stores/search?category=22">Clothing, Shoes &amp; Jewelry</a></li>
-                        <li><a href="/stores/search?category=15">Computer &amp; Office</a></li>
-                        <li><a href="/stores/search?category=17">Electronics</a></li>
-                        <li><a href="/stores/search?category=19">Flowers, Gifts &amp; Gourmet</a></li>
-                        <li><a href="/stores/search?category=20">Health &amp; Beauty</a></li>
-                        <li><a href="/stores/search?category=18">Home &amp; Garden</a></li>
-                        <li><a href="/stores/search?category=2">Movies &amp; Music</a></li>
-                        <li><a href="/stores/search?category=24">Sports &amp; Outdoors</a></li>
-                        <li><a href="/stores/search?category=21">Toys, Kids &amp; Baby</a></li>
-                        <li><a href="/stores/search?category=251">Travel &amp; Auto</a></li>
-                        <li><a href="/stores/search?category=157">Video Games</a></li>
-
-	           </ul>
-                       </div></div>
+                    <?php foreach ($categories as $category) :?>
+                    <li><a href="<?php echo escape("/stores/search?category=" . $category['id'], 'html_attr')?>"><?php echo escape($category['name']) ?></a></li>
+                    <?php endforeach ?>
+                </ul>
+            </div>
+        </div>
 
 
 
