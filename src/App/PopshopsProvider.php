@@ -34,7 +34,14 @@ class PopshopsProvider implements ServiceProviderInterface
         $app['popshops.log_plugin'] = $app->share(function () use ($app) {
             $log = new Logger('apilog');
             $level = $app['debug'] ? Logger::DEBUG : Logger::ERROR;
-            $log->pushHandler(new StreamHandler($app['log_dir'] . '/popshops.log', Logger::DEBUG));
+            $logPath = $app['log_dir'] . '/popshops_' . date('Ymd') . '.log';
+
+            if (!file_exists($logPath)) {
+                touch($logPath);
+                chmod($logPath, 0666);
+            }
+
+            $log->pushHandler(new StreamHandler($logPath, Logger::DEBUG));
 
             return new LogPlugin(new PsrLogAdapter($log), MessageFormatter::SHORT_FORMAT);
         });
