@@ -104,7 +104,7 @@ class Stores extends Controller
         $client = $this->container['popshops.client'];
         $catalogs = $this->container['popshops.catalog_keys'];
 
-        $merchants = $client->getMerchantsAndDeals($catalogs['all_stores'])->filterByNamePrefix($search);
+        $merchants = $client->findMerchants($catalogs['all_stores'])->getMerchants()->filterByNamePrefix($search);
         $stores = serialize_merchants($merchants->slice($limit * ($page - 1), $limit));
         $count = $merchants->getTotalCount();
 

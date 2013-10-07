@@ -11,7 +11,7 @@ class MerchantCollection extends ArrayCollection implements DomCrawlerInterface
 
     protected $catalogKey;
 
-    public function __construct($node)
+    public function __construct($node = [])
     {
         parent::__construct(is_array($node) ? $node : []);
         if ($node instanceof Crawler) {

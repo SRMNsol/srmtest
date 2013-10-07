@@ -33,6 +33,21 @@ class Client
         return new Crawler($response->getBody(true));
     }
 
+    public function parallelRequests(array $paths)
+    {
+        $requests = [];
+        foreach ($paths as $path) {
+            $requests[] = $this->client->get($path);
+        }
+        $responses = $this->client->send($requests);
+        $return = [];
+        foreach ($responses as $response) {
+            $return[] = new Crawler($response->getBody(true));
+        }
+
+        return $return;
+    }
+
     public function getMerchants($catalogKey = null)
     {
         $crawler = $this->request(['merchants.xml{?catalog_key}', [
@@ -71,14 +86,25 @@ class Client
         return new DealSearchResult($crawler);
     }
 
-    public function getMerchantsAndDeals($catalogKey)
+    public function findMerchants($catalogKey)
     {
-        $merchants = $this->getMerchants($catalogKey);
-        $this->findDeals($catalogKey)->getMerchants()->forAll(function ($id, $relMerchant) use ($merchants) {
+        $crawlers = $this->parallelRequests([
+            ['merchants.xml{?catalog_key}', ['catalog_key' => $catalogKey]],
+            ['deals.xml{?catalog_key}', ['catalog_key' => $catalogKey]],
+            ['products.xml{?catalog_key}', ['catalog_key' => $catalogKey]],
+        ]);
+
+        $merchants = new MerchantCollection($crawlers[0]);
+        $deals = new DealSearchResult($crawlers[1]);
+        $deals->getMerchants()->forAll(function ($id, $relMerchant) use ($merchants) {
             $merchants[$relMerchant->getId()]->setDealCount($relMerchant->getDealCount());
             return true;
         });
+        $products = new ProductSearchResult($crawlers[2]);
 
-        return $merchants;
+        $result = new MerchantSearchResult();
+        $result->setMerchants($merchants);
+        $result->setMerchantTypes($products->getMerchantTypes());
+        return $result;
     }
 }

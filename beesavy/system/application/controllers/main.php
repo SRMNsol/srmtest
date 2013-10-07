@@ -27,7 +27,7 @@ class Main extends Controller
         $client = $this->container['popshops.client'];
         $catalogs = $this->container['popshops.catalog_keys'];
 
-        $data['stores'] = random_slice(serialize_merchants($client->getMerchantsAndDeals($catalogs['all_stores'])), $num_stores);
+        $data['stores'] = random_slice(serialize_merchants($client->findMerchants($catalogs['all_stores'])->getMerchants()), $num_stores);
         $data['coupons'] = random_slice(serialize_deals($client->findDeals($catalogs['hot_coupons'])->getDeals()), 5);
         $data['deals'] = random_slice(serialize_deals($client->findDeals($catalogs['hot_deals'])->getDeals()), 2);
         $data['home'] = $home['vars'];
