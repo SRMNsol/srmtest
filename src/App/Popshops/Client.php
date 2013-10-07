@@ -79,18 +79,23 @@ class Client
     {
         $crawler = $this->request(['deals.xml{?catalog_key,deal_type_id,keywords}', [
             'catalog_key' => $catalogKey,
-            'deal_type_id' => $dealType instanceof DealType ? $dealType->getId() : null,
+            'deal_type_id' => $dealType instanceof DealType ? $dealType->getId() : $dealType,
             'keywords' => $keywords,
         ]]);
 
         return new DealSearchResult($crawler);
     }
 
-    public function findMerchants($catalogKey)
+    public function findMerchants($catalogKey, $merchantType = null)
     {
+        $params = [
+            'catalog_key' => $catalogKey,
+            'merchant_type_id' => $merchantType instanceof MerchantType ? $merchantType->getId() : $merchantType,
+        ];
+
         $crawlers = $this->parallelRequests([
-            ['merchants.xml{?catalog_key}', ['catalog_key' => $catalogKey]],
-            ['deals.xml{?catalog_key}', ['catalog_key' => $catalogKey]],
+            ['merchants.xml{?catalog_key,merchant_type_id}', $params],
+            ['deals.xml{?catalog_key,merchant_type_id}', $params],
             ['products.xml{?catalog_key}', ['catalog_key' => $catalogKey]],
         ]);
 
