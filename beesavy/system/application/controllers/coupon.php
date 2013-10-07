@@ -1,7 +1,7 @@
 <?php
 /**
  */
-class coupon extends Controller
+class Coupon extends Controller
 {
     public function Coupon()
     {
