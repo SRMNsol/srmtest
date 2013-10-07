@@ -77,15 +77,14 @@ class Client
 
     public function findDeals($catalogKey, array $params = null)
     {
-        $params = (array) $params;
-
-        $crawler = $this->request(['deals.xml{?catalog_key,deal_type_id,deal_limit,deal_offset,end_on_max}', $params + [
+        $params = [
             'catalog_key' => $catalogKey,
-            'deal_type_id' => null,
+        ] + (array) $params + [
             'deal_limit' => 25,
             'deal_offset' => 0,
-            'end_on_max'
-        ]]);
+        ];
+
+        $crawler = $this->request(['deals.xml{?catalog_key,deal_type_id,deal_limit,deal_offset,end_on_max}', $params]);
 
         return new DealSearchResult($crawler);
     }
@@ -114,6 +113,7 @@ class Client
         $result = new MerchantSearchResult();
         $result->setMerchants($merchants);
         $result->setMerchantTypes($products->getMerchantTypes());
+
         return $result;
     }
 }
