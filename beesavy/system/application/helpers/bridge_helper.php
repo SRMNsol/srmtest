@@ -45,8 +45,7 @@ function serialize_merchant_types(Doctrine\Common\Collections\Collection $mercha
         return [
             'id' => $merchantType->getId(),
             'name' => $merchantType->getName(),
-            'label' => $merchantType->getName(),
-            'hits' => $merchantType->getProductCount(),
+            'count' => $merchantType->getProductCount(),
         ];
     })->toArray());
 }
@@ -118,7 +117,7 @@ function serialize_brands(\Doctrine\Common\Collections\Collection $brands)
         return [
             'id' => $brand->getId(),
             'name' => $brand->getName(),
-            'hits' => $brand->getProductCount(),
+            'count' => $brand->getProductCount(),
         ];
     })->toArray());
 }

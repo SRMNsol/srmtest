@@ -57,13 +57,18 @@ class Client
         return new MerchantCollection($crawler);
     }
 
-    public function findProducts($catalogKey, $keywords)
+    public function findProducts($catalogKey, $keywords = null, array $params = [])
     {
-        $crawler = $this->request(['products.xml{?catalog_key,keywords,include_product_groups}', [
+        $params = [
             'catalog_key' => $catalogKey,
             'keywords' => $keywords,
+        ] + $params + [
             'include_product_groups' => 1,
-        ]]);
+            'product_limit' => 25,
+            'product_offset' => 0,
+        ];
+
+        $crawler = $this->request(['products.xml{?catalog_key,keywords,brand_id,merchant_type_id,include_product_groups,product_limit,product_offset,product_sort}', $params]);
 
         return new ProductSearchResult($crawler);
     }
@@ -75,11 +80,11 @@ class Client
         return new DealTypeCollection($crawler);
     }
 
-    public function findDeals($catalogKey, array $params = null)
+    public function findDeals($catalogKey, array $params = [])
     {
         $params = [
             'catalog_key' => $catalogKey,
-        ] + (array) $params + [
+        ] + $params + [
             'deal_limit' => 25,
             'deal_offset' => 0,
         ];

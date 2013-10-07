@@ -8,7 +8,6 @@ class Product extends Controller
     public function Product()
     {
         parent::Controller();
-        $this->load->library('beesavy');
         $this->load->model('refer');
         parse_str($_SERVER['QUERY_STRING'],$_GET);
 
@@ -36,9 +35,8 @@ class Product extends Controller
     {
         //Grab information
         $search = $this->input->get('q');
-        $category = $this->input->get('category');
-        $brand = $this->input->get('brand');
-        $brandarr = explode("__", $brand);
+        $category = $this->input->get('category') ?: null;
+        $brand = $this->input->get('brand') ?: null;
         $page = $this->input->get('page');
         $sort = $this->input->get('sort');
         $limit = $this->input->get('limit');
@@ -55,19 +53,18 @@ class Product extends Controller
         $client = $this->container['popshops.client'];
         $catalogs = $this->container['popshops.catalog_keys'];
 
-        $search_results = $this->cache->library('beesavy', 'productsearch', array($search,$page,$category,$brandarr,$limit,$sort, $zip), 3600);
-        $result = $client->findProducts($catalogs['all_stores'], $search);
-        //$brands = $search_results['metadata']['brands'];
+        $result = $client->findProducts($catalogs['all_stores'], $search, [
+            'brand_id' => $brand,
+            'merchant_type_id' => $category,
+            'product_sort' => $sort,
+            'product_offset' => ($page - 1) * $limit,
+            'product_limit' => $limit,
+        ]);
+
         $brands = serialize_brands($result->getBrands());
-        //$categories = $search_results['metadata']['categories'];
         $categories = serialize_merchant_types($result->getMerchantTypes());
-        //$products = $search_results['products'];
         $products = serialize_products($result->getProducts());
-        //$this->beesavy->abreviate($products, 'description', 100);
-        //$count = $search_results['metadata']['count'];
         $count = $result->getProducts()->getTotalCount();
-        $category_tree = $this->cache->library('beesavy', 'getCategory', array($category), 3600);
-        $this->_ischecked($brands, $brandarr);
 
         //Load the page
         $data = $this->blocks->getBlocks();
@@ -81,14 +78,14 @@ class Product extends Controller
         $data['end']=$end;
         $data['sort'] = $sort;
         $data['brands']=$brands;
-        $data['brandarr']=$brandarr;
+        $data['brand'] = $brand;
         $data['categories']=$categories;
+        $data['category'] = $category;
+
         $data['page']=$page;
         $data['page_index']=$page-1;
         $data['limit']=$limit;
         $data['products']=$products;
-        $data['chosen_brands']=array();
-        $data['category_tree'] = $category_tree;
         $data['base_url'] = "/product/search?q=$search";
         $data['query_string']=array('search'=>$search,'category'=>$category,
             'brand'=>$brand,'page'=>$page,'sort'=>$sort);

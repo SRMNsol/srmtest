@@ -44,10 +44,11 @@
             		<div class="holder osX">
 						<div id="pane1" class="scroll-pane">
         <ul>
-        {brands}
- <li ><input type="checkbox" {checked}  class="facet-value" name="str_brand[]" value="{name}" id="{name}"  /> <label for="{name}" title="{name}">{name}</label> <span class="count">({hits})</span></li>
- {/brands}
-                                    </ul>
+        <?php foreach ($brands as $item) : ?>
+        <?php $brand_url = '/product/search/?' . http_build_query(['q' => $search, 'brand' => $item['id']]) ?>
+        <li><a href="<?php echo escape($brand_url, 'html_attr') ?>"><?php echo escape($item['name']) ?></a> <span class="count"><?php echo escape($item['count'])?></span></li>
+        <?php endforeach ?>
+        </ul>
                                     </div></div>
                 <br style="clear: both;"/>
     </div>
@@ -63,12 +64,12 @@
                             		<div class="holder osX">
 						<div id="pane2" class="scroll-pane">
 
-                        <ul class="bullets">
-                        {categories}
-<li style="padding-left:5px;"><a class="grandparent_category_id-{id}" href="<?php echo $base_url?>&amp;category={id}">{label}</a> <span class="count">({hits})</span></li>
-  {/categories}
-
-                       </ul>
+<ul class="bullets">
+<?php foreach ($categories as $item) : ?>
+<?php $category_url = '/product/search?' . http_build_query(['q' => $search, 'brand' => $brand, 'category' => $item['id']]) ?>
+<li style="padding-left:5px;"><a href="<?php echo escape($category_url, 'html_attr') ?>"><?php echo escape($item['name']) ?></a> <span class="count"><?php echo escape($item['count']) ?></span></li>
+<?php endforeach ?>
+</ul>
 
                     </div>
 
@@ -92,10 +93,9 @@
     <div id="refine">
         <div id="sort"><label>Sort By:</label>&nbsp;&nbsp;
         <select name="sort" id="sortField">
-            <option value="score desc" selected="selected">Relevance</option>
-            <option value="lowest_price asc" >Price (Lowest)</option>
-            <option value="lowest_price desc" >Price (Highest)</option>
-            <option value="num_child_products desc" ># of Sellers</option>
+            <option value="" selected="selected">Relevance</option>
+            <option value="price_asc" >Price (Lowest)</option>
+            <option value="price_desc" >Price (Highest)</option>
         </select>
     </div>
 </div>
