@@ -19,27 +19,27 @@
 		<div id="pageTitleRight"></div>
 	</div>
    		<!-- /page Title -->
-    
-    	
+
+
    		<!-- Left catagory -->
 
 <div id="facetNav">
 <div id="catagory">
 	<form id="facetForm" name="facetForm" action="//categories?category=62" method="get">
-    <div class="facet">       
+    <div class="facet">
     	<div id="catagory-bt" class="cat-bg">
         <div id="cat-left-curve"><img src="/images/cat-left-curve.jpg" width="4" height="35" alt="** PLEASE DESCRIBE THIS IMAGE **"/></div>
-        <div id="cat-right-curve"><img src="/images/cat-right-curve.jpg" width="4" height="35" alt="** PLEASE DESCRIBE THIS IMAGE **"/></div>	
+        <div id="cat-right-curve"><img src="/images/cat-right-curve.jpg" width="4" height="35" alt="** PLEASE DESCRIBE THIS IMAGE **"/></div>
         <div class="parent">Category</div>
-    </div>  
-          
-         
-         
-    <div id="catagory-bg">    
-    
+    </div>
+
+
+
+    <div id="catagory-bg">
+
                         <div class="sub-catagory-txt">Brand</div>
         <div id="sub-catagory-bg">
-                 
+
     <div class="child">
             		<div class="holder osX">
 						<div id="pane1" class="scroll-pane">
@@ -51,104 +51,101 @@
                                     </div></div>
                 <br style="clear: both;"/>
     </div>
-</div> 
+</div>
           </form>
                   <div style="clear:both;height:10px;">	</div>
 
-        
-    	<div class="sub-catagory-txt">Catagory</div>
+
+    	<div class="sub-catagory-txt">Category</div>
         <div id="sub-catagory-bg">
-    	<div class="child"> 
-         <div style="clear:both;height:5px;">	</div>                   
+    	<div class="child">
+         <div style="clear:both;height:5px;">	</div>
                             		<div class="holder osX">
 						<div id="pane2" class="scroll-pane">
-                    
+
                         <ul class="bullets">
                         {categories}
-<li style="padding-left:5px;"><a class="grandparent_category_id-{id}" href="<?php echo $base_url?>&amp;category={name}">{label}</a> <span class="count">({hits})</span></li>
+<li style="padding-left:5px;"><a class="grandparent_category_id-{id}" href="<?php echo $base_url?>&amp;category={id}">{label}</a> <span class="count">({hits})</span></li>
   {/categories}
 
                        </ul>
-                    
+
                     </div>
-                  
-
-                    
-                    </div>  
-      
-                    </div> 
-        </div>	                    
 
 
-        </div>    
+
+                    </div>
+
+                    </div>
+        </div>
+
+
+        </div>
         </div>
             </div> </div>
-        
+
        <!-- /Left catagory -->
-       
-       
-       <!-- Right side -->
-        <div id="results">
-		    		    <div id="refine">
-                <div id="sort"><label>Sort By:</label>&nbsp;&nbsp;
-                <select name="sort" id="sortField">
-               <option value="score desc" selected="selected">Relevance</option>
-                    <option value="lowest_price asc" >Price (Lowest)</option>
-                    <option value="lowest_price desc" >Price (Highest)</option>
-                    <option value="num_child_products desc" ># of Sellers</option>
-
-                </select>
-                </div>
 
 
+<!-- Right side -->
+<div id="results">
+    <div id="refine">
+        <div id="sort"><label>Sort By:</label>&nbsp;&nbsp;
+        <select name="sort" id="sortField">
+            <option value="score desc" selected="selected">Relevance</option>
+            <option value="lowest_price asc" >Price (Lowest)</option>
+            <option value="lowest_price desc" >Price (Highest)</option>
+            <option value="num_child_products desc" ># of Sellers</option>
+        </select>
+    </div>
+</div>
+<?php $index = 0; ?>
+<?php $ad = 0; ?>
+<?php foreach ($products as $product) : ?>
+    <?php if ($index === $ad) : ?>
+    <div style="float:right;margin-right:-24px;border:0px solid #000;"><!--
+    <script type='text/javascript'>
+        OA_show(11);
+    </script><noscript><a target='_blank' href='http://50.16.95.24/openx/www/delivery/ck.php?n=a88fd39'><img border='0' alt='' src='http://50.16.95.24/openx/www/delivery/avw.php?zoneid=11&amp;n=a88fd39' /></a></noscript>
+    <!--<img src="/images/rightbanner.jpg">-->
+    </div>
+    <?php endif ?>
+    <div class="productResult inactive">
+        <?php $compare_url = '/product/compare/' . $product['groupID']  ?>
+        <input name="group_id" value="<?php echo escape($product['groupID'], 'html_attr') ?>" type="hidden"/>
+        <div class="thumb">
+            <a href="<?php echo escape($compare_url, 'html_attr') ?>">
+                <img class="cdn-image" src="<?php echo escape($product['image'], 'html_attr') ?>" alt="** PLEASE DESCRIBE THIS IMAGE **" onerror="this.src ='/images/no-image-100px.gif'"/>
+            </a>
+        </div>
+        <div class="pInfo">
+            <h3>
+            <a href="<?php echo escape($compare_url, 'html_attr') ?>" title="<? echo escape($product['name'], 'html_attr') ?>">
+                <?php echo escape($product['name-abrv']) ?></a>
+            </h3>
+            <span class="desc"><?php echo escape($product['description-abrv']) ?> <a href="<?php echo escape($compare_url, 'html_attr') ?>" class="more">more ›</a></span>
+        </div>
+        <div class="CtA">
+            <span class="details">from</span> <a href="<?php echo escape($compare_url, 'html_attr') ?>" class="price">$<?php echo escape($product['lowprice']) ?></a><br/>
+            <div class="BtnOrangeBg BtnComparePrice">
+                <a class="BtnBlackTxt" href="<?php escape($compare_url, 'html_attr')  ?>" rel="nofollow">COMPARE PRICES</a>
             </div>
-<? $index=0;
-$ad = 0;
-foreach($products as $product){ 
-    if($index==$ad){
-?>
-							<div style="float:right;margin-right:-24px;border:0px solid #000;"><!--
-<script type='text/javascript'>
-    OA_show(11);
-</script><noscript><a target='_blank' href='http://50.16.95.24/openx/www/delivery/ck.php?n=a88fd39'><img border='0' alt='' src='http://50.16.95.24/openx/www/delivery/avw.php?zoneid=11&amp;n=a88fd39' /></a></noscript>
-<!--<img src="/images/rightbanner.jpg">-->
-                </div>
-<? }
-?>
-							<div class="productResult inactive">
-							<input name="group_id" value="<? echo $product['groupID'] ?>" type="hidden"/>
-    <div class="thumb">
-    <a href="/product/compare/<? echo $product['groupID'] ?>">
-        <img class="cdn-image" src="<? echo $product['image'] ?>" alt="** PLEASE DESCRIBE THIS IMAGE **" onerror="this.src ='/images/no-image-100px.gif'"/>
-        </a>
+            <span class="details">available at <a href="<?php echo escape($compare_url, 'html_attr') ?>"><?php echo escape($product['numchildproducts']) ?> stores</a></span>
+        </div>
     </div>
-    <div class="pInfo">
-        <h3>
-        <a href="/product/compare/<? echo $product['groupID'] ?>" title="<? echo $product['name'] ?>">
-            <? echo $product['name'] ?>            </a>
-        </h3>
-        <span class="desc"><? echo $product['description-abrv']?> <a href="/product/compare/<? echo $product['groupID'] ?>" class="more">more ›</a></span>
-    </div>
-    <div class="CtA">
-    <span class="details">from</span> <a href="/product/compare/<? echo $product['groupID'] ?>" class="price">$<? echo $product['lowprice'] ?></a><br/>
- 	          <div class="BtnOrangeBg BtnComparePrice">	          
-		        <a class="BtnBlackTxt" href="/product/compare/<? echo $product['groupID'] ?>" rel="nofollow">COMPARE PRICES</a>	        
- 	          </div>
- 	          <span class="details">available at <a href="/product/compare/<? echo $product['groupID'] ?>"><? echo $product['numchildproducts'] ?> stores</a></span>		
-    </div></div>
-<?  $index++; } ?>
-							<div class="productResult inactive"><!--
+<?php $index++ ?>
+<?php endforeach ?>
+<div class="productResult inactive"><!--
 <script type='text/javascript'>
     OA_show(12);
 </script><noscript><a target='_blank' href='http://50.16.95.24/openx/www/delivery/ck.php?n=a88fd39'><img border='0' alt='' src='http://50.16.95.24/openx/www/delivery/avw.php?zoneid=12&amp;n=a88fd39' /></a></noscript>
 <!--<img src="/images/rightbanner.jpg">-->
 </div>
-</div>
-    
 
-  <div class="pag">  
-  
-  
+
+  <div class="pag">
+
+
 <div id="Pagination" class="pagination-controls"></div>
     <div class="pagination-info">Showing results <strong>{start}</strong> to <strong>{end}</strong> of <strong>{count}</strong></div>
 </div>
@@ -185,7 +182,7 @@ foreach($products as $product){
             url += brandstring;
             $(this).removeAttr("checked");
             document.location = url;
-        });   
+        });
         // this initialises the demo scollpanes on the page.
     $('#pane1').jScrollPane({ showArrows: true, scrollbarWidth: 15, arrowSize: 16 });
     $('#pane2').jScrollPane({ showArrows: true, scrollbarWidth: 15, arrowSize: 16 });
@@ -229,22 +226,22 @@ baseurl = baseurl + "&sort="+sort_type;
         else {
             var pat = new RegExp("[?]");
             if(pat.test(document.URL)){
-            window.location = (document.URL)+"&page="+page;  
+            window.location = (document.URL)+"&page="+page;
             }else{
-            window.location = (document.URL)+"?page="+page;  
+            window.location = (document.URL)+"?page="+page;
             }
-        }             
+        }
         // Iterate through a selection of the content and build an HTML string
         for(var i=page_index*items_per_page;i<max_elem;i++)
         {
         }
-        
+
         // Replace old content with new content
-        
+
         // Prevent click eventpropagation
         return false;
     }
-    
+
     function getOptions(){
         var opt = {callback: pageselectCallback};
         var page = {page_index};
@@ -260,8 +257,8 @@ baseurl = baseurl + "&sort="+sort_type;
         opt["link_to"]=document.URL;
         return opt;
     }
-    
-    // When document has loaded, initialize pagination and form 
+
+    // When document has loaded, initialize pagination and form
         // Create pagination element with options from form
         var optInit = getOptions();
         $("#Pagination").pagination({count}, optInit);
@@ -276,8 +273,8 @@ $(document).ready(function() {
     	var element = $(this);
 		element.find('.BtnComparePrice').addClass('BtnOrangeBg').removeClass('BtnOrangeRBg');
     });
-	
-		
+
+
     $("div.ShopByStore").mouseover(function () {
         var element = $(this);
 		element.find('.nav-ShopByStore-Bt').addClass('BtnSBSOrangeRBg').removeClass('BtnSBSOrangeBg');
@@ -285,7 +282,7 @@ $(document).ready(function() {
     	var element = $(this);
 		element.find('.nav-ShopByStore-Bt').addClass('BtnSBSOrangeBg').removeClass('BtnSBSOrangeRBg');
     });
-	
+
 	    $("div.FindCoupons").mouseover(function () {
         var element = $(this);
 		element.find('.nav-FindCoupons-Bt').addClass('BtnFCOrangeRBg').removeClass('BtnFCOrangeBg');
@@ -293,20 +290,20 @@ $(document).ready(function() {
     	var element = $(this);
 		element.find('.nav-FindCoupons-Bt').addClass('BtnFCOrangeBg').removeClass('BtnFCOrangeRBg');
     });
-	
+
 	});
 </script>
 
 
 <!-- /content -->
 
-         
-      
-   
-<!-- footer -->  
+
+
+
+<!-- footer -->
 {footer}
-   <!-- /footer -->  
-  
+   <!-- /footer -->
+
 
 
 

@@ -10,6 +10,7 @@ class Main extends Controller
         parent::Controller();
         $this->load->library('beesavy');
         $this->load->model('user');
+
         $this->load->helper('bridge');
         $this->load->helper('escape');
         $this->container = silex();

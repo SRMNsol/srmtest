@@ -3,6 +3,8 @@
  */
 class Coupon extends Controller
 {
+    protected $container;
+
     public function Coupon()
     {
         parent::Controller();

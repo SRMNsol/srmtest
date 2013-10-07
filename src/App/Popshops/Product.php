@@ -109,6 +109,7 @@ class Product implements DomCrawlerInterface
         $this->setRetailPrice($node->attr('retail_price'));
 
         if ($node->attr('product_group_id')) {
+            $this->setGroupId($node->attr('product_group_id'));
             $this->setMerchantCount($node->attr('product_group_merchant_count'));
             $this->setMinPrice($node->attr('product_group_min_price'));
             $this->setMaxPrice($node->attr('product_group_max_price'));

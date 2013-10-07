@@ -117,9 +117,9 @@ class ProductSearchResult implements DomCrawlerInterface
             $result->getMerchants()->add($merchant);
         });
 
-        $node->filter('products product')->each(function (Crawler $node, $i) use ($result) {
-            $product = new Product($node);
-            $result->getProducts()->add($product);
+        $node->filter('merchant_types merchant_type')->each(function (Crawler $node, $i) use ($result) {
+            $merchantType = new MerchantType($node);
+            $result->getMerchantTypes()->add($merchantType);
         });
 
         $node->filter('price_ranges price_range')->each(function (Crawler $node, $i) use ($result) {
@@ -132,9 +132,9 @@ class ProductSearchResult implements DomCrawlerInterface
             $result->getBrands()->add($brand);
         });
 
-        $node->filter('merchant_types merchant_type')->each(function (Crawler $node, $i) use ($result) {
-            $merchantType = new MerchantType($node);
-            $result->getMerchantTypes()->add($merchantType);
+        $node->filter('products product')->each(function (Crawler $node, $i) use ($result) {
+            $product = new Product($node);
+            $result->getProducts()->add($product);
         });
     }
 }

@@ -45,6 +45,8 @@ function serialize_merchant_types(Doctrine\Common\Collections\Collection $mercha
         return [
             'id' => $merchantType->getId(),
             'name' => $merchantType->getName(),
+            'label' => $merchantType->getName(),
+            'hits' => $merchantType->getProductCount(),
         ];
     })->toArray());
 }
@@ -76,6 +78,47 @@ function serialize_deals(\Doctrine\Common\Collections\Collection $deals)
             'name-abrv' => truncate_str($deal->getName()),
             'exp_date_short' => $deal->getEndOn()->diff(new DateTime())->format('Expires in %a days'),
             'expiration' => $deal->getEndOn()->format('M d, Y'),
+        ];
+    })->toArray());
+}
+
+/**
+ * serialize products to array
+ */
+function serialize_products(Doctrine\Common\Collections\Collection $products)
+{
+    return array_values($products->map(function (\App\Popshops\Product $product) {
+        return [
+            'groupID' => $product->getGroupId(),
+            'name' => $product->getName(),
+            'name-abrv' => truncate_str($product->getName(), 100),
+            'description' => $product->getDescription(),
+            'description-abrv' => truncate_str($product->getDescription(), 100),
+            'category_id' => null,
+            'category_name' => null,
+            'parent_category_id' => null,
+            'parent_category_name' => null,
+            'grandparent_category_name' => null,
+            'grandparent_category_id' => null,
+            'lowprice' => $product->getLowestPrice() ,
+            'numchildproducts' => $product->getMerchantCount(),
+            'sales_rank' => 0,
+            'score' => 0,
+            'image' => $product->getLargeImageUrl(),
+        ];
+    })->toArray());
+}
+
+/**
+ * serialize brands to array
+ */
+function serialize_brands(\Doctrine\Common\Collections\Collection $brands)
+{
+    return array_values($brands->map(function (\App\Popshops\Brand $brand) {
+        return [
+            'id' => $brand->getId(),
+            'name' => $brand->getName(),
+            'hits' => $brand->getProductCount(),
         ];
     })->toArray());
 }
