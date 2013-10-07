@@ -1,10 +1,11 @@
 <?php
 /**
  */
-class Coupon extends Controller {
-
-	function Coupon()	{
-		parent::Controller();
+class coupon extends Controller
+{
+    public function Coupon()
+    {
+        parent::Controller();
         $this->load->library('simple');
         $this->load->library('beesavy');
         parse_str($_SERVER['QUERY_STRING'],$_GET);
@@ -25,43 +26,66 @@ class Coupon extends Controller {
         $this->load->helper('bridge');
         $this->load->helper('escape');
         $this->container = silex();
-	}
+    }
 
-    function _get_list(){
+    public function _get_list()
+    {
         $q = "select * from store;";
         $res = $this->db->query($q);
         $res = $res->result_array();
+
         return $res;
     }
 
-    function index(){
+    public function index()
+    {
     }
 
-    function search(){
+    public function search()
+    {
         $sort = $this->input->get('sort');
         //Grab information
         $page = $this->input->get('page');
         $limit = $this->input->get('limit');
 
         //Set defaults
-        if(!$page){$page=1;}
-        if(!$sort){$sort='';}
-        if(!$limit){$limit=25;}
+        if (!$page) {$page=1;}
+        if (!$sort) {$sort='';}
+        if (!$limit) {$limit=25;}
 
         //Run the search query
         $client = $this->container['popshops.client'];
         $catalogs = $this->container['popshops.catalog_keys'];
 
-        $result = $client->findDeals($catalogs['all_stores']);
+        $catalogKey = $catalogs['all_stores'];
+        $params = [
+            'deal_limit' => $limit,
+            'deal_offset' => ($page - 1) * 25,
+        ];
 
+        switch ($sort) {
+            case 'free_shipping' :
+                $params += ['deal_type_id' => 1];
+                break;
+            case 'expire_soon' :
+                $params += [
+                    'end_on_max' => (new DateTime('1 week'))->format('m/d/Y'),
+                ];
+                break;
+            case 'hot_coupons' :
+                $catalogKey = $catalogs['hot_coupons'];
+                break;
+        }
+
+        $result = $client->findDeals($catalogKey, $params);
         $stores = serialize_merchants($result->getMerchants());
         $count = $result->getDeals()->getTotalCount();
         $coupons = serialize_deals($result->getDeals());
 
-        foreach($coupons as &$coupon){
-            if($coupon['code']){
+        foreach ($coupons as &$coupon) {
+            if ($coupon['code']) {
                 $coupon['action_text']='CLICK TO COPY';
-            }else{
+            } else {
                 $coupon['action_text']='CLICK TO ACTIVATE';
             }
         }
@@ -86,7 +110,4 @@ class Coupon extends Controller {
         $this->parser->parse('coupon/coupon_search', $data);
     }
 
-
-
 }
-?>

@@ -7,40 +7,40 @@
 {nav_bar}
 <!-- content -->
 		<!-- page Title -->
-        
+
 		<div id="pageTitle">
 		<div id="pageTitleLeft"></div>
 		<h1>Find Free Coupons</h1>
 		<div id="pageTitleRight"></div>
             <div id="titleNav" class="large">
         <a href="/coupon/search?" <?php if(!$sort) echo "id='active'";?>>All</a>
-        <a href="/coupon/search?sort=free_shipping+asc" <?php if($sort=="free_shipping asc") echo "id='active'";?>>Free Shipping</a>
-        <a href="/coupon/search?sort=end_date+asc" <?php if($sort=="end_date asc") echo "id='active'";?>>Expiring Soon</a>
-        <a href="/coupon/search?" >Hot Coupons!</a>
+        <a href="/coupon/search?sort=free_shipping" <?php if($sort=="free_shipping asc") echo "id='active'";?>>Free Shipping</a>
+        <a href="/coupon/search?sort=expire_soon" <?php if($sort=="end_date asc") echo "id='active'";?>>Expiring Soon</a>
+        <a href="/coupon/search?sort=hot_coupons" >Hot Coupons!</a>
     </div>
 	</div>
-    
+
    		<!-- /page Title -->
-    
-    
+
+
    		<!-- Left side -->
         <div class="BGLeftCol">
                 <div id="facetNav">
 
 <div id="catagory">
 
-    <div class="facet" >       
+    <div class="facet" >
     	<div id="catagory-bt" class="cat-bg">
         <div id="cat-left-curve"><img src="/images/cat-left-curve.jpg" width="4" height="35" alt="** PLEASE DESCRIBE THIS IMAGE **"/></div>
-        <div id="cat-right-curve"><img src="/images/cat-right-curve.jpg" width="4" height="35" alt="** PLEASE DESCRIBE THIS IMAGE **"/></div>	
+        <div id="cat-right-curve"><img src="/images/cat-right-curve.jpg" width="4" height="35" alt="** PLEASE DESCRIBE THIS IMAGE **"/></div>
         <div class="parent">Jump to a Store</div>
-   		 </div>      
-         
-    <div id="catagory-bg">    
+   		 </div>
 
-    	<div class="child scroll"> 
-         <div style="clear:both;height:5px;">	</div> 
-                         
+    <div id="catagory-bg">
+
+    	<div class="child scroll">
+         <div style="clear:both;height:5px;">	</div>
+
                   <div style="margin-left:10px;margin-bottom:10px;">
 
                    <select name="merchant" id="merchantSelect" onchange="if(this.options[this.selectedIndex].value !=''){window.location=this.options[this.selectedIndex].value}">
@@ -50,27 +50,27 @@
 {/store_list}
                                        </select>
                   </div>
-        </div>          
-                    
-                    
-                    </div>  
-      
-       
+        </div>
+
+
+                    </div>
+
+
 
 
            </div>
            </div>
 
 
-        </div>		
-        
+        </div>
+
        <!-- /Left side-->
-       
-       
+
+
        <!-- Right side -->
 <? $index=0;
 $ad = 0;
-foreach($coupons as $coupon){ 
+foreach($coupons as $coupon){
     if($index==$ad){
 ?>
              <div style="float:right;margin-right:6px;"><!--
@@ -84,15 +84,15 @@ foreach($coupons as $coupon){
 <div class='couponList inactive'>
 	        <div class='logo'>
 	            <a class='transfer-link' href='/transfer/coupon/<? echo $coupon['id'] ?>' target='_blank' rel='nofollow'>
-                    <img class='cdn-image' src='<? echo $coupon['logo_thumb'] ?>' 
+                    <img class='cdn-image' src='<? echo $coupon['logo_thumb'] ?>'
 onload="
         var width=100;
-    var height=32; 
+    var height=32;
     var ratio= Math.min(width/this.width, height/this.height);
-    var nwidth=ratio*this.width; 
-    var nheight=ratio*this.height; 
-    this.width=nwidth; 
-    this.height=nheight;" 
+    var nwidth=ratio*this.width;
+    var nheight=ratio*this.height;
+    this.width=nwidth;
+    this.height=nheight;"
 alt='$store' onerror="this.src ='../images/no-image-100px.gif'"/>
 	            </a>
 	        </div>
@@ -108,21 +108,21 @@ alt='$store' onerror="this.src ='../images/no-image-100px.gif'"/>
                     </div>
                      	            </div>
 	        </div>
-                                   
+
 	        <div class="CashBack"><div class='CashBack-Bt BtnCBOrangeBg'>
-            
-                      
+
+
 	            <a  href='/transfer/coupon/<? echo $coupon['id'] ?>' target='_blank' rel='nofollow'>
 	                <span style="position:absolute;border:0px solid #000" class="CashBack-value value"><? echo $coupon['cashback_text'] ?></span>
 	            </a>
 	        </div></div>
-            
-            
+
+
 	        <div class='CtA'>
-                          <div > 
+                          <div >
 	           <table cellspacing=0 cellpadding=0>
                <tr><td>
-                              
+
 	           <div class="ClickToCopyCode"><div style="position:relative;overflow:auto;0" class="click-contain ClickToCopyCode-Bt BtnCTCCOrangeBg-coupon">
 	          <a class="BtnBlackTxt click-button" class='transfer-link' href='/transfer/coupon/<? echo $coupon['id'] ?>' target='_blank' rel='nofollow'>
 	          <? echo $coupon['action_text'] ?>
@@ -132,8 +132,8 @@ alt='$store' onerror="this.src ='../images/no-image-100px.gif'"/>
 	                			        <div class='instructions'><? echo $coupon['code_prefix'] ?>
     <a class='click-text couponCode transfer-link' href='/transfer/coupon/<? echo $coupon['id'] ?>' target='_blank' rel='nofollow'><? echo $coupon['code'] ?></a>
 			        </div></td></tr></table>
-			         
-	            </div>                
+
+	            </div>
 	        </div>
 	    </div>
 <?
@@ -150,9 +150,9 @@ alt='$store' onerror="this.src ='../images/no-image-100px.gif'"/>
 
 
 
-  <div class="pag">  
-  
-  
+  <div class="pag">
+
+
 <div id="Pagination" class="pagination-controls"></div>
     <div class="pagination-info">Showing results <strong>{start}</strong> to <strong>{end}</strong> of <strong>{count}</strong></div>
 </div>
@@ -187,22 +187,22 @@ $(document).ready(function() {
         else {
             var pat = new RegExp("[?]");
             if(pat.test(document.URL)){
-            window.location = (document.URL)+"&page="+page;  
+            window.location = (document.URL)+"&page="+page;
             }else{
-            window.location = (document.URL)+"?page="+page;  
+            window.location = (document.URL)+"?page="+page;
             }
-        }             
+        }
         // Iterate through a selection of the content and build an HTML string
         for(var i=page_index*items_per_page;i<max_elem;i++)
         {
         }
-        
+
         // Replace old content with new content
-        
+
         // Prevent click eventpropagation
         return false;
     }
-    
+
     function getOptions(){
         var opt = {callback: pageselectCallback};
         var page = {page_index};
@@ -218,8 +218,8 @@ $(document).ready(function() {
         opt["link_to"]=document.URL;
         return opt;
     }
-    
-    // When document has loaded, initialize pagination and form 
+
+    // When document has loaded, initialize pagination and form
         // Create pagination element with options from form
         var optInit = getOptions();
         $("#Pagination").pagination({count}, optInit);
@@ -237,8 +237,8 @@ $(document).ready(function() {
 		element.find('.ClickToCopyCode-Bt').addClass('BtnCTCCOrangeBg-coupon').removeClass('BtnCTCCOrangeRBg-coupon');
 				element.find('.CashBack-Bt').addClass('BtnCBOrangeBg').removeClass('BtnCBOrangeRBg');
     });
-	
-	
+
+
 
     $("div.ShopByStore").mouseover(function () {
         var element = $(this);
@@ -247,7 +247,7 @@ $(document).ready(function() {
     	var element = $(this);
 		element.find('.nav-ShopByStore-Bt').addClass('BtnSBSOrangeBg').removeClass('BtnSBSOrangeRBg');
     });
-	
+
 	    $("div.FindCoupons").mouseover(function () {
         var element = $(this);
 		element.find('.nav-FindCoupons-Bt').addClass('BtnFCOrangeRBg').removeClass('BtnFCOrangeBg');
@@ -255,7 +255,7 @@ $(document).ready(function() {
     	var element = $(this);
 		element.find('.nav-FindCoupons-Bt').addClass('BtnFCOrangeBg').removeClass('BtnFCOrangeRBg');
     });
-	
+
 	});
 </script>
 
@@ -265,11 +265,11 @@ $(document).ready(function() {
 
 
 <!-- /content -->
-      
-<!-- footer -->  
+
+<!-- footer -->
 {footer}
-   <!-- /footer -->  
-  
+   <!-- /footer -->
+
 
   </body>
   </html>

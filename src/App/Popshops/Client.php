@@ -75,12 +75,16 @@ class Client
         return new DealTypeCollection($crawler);
     }
 
-    public function findDeals($catalogKey, $dealType = null, $keywords = null)
+    public function findDeals($catalogKey, array $params = null)
     {
-        $crawler = $this->request(['deals.xml{?catalog_key,deal_type_id,keywords}', [
+        $params = (array) $params;
+
+        $crawler = $this->request(['deals.xml{?catalog_key,deal_type_id,deal_limit,deal_offset,end_on_max}', $params + [
             'catalog_key' => $catalogKey,
-            'deal_type_id' => $dealType instanceof DealType ? $dealType->getId() : $dealType,
-            'keywords' => $keywords,
+            'deal_type_id' => null,
+            'deal_limit' => 25,
+            'deal_offset' => 0,
+            'end_on_max'
         ]]);
 
         return new DealSearchResult($crawler);
