@@ -7,6 +7,8 @@ use Symfony\Component\DomCrawler\Crawler;
 
 class ProductSearchResult implements DomCrawlerInterface
 {
+    use DealsTrait;
+
     protected $keywords;
     protected $limit;
     protected $offset;
@@ -27,6 +29,8 @@ class ProductSearchResult implements DomCrawlerInterface
         $this->brands = new ArrayCollection();
         $this->suggestedMerchants= new ArrayCollection();
         $this->networks = new ArrayCollection();
+        $this->deals = new DealCollection();
+        $this->dealTypes = new ArrayCollection();
 
         if (isset($node)) {
             $this->populateFromCrawler($node);
@@ -148,6 +152,19 @@ class ProductSearchResult implements DomCrawlerInterface
         $node->filter('brands brand')->each(function (Crawler $node, $i) use ($result) {
             $brand = new Brand($node);
             $result->getBrands()->set($brand->getId(), $brand);
+        });
+
+        $node->filter('deals deal')->each(function (Crawler $node, $i) use ($result) {
+            $deal = new Deal($node);
+            foreach (explode(',', $node->attr('deal_type_ids')) as $dealTypeId) {
+                if ($result->getDealTypes()->containsKey($dealTypeId)) {
+                    $deal->getDealTypes()->add($result->getDealTypes()->get($dealTypeId));
+                }
+            }
+            if ($result->getMerchants()->containsKey($node->attr('merchant_id'))) {
+                $deal->setMerchant($result->getMerchants()->get($node->attr('merchant_id')));
+            }
+            $result->getDeals()->add($deal);
         });
 
         $node->filter('products product')->each(function (Crawler $node, $i) use ($result) {

@@ -8,12 +8,11 @@ use Symfony\Component\DomCrawler\Crawler;
 class DealSearchResult
 {
     use DealCountTrait;
+    use DealsTrait;
 
     protected $keywords;
     protected $limit;
     protected $offset;
-    protected $deals;
-    protected $dealTypes;
     protected $merchants;
     protected $merchantTypes;
     protected $networks;
@@ -65,16 +64,6 @@ class DealSearchResult
         $this->offset = $offset;
 
         return $this;
-    }
-
-    public function getDeals()
-    {
-        return $this->deals;
-    }
-
-    public function getDealTypes()
-    {
-        return $this->dealTypes;
     }
 
     public function getMerchants()

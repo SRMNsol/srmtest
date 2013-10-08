@@ -130,6 +130,10 @@ function comparison_result(\App\Popshops\ProductSearchResult $result)
 {
     $comparison = [];
     foreach ($result->getProducts() as $product) {
+        $deal = $result->getDeals()->filter(function (\App\Popshops\Deal $deal) use ($product) {
+            return $deal->getMerchant() === $product->getMerchant();
+        })->current();
+
         $comparison[] = [
             'id' => $product->getId(),
             'name' => $product->getName(),
@@ -154,10 +158,10 @@ function comparison_result(\App\Popshops\ProductSearchResult $result)
             'shipping_amount' => null,
             'tax_amount' => null,
             't&s' => null,
-            'coupon_discount' => null,
-            'coupon_id' => null,
-            'code' => null,
-            'expiration' => null,
+            'coupon_discount' => $deal ? $deal->getName() : null,
+            'coupon_id' => $deal ? $deal->getName() : null,
+            'code' => $deal ? $deal->getCode() : null,
+            'expiration' => $deal ? $deal->getEndOn()->format('M d,Y') : null,
             'image' => $product->getLargeImageUrl(),
             'thumb' => $product->getLargeImageUrl(),
             'link' => $product->getUrl(),

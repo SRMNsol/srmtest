@@ -147,7 +147,7 @@ for($i=0; $i<count($compare); $i++){
         $name = $result['name'];
         $exp = $result['expiration'];
         $coupon_html ="<div class='coupon'>
-						<a class='tooltip transfer-link' href='$store_url' ><span class='couponTip'><strong>$name</strong>Code: <strong>$code</strong><br/><em>Expires $exp</em></span><span class='title'>$$coupon_discount Off</span></a><br/>
+						<a class='tooltip transfer-link' href='$store_url' ><span class='couponTip'><strong>$name</strong>Code: <strong>$code</strong><br/><em>Expires $exp</em></span><span class='title'>$coupon_discount</span></a><br/>
 					<span class='code'>Code: <strong>$code</strong></span>
 					</div>
 ";
