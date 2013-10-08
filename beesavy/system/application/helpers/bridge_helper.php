@@ -88,6 +88,7 @@ function serialize_products(Doctrine\Common\Collections\Collection $products)
 {
     return array_values($products->map(function (\App\Popshops\Product $product) {
         return [
+            'id' => $product->getId(),
             'groupID' => $product->getGroupId(),
             'name' => $product->getName(),
             'name-abrv' => truncate_str($product->getName(), 100),
@@ -120,6 +121,56 @@ function serialize_brands(\Doctrine\Common\Collections\Collection $brands)
             'count' => $brand->getProductCount(),
         ];
     })->toArray());
+}
+
+/**
+ * build comparison result
+ */
+function comparison_result(\App\Popshops\ProductSearchResult $result)
+{
+    $comparison = [];
+    foreach ($result->getProducts() as $product) {
+        $comparison[] = [
+            'id' => $product->getId(),
+            'name' => $product->getName(),
+            'parent_id' => null,
+            'brand' => $product->getBrand() ? $product->getBrand()->getName() : null,
+            'description' => $product->getDescription(),
+            'manufacturer_model' => null,
+            'upc' => null,
+            'sku' => null,
+            'availability' => null,
+            'condition' => null,
+            'group_id' => $product->getGroupId(),
+            'num_child_products' => $product->getMerchantCount(),
+            'product_url' => $product->getUrl(),
+            'retail_amount' => $product->getRetailPrice(),
+            'cashback_amount' => 0,
+            'final_amount' => $product->getMerchantPrice() - 0,
+            'cashback_amount_half' => 0,
+            'final_amount_half' => $product->getMerchantPrice() - 0,
+            'merchant_id' => $product->getMerchant() ? $product->getMerchant()->getId() : null,
+            'merchant_name' => $product->getMerchant() ? $product->getMerchant()->getName() : null,
+            'merchant_image' => $product->getMerchant() ? $product->getMerchant()->getLogoUrl() : null,
+            'shipping_amount' => null,
+            'tax_amount' => null,
+            't&s' => null,
+            'coupon_discount' => null,
+            'coupon_id' => null,
+            'code' => null,
+            'expiration' => null,
+            'image' => $product->getLargeImageUrl(),
+            'thumb' => $product->getLargeImageUrl(),
+            'link' => $product->getUrl(),
+        ];
+    }
+
+    $comparison[0]['lowest_price'] = $result->getLowestPrice();
+    $comparison[0]['highest_price'] = $result->getHighestPrice();
+    $comparison[0]['lowest_price_half'] = $result->getLowestPrice();
+    $comparison[0]['highest_price_half'] = $result->getHighestPrice();
+
+    return $comparison;
 }
 
 /**

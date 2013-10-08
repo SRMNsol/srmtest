@@ -112,7 +112,7 @@
     </div>
     <?php endif ?>
     <div class="productResult inactive">
-        <?php $compare_url = '/product/compare/' . $product['groupID']  ?>
+        <?php $compare_url = '/product/compare/' . ($product['groupID'] ?: '0' . $product['id'])  ?>
         <input name="group_id" value="<?php echo escape($product['groupID'], 'html_attr') ?>" type="hidden"/>
         <div class="thumb">
             <a href="<?php echo escape($compare_url, 'html_attr') ?>">

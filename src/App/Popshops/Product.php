@@ -10,10 +10,12 @@ class Product implements DomCrawlerInterface
     use MerchantTrait;
     use NetworkTrait;
 
+    protected $id;
     protected $url;
     protected $name;
     protected $description;
     protected $largeImageUrl;
+    protected $brand;
     protected $merchantPrice = 0.00;
     protected $retailPrice = 0.00;
 
@@ -22,6 +24,18 @@ class Product implements DomCrawlerInterface
         if (isset($node)) {
             $this->populateFromCrawler($node);
         }
+    }
+
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
     }
 
     public function getUrl()
@@ -72,6 +86,18 @@ class Product implements DomCrawlerInterface
         return $this;
     }
 
+    public function getBrand()
+    {
+        return $this->brand;
+    }
+
+    public function setBrand(Brand $brand = null)
+    {
+        $this->brand = $brand;
+
+        return $this;
+    }
+
     public function getMerchantPrice()
     {
         return $this->merchantPrice;
@@ -99,8 +125,14 @@ class Product implements DomCrawlerInterface
         return $this->merchantCount > 1 ? $this->minPrice : $this->merchantPrice;
     }
 
+    public function getHighestPrice()
+    {
+        return $this->merchantCount > 1 ? $this->maxPrice : $this->merchantPrice;
+    }
+
     public function populateFromCrawler(Crawler $node)
     {
+        $this->setId($node->attr('id'));
         $this->setUrl($node->attr('url'));
         $this->setName($node->attr('name'));
         $this->setDescription($node->attr('description'));

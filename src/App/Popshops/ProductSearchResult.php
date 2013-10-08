@@ -104,6 +104,24 @@ class ProductSearchResult implements DomCrawlerInterface
         return $this->networks;
     }
 
+    public function getLowestPrice()
+    {
+        return array_reduce($this->products->map(function ($product) {
+            return $product->getMerchantPrice() ?: 0.00;
+        })->toArray(), function ($price1, $price2) {
+            return $price1 < $price2 ? $price1 : $price2;
+        });
+    }
+
+    public function getHighestPrice()
+    {
+        return array_reduce($this->products->map(function ($product) {
+            return $product->getMerchantPrice() ?: 0.00;
+        })->toArray(), function ($price1, $price2) {
+            return $price1 > $price2 ? $price1 : $price2;
+        });
+    }
+
     public function populateFromCrawler(Crawler $node)
     {
         $result = $this;
@@ -114,12 +132,12 @@ class ProductSearchResult implements DomCrawlerInterface
 
         $node->filter('merchants merchant')->each(function (Crawler $node, $i) use ($result) {
             $merchant = new Merchant($node);
-            $result->getMerchants()->add($merchant);
+            $result->getMerchants()->set($merchant->getId(), $merchant);
         });
 
         $node->filter('merchant_types merchant_type')->each(function (Crawler $node, $i) use ($result) {
             $merchantType = new MerchantType($node);
-            $result->getMerchantTypes()->add($merchantType);
+            $result->getMerchantTypes()->set($merchantType->getId(), $merchantType);
         });
 
         $node->filter('price_ranges price_range')->each(function (Crawler $node, $i) use ($result) {
@@ -129,11 +147,20 @@ class ProductSearchResult implements DomCrawlerInterface
 
         $node->filter('brands brand')->each(function (Crawler $node, $i) use ($result) {
             $brand = new Brand($node);
-            $result->getBrands()->add($brand);
+            $result->getBrands()->set($brand->getId(), $brand);
         });
 
         $node->filter('products product')->each(function (Crawler $node, $i) use ($result) {
             $product = new Product($node);
+
+            if ($result->getBrands()->containsKey($node->attr('brand_id'))) {
+                $product->setBrand($result->getBrands()->get($node->attr('brand_id')));
+            }
+
+            if ($result->getMerchants()->containsKey($node->attr('merchant_id'))) {
+                $product->setMerchant($result->getMerchants()->get($node->attr('merchant_id')));
+            }
+
             $result->getProducts()->add($product);
         });
     }

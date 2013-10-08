@@ -114,7 +114,20 @@ class Product extends Controller
     {
         //Run the search query
         $zip = $this->input->get('zip');
-        $results = $this->cache->library('beesavy', 'compareprices', array($group_id, $zip), 3600);
+
+        $client = $this->container['popshops.client'];
+        $catalogs = $this->container['popshops.catalog_keys'];
+
+        $params = ['include_deals' => 1];
+
+        if (strpos($group_id, '0') === 0) {
+            $params['product_id'] = substr($group_id, 1);
+        } else {
+            $params['product_group_id'] = $group_id;
+        }
+
+        $results = comparison_result($client->findProducts($catalogs['all_stores'], null, $params));
+
         $this->load->helper('url');
         //Load the page
         $data = $this->blocks->getBlocks();
@@ -123,6 +136,7 @@ class Product extends Controller
         $data['zip'] = $zip;
         $this->parser->parse('product/compare', $data);
     }
+
     public function category()
     {
         error_reporting(E_ALL);

@@ -63,12 +63,13 @@ class Client
             'catalog_key' => $catalogKey,
             'keywords' => $keywords,
         ] + $params + [
+            'include_product_ids' => 1,
             'include_product_groups' => 1,
             'product_limit' => 25,
             'product_offset' => 0,
         ];
 
-        $crawler = $this->request(['products.xml{?catalog_key,keywords,brand_id,merchant_type_id,include_product_groups,product_limit,product_offset,product_sort}', $params]);
+        $crawler = $this->request(['products.xml{?' . implode(',', array_keys($params)) . '}', $params]);
 
         return new ProductSearchResult($crawler);
     }

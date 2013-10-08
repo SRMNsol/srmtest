@@ -23,7 +23,7 @@
 
 
 	<div id="thumb">
-<?php 
+<?php
 $cheapest = $compare[0];
 $image = $cheapest['image'];
 $desc = $cheapest['description'];
@@ -33,6 +33,8 @@ $model = $cheapest['manufacturer_model'];
 $low = $cheapest['lowest_price'];
 $high = $cheapest['highest_price'];
 $count = $cheapest['num_child_products'];
+$price_range = '$' . $low . ($high > $low ? ' - $' . $high : '');
+$store_word = 'Store' . ($count > 1 ? 's' : '');
 $merchant = $cheapest['merchant_name'];
 $merchant_id = $cheapest['merchant_id'];
 $price = $cheapest['final_amount'];
@@ -43,23 +45,18 @@ $product_url = $cheapest['link'];
 echo "<a id='large-image' href='#'><img class='cdn-image' src='$image' alt='** PLEASE DESCRIBE THIS IMAGE **' onerror=\"this.src='/images/no-image-100px.gif'\"/></a>
 	</div>
 	<div id='product-info'>
-				<span id='price-range'><a href='#compare'>$$low - $$high</a> ($count Stores)</span><br/><br/>
-					
-		
-				<div class='spec'>Brand: $brand</div>
-        		
-				<div class='spec'>Model #: $model</div>
-				
-		        <div class='spec'>UPC: $upc</div>
-        		
-				
+				<span id='price-range'><a href='#compare'>$price_range</a> ($count $store_word)</span><br/><br/>
+
+
+
+
 				<div class='desc'>$desc</div>
-				
+
 			</div>
 	<div id='pricePromo'>
 	    <div class='promoInfo'>
 	        <a class='price transfer-link' href='' >$$price</a><br/>
-	        <a class='merchant transfer-link' href='/stores/details/$merchant_id' >From $merchant</a>	
+	        <a class='merchant transfer-link' href='/stores/details/$merchant_id' >From $merchant</a>
 	    </div>
 	    <div class='promoButton'>
         <div class='ShopNow'>
@@ -101,20 +98,20 @@ echo "<a id='large-image' href='#'><img class='cdn-image' src='$image' alt='** P
 	</div>
 
 
-        
-          
-    
+
+
+
 	<a name="compare"></a>
 	<table class="matrix" id="matrix-products">
 		<thead>
-			<tr >	
+			<tr >
 				<th class="TH-borderLeft header" >Store Name</th>
 				<th class="header">Store Price</th>
 				<th class="header">Coupons&nbsp;&nbsp;</th>
 				<th class="header"><a class="tooltip">Cash Back <img style="margin: -4px; padding-left: 3px;padding-right:20px;"  alt="** PLEASE DESCRIBE THIS IMAGE **" src="/images/cashback-question.png" width="16" height="16" /><span id="cashbackTip">When
  you shop through BeeSavy at one of our trusted stores, we earn a sales
- commission on anything you purchase from that store. We pass the 
-majority of this commission back to you as "cash back".</span></a></th>	
+ commission on anything you purchase from that store. We pass the
+majority of this commission back to you as "cash back".</span></a></th>
 				<th class="header">Tax &amp; Shipping</th>
 				<th class="header headerSortDown">Beesavy Price</th>
 				<th class="TH-borderRight header">&nbsp;</th>
@@ -162,15 +159,15 @@ echo "<tr class='productList'>
 					    <div class='iconInfo displayNone'><a href='$store_url' title='View Store Information'></a></div>
 					</div>
 					<div class='storeName'>
-                    <a class='transfer-link' target='_blank' href='$url' rel='nofollow'><img class='cdn-image' 
+                    <a class='transfer-link' target='_blank' href='$url' rel='nofollow'><img class='cdn-image'
 onload=\"
         var width=100;
-    var height=32; 
+    var height=32;
     var ratio= Math.min(width/this.width, height/this.height);
-    var nwidth=ratio*this.width; 
-    var nheight=ratio*this.height; 
-    this.width=nwidth; 
-    this.height=nheight;\" 
+    var nwidth=ratio*this.width;
+    var nheight=ratio*this.height;
+    this.width=nwidth;
+    this.height=nheight;\"
                     src='$image' alt='** PLEASE DESCRIBE THIS IMAGE **' onerror='this.src ='../images/no-image-100px.gif''/></a><br/>
 					</div>
 				</td>
@@ -182,7 +179,7 @@ onload=\"
 					<span class='final'>$$final</span><br/>
 					$low</td>
                     <td class='shop-now'>
-   <div class='ShopNow'><div class='BtnShopNow BtnSNOrangeBg'><a class='BtnBlackTxt' target='_blank' href='$url' rel='nofollow'>SHOP NOW</a></div> </div>	
+   <div class='ShopNow'><div class='BtnShopNow BtnSNOrangeBg'><a class='BtnBlackTxt' target='_blank' href='$url' rel='nofollow'>SHOP NOW</a></div> </div>
         </td>
 			</tr>";
 }
@@ -202,7 +199,7 @@ $(document).ready(function() {
     	var element = $(this);
 		element.find('.BtnShopNow').addClass('BtnSNOrangeBg').removeClass('BtnSNOrangeRBg');
     });
-	
+
 	    $("div.ShopNow").mouseover(function () {
         var element = $(this);
  		element.find('.BtnShopNowSep').addClass('BtnSNOrangeRBg').removeClass('BtnSNOrangeBg');
@@ -210,7 +207,7 @@ $(document).ready(function() {
     	var element = $(this);
 		element.find('.BtnShopNowSep').addClass('BtnSNOrangeBg').removeClass('BtnSNOrangeRBg');
     });
-		
+
     $("div.ShopByStore").mouseover(function () {
         var element = $(this);
 		element.find('.nav-ShopByStore-Bt').addClass('BtnSBSOrangeRBg').removeClass('BtnSBSOrangeBg');
@@ -218,7 +215,7 @@ $(document).ready(function() {
     	var element = $(this);
 		element.find('.nav-ShopByStore-Bt').addClass('BtnSBSOrangeBg').removeClass('BtnSBSOrangeRBg');
     });
-	
+
 	    $("div.FindCoupons").mouseover(function () {
         var element = $(this);
 		element.find('.nav-FindCoupons-Bt').addClass('BtnFCOrangeRBg').removeClass('BtnFCOrangeBg');
@@ -226,11 +223,11 @@ $(document).ready(function() {
     	var element = $(this);
 		element.find('.nav-FindCoupons-Bt').addClass('BtnFCOrangeBg').removeClass('BtnFCOrangeRBg');
     });
-	
+
 	});
 </script>
 
-<!-- footer -->  
+<!-- footer -->
 <div style="margin-left:20px;">
 {footer}
 </div>
