@@ -44,9 +44,10 @@
             		<div class="holder osX">
 						<div id="pane1" class="scroll-pane">
         <ul>
+        <li><a href="<?php echo escape('/product/search/?' . http_build_query(['q' => $search]), 'html_attr') ?>">All</a></li>
         <?php foreach ($brands as $item) : ?>
         <?php $brand_url = '/product/search/?' . http_build_query(['q' => $search, 'brand' => $item['id']]) ?>
-        <li><a href="<?php echo escape($brand_url, 'html_attr') ?>"><?php echo escape($item['name']) ?></a> <span class="count"><?php echo escape($item['count'])?></span></li>
+        <li><a href="<?php echo escape($brand_url, 'html_attr') ?>"><?php echo escape($item['name']) ?></a> <span class="count">(<?php echo escape($item['count'])?>)</span></li>
         <?php endforeach ?>
         </ul>
                                     </div></div>
@@ -67,7 +68,7 @@
 <ul class="bullets">
 <?php foreach ($categories as $item) : ?>
 <?php $category_url = '/product/search?' . http_build_query(['q' => $search, 'brand' => $brand, 'category' => $item['id']]) ?>
-<li style="padding-left:5px;"><a href="<?php echo escape($category_url, 'html_attr') ?>"><?php echo escape($item['name']) ?></a> <span class="count"><?php echo escape($item['count']) ?></span></li>
+<li style="padding-left:5px;"><a href="<?php echo escape($category_url, 'html_attr') ?>"><?php echo escape($item['name']) ?></a> <span class="count">(<?php echo escape($item['count']) ?>)</span></li>
 <?php endforeach ?>
 </ul>
 
