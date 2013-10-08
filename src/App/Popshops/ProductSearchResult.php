@@ -109,7 +109,7 @@ class ProductSearchResult implements DomCrawlerInterface
         return array_reduce($this->products->map(function ($product) {
             return $product->getMerchantPrice() ?: 0.00;
         })->toArray(), function ($price1, $price2) {
-            return $price1 < $price2 ? $price1 : $price2;
+            return isset($price1) && $price1 < $price2 ? $price1 : $price2;
         });
     }
 

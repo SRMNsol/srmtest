@@ -142,7 +142,6 @@ function comparison_result(\App\Popshops\ProductSearchResult $result)
             'availability' => null,
             'condition' => null,
             'group_id' => $product->getGroupId(),
-            'num_child_products' => $product->getMerchantCount(),
             'product_url' => $product->getUrl(),
             'retail_amount' => $product->getRetailPrice(),
             'cashback_amount' => 0,
@@ -169,6 +168,7 @@ function comparison_result(\App\Popshops\ProductSearchResult $result)
     $comparison[0]['highest_price'] = $result->getHighestPrice();
     $comparison[0]['lowest_price_half'] = $result->getLowestPrice();
     $comparison[0]['highest_price_half'] = $result->getHighestPrice();
+    $comparison[0]['num_child_products'] = $result->getMerchants()->count();
 
     return $comparison;
 }

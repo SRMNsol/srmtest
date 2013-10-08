@@ -118,7 +118,10 @@ class Product extends Controller
         $client = $this->container['popshops.client'];
         $catalogs = $this->container['popshops.catalog_keys'];
 
-        $params = ['include_deals' => 1];
+        $params = [
+            'include_deals' => 1,
+            'product_sort' => 'price_asc',
+        ];
 
         if (strpos($group_id, '0') === 0) {
             $params['product_id'] = substr($group_id, 1);
