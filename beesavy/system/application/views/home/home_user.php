@@ -3,17 +3,17 @@
 {header}
 <body>
 <div id="container">
-<!-- Header -->	
+<!-- Header -->
  {banner}
 <!-- /Header -->
 
 <!-- Navigation bar -->
 {nav_bar}
 <!-- /Navigation bar -->
-     
-              
-               		
-<!-- Content -->               
+
+
+
+<!-- Content -->
     <!-- Daily Deals -->
     <div>
     <div id="daily-deals-SIcontainer">
@@ -23,93 +23,75 @@
       <div class="seeAll"><a href="/main/deal">See All Deals »</a></div>
       </div>
 
-<?php if(empty($deal_first)){
-    echo "<p style='font-size:1.5em;text-align:center;padding-top:20px;'>Currently gathering daily deals</p>";
-} else { ?> 
-      {deal_first}
-      <div class="HomeDailyDeals" style="margin-top: 15px;">
-        <div class="ProductName"><a class="title" href="{link}" onclick="window.open(this.href); return false;" rel="nofollow"> <strong>{merchant_name}</strong> </a> </div>
-<div class="DealsCt">
-<div class="DealsLogo"><img src="{merchant_thumb}" 
-onload="
-        var width=100;
-    var height=34; 
-    var ratio= Math.min(width/this.width, height/this.height);
-    var nwidth=ratio*this.width; 
-    var nheight=ratio*this.height; 
-    this.width=nwidth; 
-    this.height=nheight;" 
- onerror="this.src='/images/no-image-100px.gif'"
-alt="** PLEASE DESCRIBE THIS IMAGE **"/>
-</div>
-<div class="DealsText">
-    <p><a class="title" href="{link}">{short_name}</a></p>
-</div>
-</div>
-<DIV class="savings-container">
-    <DIV class=percent>{cashback_text}</DIV>
-    <DIV class=savings>Back</DIV>
-</DIV>
-<div style="clear:both;line-height:1px;">&nbsp;</div>
-<div class="expdate"><?php echo $exp_date_short; ?>{exp_date_short}</div>{code}
-<div style="clear:both;line-height:1px;">&nbsp;</div>
-</div>
-      {/deal_first}
-		<div style="background:#c7c7c7;height:2px;width:200px;margin-left:55px;margin-top:25px;margin-bottom:25px;"></div>
-	  {deal_second}
-      <div class="HomeDailyDeals">
-      
-        <div class="ProductName"><a class="title" href="{link}" onclick="window.open(this.href); return false;" rel="nofollow"> <strong>{merchant_name}</strong> </a> </div>
-<div class="DealsCt">
-<div class="DealsLogo"><img src="{merchant_thumb}" 
-onload="
-        var width=100;
-    var height=32; 
-    var ratio= Math.min(width/this.width, height/this.height);
-    var nwidth=ratio*this.width; 
-    var nheight=ratio*this.height; 
-    this.width=nwidth; 
-    this.height=nheight;" 
-         onerror="this.src='/images/no-image-100px.gif'"
-alt="** PLEASE DESCRIBE THIS IMAGE **"/>
-</div>
-<div class="DealsText">
-    <p><a class="title" href="{link}">{short_name}</a></p>
-</div>
-</div>
-<DIV class="savings-container">
-    <DIV class=percent>{cashback_text}</DIV>
-    <div class=savings>back</div>
-</DIV>
-<div style="clear:both;line-height:1px;">&nbsp;</div>
-<div class="expdate">{exp_date_short}</div>{code}
-<div style="clear:both;line-height:1px;">&nbsp;</div>
-</div>
-      {/deal_second}
-<? } ?>
+    <?php if (empty($deals)) : ?>
+    <p style='font-size:1.5em;text-align:center;padding-top:20px;'>Currently gathering daily deals</p>
+    <?php else : ?>
+        <?php $i = 0 ?>
+        <?php foreach ($deals as $deal) : ?>
+        <div class="HomeDailyDeals">
+            <div class="ProductName"><a class="title" href="<?php echo escape($deal['link'], 'html_attr') ?>" onclick="window.open(this.href); return false;" rel="nofollow"> <strong><?php echo escape($deal['merchant_name']) ?></strong> </a></div>
+            <div class="DealsCt">
+                <div class="DealsLogo"><img
+                    src="<?php echo escape($deal['merchant_logo']) ?>"
+                    onload="
+                        var width=100;
+                        var height=34;
+                        var ratio= Math.min(width/this.width, height/this.height);
+                        var nwidth=ratio*this.width;
+                        var nheight=ratio*this.height;
+                        this.width=nwidth;
+                        this.height=nheight;
+                    "
+                    onerror="this.src='/images/no-image-100px.gif'"
+                    alt="** PLEASE DESCRIBE THIS IMAGE **"
+                />
+            </div>
+
+            <div class="DealsText">
+                <p><a class="title" href="<?php echo escape($deal['link'], 'html_attr') ?>"><?php echo escape($deal['name-abrv']) ?></a></p>
+            </div>
+        </div>
+        <div class="savings-container">
+            <div class=percent><?php echo escape($deal['cashback_text']) ?></div>
+                <div class=savings>Back</div>
+            </div>
+            <div style="clear:both;line-height:1px;">&nbsp;</div>
+            <div class="expdate"><?php echo escape($deal['exp_date_short']) ?></div>
+            <?php if ($deal['code']) : ?>
+            <div class="btnCouponCode"><a class="BtnBlackTxt" href="<?php echo escape($deal['link'], 'html_attr') ?>">Coupon: <?php echo escape($deal['code']) ?></a></div>
+            <?php endif ?>
+            <div style="clear:both;line-height:1px;">&nbsp;</div>
+        </div>
+        <?php if ($i < count($deals) - 1) : ?>
+        <div style="background:#c7c7c7;height:2px;width:200px;margin-left:55px;margin-top:5px;margin-bottom:5px;"></div>
+        <?php endif ?>
+        <?php $i++ ?>
+        <?php endforeach ?>
+    <?php endif ?>
+
     </div>
     <!-- /Daily Deals -->
-    
+
     <!-- Top Stores -->
-    <div id="CenterBox">     
-      
+    <div id="CenterBox">
+
         <div id="WelcomeUserBg">
 <div  class="orangegradiant-bg">
 	<div id="cat-left-curve"><img src="/images/cat-orange-left-curve.jpg" width="4" height="35" alt="** PLEASE DESCRIBE THIS IMAGE **"/></div>
-	<div id="cat-right-curve"><img src="/images/cat-orange-right-curve.jpg" width="4" height="35" alt="** PLEASE DESCRIBE THIS IMAGE **"/></div>	
+	<div id="cat-right-curve"><img src="/images/cat-orange-right-curve.jpg" width="4" height="35" alt="** PLEASE DESCRIBE THIS IMAGE **"/></div>
     <div class="title1"><font color=#000>Welcome back!</font></div>
-</div>      
-<div class="inner-outerbox">  
-	  
+</div>
+<div class="inner-outerbox">
+
 	<div class="innerbox">
     <table><tbody><tr><td><strong>Member since:</strong></td><td>{created}</td></tr><tr><td><strong>Last Login:</strong></td><td>{last_login} </td></tr><tr><td><strong>Last Purchase:</strong></td><td><? if(strtotime($last_cashback)){
         echo strftime('%B %e, %Y', strtotime($last_cashback));
     }else{
         echo "-";
     }?></td></tr></tbody></table>
-	</div>          
+	</div>
 <div style="clear:both;height:10px;"></div>
-   
+
 </div>
 </div>
 
@@ -130,31 +112,31 @@ _gwparam["SID"]="{user_id}";
 <script id="grouponAd" type="text/javascript" src="http://www.groupon.com/javascripts/common/affiliate_widget/grouponwidget.js"></script></div>
     </div>
     <!-- /Top stores -->
-    
+
     <!-- Referral Overview -->
     <div id="accounts-summary-container">
 <div class="TotalBox">
 <div  class="blockgradiant-bg">
 	<div id="cat-left-curve"><img src="/images/cat-left-curve.jpg" width="4" height="35" alt="** PLEASE DESCRIBE THIS IMAGE **"/></div>
-	<div id="cat-right-curve"><img src="/images/cat-right-curve.jpg" width="4" height="35" alt="** PLEASE DESCRIBE THIS IMAGE **"/></div>	
+	<div id="cat-right-curve"><img src="/images/cat-right-curve.jpg" width="4" height="35" alt="** PLEASE DESCRIBE THIS IMAGE **"/></div>
 	<div class="title1">Account Summary</div>
-</div>      
-<div class="outerbox">    
+</div>
+<div class="outerbox">
 	<div class="title2">Referral Overview</div>
 	<div class="innerbox">
 {total}
     <table><tbody><tr><td><strong>Level 1 Referrals :</strong></td><td>{referralcountdirect}</td></tr><tr><td><strong>Level 2 to 7 Referrals :</strong></td><td>{referralcountindirect}</td></tr><tr><td><strong>Total Referral Network:</strong></td><td><?php echo $total[0]['referralcountdirect'] + $total[0]['referralcountindirect']?></td></tr></tbody></table>
-	</div>          
+	</div>
 	<div class="title2">Cash Back Overview</div>
 	<div class="innerbox">
     <table><tbody><tr><td><strong>Pending :</strong></td><td>${pending}</td></tr><tr><td><strong>Available :</strong></td><td>${available}</td></tr><tr><td><strong>Processing :</strong></td><td>${processing}</td></tr><tr><td><strong>Paid :</strong></td><td>${paid}</td></tr></tbody></table>
 	{/total}
 	</div>
-   	
+
 <?php if((float)$total[0]['available'] > 10) { ?>
         <div class="Request"><div class="BtnRequestBg BtnRequest"><a class="BtnRequestTxt" href="/account/index/0/2" rel="nofollow">REQUEST A PAYMENT</a></div></div>
         <div class="RequestNote">You can now request a payment!</div>
-<?php } else { 
+<?php } else {
     $dif = number_format(10 - (float)$total[0]['available'],2);
 ?>
 
@@ -162,12 +144,12 @@ _gwparam["SID"]="{user_id}";
         <div class="RequestNote">You need an additional $<? echo $dif ?> to request a payment.</div>
 <?php } ?>
 	<div style="clear:both;height:20px;"></div>
-</div>    
+</div>
 </div>
 </div>
 
-    
-          
+
+
         <!-- Top Stores -->
          <div style="width:930px;margin-left:0px;border:0px solid #00F;float:left;">
     <div id="welcome-top-stores-container">
@@ -175,25 +157,25 @@ _gwparam["SID"]="{user_id}";
        <div id="top-stores" class="h1">Top Stores</div>
 	   <div class="seeAll"><a href="/stores/search">See All Stores »</a></div>
        </div>
-       {stores}	
+       {stores}
  	      <div class="store">
-                  <div class="logo"><a href="/stores/details/{id}"><img class="cdn-image" 
+                  <div class="logo"><a href="/stores/details/{id}"><img class="cdn-image"
 onload="
         var width=100;
-    var height=34; 
+    var height=34;
     var ratio= Math.min(width/this.width, height/this.height);
-    var nwidth=ratio*this.width; 
-    var nheight=ratio*this.height; 
-    this.width=nwidth; 
+    var nwidth=ratio*this.width;
+    var nheight=ratio*this.height;
+    this.width=nwidth;
     this.height=nheight;"  onerror="this.src='/images/no-image-100px.gif'"
 src="{logo_thumb}" alt="{name}"/></a></div>
 		          <div class="cashback"><a href="/stores/details/{id}">{cashback_text} Cash Back</a></div>
 	          </div>
-	   {/stores}    	
+	   {/stores}
     </div>
-    
+
     <!-- /Top stores -->
-    
+
  <!-- Hot Coupons -->
     <div id="hot-coupons-container">
     	<div style="width:100%;height:35px;">
@@ -202,17 +184,17 @@ src="{logo_thumb}" alt="{name}"/></a></div>
       	</div>
       	{coupons}
 	    <div class="Homecoupon">
-            <div class="descimg"><a href='{linkstore}' ><img src="{logo_thumb}" 
+            <div class="descimg"><a href='{linkstore}' ><img src="{logo_thumb}"
 onload="
         var width=100;
-    var height=34; 
+    var height=34;
     var ratio= Math.min(width/this.width, height/this.height);
-    var nwidth=ratio*this.width; 
-    var nheight=ratio*this.height; 
-    this.width=nwidth; 
+    var nwidth=ratio*this.width;
+    var nheight=ratio*this.height;
+    this.width=nwidth;
     this.height=nheight;"  onerror="this.src='/images/no-image-100px.gif'"
 alt="** PLEASE DESCRIBE THIS IMAGE **"/></a></div>
-	        <div class="desc"> <a class="title" href="{linkstore}"  rel="nofollow"> {name-abrv} </a> <br/>{code_prefix}<a class="code" href=""  rel="nofollow">{code}</a> 
+	        <div class="desc"> <a class="title" href="{linkstore}"  rel="nofollow"> {name-abrv} </a> <br/>{code_prefix}<a class="code" href=""  rel="nofollow">{code}</a>
 			</div>
 	        <div style="clear: both;"></div>
       </div>
@@ -223,7 +205,7 @@ alt="** PLEASE DESCRIBE THIS IMAGE **"/></a></div>
 
 
    <!-- /Referral Overview -->
-<!-- /Content -->  
+<!-- /Content -->
     <script>
 $(document).ready(function() {
 	    $("div.ShopByStore").mouseover(function () {
@@ -233,7 +215,7 @@ $(document).ready(function() {
     	var element = $(this);
 		element.find('.nav-ShopByStore-Bt').addClass('BtnSBSOrangeBg').removeClass('BtnSBSOrangeRBg');
     });
-	
+
 	    $("div.Request").mouseover(function () {
         var element = $(this);
  		element.find('.BtnRequestBg').addClass('BtnRequestRBg').removeClass('BtnRequestBg');
@@ -241,7 +223,7 @@ $(document).ready(function() {
     	var element = $(this);
 		element.find('.BtnRequestRBg').addClass('BtnRequestBg').removeClass('BtnRequestRBg');
     });
-	
+
 	    $("div.FindCoupons").mouseover(function () {
         var element = $(this);
 		element.find('.nav-FindCoupons-Bt').addClass('BtnFCOrangeRBg').removeClass('BtnFCOrangeBg');
@@ -249,7 +231,7 @@ $(document).ready(function() {
     	var element = $(this);
 		element.find('.nav-FindCoupons-Bt').addClass('BtnFCOrangeBg').removeClass('BtnFCOrangeRBg');
     });
-	
+
 	    $("div.LogIn").mouseover(function () {
         var element = $(this);
  		element.find('.BtnLogIn').addClass('BtnLogInRBg').removeClass('BtnLogInBg');
@@ -257,7 +239,7 @@ $(document).ready(function() {
     	var element = $(this);
 		element.find('.BtnLogInRBg').addClass('BtnLogInBg').removeClass('BtnLogInRBg');
     });
-	
+
 	    $("div.SignUp").mouseover(function () {
         var element = $(this);
  		element.find('.BtnSignUp').addClass('BtnSignUpRBg').removeClass('BtnSignUpBg');
@@ -265,10 +247,10 @@ $(document).ready(function() {
     	var element = $(this);
 		element.find('.BtnSignUpRBg').addClass('BtnSignUpBg').removeClass('BtnSignUpRBg');
     });
-	
+
 	});
 </script>
-<!-- footer -->  
+<!-- footer -->
 <div id="ftr" >
 <p id="links" style="height: 20px; line-height: 20px;">Copyright &copy; 2011 - <?php echo date('Y'); ?> BeeSavy, LLC. &nbsp;All Rights Reserved. &nbsp;<a href="/stores/storelist">All Stores</a> | <a href="/info/terms">Terms of Service</a> | <a href="/info/privacy">Privacy Policy</a> | <a href="/info/contact">Contact Us</a></p>
 		<a href="http://twitter.com/beesavy" target="_blank" class="socialMedia twitter">Follow Us On Twitter</a>
@@ -276,7 +258,7 @@ $(document).ready(function() {
 		<div style="clear: both;"></div>
 		<p id="disclaimer">Tax and shipping costs are estimates; &nbsp;please see the store's website for exact pricing. &nbsp;BeeSavy does not guarantee the accuracy of information provided by online stores and other third parties, including product information, prices, coupons, and availability. &nbsp;BeeSavy shall not be liable for or responsible to honor any inaccurate information shown on our website. &nbsp;Please see our <a href="/info/terms">Terms of Service</a> for more details.</p>
 	</div>
-   <!-- /footer -->  
+   <!-- /footer -->
   </div>
   </body>
   </html>
