@@ -193,6 +193,7 @@
     <?php if (empty($deals)) : ?>
     <p style='font-size:1.5em;text-align:center;padding-top:20px;'>Currently gathering daily deals</p>
     <?php else : ?>
+        <?php $i = 0 ?>
         <?php foreach ($deals as $deal) : ?>
         <div class="HomeDailyDeals">
             <div class="ProductName"><a class="title" href="<?php echo escape($deal['link'], 'html_attr') ?>" onclick="window.open(this.href); return false;" rel="nofollow"> <strong><?php echo escape($deal['merchant_name']) ?></strong> </a></div>
@@ -228,7 +229,10 @@
             <?php endif ?>
             <div style="clear:both;line-height:1px;">&nbsp;</div>
         </div>
+        <?php if ($i < count($deals) - 1) : ?>
         <div style="background:#c7c7c7;height:2px;width:200px;margin-left:55px;margin-top:5px;margin-bottom:5px;"></div>
+        <?php endif ?>
+        <?php $i++ ?>
         <?php endforeach ?>
     <?php endif ?>
 
