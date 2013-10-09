@@ -98,24 +98,10 @@ class Transfer extends Controller
 
     public function guest($type, $id)
     {
-        $client = $this->container['popshops.client'];
-        $catalogs = $this->container['popshops.catalog_keys'];
-
         if ($type == "store") {
-            $data = current(serialize_merchants($client->findMerchants($catalogs['all_stores'], ['merchant_id' => $id])->getMerchants()));
+            $data = $this->getMerchantData($id);
         } elseif ($type == "product") {
-            list($productGroupId, $productId) = explode('-', $id);
-            $params = [];
-            if (strpos($productGroupId, '0') === '0') {
-                $params['product_id'] = $productId;
-            } else {
-                $params['product_group_id'] = $productGroupId;
-            }
-
-            $data = current(serialize_products($client->findProducts($catalogs['all_stores'], null, $params)->getProducts()->filter(function ($product) use ($productId) {
-                return $product->getId() == $productId;
-            })));
-
+            $data = $this->getProductData($id);
         } elseif ($type == "coupon") {
             $data = $this->cache->library('beesavy', 'getCoupon', array($id), 3600);
         } elseif ($type == "deal") {
@@ -130,16 +116,11 @@ class Transfer extends Controller
         $data['type_id'] = $id;
             $data['referral'] = $this->db_session->userdata('referral');
         $this->parser->parse('transfer/guest', $data);
-
     }
 
     public function store($id)
     {
-        $client = $this->container['popshops.client'];
-        $catalogs = $this->container['popshops.catalog_keys'];
-        $store = current(serialize_merchants($client->findMerchants($catalogs['all_stores'], ['merchant_id' => $id])->getMerchants()));
-
-        $merchant_id = $store['id'];
+        $store = $this->getMerchantData($id);
         $store['cookie_url'] = $store['url'];
         $store['destination_url'] = $store['cookie_url'];
         $this->parser->parse('transfer/store', $store);
@@ -147,24 +128,7 @@ class Transfer extends Controller
 
     public function product($id)
     {
-        $client = $this->container['popshops.client'];
-        $catalogs = $this->container['popshops.catalog_keys'];
-        list($productGroupId, $productId) = explode('-', $id);
-        $params = [];
-        if (strpos($productGroupId, '0') === 0) {
-            $params['product_id'] = $productId;
-        } else {
-            $params['product_group_id'] = $productGroupId;
-        }
-
-        $product = current(serialize_products($client->findProducts($catalogs['all_stores'], null, $params)->getProducts()->filter(function ($product) use ($productId) {
-            if ($product->getId() == $productId) {
-                return $product;
-            }
-        })));
-
-        $merchant_id = $product['merchant_id'];
-        $product_id = $product['id'];
+        $product = $this->getProductData($id);
         $product['cookie_url'] = $product['url'];
         $product['destination_url'] = $product['url'];
         $this->parser->parse('transfer/product', $product);
@@ -187,5 +151,36 @@ class Transfer extends Controller
         $deal['destination_url'] = $deal['product_url'];
         $deal['final_amount'] = number_format((float) $deal['final_amount']-(float) $deal['cashback_amount'], 2);
         $this->parser->parse('transfer/deal', $deal);
+    }
+
+    protected function getProductData($id)
+    {
+        $client = $this->container['popshops.client'];
+        $catalogs = $this->container['popshops.catalog_keys'];
+
+        list($productGroupId, $productId) = explode('-', $id);
+        $params = [];
+        if (strpos($productGroupId, '0') === 0) {
+            $params['product_id'] = $productId;
+        } else {
+            $params['product_group_id'] = $productGroupId;
+        }
+
+        $product = current(array_filter(comparison_result($client->findProducts($catalogs['all_stores'], null, $params)), function ($item) use ($productId) {
+            if ($item['id'] == $productId) {
+                return $item;
+            }
+        }));
+
+        return $product;
+    }
+
+    protected function getMerchantData($id)
+    {
+        $client = $this->container['popshops.client'];
+        $catalogs = $this->container['popshops.catalog_keys'];
+        $merchant = current(serialize_merchants($client->findMerchants($catalogs['all_stores'], ['merchant_id' => $id])->getMerchantDatas()));
+
+        return $merchant;
     }
 }

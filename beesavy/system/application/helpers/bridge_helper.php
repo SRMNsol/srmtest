@@ -110,10 +110,6 @@ function serialize_products(Doctrine\Common\Collections\Collection $products)
             'sales_rank' => 0,
             'score' => 0,
             'image' => $product->getLargeImageUrl(),
-            'url' => $product->getUrl(),
-            'link' => '/transfer/product/' . ($product->getGroupId() ?: '0' . $product->getId()) . '-' . $product->getId(),
-            'merchant_id' => $product->getMerchant() ? $product->getMerchant()->getId() : null,
-            'merchant_name' => $product->getMerchant() ? $product->getMerchant()->getName() : null,
         ];
     })->toArray());
 }
@@ -174,6 +170,7 @@ function comparison_result(\App\Popshops\ProductSearchResult $result)
             'image' => $product->getLargeImageUrl(),
             'thumb' => $product->getLargeImageUrl(),
             'link' => '/transfer/product/' . ($product->getGroupId() ?: '0' . $product->getId()) . '-' . $product->getId(),
+            'url' => $product->getUrl(),
         ];
     }
 
