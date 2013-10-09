@@ -9,7 +9,11 @@
  */
 function silex()
 {
-    $app = require __DIR__ . '/../../../../src/app.php';
+    static $app;
+
+    if (!isset($app)) {
+        $app = require __DIR__ . '/../../../../src/app.php';
+    }
 
     return $app;
 }

@@ -15,20 +15,11 @@
               <div id="nav-right-curve"><img src="/images/nav-right-curve.gif" width="8" height="42" alt="** PLEASE DESCRIBE THIS IMAGE **"/></div>
       </div>
       <div>
-      <div id="catDropdown1" style="float:left;width:921px;height:87px;display: none;">
-      	<ul id="catDropdown">
-		<li><a href="/product/category?category=17" class="col1"><span id="electronics"></span>Electronics</a></li>
-		<li><a href="/product/category?category=22" class="col2"><span id="jewelry"></span>Clothing, Shoes &amp; Jewelry</a></li>
-		<li><a href="/product/category?category=18" class="col3"><span id="garden"></span>Home &amp; Garden</a></li>
-		<li><a href="/product/category?category=2" class="col4"><span id="movies"></span>Movies &amp; Music</a></li>
-		<li><a href="/product/category?category=15" class="col5"><span id="computers"></span>Computer &amp; Office</a></li>
-		<li><a href="/product/category?category=1" class="col6"><span id="books"></span>Books</a></li>
-		<li><a href="/product/category?category=157" class="col1"><span id="video"></span>Video Games</a></li>		
-		<li><a href="/product/category?category=19" class="col2"><span id="flowers"></span>Flowers, Gifts &amp; Gourmet</a></li>
-		<li><a href="/product/category?category=20" class="col3"><span id="health"></span>Health &amp; Beauty</a></li>
-		<li><a href="/product/category?category=24" class="col4"><span id="sports"></span>Sports &amp; Outdoors</a></li>
-		<li><a href="/product/category?category=21" class="col5"><span id="toys"></span>Toys, Kids &amp; Baby</a></li>
-	    <li><a href="/product/category?category=251" class="col6"><span id="auto"></span>Travel</a></li>
-	</ul>
+      <div id="catDropdown1" style="float:left;width:921px;height:320px;display: none;">
+        <ul id="catDropdown">
+            <?php foreach ($categories as $category) : ?>
+            <li><a href="/product/category?category=<?php echo escape($category['id'], 'html_attr') ?>" class="col2" style="width: 210px; padding-left: 10px;"><?php echo escape($category['name']) ?></a></li>
+            <?php endforeach ?>
+        </ul>
     </div>
     </div>
