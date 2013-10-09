@@ -36,6 +36,7 @@ function serialize_merchants(\Doctrine\Common\Collections\Collection $merchants)
             'cashback_text' => '0%',
             'coupons' => $merchant->getDealCount(),
             'link' => '/transfer/store/' . $merchant->getId(),
+            'url' => $merchant->getUrl(),
         ];
     })->toArray());
 }
@@ -109,6 +110,10 @@ function serialize_products(Doctrine\Common\Collections\Collection $products)
             'sales_rank' => 0,
             'score' => 0,
             'image' => $product->getLargeImageUrl(),
+            'url' => $product->getUrl(),
+            'link' => '/transfer/product/' . ($product->getGroupId() ?: '0' . $product->getId()) . '-' . $product->getId(),
+            'merchant_id' => $product->getMerchant() ? $product->getMerchant()->getId() : null,
+            'merchant_name' => $product->getMerchant() ? $product->getMerchant()->getName() : null,
         ];
     })->toArray());
 }
@@ -168,7 +173,7 @@ function comparison_result(\App\Popshops\ProductSearchResult $result)
             'expiration' => $deal ? $deal->getEndOn()->format('M d,Y') : null,
             'image' => $product->getLargeImageUrl(),
             'thumb' => $product->getLargeImageUrl(),
-            'link' => $product->getUrl(),
+            'link' => '/transfer/product/' . ($product->getGroupId() ?: '0' . $product->getId()) . '-' . $product->getId(),
         ];
     }
 

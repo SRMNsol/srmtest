@@ -1,55 +1,66 @@
 <?php
 /**
  */
-class Transfer extends Controller {
+class Transfer extends Controller
+{
+    protected $container;
 
-	function Transfer()	{
-		parent::Controller();
+    public function Transfer()
+    {
+        parent::Controller();
         $this->load->library('beesavy');
         $this->load->model('user');
         $this->load->model('admin');
         $this->load->helper('url_helper');
         $this->load->model('emailer');
         $is_user = $this->user->login_status();
-        if($is_user){
+        if ($is_user) {
             $this->user_id = $this->user->get_field('id');
-        }else{
+        } else {
             $this->user_id = $this->admin->getDefault();
         }
-	}
 
-    public function _remap(){
+        $this->load->helper('bridge');
+        $this->load->helper('escape');
+        $this->container = silex();
+    }
+
+    public function _remap()
+    {
         $type = $this->uri->segment(2);
-        if($type=="login"){
+        if ($type=="login") {
             $this->login();
-        }elseif($type=="register"){
+        } elseif ($type=="register") {
             $this->register();
-        }else{
+        } else {
             $id = $this->uri->segment(3);
             $logged_in = $this->user->login_status();
             $skip = $this->uri->segment(4);
-            if($skip || $logged_in){
+            if ($skip || $logged_in) {
                 $this->$type($id);
-            }else{
+            } else {
                 $this->guest($type, $id);
             }
         }
     }
 
-    function login(){
+    public function login()
+    {
         $type = $this->uri->segment(3);
         $id = $this->uri->segment(4);
         $email = $this->input->post('email');
         $pass = sha1($this->input->post('password'));
         $error = $this->user->login($email, $pass);
-        if($error){
+        if ($error) {
             $code = $error['code'];
             redirect("/transfer/$type/$id?codes=$code");
-        }else{
+        } else {
             redirect("/transfer/$type/$id");
         }
     }
-    function register(){
+
+    public function register()
+    {
         $this->load->helper('string');
         $type = $this->uri->segment(3);
         $id = $this->uri->segment(4);
@@ -60,42 +71,56 @@ class Transfer extends Controller {
 
         #Error check
         $errors = array();
-        if(filter_var($email, FILTER_VALIDATE_EMAIL)==FALSE){
+        if (filter_var($email, FILTER_VALIDATE_EMAIL)==FALSE) {
             $errors[] = $this->code->get_code('invalid_email');
             $email = "";
         }
         if(!$rid = $this->user->check_referral($referral))
             $errors[] = $this->code->get_code('invalid_referral');
-        if(empty($errors)){
+        if (empty($errors)) {
             $error = $this->user->add_user($email, $rid, $pass);
             if($error)
                 $errors[] = $this->code->get_code('general_login');
         }
         #Show page
-        if(empty($errors)){
+        if (empty($errors)) {
             $this->user->login($email,$pass);
             $data = array('email'=>$email, 'password'=>$password);
             $msg = $this->parser->parse('email/joininfo', $data, True);
             $txtmsg = $this->parser->parse('email/joininfot', $data, True);
             $this->emailer->sendMessage($msg, $txtmsg, $data['email'], "BeeSavy - Welcome to BeeSavy");
             redirect("/transfer/$type/$id");
-        }else{
-            $error_str = implode(",",$errors);  
+        } else {
+            $error_str = implode(",",$errors);
             redirect("/transfer/$type/$id?codes=$error_str");
         }
     }
 
-    function guest($type, $id){
-        if($type == "store"){
-			$data = $this->cache->library('beesavy', 'getStore', array($id), 3600);
-        }elseif($type == "product"){
-			$data = $this->cache->library('beesavy', 'compareprices', array($id), 3600);
-            $data = $data[0];
-        }elseif($type == "coupon"){
-			$data = $this->cache->library('beesavy', 'getCoupon', array($id), 3600);
-        }elseif($type == "deal"){
-			$data = $this->cache->library('beesavy', 'getDailyDeals', array($id), 3600);
-        }else{
+    public function guest($type, $id)
+    {
+        $client = $this->container['popshops.client'];
+        $catalogs = $this->container['popshops.catalog_keys'];
+
+        if ($type == "store") {
+            $data = current(serialize_merchants($client->findMerchants($catalogs['all_stores'], ['merchant_id' => $id])->getMerchants()));
+        } elseif ($type == "product") {
+            list($productGroupId, $productId) = explode('-', $id);
+            $params = [];
+            if (strpos($productGroupId, '0') === '0') {
+                $params['product_id'] = $productId;
+            } else {
+                $params['product_group_id'] = $productGroupId;
+            }
+
+            $data = current(serialize_products($client->findProducts($catalogs['all_stores'], null, $params)->getProducts()->filter(function ($product) use ($productId) {
+                return $product->getId() == $productId;
+            })));
+
+        } elseif ($type == "coupon") {
+            $data = $this->cache->library('beesavy', 'getCoupon', array($id), 3600);
+        } elseif ($type == "deal") {
+            $data = $this->cache->library('beesavy', 'getDailyDeals', array($id), 3600);
+        } else {
             show_404();
         }
         $data['code'] = $this->input->get('codes');
@@ -108,36 +133,59 @@ class Transfer extends Controller {
 
     }
 
-    function store($id){
-		$store = $this->cache->library('beesavy', 'getStore', array($id), 3600);
+    public function store($id)
+    {
+        $client = $this->container['popshops.client'];
+        $catalogs = $this->container['popshops.catalog_keys'];
+        $store = current(serialize_merchants($client->findMerchants($catalogs['all_stores'], ['merchant_id' => $id])->getMerchants()));
+
         $merchant_id = $store['id'];
-        $store['cookie_url'] = $this->beesavy->click($merchant_id, $this->user_id, False);
+        $store['cookie_url'] = $store['url'];
         $store['destination_url'] = $store['cookie_url'];
         $this->parser->parse('transfer/store', $store);
     }
-    function product($id){
-		$products = $this->cache->library('beesavy', 'compareprices', array($id), 3600);
-        $product = $products[0];
+
+    public function product($id)
+    {
+        $client = $this->container['popshops.client'];
+        $catalogs = $this->container['popshops.catalog_keys'];
+        list($productGroupId, $productId) = explode('-', $id);
+        $params = [];
+        if (strpos($productGroupId, '0') === 0) {
+            $params['product_id'] = $productId;
+        } else {
+            $params['product_group_id'] = $productGroupId;
+        }
+
+        $product = current(serialize_products($client->findProducts($catalogs['all_stores'], null, $params)->getProducts()->filter(function ($product) use ($productId) {
+            if ($product->getId() == $productId) {
+                return $product;
+            }
+        })));
+
         $merchant_id = $product['merchant_id'];
         $product_id = $product['id'];
-        $product['cookie_url'] = $this->beesavy->click($merchant_id, $this->user_id, $product_id);
-        $product['destination_url'] = $product['product_url'];
+        $product['cookie_url'] = $product['url'];
+        $product['destination_url'] = $product['url'];
         $this->parser->parse('transfer/product', $product);
     }
-    function coupon($id){
-		$coupon = $this->cache->library('beesavy', 'getCoupon', array($id), 3600);
+
+    public function coupon($id)
+    {
+        $coupon = $this->cache->library('beesavy', 'getCoupon', array($id), 3600);
         $merchant_id = $coupon['merchant_id'];
         $coupon['cookie_url'] = $this->beesavy->click($merchant_id, $this->user_id, False);
         $coupon['destination_url'] = $coupon['cookie_url'];
         $this->parser->parse('transfer/coupon', $coupon);
     }
-    function deal($id){
-		$deal = $this->cache->library('beesavy', 'getDailyDeals', array($id), 3600);
+
+    public function deal($id)
+    {
+        $deal = $this->cache->library('beesavy', 'getDailyDeals', array($id), 3600);
         $merchant_id = $deal['merchant_id'];
         $deal['cookie_url'] = $this->beesavy->click($merchant_id, $this->user_id, False);
         $deal['destination_url'] = $deal['product_url'];
-        $deal['final_amount'] = number_format((float)$deal['final_amount']-(float)$deal['cashback_amount'], 2);
+        $deal['final_amount'] = number_format((float) $deal['final_amount']-(float) $deal['cashback_amount'], 2);
         $this->parser->parse('transfer/deal', $deal);
     }
 }
-?>
