@@ -23,11 +23,18 @@ class Product extends Controller
     public function check_store($store)
     {
         $this->load->helper('url');
-        $arr = array('name'=>$store);
-        $res = $this->db->get_where('store', $arr);
-        $res = $res->result_array();
-        if (!empty($res)) {
-            redirect('/stores/details/'.$res[0]['id']);
+
+        $client = $this->container['popshops.client'];
+        $catalogs = $this->container['popshops.catalog_keys'];
+
+        $matches = $client->findMerchants($catalogs['all_stores'])->getMerchants()->filter(function ($merchant) use ($store) {
+            if (strtolower($store) === strtolower($merchant->getName())) {
+                return $merchant;
+            }
+        });
+
+        if ($matches->count() > 0) {
+            redirect('/stores/details/' . $matches->current()->getId());
         }
     }
 
