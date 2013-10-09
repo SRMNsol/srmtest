@@ -8,7 +8,6 @@ class Main extends Controller
     public function Main()
     {
         parent::Controller();
-        $this->load->library('beesavy');
         $this->load->model('user');
 
         $this->load->helper('bridge');
@@ -41,12 +40,6 @@ class Main extends Controller
             unset($data['id']);
         }
         $this->parser->parse($home['page'], $data);
-    }
-
-    public function test()
-    {
-        $id = 86558;
-        $this->beesavy->processPayment($id);
     }
 
     public function deal()

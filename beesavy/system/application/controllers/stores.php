@@ -6,7 +6,6 @@ class Stores extends Controller
     public function Stores()
     {
         parent::Controller();
-        $this->load->library('beesavy');
         parse_str($_SERVER['QUERY_STRING'],$_GET);
         $this->load->helper('bridge');
         $this->load->helper('escape');
@@ -63,25 +62,6 @@ class Stores extends Controller
 
         $this->load->vars($data);
         $this->parser->parse('store/store', $data);
-    }
-
-    public function set_list()
-    {
-        $search = $this->input->get('q');
-        $category = $this->input->get('category');
-        $page = $this->input->get('page');
-        $sort = $this->input->get('sort');
-        $limit = $this->input->get('limit');
-        $search_results2 = $this->cache->library('beesavy', 'listStore', array($search,$page,$sort, 10000,$category), 3600);
-        $store_list = $search_results2['stores'];
-        $q = "delete from store";
-        $this->db->query($q);
-        foreach ($store_list as $store) {
-            $id = addslashes($store['id']);
-            $name = addslashes($store['name']);
-            $q = "insert into store (id, name) select '$id', '$name';";
-            $this->db->query($q);
-        }
     }
 
     public function _get_list()

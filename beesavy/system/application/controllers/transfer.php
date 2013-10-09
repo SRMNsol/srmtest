@@ -8,7 +8,6 @@ class Transfer extends Controller
     public function Transfer()
     {
         parent::Controller();
-        $this->load->library('beesavy');
         $this->load->model('user');
         $this->load->model('admin');
         $this->load->helper('url_helper');

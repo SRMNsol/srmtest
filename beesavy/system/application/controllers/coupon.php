@@ -8,8 +8,6 @@ class Coupon extends Controller
     public function Coupon()
     {
         parent::Controller();
-        $this->load->library('simple');
-        $this->load->library('beesavy');
         parse_str($_SERVER['QUERY_STRING'],$_GET);
         $css = array('pagination.css', 'scroll-styles/jScrollPane.css',
             'shopping.css', 'results.css', 'jquery/scroll.css','product.css');
