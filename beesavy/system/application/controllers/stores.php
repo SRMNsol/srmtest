@@ -144,10 +144,11 @@ class Stores extends Controller
 
         $this->parser->parse('store/search', $data);
     }
+
     public function storelist()
     {
         $search = $this->uri->segment(3);
-        if (!$search) {
+        if (!isset($search)) {
             $search = "A";
         }
         //Grab information
@@ -159,8 +160,13 @@ class Stores extends Controller
         $sort = '';
 
         //Run the search query
-        $search_results = $this->beesavy->listStore($search,$page,$sort, $limit,$category);
-        $stores = $search_results['stores'];
+        $client = $this->container['popshops.client'];
+        $catalogs = $this->container['popshops.catalog_keys'];
+
+        $result = $client->findMerchants($catalogs['all_stores']);
+        $merchants = $result->getMerchants()->filterByNamePrefix($search === '0' ? '*' : $search);
+        $stores = serialize_merchants($merchants->slice($limit * ($page - 1), $limit));
+
         $count = count($stores)/3;
         $split = array_chunk($stores,$count);
 
