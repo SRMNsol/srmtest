@@ -61,9 +61,9 @@ class MerchantCommand extends Command
             $table->render($output);
 
             if ($input->getOption('filters')) {
-                $table->setHeaders(['Merchant Type', 'Count']);
+                $table->setHeaders(['Merchant Type']);
                 $table->setRows($result->getMerchantTypes()->map(function ($merchantType) {
-                    return [$merchantType->getName(), $merchantType->getProductCount()];
+                    return [$merchantType->getName()];
                 })->toArray());
                 $table->render($output);
             }
