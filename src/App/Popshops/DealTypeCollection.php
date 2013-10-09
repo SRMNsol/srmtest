@@ -9,7 +9,7 @@ class DealTypeCollection extends ArrayCollection implements DomCrawlerInterface
 {
     use TotalCountTrait;
 
-    public function __construct($node)
+    public function __construct($node = [])
     {
         parent::__construct(is_array($node) ? $node : []);
         if ($node instanceof Crawler) {

@@ -20,11 +20,17 @@ class Stores extends Controller
         $limit=10;
 
         //Run the search query
-        $store_search = $this->cache->library('beesavy', 'get_hot_stores_rand', array(8), 3600);
-        $store = $this->cache->library('beesavy', 'getStore', array($id), 3600);
-        $store['coupon_info'] = $this->beesavy->listCoupon($store['id'],'','','');
-        $store['coupons'] =$store['coupon_info']['coupons'];
-        $top_stores = $store_search['stores'];
+        $client = $this->container['popshops.client'];
+        $catalogs = $this->container['popshops.catalog_keys'];
+
+        $result = $client->findMerchants($catalogs['all_stores'], ['merchant_id' => $id]);
+        $store_search = random_slice(serialize_merchants($client->findMerchants($catalogs['all_stores'])->getMerchants()), 8);
+        $store = current(serialize_merchants($result->getMerchants()));
+
+        $store['coupons'] = serialize_deals($result->getDeals());
+        $store['restrictions'] = null;
+
+        $top_stores = $store_search;
         foreach ($store['coupons'] as &$coupon) {
             if ($coupon['code']!='') {
                 $coupon['action_text']='CLICK TO COPY';

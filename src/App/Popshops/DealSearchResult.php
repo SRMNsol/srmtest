@@ -20,7 +20,7 @@ class DealSearchResult
     public function __construct(Crawler $node = null)
     {
         $this->deals = new DealCollection();
-        $this->dealTypes = new ArrayCollection();
+        $this->dealTypes = new DealTypeCollection();
         $this->merchants = new ArrayCollection();
         $this->merchantTypes = new ArrayCollection();
         $this->networks = new ArrayCollection();

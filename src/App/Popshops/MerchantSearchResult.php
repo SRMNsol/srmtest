@@ -7,6 +7,8 @@ use Symfony\Component\DomCrawler\Crawler;
 
 class MerchantSearchResult
 {
+    use DealsTrait;
+
     protected $merchants;
     protected $merchantTypes;
 

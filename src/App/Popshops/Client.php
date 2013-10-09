@@ -90,7 +90,7 @@ class Client
             'deal_offset' => 0,
         ];
 
-        $crawler = $this->request(['deals.xml{?catalog_key,deal_type_id,deal_limit,deal_offset,end_on_max}', $params]);
+        $crawler = $this->request(['deals.xml{?' . implode(',', array_keys($params))  . '}', $params]);
 
         return new DealSearchResult($crawler);
     }
@@ -108,18 +108,20 @@ class Client
         ]);
 
         $merchants = new MerchantCollection($crawlers[0]);
-        $deals = new DealSearchResult($crawlers[1]);
-        $deals->getMerchants()->forAll(function ($id, $relMerchant) use ($merchants) {
+        $dealResult = new DealSearchResult($crawlers[1]);
+        $dealResult->getMerchants()->forAll(function ($id, $relMerchant) use ($merchants) {
             if ($merchants->containsKey($relMerchant->getId())) {
                 $merchants[$relMerchant->getId()]->setDealCount($relMerchant->getDealCount());
             }
             return true;
         });
-        $products = new ProductSearchResult($crawlers[2]);
+        $productResult = new ProductSearchResult($crawlers[2]);
 
         $result = new MerchantSearchResult();
         $result->setMerchants($merchants);
-        $result->setMerchantTypes($products->getMerchantTypes());
+        $result->setMerchantTypes($productResult->getMerchantTypes());
+        $result->setDeals($dealResult->getDeals());
+        $result->setDealTypes($dealResult->getDealTypes());
 
         return $result;
     }
