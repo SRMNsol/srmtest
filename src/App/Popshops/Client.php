@@ -86,6 +86,7 @@ class Client
         $params = [
             'catalog_key' => $catalogKey,
         ] + $params + [
+            'include_deal_ids' => 1,
             'deal_limit' => 25,
             'deal_offset' => 0,
         ];
@@ -97,13 +98,12 @@ class Client
 
     public function findMerchants($catalogKey, array $params = [])
     {
-        $params = [
-            'catalog_key' => $catalogKey,
-        ] + $params;
+        $merchantParams = ['catalog_key' => $catalogKey] + $params;
+        $dealParams = ['catalog_key' => $catalogKey, 'include_deal_ids' => 1] + $params;
 
         $crawlers = $this->parallelRequests([
-            ['merchants.xml{?' . implode(',', array_keys($params)) . '}', $params],
-            ['deals.xml{?' . implode(',', array_keys($params)) . '}', $params],
+            ['merchants.xml{?' . implode(',', array_keys($merchantParams)) . '}', $merchantParams],
+            ['deals.xml{?' . implode(',', array_keys($dealParams)) . '}', $dealParams],
             ['products.xml{?catalog_key}', ['catalog_key' => $catalogKey]],
         ]);
 

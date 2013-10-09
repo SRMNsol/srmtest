@@ -10,6 +10,7 @@ class Deal implements DomCrawlerInterface
     use MerchantTrait;
     use DealCountTrait;
 
+    protected $id;
     protected $name;
     protected $description;
     protected $url;
@@ -26,6 +27,18 @@ class Deal implements DomCrawlerInterface
         if (isset($node)) {
             $this->populateFromCrawler($node);
         }
+    }
+
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
     }
 
     public function getName()
@@ -119,6 +132,7 @@ class Deal implements DomCrawlerInterface
 
     public function populateFromCrawler(Crawler $node)
     {
+        $this->setId($node->attr('id'));
         $this->setName($node->attr('name'));
         $this->setDescription($node->attr('description'));
         $this->setUrl($node->attr('url'));

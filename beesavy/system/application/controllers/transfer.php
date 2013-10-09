@@ -103,9 +103,9 @@ class Transfer extends Controller
         } elseif ($type == "product") {
             $data = $this->getProductData($id);
         } elseif ($type == "coupon") {
-            $data = $this->cache->library('beesavy', 'getCoupon', array($id), 3600);
+            $data = $this->getDealData($id);
         } elseif ($type == "deal") {
-            $data = $this->cache->library('beesavy', 'getDailyDeals', array($id), 3600);
+            $data = $this->getDealData($id);
         } else {
             show_404();
         }
@@ -136,20 +136,18 @@ class Transfer extends Controller
 
     public function coupon($id)
     {
-        $coupon = $this->cache->library('beesavy', 'getCoupon', array($id), 3600);
-        $merchant_id = $coupon['merchant_id'];
-        $coupon['cookie_url'] = $this->beesavy->click($merchant_id, $this->user_id, False);
-        $coupon['destination_url'] = $coupon['cookie_url'];
+        $coupon = $this->getDealData($id);
+        $coupon['cookie_url'] = $coupon['url'];
+        $coupon['destination_url'] = $coupon['url'];
         $this->parser->parse('transfer/coupon', $coupon);
     }
 
     public function deal($id)
     {
-        $deal = $this->cache->library('beesavy', 'getDailyDeals', array($id), 3600);
-        $merchant_id = $deal['merchant_id'];
-        $deal['cookie_url'] = $this->beesavy->click($merchant_id, $this->user_id, False);
-        $deal['destination_url'] = $deal['product_url'];
-        $deal['final_amount'] = number_format((float) $deal['final_amount']-(float) $deal['cashback_amount'], 2);
+        $deal = $this->getDealData($id);
+        $deal['cookie_url'] = $deal['url'];
+        $deal['destination_url'] = $deal['url'];
+        $deal['final_amount'] = 0.00;
         $this->parser->parse('transfer/deal', $deal);
     }
 
@@ -179,8 +177,25 @@ class Transfer extends Controller
     {
         $client = $this->container['popshops.client'];
         $catalogs = $this->container['popshops.catalog_keys'];
+
         $merchant = current(serialize_merchants($client->findMerchants($catalogs['all_stores'], ['merchant_id' => $id])->getMerchantDatas()));
 
         return $merchant;
+    }
+
+    protected function getDealData($id)
+    {
+        $client = $this->container['popshops.client'];
+        $catalogs = $this->container['popshops.catalog_keys'];
+
+        list($dealId, $merchantId) = explode('-', $id);
+
+        $deal = current(serialize_deals($client->findMerchants($catalogs['all_stores'], ['merchant_id' => $merchantId])->getDeals()->filter(function ($deal) use ($dealId) {
+            if ($deal->getId() == $dealId) {
+                return $deal;
+            }
+        })));
+
+        return $deal;
     }
 }

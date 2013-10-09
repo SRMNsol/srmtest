@@ -61,27 +61,30 @@ function serialize_merchant_types(Doctrine\Common\Collections\Collection $mercha
 function serialize_deals(\Doctrine\Common\Collections\Collection $deals)
 {
     return array_values($deals->map(function (\App\Popshops\Deal $deal) {
+        $merchant = $deal->getMerchant();
+
         return [
-            'id' => null,
-            'cid' => null,
-            'merchant_id' => $deal->getMerchant()->getId(),
+            'id' => $deal->getId(),
+            'cid' => $deal->getId() . '-' . ($merchant ? $merchant->getId() : 0),
+            'merchant_id' => $merchant ? $merchant->getId() : null,
             'name' => $deal->getName(),
             'code' => $deal->getCode(),
-            'link' => '/transfer/coupon/' . $deal->getUrl(),
+            'link' => '/transfer/coupon/' . $deal->getId() . '-' . ($merchant ? $merchant->getId() : 0),
             'cashback_flat' => 0,
             'cashback_percent' => 0,
-            'logo' => $deal->getMerchant()->getLogoUrl(),
-            'logo_thumb' => $deal->getMerchant()->getLogoUrl(),
-            'merchant_name' => $deal->getMerchant()->getName(),
-            'merchant_logo' => $deal->getMerchant()->getLogoUrl(),
+            'logo' => $merchant ? $merchant->getLogoUrl() : null,
+            'logo_thumb' => $merchant ? $merchant->getLogoUrl() : null,
+            'merchant_name' => $merchant ? $merchant->getName() : null,
+            'merchant_logo' => $merchant ? $merchant->getLogoUrl() : null,
             'end_date' => $deal->getEndOn()->format('m/d/Y'),
             'restrictions' => $deal->getDescription(),
             'code_prefix' => 'Coupon: ',
             'cashback_text' => '0%',
-            'linkstore' => '/stores/details/' . $deal->getMerchant()->getId(),
+            'linkstore' => '/stores/details/' . ($merchant ? $merchant->getId() : null),
             'name-abrv' => truncate_str($deal->getName()),
             'exp_date_short' => $deal->getEndOn()->diff(new DateTime())->format('Expires in %a days'),
             'expiration' => $deal->getEndOn()->format('M d, Y'),
+            'url' => $deal->getUrl(),
         ];
     })->toArray());
 }
