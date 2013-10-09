@@ -44,11 +44,11 @@
             		<div class="holder osX">
 						<div id="pane1" class="scroll-pane">
         <ul>
-        <li><a href="<?php echo escape('/product/search/?' . http_build_query(['q' => $search]), 'html_attr') ?>">All</a></li>
-        <?php foreach ($brands as $item) : ?>
-        <?php $brand_url = '/product/search/?' . http_build_query(['q' => $search, 'brand' => $item['id']]) ?>
-        <li><a href="<?php echo escape($brand_url, 'html_attr') ?>"><?php echo escape($item['name']) ?></a> <span class="count">(<?php echo escape($item['count'])?>)</span></li>
-        <?php endforeach ?>
+            <li><a href="<?php echo escape('/product/search/?' . http_build_query(['q' => $search]), 'html_attr') ?>">All</a></li>
+            <?php foreach ($brands as $item) : ?>
+            <?php $brand_url = '/product/search/?' . http_build_query(['q' => $search, 'brand' => $item['id']]) ?>
+            <li><a href="<?php echo escape($brand_url, 'html_attr') ?>"><?php echo escape($item['name']) ?></a> <span class="count">(<?php echo escape($item['count'])?>)</span></li>
+            <?php endforeach ?>
         </ul>
                                     </div></div>
                 <br style="clear: both;"/>
@@ -94,7 +94,7 @@
     <div id="refine">
         <div id="sort"><label>Sort By:</label>&nbsp;&nbsp;
         <select name="sort" id="sortField">
-            <option value="" selected="selected">Relevance</option>
+            <option value="">Relevance</option>
             <option value="price_asc" >Price (Lowest)</option>
             <option value="price_desc" >Price (Highest)</option>
         </select>
