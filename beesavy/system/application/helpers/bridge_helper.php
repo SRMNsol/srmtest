@@ -78,11 +78,11 @@ function serialize_deals(\Doctrine\Common\Collections\Collection $deals)
             'merchant_logo' => $merchant ? $merchant->getLogoUrl() : null,
             'end_date' => $deal->getEndOn()->format('m/d/Y'),
             'restrictions' => $deal->getDescription(),
-            'code_prefix' => 'Coupon: ',
+            'code_prefix' => $deal->getCode() ? 'Coupon: ' : '',
             'cashback_text' => '0%',
             'linkstore' => '/stores/details/' . ($merchant ? $merchant->getId() : null),
             'name-abrv' => truncate_str($deal->getName()),
-            'exp_date_short' => $deal->getEndOn()->diff(new DateTime())->format('Expires in %a days'),
+            'exp_date_short' => $deal->getEndOn() < new \DateTime('1 month') ? $deal->getEndOn()->diff(new DateTime())->format('Expires in %a days') : '',
             'expiration' => $deal->getEndOn()->format('M d, Y'),
             'url' => $deal->getUrl(),
         ];
