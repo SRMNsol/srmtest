@@ -1,3 +1,4 @@
 data/*.sql*
 public/*
 !public/index.php
+!public/styles/results.css
