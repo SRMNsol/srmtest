@@ -2,12 +2,13 @@
 debug: false
 
 # resources
-template_dir: %root_dir%/views
-log_dir:      %root_dir%/data/log
-cache_dir:    %root_dir%/data/cache
-assets_dir:   %root_dir%/assets
-web_dir:      %root_dir%/web
-twbs_dir:     %root_dir%/vendor/twbs/bootstrap
+template_dir:     %root_dir%/views
+log_dir:          %root_dir%/data/log
+cache_dir:        %root_dir%/data/cache
+assets_dir:       %root_dir%/assets
+web_dir:          %root_dir%/web
+twbs_dir:         %root_dir%/vendor/twbs/bootstrap
+legacy_cache_dir: %root_dir%/beesavy/system/application/cache
 
 # popshops
 popshops.public_key: 7otijzbtj2q6uv4hhlwcz58ua
