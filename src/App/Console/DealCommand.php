@@ -53,7 +53,11 @@ class DealCommand extends Command
         });
         $dealType = count($dealTypes) > 0 ? $dealTypes->current() : null;
 
-        $result = $popshops->findDeals($catalogs[$catalog], $dealType, $keywords);
+        $result = $popshops->findDeals($catalogs[$catalog], [
+            'deal_type_id' => $dealType ? $dealType->getId() : null,
+            'keywords' => $keywords,
+        ]);
+
         if (count($result->getDeals()) > 0) {
             $table = $this->getHelperSet()->get('table');
 

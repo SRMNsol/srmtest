@@ -9,19 +9,18 @@ class DealSearchResult
 {
     use DealCountTrait;
     use DealsTrait;
+    use MerchantsTrait;
 
     protected $keywords;
     protected $limit;
     protected $offset;
-    protected $merchants;
-    protected $merchantTypes;
     protected $networks;
 
     public function __construct(Crawler $node = null)
     {
         $this->deals = new DealCollection();
         $this->dealTypes = new DealTypeCollection();
-        $this->merchants = new ArrayCollection();
+        $this->merchants = new MerchantCollection();
         $this->merchantTypes = new ArrayCollection();
         $this->networks = new ArrayCollection();
 
@@ -64,16 +63,6 @@ class DealSearchResult
         $this->offset = $offset;
 
         return $this;
-    }
-
-    public function getMerchants()
-    {
-        return $this->merchants;
-    }
-
-    public function getMerchantTypes()
-    {
-        return $this->merchantTypes;
     }
 
     public function getNetworks()

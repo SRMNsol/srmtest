@@ -52,7 +52,7 @@ class PopshopsProvider implements ServiceProviderInterface
                 $app['popshops.log_plugin']
             ]);
 
-            return PopshopsClient::create($app['popshops.public_key'], $plugins);
+            return PopshopsClient::create($app['popshops.public_key'], $app['orm.em'], $plugins);
         });
     }
 

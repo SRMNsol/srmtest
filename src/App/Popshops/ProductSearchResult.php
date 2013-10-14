@@ -8,14 +8,13 @@ use Symfony\Component\DomCrawler\Crawler;
 class ProductSearchResult implements DomCrawlerInterface
 {
     use DealsTrait;
+    use MerchantsTrait;
 
     protected $keywords;
     protected $limit;
     protected $offset;
     protected $products;
     protected $priceRanges;
-    protected $merchants;
-    protected $merchantTypes;
     protected $brands;
     protected $suggestedMerchants;
     protected $networks;
@@ -24,7 +23,7 @@ class ProductSearchResult implements DomCrawlerInterface
     {
         $this->products = new ProductCollection();
         $this->priceRanges = new ArrayCollection();
-        $this->merchants = new ArrayCollection();
+        $this->merchants = new MerchantCollection();
         $this->merchantTypes = new ArrayCollection();
         $this->brands = new ArrayCollection();
         $this->suggestedMerchants= new ArrayCollection();
@@ -81,16 +80,6 @@ class ProductSearchResult implements DomCrawlerInterface
     public function getPriceRanges()
     {
         return $this->priceRanges;
-    }
-
-    public function getMerchants()
-    {
-        return $this->merchants;
-    }
-
-    public function getMerchantTypes()
-    {
-        return $this->merchantTypes;
     }
 
     public function getBrands()

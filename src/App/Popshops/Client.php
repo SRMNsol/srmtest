@@ -5,17 +5,20 @@ namespace App\Popshops;
 use Guzzle\Http\Client as HttpClient;
 use Symfony\Component\DomCrawler\Crawler;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\EntityManager;
 
 class Client
 {
     protected $client;
+    protected $em;
 
-    public function __construct(HttpClient $client)
+    public function __construct(HttpClient $client, EntityManager $em)
     {
         $this->client = $client;
+        $this->em = $em;
     }
 
-    public static function create($publicKey, array $plugins = [])
+    public static function create($publicKey, EntityManager $em, array $plugins = [])
     {
         $client = new HttpClient('http://api.popshops.com/v2/{publicKey}', ['publicKey' => $publicKey]);
 
@@ -23,7 +26,7 @@ class Client
             $client->addSubscriber($plugin);
         }
 
-        return new self($client);
+        return new self($client, $em);
     }
 
     protected function request($path)
