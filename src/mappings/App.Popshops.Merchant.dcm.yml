@@ -1,0 +1,15 @@
+# Merchant
+App\Popshops\Merchant:
+  type: entity
+  id:
+    id:
+      type: integer
+  fields:
+    networkMerchantId:
+      type: integer
+    name:
+      type: string
+    logoUrl:
+      type: string
+    url:
+      type: string
