@@ -15,6 +15,12 @@ class Merchant implements DomCrawlerInterface
     protected $name;
     protected $logoUrl;
     protected $url;
+    protected $description;
+    protected $cashbackRate = 0.00;
+    protected $cashbackType;
+
+    const CASHBACK_TYPE_FIXED = 'fixed';
+    const CASHBACK_TYPE_PERCENTAGE = 'percentage';
 
     public function __construct(Crawler $node = null)
     {
@@ -93,6 +99,71 @@ class Merchant implements DomCrawlerInterface
         $this->url = $url;
 
         return $this;
+    }
+
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    public function setDescription($text)
+    {
+        $this->description = $text;
+
+        return $this;
+    }
+
+    public function getCashbackRate()
+    {
+        return $this->cashbackRate;
+    }
+
+    public function setCashbackRate($value)
+    {
+        $this->cashbackRate = (float) $value;
+
+        return $this;
+    }
+
+    public function getCashbackType()
+    {
+        return $this->cashbackType;
+    }
+
+    public function setCashbackType($value)
+    {
+        $this->cashbackType = $value;
+
+        return $this;
+    }
+
+    public function getCashbackRateText($sharePct = 100, $currency = '$')
+    {
+        $text = number_format($this->cashbackRate * ($share / 100), 2);
+        $text = preg_replace('/\.00$/', '', $text);
+
+        switch ($this->cashbackType) {
+            case self::CASHBACK_TYPE_FIXED :
+                return $currency . $text;
+            case self::CASHBACK_TYPE_PERCENTAGE :
+                return $text . '%';
+        }
+
+        return null;
+    }
+
+    public function calculateFinalPrice($price, $sharePct = 100)
+    {
+        $rate = $this->cashbackRate * ($share / 100);
+
+        switch ($this->cashbackType) {
+            case self::CASHBACK_TYPE_FIXED :
+                return $price - $rate;
+            case self::CASHBACK_TYPE_PERCENTAGE :
+                return $price * ($rate / 100);
+        }
+
+        return $price;
     }
 
     public function populateFromCrawler(Crawler $node)

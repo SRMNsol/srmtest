@@ -13,3 +13,10 @@ App\Popshops\Merchant:
       type: string
     url:
       type: string
+    description:
+      type: string(500)
+    cashbackRate:
+      type: decimal
+      scale: 2
+    cashbackType:
+      type: string(10)
