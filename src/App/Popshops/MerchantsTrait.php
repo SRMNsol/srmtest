@@ -3,12 +3,14 @@
 namespace App\Popshops;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\EntityManager;
 use Symfony\Component\DomCrawler\Crawler;
 
 trait MerchantsTrait
 {
     protected $merchants;
     protected $merchantTypes;
+    protected $em;
 
     public function getMerchants()
     {
@@ -30,6 +32,18 @@ trait MerchantsTrait
     public function setMerchantTypes(ArrayCollection $merchantTypes)
     {
         $this->merchantTypes = $merchantTypes;
+
+        return $this;
+    }
+
+    public function getEntityManager()
+    {
+        return $this->em;
+    }
+
+    public function setEntityManager(EntityManager $em = null)
+    {
+        $this->em = $em;
 
         return $this;
     }

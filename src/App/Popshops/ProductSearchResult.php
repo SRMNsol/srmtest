@@ -3,6 +3,7 @@
 namespace App\Popshops;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\EntityManager;
 use Symfony\Component\DomCrawler\Crawler;
 
 class ProductSearchResult implements DomCrawlerInterface
@@ -19,7 +20,7 @@ class ProductSearchResult implements DomCrawlerInterface
     protected $suggestedMerchants;
     protected $networks;
 
-    public function __construct(Crawler $node = null)
+    public function __construct(Crawler $node = null, EntityManager $em = null)
     {
         $this->products = new ProductCollection();
         $this->priceRanges = new ArrayCollection();
@@ -30,6 +31,7 @@ class ProductSearchResult implements DomCrawlerInterface
         $this->networks = new ArrayCollection();
         $this->deals = new DealCollection();
         $this->dealTypes = new ArrayCollection();
+        $this->em = $em;
 
         if (isset($node)) {
             $this->populateFromCrawler($node);

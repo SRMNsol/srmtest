@@ -57,7 +57,7 @@ class Client
             'catalog_key' => $catalogKey,
         ]]);
 
-        return new MerchantSearchResult($crawler);
+        return new MerchantSearchResult($crawler, $this->em);
     }
 
     public function findProducts($catalogKey, $keywords = null, array $params = [])
@@ -74,7 +74,7 @@ class Client
 
         $crawler = $this->request(['products.xml{?' . implode(',', array_keys($params)) . '}', $params]);
 
-        return new ProductSearchResult($crawler);
+        return new ProductSearchResult($crawler, $this->em);
     }
 
     public function getDealTypes()
@@ -96,7 +96,7 @@ class Client
 
         $crawler = $this->request(['deals.xml{?' . implode(',', array_keys($params))  . '}', $params]);
 
-        return new DealSearchResult($crawler);
+        return new DealSearchResult($crawler, $this->em);
     }
 
     public function findMerchants($catalogKey, array $params = [])
@@ -110,9 +110,9 @@ class Client
             ['products.xml{?catalog_key}', ['catalog_key' => $catalogKey]],
         ]);
 
-        $merchantResult = new MerchantSearchResult($crawlers[0]);
-        $dealResult = new DealSearchResult($crawlers[1]);
-        $productResult = new ProductSearchResult($crawlers[2]);
+        $merchantResult = new MerchantSearchResult($crawlers[0], $this->em);
+        $dealResult = new DealSearchResult($crawlers[1], $this->em);
+        $productResult = new ProductSearchResult($crawlers[2], $this->em);
 
         $merchantResult->setMerchantTypes($productResult->getMerchantTypes());
         $merchantResult->setDeals($dealResult->getDeals());
