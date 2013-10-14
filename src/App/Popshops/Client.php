@@ -12,10 +12,22 @@ class Client
     protected $client;
     protected $em;
 
-    public function __construct(HttpClient $client, EntityManager $em)
+    public function __construct(HttpClient $client, EntityManager $em = null)
     {
         $this->client = $client;
         $this->em = $em;
+    }
+
+    public function getEntityManager()
+    {
+        return $this->em;
+    }
+
+    public function setEntityManager(EntityManager $em = null)
+    {
+        $this->em = $em;
+
+        return $this;
     }
 
     public static function create($publicKey, EntityManager $em, array $plugins = [])

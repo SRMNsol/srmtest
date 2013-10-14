@@ -17,7 +17,7 @@ class Merchant implements DomCrawlerInterface
     protected $url;
     protected $description;
     protected $cashbackRate = 0.00;
-    protected $cashbackType;
+    protected $cashbackType = self::CASHBACK_TYPE_FIXED;
 
     const CASHBACK_TYPE_FIXED = 'fixed';
     const CASHBACK_TYPE_PERCENTAGE = 'percentage';
@@ -173,8 +173,14 @@ class Merchant implements DomCrawlerInterface
         $this->setName($node->attr('name'));
         $this->setLogoUrl($node->attr('logo_url'));
         $this->setUrl($node->attr('url'));
-        $this->setProductCount($node->attr('product_count'));
-        $this->setDealCount($node->attr('deal_count'));
+
+        if ($node->attr('product_count')) {
+            $this->setProductCount($node->attr('product_count'));
+        }
+
+        if ($node->attr('deal_count')) {
+            $this->setDealCount($node->attr('deal_count'));
+        }
 
         return $this;
     }

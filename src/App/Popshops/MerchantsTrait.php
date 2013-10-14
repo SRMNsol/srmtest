@@ -50,17 +50,33 @@ trait MerchantsTrait
 
     public function populateMerchantsFromCrawler(Crawler $nodes)
     {
+        if (null !== $this->em) {
+            $ids = $nodes->extract('id');
+            $merchants = $this->em->getRepository('App\Popshops\Merchant')->findBy(['id' => $ids]);
+            foreach ($merchants as $merchant) {
+                $this->merchants[$merchant->getId()] = $merchant;
+            }
+        }
+
         foreach ($nodes as $node) {
             $node = new Crawler($node);
             $id = $node->attr('id');
 
             if (isset($this->merchants[$id])) {
-                $merchant = $this->merchant[$id];
+                $merchant = $this->merchants[$id];
                 $merchant->populateFromCrawler($node);
             } else {
                 $merchant = new Merchant($node);
                 $this->merchants[$id] = $merchant;
+
+                if (null !== $this->em) {
+                    $this->em->persist($merchant);
+                }
             }
+        }
+
+        if (null !== $this->em) {
+            $this->em->flush();
         }
     }
 
@@ -71,7 +87,7 @@ trait MerchantsTrait
             $id = $node->attr('id');
 
             if (isset($this->merchantTypes[$id])) {
-                $merchantType = $this->merchantType[$id];
+                $merchantType = $this->merchantTypes[$id];
                 $merchantType->populateFromCrawler($node);
             } else {
                 $merchantType = new MerchantType($node);

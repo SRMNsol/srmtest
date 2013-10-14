@@ -15,6 +15,7 @@ App\Popshops\Merchant:
       type: string
     description:
       type: string(500)
+      nullable: true
     cashbackRate:
       type: decimal
       scale: 2
