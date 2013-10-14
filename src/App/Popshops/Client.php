@@ -57,7 +57,7 @@ class Client
             'catalog_key' => $catalogKey,
         ]]);
 
-        return new MerchantCollection($crawler);
+        return new MerchantSearchResult($crawler);
     }
 
     public function findProducts($catalogKey, $keywords = null, array $params = [])
@@ -110,22 +110,14 @@ class Client
             ['products.xml{?catalog_key}', ['catalog_key' => $catalogKey]],
         ]);
 
-        $merchants = new MerchantCollection($crawlers[0]);
+        $merchantResult = new MerchantSearchResult($crawlers[0]);
         $dealResult = new DealSearchResult($crawlers[1]);
-        $dealResult->getMerchants()->forAll(function ($id, $relMerchant) use ($merchants) {
-            if ($merchants->containsKey($relMerchant->getId())) {
-                $merchants[$relMerchant->getId()]->setDealCount($relMerchant->getDealCount());
-            }
-            return true;
-        });
         $productResult = new ProductSearchResult($crawlers[2]);
 
-        $result = new MerchantSearchResult();
-        $result->setMerchants($merchants);
-        $result->setMerchantTypes($productResult->getMerchantTypes());
-        $result->setDeals($dealResult->getDeals());
-        $result->setDealTypes($dealResult->getDealTypes());
+        $merchantResult->setMerchantTypes($productResult->getMerchantTypes());
+        $merchantResult->setDeals($dealResult->getDeals());
+        $merchantResult->setDealTypes($dealResult->getDealTypes());
 
-        return $result;
+        return $merchantResult;
     }
 }

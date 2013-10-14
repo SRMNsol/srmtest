@@ -123,15 +123,8 @@ class ProductSearchResult implements DomCrawlerInterface
         $result->setOffset($node->filter('search_results')->attr('product_offset'));
         $result->getProducts()->setTotalCount($node->filter('products')->attr('total_count'));
 
-        $node->filter('merchants merchant')->each(function (Crawler $node, $i) use ($result) {
-            $merchant = new Merchant($node);
-            $result->getMerchants()->set($merchant->getId(), $merchant);
-        });
-
-        $node->filter('merchant_types merchant_type')->each(function (Crawler $node, $i) use ($result) {
-            $merchantType = new MerchantType($node);
-            $result->getMerchantTypes()->set($merchantType->getId(), $merchantType);
-        });
+        $this->populateMerchantsFromCrawler($node->filter('merchants merchant'));
+        $this->populateMerchantTypesFromCrawler($node->filter('merchant_types merchant_type'));
 
         $node->filter('price_ranges price_range')->each(function (Crawler $node, $i) use ($result) {
             $priceRange = new PriceRange($node);

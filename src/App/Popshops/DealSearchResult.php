@@ -5,7 +5,7 @@ namespace App\Popshops;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\DomCrawler\Crawler;
 
-class DealSearchResult
+class DealSearchResult implements DomCrawlerInterface
 {
     use DealCountTrait;
     use DealsTrait;
@@ -82,10 +82,8 @@ class DealSearchResult
             $result->getDealTypes()->set($dealType->getId(), $dealType);
         });
 
-        $node->filter('merchants merchant')->each(function (Crawler $node, $i) use ($result) {
-            $merchant = new Merchant($node);
-            $result->getMerchants()->set($merchant->getId(), $merchant);
-        });
+        $this->populateMerchantsFromCrawler($node->filter('merchants merchant'));
+        $this->populateMerchantTypesFromCrawler($node->filter('merchant_types merchant_type'));
 
         $node->filter('deals deal')->each(function (Crawler $node, $i) use ($result) {
             $deal = new Deal($node);
@@ -98,11 +96,6 @@ class DealSearchResult
                 $deal->setMerchant($result->getMerchants()->get($node->attr('merchant_id')));
             }
             $result->getDeals()->add($deal);
-        });
-
-        $node->filter('merchant_types merchant_type')->each(function (Crawler $node, $i) use ($result) {
-            $merchantType = new MerchantType($node);
-            $result->getMerchantTypes()->set($merchantType->getId(), $merchantType);
         });
 
         return $this;
