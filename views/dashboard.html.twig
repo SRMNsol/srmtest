@@ -1,5 +1,31 @@
 {% extends 'common/layout.html.twig' %}
 
 {% block content %}
-Index
+<div class="page-header">
+  <h1>Dashboard <small>Beesavy Backoffice</small></h1>
+</div>
+
+<div class="row">
+  <div class="col-md-3">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Merchants</h3>
+      </div>
+      <table class="table">
+        <tr>
+          <td>Total Merchants</td>
+          <td><b class="pull-right">{{ merchants.total }}</b></td>
+        </tr>
+        <tr>
+          <td>No Cashback</td>
+          <td><b class="pull-right">{{ merchants.totalNoCashback }}</b></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td><a href="{{ path('merchant_list') }}" class="btn btn-default btn-xs pull-right">Edit</a></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>
 {% endblock %}

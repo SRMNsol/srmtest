@@ -12,7 +12,7 @@ class ControllerProvider implements ControllerProviderInterface
         $controllers = $app['controllers_factory'];
 
         $app['main.controller'] = $app->share(function () use ($app) {
-            $controller = new Controller\MainController();
+            $controller = new Controller\MainController($app['orm.em']);
             $controller->setTwig($app['twig']);
 
             return $controller;
