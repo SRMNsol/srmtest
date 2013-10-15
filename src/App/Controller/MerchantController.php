@@ -42,8 +42,8 @@ class MerchantController implements TwigInterface
             ])
             ->add('commissionType', 'choice', [
                 'choices' => [
-                    Merchant::COMMISSION_TYPE_FIXED => ucfirst(Merchant::COMMISSION_TYPE_FIXED),
-                    Merchant::COMMISSION_TYPE_PERCENTAGE => ucfirst(Merchant::COMMISSION_TYPE_PERCENTAGE),
+                    Merchant::COMMISSION_TYPE_FIXED => 'Fixed Amount',
+                    Merchant::COMMISSION_TYPE_PERCENTAGE => 'Percentage Off',
                 ],
                 'constraints' => [new Assert\Choice([
                     Merchant::COMMISSION_TYPE_FIXED,
