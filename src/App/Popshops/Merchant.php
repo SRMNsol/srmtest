@@ -137,6 +137,24 @@ class Merchant implements DomCrawlerInterface
         return $this;
     }
 
+    public function getCashbackPercentage($sharePct = 100)
+    {
+        if ($this->commissionType === self::COMMISSION_TYPE_PERCENTAGE) {
+            return $this->commissionType * ($sharePct / 100);
+        }
+
+        return 0;
+    }
+
+    public function getCashbackFixed($sharePct = 100)
+    {
+        if ($this->commissionType === self::COMMISSION_TYPE_FIXED) {
+            return $this->commissionType * ($sharePct / 100);
+        }
+
+        return 0;
+    }
+
     public function getCashbackText($sharePct = 100, $currency = '$')
     {
         $text = number_format($this->commission * ($sharePct / 100), 2);

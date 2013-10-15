@@ -38,15 +38,6 @@ class Stores extends Controller
             }
         }
 
-        //Make store referral
-        $cashback_percent = $store['cashback_percent'];
-        $cashback_flat = $store['cashback_flat'];
-        if ($cashback_percent>0) {
-            $cb = "Shop $cashback_percent% Cash Back";
-        } else {
-            $cb = "Shop $$cashback_flat Cash Back";
-        }
-
         //Load the page
         $data = $this->blocks->getBlocks();
         $data['top_stores']=$top_stores;
@@ -56,7 +47,7 @@ class Stores extends Controller
         $data['description']=$store['description'];
         $data['restrictions']=$store['restrictions'];
         $data['logo_thumb']=$store['logo_thumb'];
-        $data['cashback_text']=$cb;
+        $data['cashback_text'] = $store['cashback_text'];
         $data['link']=$store['link'];
         $data['coupons'] = $store['coupons'];
 
