@@ -139,7 +139,7 @@ class Merchant implements DomCrawlerInterface
 
     public function getCashbackRateText($sharePct = 100, $currency = '$')
     {
-        $text = number_format($this->cashbackRate * ($share / 100), 2);
+        $text = number_format($this->cashbackRate * ($sharePct / 100), 2);
         $text = preg_replace('/\.00$/', '', $text);
 
         switch ($this->cashbackType) {
@@ -154,7 +154,7 @@ class Merchant implements DomCrawlerInterface
 
     public function calculateFinalPrice($price, $sharePct = 100)
     {
-        $rate = $this->cashbackRate * ($share / 100);
+        $rate = $this->cashbackRate * ($sharePct / 100);
 
         switch ($this->cashbackType) {
             case self::CASHBACK_TYPE_FIXED :

@@ -25,11 +25,21 @@ class ControllerProvider implements ControllerProviderInterface
             return $controller;
         });
 
+        $app['merchant.controller'] = $app->share(function () use ($app) {
+            $controller = new Controller\MerchantController($app['orm.em']);
+            $controller->setTwig($app['twig']);
+
+            return $controller;
+        });
+
         $controllers->get('/', 'main.controller:dashboard')
             ->bind('homepage');
 
         $controllers->get('/login', 'auth.controller:login')
             ->bind('login');
+
+        $controllers->get('/merchant/list', 'merchant.controller:listMerchants')
+            ->bind('merchant_list');
 
         return $controllers;
     }
