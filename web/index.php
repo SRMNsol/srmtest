@@ -19,6 +19,6 @@ $app->register(new ValidatorServiceProvider());
 $app->register(new ServiceControllerServiceProvider());
 
 // controllers
-$app->mount('/', new App\MainControllerProvider());
+$app->mount('/', new App\ControllerProvider());
 
 $app->run();

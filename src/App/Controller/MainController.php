@@ -1,13 +1,10 @@
 <?php
 
-namespace App;
+namespace App\Controller;
 
 use Symfony\Component\HttpFoundation\Response;
 
-use App\Controller\BaseController;
-use App\Controller\TwigTrait;
-
-class MainController extends BaseController
+class MainController implements TwigInterface
 {
     use TwigTrait;
 
