@@ -21,6 +21,24 @@ class TemplatingProvider implements ServiceProviderInterface
     public function register(SilexApp $app)
     {
         $app->register(new TwigServiceProvider(), ['twig.path' => $app['template_dir']]);
+        $app['twig'] = $app->share($app->extend('twig', function ($twig, $app) {
+            $twig->addFilter(new \Twig_SimpleFilter('add_class', function ($attr, $class) {
+                $attr = (array) $attr;
+                if (!isset($attr['class'])) {
+                    $attr['class'] = $class;
+                } else {
+                    $classes = explode(' ', $attr['class'] . " $class");
+                    $classes = array_filter($classes);
+                    $classes = array_unique($classes);
+                    $attr['class'] = implode(' ', $classes);
+                }
+
+                return $attr;
+            }));
+
+            return $twig;
+        }));
+
         $app->register(new UrlGeneratorServiceProvider());
         $app->register(new AsseticServiceProvider());
 
