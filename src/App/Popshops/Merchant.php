@@ -141,12 +141,17 @@ class Merchant implements DomCrawlerInterface
     {
         $text = number_format($this->commission * ($sharePct / 100), 2);
 
+        if ($text === '0.00') {
+            return null;
+        }
+
         switch ($this->commissionType) {
             case self::COMMISSION_TYPE_FIXED :
                 $text = preg_replace('/\.00$/', '', $text);
                 return $currency . $text;
             case self::COMMISSION_TYPE_PERCENTAGE :
                 $text = preg_replace('/0+$/', '', $text);
+                $text = preg_replace('/\.$/', '', $text);
                 return $text . '%';
         }
 
