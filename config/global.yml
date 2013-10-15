@@ -27,10 +27,16 @@ db.options:
   charset:  utf8
 
 # orm
-orm.proxies_dir: %cache_dir%/doctrine
+orm.proxies_dir: %root_dir%/data/cache/doctrine
 orm.em.options:
   mappings:
     - type: yml
       namespace: App\Popshops
       path: %root_dir%/src/mappings
+
+# user provider
+user.provider:
+  admin:
+    - ROLE_ADMIN
+    - PASSWORD_HASH
 

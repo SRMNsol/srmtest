@@ -17,6 +17,7 @@ $app->register(new MonologServiceProvider(), array(
 $app->register(new FormServiceProvider());
 $app->register(new ValidatorServiceProvider());
 $app->register(new ServiceControllerServiceProvider());
+$app->register(new App\SecurityProvider());
 
 // controllers
 $app->mount('/', new App\ControllerProvider());

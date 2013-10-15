@@ -18,7 +18,15 @@ class ControllerProvider implements ControllerProviderInterface
             return $controller;
         });
 
+        $app['auth.controller'] = $app->share(function () use ($app) {
+            $controller = new Controller\AuthController();
+            $controller->setTwig($app['twig']);
+
+            return $controller;
+        });
+
         $controllers->get('/', 'main.controller:dashboard');
+        $controllers->get('/login', 'auth.controller:login');
 
         return $controllers;
     }
