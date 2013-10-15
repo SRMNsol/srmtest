@@ -6,6 +6,7 @@ use Silex\Provider\SessionServiceProvider;
 use Silex\Provider\MonologServiceProvider;
 use Silex\Provider\FormServiceProvider;
 use Silex\Provider\ValidatorServiceProvider;
+use Silex\Provider\TranslationServiceProvider;
 use Silex\Provider\ServiceControllerServiceProvider;
 
 // services for web
@@ -16,6 +17,7 @@ $app->register(new MonologServiceProvider(), array(
 ));
 $app->register(new FormServiceProvider());
 $app->register(new ValidatorServiceProvider());
+$app->register(new TranslationServiceProvider());
 $app->register(new ServiceControllerServiceProvider());
 $app->register(new App\SecurityProvider());
 

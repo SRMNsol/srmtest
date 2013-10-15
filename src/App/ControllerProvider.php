@@ -26,7 +26,7 @@ class ControllerProvider implements ControllerProviderInterface
         });
 
         $app['merchant.controller'] = $app->share(function () use ($app) {
-            $controller = new Controller\MerchantController($app['orm.em']);
+            $controller = new Controller\MerchantController($app['orm.em'], $app['form.factory']);
             $controller->setTwig($app['twig']);
 
             return $controller;
@@ -41,7 +41,7 @@ class ControllerProvider implements ControllerProviderInterface
         $controllers->get('/merchant/list', 'merchant.controller:listMerchants')
             ->bind('merchant_list');
 
-        $controllers->get('/merchant/edit/{merchantId}', 'merchant.controller:editMerchant')
+        $controllers->match('/merchant/edit/{merchantId}', 'merchant.controller:editMerchant')
             ->bind('merchant_edit');
 
         return $controllers;
