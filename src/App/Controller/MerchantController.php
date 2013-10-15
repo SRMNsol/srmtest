@@ -36,7 +36,7 @@ class MerchantController implements TwigInterface
         $merchant = $this->em->find('App\Popshops\Merchant', $merchantId);
 
         $form = $this->formFactory->createBuilder('form', $merchant)
-            ->setMethod('POST')
+            ->add('description', 'textarea')
             ->add('commission', 'number', [
                 'constraints' => [new Assert\NotBlank()],
             ])

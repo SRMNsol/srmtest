@@ -7,24 +7,29 @@
 
 <p>Total {{ merchants|length }} merchants</p>
 
-<table class="table table-bordered table-hover">
-  <thead>
-    <tr>
-      <th style="width: 50%;">Name</th>
-      <th style="width: 10%;">Commission</th>
-      <th></th>
-    </tr>
-  </thead>
-  </tbody>
-    {% for merchant in merchants %}
-    <tr>
-      <td>{{ merchant.name }}</td>
-      <td>{{ merchant.cashbackText }}</td>
-      <td>
-        <a href="{{ path('merchant_edit', { merchantId: merchant.id }) }}" class="btn btn-default btn-xs pull-right">Edit</a>
-      </td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
+<div class="row">
+  <div class="col-md-12">
+    <table class="table table-bordered table-hover">
+      <thead>
+        <tr>
+          <th style="width: 80%;">Merchant Name</th>
+          <th style="width: 10%;">Comm.</th>
+          <th></th>
+        </tr>
+      </thead>
+      </tbody>
+        {% for merchant in merchants %}
+        <tr>
+          <td>{{ merchant.name }}</td>
+          <td>{{ merchant.cashbackText }}</td>
+          <td>
+            <a href="{{ path('merchant_edit', { merchantId: merchant.id }) }}" class="btn btn-default btn-xs pull-right">Edit</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
 {% endblock %}

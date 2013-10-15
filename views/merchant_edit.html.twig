@@ -15,13 +15,19 @@
         </div>
       </div>
       <div class="form-group">
+        <label class="col-md-2 control-label">Description</label>
+        <div class="col-md-6">
+          {{ form_widget(form.description, { attr: { class: 'form-control', rows: 6 } }) }}
+        </div>
+      </div>
+      <div class="form-group">
         <label class="col-md-2 control-label">Commission</label>
-        <div class="col-md-4">
+        <div class="col-md-3">
           {{ form_widget(form.commission, { attr: { class: 'form-control' } }) }}
         </div>
       </div>
       <div class="form-group">
-        <label class="col-md-2 control-label">Comm. Type</label>
+        <label class="col-md-2 control-label">Type</label>
         <div class="col-md-3">
           {{ form_widget(form.commissionType, { attr: { class: 'form-control' } }) }}
         </div>
