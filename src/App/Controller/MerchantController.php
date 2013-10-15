@@ -24,4 +24,13 @@ class MerchantController implements TwigInterface
             'merchants' => $merchants,
         ]));
     }
+
+    public function editMerchant($merchantId)
+    {
+        $merchant = $this->em->find('App\Popshops\Merchant', $merchantId);
+
+        return new Response($this->render('merchant_edit.html.twig', [
+            'merchant' => $merchant,
+        ]));
+    }
 }

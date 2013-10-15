@@ -29,7 +29,7 @@
         <td>{{ merchant.cashbackRateText }}</td>
         <td>{{ merchant.cashbackType|title }}</td>
         <td>
-          <a href="#" class="btn btn-default btn-xs pull-right">Edit</a>
+          <a href="{{ path('merchant_edit', { merchantId: merchant.id }) }}" class="btn btn-default btn-xs pull-right">Edit</a>
         </td>
       </tr>
       {% endfor %}

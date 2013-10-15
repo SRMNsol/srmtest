@@ -41,6 +41,9 @@ class ControllerProvider implements ControllerProviderInterface
         $controllers->get('/merchant/list', 'merchant.controller:listMerchants')
             ->bind('merchant_list');
 
+        $controllers->get('/merchant/edit/{merchantId}', 'merchant.controller:editMerchant')
+            ->bind('merchant_edit');
+
         return $controllers;
     }
 }
