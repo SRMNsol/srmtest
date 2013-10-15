@@ -2,59 +2,50 @@
 
 namespace App\Controller;
 
+use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Form\FormFactory;
-use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\EntityManager;
 use App\Popshops\Merchant;
+use App\Form\MerchantType;
 
-class MerchantController implements TwigInterface
+class MerchantController
 {
-    use TwigTrait;
-
     protected $em;
-    protected $formFactory;
 
-    public function __construct(EntityManager $em, FormFactory $factory)
+    public function __construct(EntityManager $em)
     {
         $this->em = $em;
-        $this->formFactory = $factory;
     }
 
-    public function listMerchants()
+    public function listMerchants(Application $app)
     {
         $merchants = $this->em->getRepository('App\Popshops\Merchant')->findBy([], ['name' => 'ASC']);
 
-        return new Response($this->render('merchant_list.html.twig', [
+        return new Response($app['twig']->render('merchant_list.html.twig', [
             'merchants' => $merchants,
         ]));
     }
 
-    public function editMerchant($merchantId, Request $request)
+    public function editMerchant($merchantId, Request $request, Application $app)
     {
         $merchant = $this->em->find('App\Popshops\Merchant', $merchantId);
+        $form = $app['form.factory']->create(new MerchantType(), $merchant);
 
-        $form = $this->formFactory->createBuilder('form', $merchant)
-            ->add('description', 'textarea')
-            ->add('commission', 'number', [
-                'constraints' => [new Assert\NotBlank()],
-            ])
-            ->add('commissionType', 'choice', [
-                'choices' => [
-                    Merchant::COMMISSION_TYPE_FIXED => 'Fixed Amount',
-                    Merchant::COMMISSION_TYPE_PERCENTAGE => 'Percentage Off',
-                ],
-                'constraints' => [new Assert\Choice([
-                    Merchant::COMMISSION_TYPE_FIXED,
-                    Merchant::COMMISSION_TYPE_PERCENTAGE,
-                ])],
-            ])
-            ->getForm();
+        try {
+            $form->handleRequest($request);
+            if ($form->isValid()) {
+                $merchant = $form->getData();
+                $this->em->flush();
 
-        $form->handleRequest($request);
+                return $app->redirect($app['url_generator']->generate('merchant_list'));
+            }
+        } catch (\Exception $e) {
 
-        return new Response($this->render('merchant_edit.html.twig', [
+        }
+
+        return new Response($app['twig']->render('merchant_edit.html.twig', [
             'merchant' => $merchant,
             'form' => $form->createView(),
         ]));

@@ -12,24 +12,15 @@ class ControllerProvider implements ControllerProviderInterface
         $controllers = $app['controllers_factory'];
 
         $app['main.controller'] = $app->share(function () use ($app) {
-            $controller = new Controller\MainController($app['orm.em']);
-            $controller->setTwig($app['twig']);
-
-            return $controller;
+            return new Controller\MainController($app['orm.em']);
         });
 
         $app['auth.controller'] = $app->share(function () use ($app) {
-            $controller = new Controller\AuthController();
-            $controller->setTwig($app['twig']);
-
-            return $controller;
+            return new Controller\AuthController();
         });
 
         $app['merchant.controller'] = $app->share(function () use ($app) {
-            $controller = new Controller\MerchantController($app['orm.em'], $app['form.factory']);
-            $controller->setTwig($app['twig']);
-
-            return $controller;
+            return new Controller\MerchantController($app['orm.em']);
         });
 
         $controllers->get('/', 'main.controller:dashboard')

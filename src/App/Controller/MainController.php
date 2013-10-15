@@ -2,13 +2,12 @@
 
 namespace App\Controller;
 
+use Silex\Application;
 use Symfony\Component\HttpFoundation\Response;
 use Doctrine\ORM\EntityManager;
 
-class MainController implements TwigInterface
+class MainController
 {
-    use TwigTrait;
-
     protected $em;
 
     public function __construct(EntityManager $em)
@@ -16,12 +15,12 @@ class MainController implements TwigInterface
         $this->em = $em;
     }
 
-    public function dashboard()
+    public function dashboard(Application $app)
     {
         $merchants['total'] = $this->em->createQuery('SELECT COUNT(m) FROM App\Popshops\Merchant m')->getSingleScalarResult();
-        $merchants['totalNoCashback'] = $this->em->createQuery('SELECT COUNT(m) FROM App\Popshops\Merchant m WHERE m.cashbackRate = 0')->getSingleScalarResult();
+        $merchants['totalNoCashback'] = $this->em->createQuery('SELECT COUNT(m) FROM App\Popshops\Merchant m WHERE m.commission = 0')->getSingleScalarResult();
 
-        return new Response($this->render('dashboard.html.twig', [
+        return new Response($app['twig']->render('dashboard.html.twig', [
             'merchants' => $merchants,
         ]));
     }
