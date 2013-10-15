@@ -25,8 +25,11 @@ class ControllerProvider implements ControllerProviderInterface
             return $controller;
         });
 
-        $controllers->get('/', 'main.controller:dashboard');
-        $controllers->get('/login', 'auth.controller:login');
+        $controllers->get('/', 'main.controller:dashboard')
+            ->bind('homepage');
+
+        $controllers->get('/login', 'auth.controller:login')
+            ->bind('login');
 
         return $controllers;
     }
