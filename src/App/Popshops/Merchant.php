@@ -16,11 +16,11 @@ class Merchant implements DomCrawlerInterface
     protected $logoUrl;
     protected $url;
     protected $description;
-    protected $cashbackRate = 0.00;
-    protected $cashbackType = self::CASHBACK_TYPE_FIXED;
+    protected $commission = 0.00;
+    protected $commissionType = self::COMMISSION_TYPE_FIXED;
 
-    const CASHBACK_TYPE_FIXED = 'fixed';
-    const CASHBACK_TYPE_PERCENTAGE = 'percentage';
+    const COMMISSION_TYPE_FIXED = 'fixed';
+    const COMMISSION_TYPE_PERCENTAGE = 'percentage';
 
     public function __construct(Crawler $node = null)
     {
@@ -113,57 +113,66 @@ class Merchant implements DomCrawlerInterface
         return $this;
     }
 
-    public function getCashbackRate()
+    public function getCommission()
     {
-        return $this->cashbackRate;
+        return $this->commission;
     }
 
-    public function setCashbackRate($value)
+    public function setCommission($value)
     {
-        $this->cashbackRate = (float) $value;
+        $this->commission = (float) $value;
 
         return $this;
     }
 
-    public function getCashbackType()
+    public function getCommissionType()
     {
-        return $this->cashbackType;
+        return $this->commissionType;
     }
 
-    public function setCashbackType($value)
+    public function setCommissionType($value)
     {
-        $this->cashbackType = $value;
+        $this->commissionType = $value;
 
         return $this;
     }
 
-    public function getCashbackRateText($sharePct = 100, $currency = '$')
+    public function getCashbackText($sharePct = 100, $currency = '$')
     {
-        $text = number_format($this->cashbackRate * ($sharePct / 100), 2);
-        $text = preg_replace('/\.00$/', '', $text);
+        $text = number_format($this->commission * ($sharePct / 100), 2);
 
-        switch ($this->cashbackType) {
-            case self::CASHBACK_TYPE_FIXED :
+        switch ($this->commissionType) {
+            case self::COMMISSION_TYPE_FIXED :
+                $text = preg_replace('/\.00$/', '', $text);
                 return $currency . $text;
-            case self::CASHBACK_TYPE_PERCENTAGE :
+            case self::COMMISSION_TYPE_PERCENTAGE :
+                $text = preg_replace('/0+$/', '', $text);
                 return $text . '%';
         }
 
         return null;
     }
 
-    public function calculateFinalPrice($price, $sharePct = 100)
+    public function calculateCashbackAmount($price, $sharePct = 100)
     {
-        $rate = $this->cashbackRate * ($sharePct / 100);
+        $cashback = $this->commission * ($sharePct / 100);
+        $amount = 0;
 
-        switch ($this->cashbackType) {
-            case self::CASHBACK_TYPE_FIXED :
-                return $price - $rate;
-            case self::CASHBACK_TYPE_PERCENTAGE :
-                return $price * ($rate / 100);
+        switch ($this->commissionType) {
+            case self::COMMISSION_TYPE_FIXED :
+                $amount = $cashback;
+                break;
+            case self::COMMISSION_TYPE_PERCENTAGE :
+                $amount = $price * ($cashback / 100);
+                break;
         }
 
-        return $price;
+        return $amount;
+    }
+
+    public function calculateFinalPrice($price, $sharePct = 100)
+    {
+        return $price - $this->calculateCashbackAmount($price, $sharePct);
     }
 
     public function populateFromCrawler(Crawler $node)

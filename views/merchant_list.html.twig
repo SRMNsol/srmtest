@@ -26,8 +26,8 @@
       {% for merchant in merchants %}
       <tr>
         <td>{{ merchant.name }}</td>
-        <td>{{ merchant.cashbackRateText }}</td>
-        <td>{{ merchant.cashbackType|title }}</td>
+        <td>{{ merchant.cashbackText }}</td>
+        <td>{{ merchant.commissionType|title }}</td>
         <td>
           <a href="{{ path('merchant_edit', { merchantId: merchant.id }) }}" class="btn btn-default btn-xs pull-right">Edit</a>
         </td>

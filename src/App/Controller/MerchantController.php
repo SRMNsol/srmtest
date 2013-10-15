@@ -37,17 +37,17 @@ class MerchantController implements TwigInterface
 
         $form = $this->formFactory->createBuilder('form', $merchant)
             ->setMethod('POST')
-            ->add('cashbackRate', 'text', [
+            ->add('commission', 'number', [
                 'constraints' => [new Assert\NotBlank()],
             ])
-            ->add('cashbackType', 'choice', [
+            ->add('commissionType', 'choice', [
                 'choices' => [
-                    Merchant::CASHBACK_TYPE_FIXED => ucfirst(Merchant::CASHBACK_TYPE_FIXED),
-                    Merchant::CASHBACK_TYPE_PERCENTAGE => ucfirst(Merchant::CASHBACK_TYPE_PERCENTAGE),
+                    Merchant::COMMISSION_TYPE_FIXED => ucfirst(Merchant::COMMISSION_TYPE_FIXED),
+                    Merchant::COMMISSION_TYPE_PERCENTAGE => ucfirst(Merchant::COMMISSION_TYPE_PERCENTAGE),
                 ],
                 'constraints' => [new Assert\Choice([
-                    Merchant::CASHBACK_TYPE_FIXED,
-                    Merchant::CASHBACK_TYPE_PERCENTAGE,
+                    Merchant::COMMISSION_TYPE_FIXED,
+                    Merchant::COMMISSION_TYPE_PERCENTAGE,
                 ])],
             ])
             ->getForm();
