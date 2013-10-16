@@ -109,7 +109,7 @@ alt='$store' onerror="this.src ='../images/no-image-100px.gif'"/>
                      	            </div>
 	        </div>
 
-	        <div class="CashBack"><div class='CashBack-Bt BtnCBOrangeBg'>
+            <div class="CashBack"><div class='CashBack-Bt BtnCBOrangeBg' <?php if (empty($coupon['cashback_text'])) : ?>style="visibility: hidden"<?php endif ?>>
 
 
 	            <a  href='/transfer/coupon/<? echo $coupon['id'] ?>' target='_blank' rel='nofollow'>

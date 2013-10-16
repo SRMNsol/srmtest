@@ -70,7 +70,17 @@ onload="
 alt="** PLEASE DESCRIBE THIS IMAGE **" onerror="this.src ='../images/no-image-100px.gif'"/>
                </a>
             </div>
-<div class="ShopCashBack"><div class="ShopCashBack-Bt BtnSCBOrangeBg"><a class="BtnCBBlackTxt" href="/transfer/store/{id}" target="_blank" rel="nofollow">Shop {cashback_text} Cashback</a></div></div>
+            <div class="ShopCashBack">
+                <div class="ShopCashBack-Bt BtnSCBOrangeBg">
+                    <a class="BtnCBBlackTxt" href="/transfer/store/{id}" target="_blank" rel="nofollow">
+                        <?php if ($store['cashback_text']) : ?>
+                        Shop <?php echo escape($store['cashback_text']) ?> Cashback
+                        <?php else : ?>
+                        Go to shop
+                        <?php endif ?>
+                    </a>
+                </div>
+            </div>
 <div style="margin-top: 15px; clear: both;">{description}</div>
 <div style="margin-top: 15px; clear: both;">{restrictions}</div>
         </div>

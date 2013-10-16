@@ -143,7 +143,7 @@ onload="
                 <?php endif ?>
             </div>
 
-            <div class="CashBack" style="border:0px solid #000;"><div class="CashBack-Bt1 BtnCBOrangeBg"><a href="/stores/details/<? echo $store['id'] ?>" rel="nofollow"><span class="CashBack-value value"><? echo $store['cashback_text']?></span></a></div></div>
+            <div class="CashBack" style="border:0px solid #000;"><div class="CashBack-Bt1 BtnCBOrangeBg" <?php if (empty($store['cashback_text'])) : ?>style="visibility:hidden"<?php endif ?>><a href="/stores/details/<? echo $store['id'] ?>" rel="nofollow"><span class="CashBack-value value"><? echo $store['cashback_text']?></span></a></div></div>
          	   <div class="ShopStore" style><div class="ShopStore-Bt BtnSSOrangeBg"><a class="BtnBlackTxt" href="/stores/details/<? echo $store['id'] ?>" rel="nofollow">SHOP STORE</a></div></div>
 	    </div>
 

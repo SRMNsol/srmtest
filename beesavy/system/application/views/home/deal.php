@@ -37,7 +37,7 @@
 <div class="ShopNow"><div class="BtnShopNowDeals BtnSNOrangeBg"><a class="BtnBlackTxt" href="<?php echo escape($deal['link'], 'html_attr') ?>" target="_blank" rel="nofollow">SHOP NOW</a></div>
 </DIV>
 <DIV class="details">
-	<DIV class=savings-container>
+<DIV class=savings-container <?php if (empty($deal['cashback_text'])) : ?>style="visibility: hidden"<?php endif ?>>
     <DIV class=percent><?php echo escape($deal['cashback_text']) ?></DIV>
 		<DIV class=savings>Back</DIV>
     </DIV>

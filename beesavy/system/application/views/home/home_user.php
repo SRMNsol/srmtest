@@ -51,7 +51,7 @@
                 <p><a class="title" href="<?php echo escape($deal['link'], 'html_attr') ?>"><?php echo escape($deal['name-abrv']) ?></a></p>
             </div>
         </div>
-        <div class="savings-container">
+        <div class="savings-container"<?php if (empty($deal['cashback_text'])) : ?> style="visibility: hidden;"<?php endif ?>>
             <div class=percent><?php echo escape($deal['cashback_text']) ?></div>
                 <div class=savings>Back</div>
             </div>

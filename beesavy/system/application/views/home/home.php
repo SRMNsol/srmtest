@@ -182,17 +182,17 @@
 
 
 <!-- Content -->
- <div style="width:930px;height:330px;margin-top:0px;margin-left:0px;border:0px solid #00F;float:left;">
+<div style="width:930px;height:330px;margin-top:0px;margin-left:0px;border:0px solid #00F;float:left;">
     <!-- Daily Deals -->
     <div id="hot-products-container" class="home-daily-deals">
-    <div style="width:100%;height:40px;">
-    	<div style="float:left;margin-top:5px;margin-left:10px;"><img src="images/clock.gif"></div>
-      <div id="hot-products" class="biggerTitle">Daily Deals</div>
-      <div class="seeAll"><a href="/main/deal">See All Deals »</a></div>
-      </div>
-    <?php if (empty($deals)) : ?>
-    <p style='font-size:1.5em;text-align:center;padding-top:20px;'>Currently gathering daily deals</p>
-    <?php else : ?>
+        <div style="width:100%;height:40px;">
+            <div style="float:left;margin-top:5px;margin-left:10px;"><img src="images/clock.gif"></div>
+            <div id="hot-products" class="biggerTitle">Daily Deals</div>
+            <div class="seeAll"><a href="/main/deal">See All Deals »</a></div>
+        </div>
+        <?php if (empty($deals)) : ?>
+        <p style='font-size:1.5em;text-align:center;padding-top:20px;'>Currently gathering daily deals</p>
+        <?php else : ?>
         <?php $i = 0 ?>
         <?php foreach ($deals as $deal) : ?>
         <div class="HomeDailyDeals">
@@ -212,14 +212,14 @@
                     onerror="this.src='/images/no-image-100px.gif'"
                     alt="** PLEASE DESCRIBE THIS IMAGE **"
                 />
-            </div>
+                </div>
 
-            <div class="DealsText">
-                <p><a class="title" href="<?php echo escape($deal['link'], 'html_attr') ?>"><?php echo escape($deal['name-abrv']) ?></a></p>
+                <div class="DealsText">
+                    <p><a class="title" href="<?php echo escape($deal['link'], 'html_attr') ?>"><?php echo escape($deal['name-abrv']) ?></a></p>
+                </div>
             </div>
-        </div>
-        <div class="savings-container">
-            <div class=percent><?php echo escape($deal['cashback_text']) ?></div>
+            <div class="savings-container"<?php if (empty($deal['cashback_text'])) : ?>style="visibility: hidden;"<?php endif ?>>
+                <div class=percent><?php echo escape($deal['cashback_text']) ?></div>
                 <div class=savings>Back</div>
             </div>
             <div style="clear:both;line-height:1px;">&nbsp;</div>
@@ -234,7 +234,7 @@
         <?php endif ?>
         <?php $i++ ?>
         <?php endforeach ?>
-    <?php endif ?>
+        <?php endif ?>
 
     </div>
     <!-- /Daily Deals -->
