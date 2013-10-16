@@ -46,7 +46,7 @@ class TemplatingProvider implements ServiceProviderInterface
         $app['assetic.options'] = [
             'debug' => $app['debug'],
             'formulae_cache_dir' => $app['cache_dir'] . '/assetic',
-            'auto_dump_assets' => true,
+            'auto_dump_assets' => $app['debug'],
         ];
 
         $app['assetic.filter_manager'] = $app->share($app->extend('assetic.filter_manager', function($fm, $app) {
