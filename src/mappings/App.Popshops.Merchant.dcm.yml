@@ -14,7 +14,7 @@ App\Popshops\Merchant:
     url:
       type: string
     description:
-      type: string(500)
+      type: text
       nullable: true
     commission:
       type: decimal
