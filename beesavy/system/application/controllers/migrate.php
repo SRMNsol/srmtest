@@ -10,8 +10,8 @@ class Migrate extends Controller
         parent::Controller();
     }
 
-    public function test($param)
+    public function user_download()
     {
-        echo "Test : $param" . PHP_EOL;
+        echo 'Starting user download', PHP_EOL;
     }
 }

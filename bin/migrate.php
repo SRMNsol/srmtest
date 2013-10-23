@@ -21,7 +21,7 @@ $console
     ])
     ->setDescription('Download and save user data from Extrabux')
     ->setCode(function (InputInterface $input, OutputInterface $output) use ($params) {
-        $params->action = 'test';
+        $params->action = 'user_download';
     })
 ;
 
