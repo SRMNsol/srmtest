@@ -7,6 +7,10 @@ class Migrate extends Controller
 {
     public function __construct()
     {
+        if (php_sapi_name() !== 'cli') {
+            exit();
+        }
+
         parent::Controller();
         $this->load->model('user');
         $this->load->model('admin');
