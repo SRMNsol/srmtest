@@ -12,14 +12,9 @@ class Migrate extends Controller
         $this->load->model('admin');
     }
 
-    public function user_download()
+    public function user_download($limit = 1, $gtid = null)
     {
         echo 'Starting user download', PHP_EOL;
-
-        $users = $this->db
-            ->order_by('id', 'asc')
-            ->get('user')
-            ->result_array();
 
         $fixturesPath = isset($_SERVER['FIXTURES_PATH'])
             ? $_SERVER['FIXTURES_PATH']
@@ -28,6 +23,23 @@ class Migrate extends Controller
         if (!isset($fixturesPath) || !file_exists($fixturesPath) || !is_dir($fixturesPath) || !is_writable($fixturesPath)) {
             throw new RuntimeException('Need writable fixtures path');
         }
+
+        $idFile = $fixturesPath . '/last-user-import.txt';
+        touch($idFile);
+        $useIdFile = false;
+
+        if (null === $gtid) {
+            $gtid = file_get_contents($idFile) ?: 0;
+            $useIdFile = true;
+        }
+
+        $users = $this->db
+            ->from('user')
+            ->select('id, email')
+            ->where('id > ', $gtid)
+            ->order_by('id', 'asc')
+            ->limit($limit)
+            ->get()->result_array();
 
         foreach ($users as $user) {
             echo sprintf('Id: %s Email: %s', $user['id'], $user['email']), PHP_EOL;
@@ -43,6 +55,10 @@ class Migrate extends Controller
                 'report' => $report,
                 'stats' => $stats,
             ], JSON_PRETTY_PRINT));
+
+            if ($useIdFile) {
+                file_put_contents($idFile, $user['id']);
+            }
         }
     }
 }

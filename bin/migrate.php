@@ -17,11 +17,14 @@ $console->setAutoExit(false);
 $console
     ->register('user:download')
     ->setDefinition([
-
+        new InputOption('gt-id', null, InputOption::VALUE_REQUIRED, 'Id greater than number'),
+        new InputOption('limit', null, InputOption::VALUE_REQUIRED, 'limit'),
     ])
     ->setDescription('Download and save user data from Extrabux')
     ->setCode(function (InputInterface $input, OutputInterface $output) use ($params) {
         $params->action = 'user_download';
+        $params->args[] = $input->getOption('limit') ?: 1;
+        $params->args[] = $input->getOption('gt-id');
     })
 ;
 
