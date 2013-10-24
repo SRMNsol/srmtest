@@ -1,0 +1,2 @@
+Direct sign in link
+https://100308795298.signin.aws.amazon.com/console
