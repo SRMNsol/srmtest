@@ -129,9 +129,19 @@ class User
     protected $lastCashbackAt;
 
     /**
+     * @Column(name="raw_data", type="text", nullable=true)
+     */
+    protected $extrabuxRawData;
+
+    /**
+     * @Column(name="last_sync", type="datetime", nullable=true)
+     */
+    protected $extrabuxLastSyncAt;
+
+    /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -154,7 +164,7 @@ class User
     /**
      * Get extrabuxId
      *
-     * @return integer 
+     * @return integer
      */
     public function getExtrabuxId()
     {
@@ -177,7 +187,7 @@ class User
     /**
      * Get email
      *
-     * @return string 
+     * @return string
      */
     public function getEmail()
     {
@@ -200,7 +210,7 @@ class User
     /**
      * Get facebookAuto
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getFacebookAuto()
     {
@@ -223,7 +233,7 @@ class User
     /**
      * Get twitterAuto
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getTwitterAuto()
     {
@@ -246,7 +256,7 @@ class User
     /**
      * Get paymentMethod
      *
-     * @return string 
+     * @return string
      */
     public function getPaymentMethod()
     {
@@ -269,7 +279,7 @@ class User
     /**
      * Get paypalEmail
      *
-     * @return string 
+     * @return string
      */
     public function getPaypalEmail()
     {
@@ -292,7 +302,7 @@ class User
     /**
      * Get alias
      *
-     * @return string 
+     * @return string
      */
     public function getAlias()
     {
@@ -315,7 +325,7 @@ class User
     /**
      * Get extrabuxCharityId
      *
-     * @return integer 
+     * @return integer
      */
     public function getExtrabuxCharityId()
     {
@@ -338,7 +348,7 @@ class User
     /**
      * Get admin
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getAdmin()
     {
@@ -361,7 +371,7 @@ class User
     /**
      * Get sendReminders
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getSendReminders()
     {
@@ -384,7 +394,7 @@ class User
     /**
      * Get sendUpdates
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getSendUpdates()
     {
@@ -407,7 +417,7 @@ class User
     /**
      * Get lastLoginAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getLastLoginAt()
     {
@@ -430,7 +440,7 @@ class User
     /**
      * Get lastReferAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getLastReferAt()
     {
@@ -453,7 +463,7 @@ class User
     /**
      * Get createdAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreatedAt()
     {
@@ -476,7 +486,7 @@ class User
     /**
      * Get facebookAccessToken
      *
-     * @return string 
+     * @return string
      */
     public function getFacebookAccessToken()
     {
@@ -499,7 +509,7 @@ class User
     /**
      * Get twitterTokenSecret
      *
-     * @return string 
+     * @return string
      */
     public function getTwitterTokenSecret()
     {
@@ -522,7 +532,7 @@ class User
     /**
      * Get twitterAccessToken
      *
-     * @return string 
+     * @return string
      */
     public function getTwitterAccessToken()
     {
@@ -545,7 +555,7 @@ class User
     /**
      * Get password
      *
-     * @return string 
+     * @return string
      */
     public function getPassword()
     {
@@ -568,7 +578,7 @@ class User
     /**
      * Get purchaseExempt
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getPurchaseExempt()
     {
@@ -591,7 +601,7 @@ class User
     /**
      * Get emailReferInfo
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getEmailReferInfo()
     {
@@ -614,7 +624,7 @@ class User
     /**
      * Get email83
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getEmail83()
     {
@@ -637,7 +647,7 @@ class User
     /**
      * Get email60
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getEmail60()
     {
@@ -660,10 +670,56 @@ class User
     /**
      * Get lastCashbackAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getLastCashbackAt()
     {
         return $this->lastCashbackAt;
+    }
+
+    /**
+     * Set extrabuxRawData
+     *
+     * @param string $extrabuxRawData
+     * @return User
+     */
+    public function setExtrabuxRawData($extrabuxRawData)
+    {
+        $this->extrabuxRawData = $extrabuxRawData;
+
+        return $this;
+    }
+
+    /**
+     * Get extrabuxRawData
+     *
+     * @return string 
+     */
+    public function getExtrabuxRawData()
+    {
+        return $this->extrabuxRawData;
+    }
+
+    /**
+     * Set extrabuxLastSyncAt
+     *
+     * @param \DateTime $extrabuxLastSyncAt
+     * @return User
+     */
+    public function setExtrabuxLastSyncAt($extrabuxLastSyncAt)
+    {
+        $this->extrabuxLastSyncAt = $extrabuxLastSyncAt;
+
+        return $this;
+    }
+
+    /**
+     * Get extrabuxLastSyncAt
+     *
+     * @return \DateTime 
+     */
+    public function getExtrabuxLastSyncAt()
+    {
+        return $this->extrabuxLastSyncAt;
     }
 }

@@ -37,6 +37,6 @@ if (isset($params->action)) {
         $path .= '/' . urlencode($arg);
     }
 
-    $_SERVER = ['APP_PATH' => $path, 'FIXTURES_PATH' => realpath(__DIR__ . '/../data/fixtures')];
+    $_SERVER = ['APP_PATH' => $path];
     require __DIR__ . '/../beesavy/public/index.php';
 }

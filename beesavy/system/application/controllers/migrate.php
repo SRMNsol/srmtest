@@ -20,30 +20,19 @@ class Migrate extends Controller
     {
         echo 'Starting user download', PHP_EOL;
 
-        $fixturesPath = isset($_SERVER['FIXTURES_PATH'])
-            ? $_SERVER['FIXTURES_PATH']
-            : null;
-
-        if (!isset($fixturesPath) || !file_exists($fixturesPath) || !is_dir($fixturesPath) || !is_writable($fixturesPath)) {
-            throw new RuntimeException('Need writable fixtures path');
-        }
-
-        $idFile = $fixturesPath . '/last-user-import.txt';
-        touch($idFile);
-        $useIdFile = false;
-
-        if (null === $gtid) {
-            $gtid = file_get_contents($idFile) ?: 0;
-            $useIdFile = true;
-        }
-
-        $users = $this->db
+        $query = $this->db
             ->from('user')
             ->select('id, email')
-            ->where('id > ', $gtid)
             ->order_by('id', 'asc')
-            ->limit($limit)
-            ->get()->result_array();
+            ->limit($limit);
+
+        if (null === $gtid) {
+            $query->where('last_sync is null');
+        } else {
+            $query->where('id > ', $gtid);
+        }
+
+        $users = $query->get()->result_array();
 
         foreach ($users as $user) {
             echo sprintf('Id: %s Email: %s', $user['id'], $user['email']), PHP_EOL;
@@ -52,17 +41,18 @@ class Migrate extends Controller
             $report = $this->cache->library('extrabux', 'getUserReport', [$user['id']], 3600);
             $stats = $this->cache->library('extrabux', 'getUserStats', [$user['id']], 3600);
 
-            file_put_contents($fixturesPath . sprintf('/user-%d.dat', $user['id']), json_encode([
-                'user' => $user,
-                'summary' => $summary,
-                'referrals' => $referrals,
-                'report' => $report,
-                'stats' => $stats,
-            ], JSON_PRETTY_PRINT));
+            $data = [
+                'raw_data' => json_encode([
+                    'user' => $user,
+                    'summary' => $summary,
+                    'referrals' => $referrals,
+                    'report' => $report,
+                    'stats' => $stats,
+                ]),
+                'last_sync' => date('Y-m-d H:i:s'),
+            ];
 
-            if ($useIdFile) {
-                file_put_contents($idFile, $user['id']);
-            }
+            $this->db->update('user', $data, ['id' => $user['id']]);
         }
     }
 }
