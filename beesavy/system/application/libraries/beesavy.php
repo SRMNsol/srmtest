@@ -19,14 +19,24 @@ class Beesavy
         $this->db = $ci->db;
     }
 
-    public function getUser($id)
+    public function getUser($email, $password, $noAuth = False)
+    {
+        $user = $this->db->get_where('user', ['email' => $email])->row_array();
+        if ($noAuth || $password === $user['password']) {
+            return $user;
+        }
+
+        return false;
+    }
+
+    protected function findUserById($id)
     {
         return $this->db->get_where('user', ['id' => $id])->row_array();
     }
 
     protected function getUserRawData($id, $type)
     {
-        $user = $this->getUser($id);
+        $user = $this->findUserById($id);
         $raw_data = json_decode($user['raw_data'], true);
 
         return $raw_data[$type];
