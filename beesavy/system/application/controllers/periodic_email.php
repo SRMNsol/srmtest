@@ -28,7 +28,7 @@ class Periodic_Email extends Controller {
         //Update any last_casshback =0
         $sql = "select * from user where date(last_cashback)+Interval 60 day < current_date and email_60 = 0 and purchase_exempt=0 and last_cashback!=0;";
         $q = $this->db->query($sql);
-            $stats = $this->extrabux->getUserStats(88481);
+            $stats = $this->beesavy->getUserStats(88481);
 
         $res = $q->result_array();
         return;
@@ -36,7 +36,7 @@ class Periodic_Email extends Controller {
             $id = $r['id'];
             $email = $r['email'];
             $data =$this->user->ebinfo_user($id);
-            $stats = $this->extrabux->getUserStats($id);
+            $stats = $this->beesavy->getUserStats($id);
             $data['cashback']= $stats['total'][0]['referralavailable'];
             $sql = "update user set email_60 = 1 where id='$id';";
             $this->db->query($sql);
@@ -53,7 +53,7 @@ class Periodic_Email extends Controller {
             $id = $r['id'];
             $email = $r['email'];
             $data =$this->user->ebinfo_user($id);
-            $stats = $this->extrabux->getUserStats($id);
+            $stats = $this->beesavy->getUserStats($id);
             $data['cashback']= $stats['total'][0]['referralavailable'];
             $sql = "update user set email_83 = 1 where id='$id';";
             $this->db->query($sql);

@@ -5,7 +5,6 @@ class Tools extends Controller {
 
 	function Tools()	{
 		parent::Controller();
-        $this->load->library('extrabux');
         $this->load->library('beesavy');
         $this->load->helper('url');
         $this->load->model('user');
@@ -34,7 +33,7 @@ class Tools extends Controller {
         $this->__get_header($data);
         $this->parser->parse('tools/overview', $data);
     }
-	
+
 	function referrals(){
         if(!$this->user->login_status()){
             redirect('main/signin?user=&code=20');
@@ -48,7 +47,7 @@ class Tools extends Controller {
         $this->__get_header($data);
         $this->parser->parse('tools/referrals', $data);
     }
-	
+
     function test(){
         $data =$this->user->info();
         $this->__get_header($data);
@@ -225,10 +224,10 @@ class Tools extends Controller {
                 redirect($url);
             }
         }
-        
+
             $this->user->set_setting($setting, $value);
             $this->index();
-        
+
     }
     function add_facebook(){
         $success = $this->facebook->get_access_token($this->user_id);

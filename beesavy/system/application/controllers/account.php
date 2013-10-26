@@ -5,7 +5,6 @@ class Account extends Controller {
 
 	function Account()	{
 		parent::Controller();
-        $this->load->library('extrabux');
         $this->load->library('beesavy');
         $this->load->helper('url_helper');
         $this->load->model('user');
@@ -27,7 +26,7 @@ class Account extends Controller {
         if(!$this->user->login_status()){
            redirect('main/signin?user=&code=20');
         }
-		
+
 		$settings = $this->beesavy->getUserStats($this->user_id);
 
         $settings = array_merge($settings, $this->user->eb_info());
@@ -72,7 +71,7 @@ class Account extends Controller {
     function payment(){
         $data = $this->__get_header();
         $fail = $this->beesavy->processPayment($this->user_id);
-		
+
         if($fail){
 			if($fail == "You must have $10 in available cash back and a confirmed purchase to request a payment.")
 			{
@@ -126,7 +125,7 @@ class Account extends Controller {
             $this->emailer->sendMessage($msg, $tmsg, $data['email'], "BeeSavy - Welcome to BeeSavy!");
             redirect('/account/index/0/1');
         }else{
-            $error_str = implode(",",$errors);  
+            $error_str = implode(",",$errors);
             redirect("/main/joinnow?email=$email&referral=$referral&errors=$error_str");
         }
     }
@@ -291,10 +290,10 @@ class Account extends Controller {
                 redirect($url);
             }
         }
-        
+
             $this->user->set_setting($setting, $value);
         $this->index();
-        
+
     }
     function add_facebook(){
         $success = $this->facebook->get_access_token($this->user_id);

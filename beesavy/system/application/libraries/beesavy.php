@@ -8,11 +8,44 @@
  * @author		Jonny Simkin
 */
 
-class Beesavy extends Extrabux
+class Beesavy
 {
+    protected $db;
+
+    public function __construct()
+    {
+        $ci = get_instance();
+        $ci->load->database();
+        $this->db = $ci->db;
+    }
+
+    public function getUser($id)
+    {
+        return $this->db->get_where('user', ['id' => $id])->row_array();
+    }
+
+    protected function getUserRawData($id, $type)
+    {
+        $user = $this->getUser($id);
+        $raw_data = json_decode($user['raw_data'], true);
+
+        return $raw_data[$type];
+    }
+
+    public function getUserReferrals($id)
+    {
+        return $this->getUserRawData($id, 'referrals');
+    }
+
+    public function getUserReport($id)
+    {
+        return $this->getUserRawData($id, 'report');
+    }
+
     public function getUserStats($id)
     {
-        $cashback = parent::getUserStats($id);
+        $cashback = $this->getUserRawData($id, 'stats');
+
         $total = $cashback['total'];
         $total[0]['UserPending'] = sprintf("%01.2f",(float) $total[0]['pending']);
         $total[0]['UserAvailable'] = sprintf("%01.2f",(float) $total[0]['available']);

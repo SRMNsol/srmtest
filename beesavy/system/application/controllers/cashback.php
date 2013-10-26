@@ -5,7 +5,6 @@ class Cashback extends Controller {
 
 	function Cashback()	{
 		parent::Controller();
-        $this->load->library('extrabux');
         $this->load->library('beesavy');
         $this->load->model('user');
         $this->user_id = $this->user->get_field('id');
