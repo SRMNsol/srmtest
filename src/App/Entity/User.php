@@ -139,6 +139,11 @@ class User
     protected $extrabuxLastSyncAt;
 
     /**
+     * @Column(name="first_name", length=20, nullable=true)
+     */
+    protected $firstName;
+
+    /**
      * Get id
      *
      * @return integer
@@ -693,7 +698,7 @@ class User
     /**
      * Get extrabuxRawData
      *
-     * @return string 
+     * @return string
      */
     public function getExtrabuxRawData()
     {
@@ -716,10 +721,33 @@ class User
     /**
      * Get extrabuxLastSyncAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getExtrabuxLastSyncAt()
     {
         return $this->extrabuxLastSyncAt;
+    }
+
+    /**
+     * Set firstName
+     *
+     * @param string $firstName
+     * @return User
+     */
+    public function setFirstName($firstName)
+    {
+        $this->firstName = $firstName;
+
+        return $this;
+    }
+
+    /**
+     * Get firstName
+     *
+     * @return string
+     */
+    public function getFirstName()
+    {
+        return $this->firstName;
     }
 }

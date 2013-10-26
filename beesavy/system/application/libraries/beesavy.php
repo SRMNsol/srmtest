@@ -19,10 +19,17 @@ class Beesavy
         $this->db = $ci->db;
     }
 
-    public function getUser($email, $password, $noAuth = False)
+    public function getUser($idOrEmail, $password, $noAuth = False)
     {
-        $user = $this->db->get_where('user', ['email' => $email])->row_array();
-        if ($noAuth || $password === $user['password']) {
+        $user = null;
+
+        if (strpos($idOrEmail, '@') > 0) {
+            $user = $this->db->get_where('user', ['email' => $idOrEmail])->row_array();
+        } elseif (is_numeric($idOrEmail)) {
+            $user = $this->findUserById($idOrEmail);
+        }
+
+        if (is_array($user) && ($noAuth || $password === $user['password'])) {
             return $user;
         }
 
