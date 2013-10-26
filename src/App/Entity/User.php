@@ -144,6 +144,11 @@ class User
     protected $firstName;
 
     /**
+     * @Column(name="raw_user_data", type="text", nullable=true)
+     */
+    protected $extrabuxRawUserData;
+
+    /**
      * Get id
      *
      * @return integer
@@ -742,6 +747,19 @@ class User
     }
 
     /**
+     * Set extrabuxRawUserData
+     *
+     * @param string $extrabuxRawUserData
+     * @return User
+     */
+    public function setExtrabuxRawUserData($extrabuxRawUserData)
+    {
+        $this->extrabuxRawUserData = $extrabuxRawUserData;
+
+        return $this;
+    }
+
+    /**
      * Get firstName
      *
      * @return string
@@ -749,5 +767,15 @@ class User
     public function getFirstName()
     {
         return $this->firstName;
+    }
+
+    /**
+     * Get extrabuxRawUserData
+     *
+     * @return string
+     */
+    public function getExtrabuxRawUserData()
+    {
+        return $this->extrabuxRawUserData;
     }
 }
