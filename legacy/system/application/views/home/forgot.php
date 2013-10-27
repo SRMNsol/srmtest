@@ -14,18 +14,18 @@
 
 
 <!-- content -->
-<? if(isset($success)) { ?>
+<?php if(isset($success)) { ?>
 <div style="clear:both" class="message success">
 {success}
 </div>
-<? } ?>
-<? if(!empty($errors)) {  ?>
+<?php } ?>
+<?php if(!empty($errors)) {  ?>
 <div style="clear:both" class="message error">
 {errors}
 {message}
 {/errors}
 </div>
-<? } ?>
+<?php } ?>
 		<!-- page Title -->
 
 		<div id="content" class="BGNoCol">

@@ -15,11 +15,11 @@
 
 
 <!-- content -->
-<? if(($success)) { ?>
+<?php if(($success)) { ?>
 <div style="clear:both" class="message success">
 {success}
 </div>
-<? } ?>
+<?php } ?>
                 <div class="BGLeftCol" style="border:#00C 0px solid" >
 		<!-- page Title -->
 

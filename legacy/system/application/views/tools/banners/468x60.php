@@ -18,7 +18,7 @@
           width='178' height='148'
           <?php }else{?>
           width='468' height='60'
-          <?    }   ?>
+          <?php    }   ?>
           src='/Banner/468x60.swf'
           bgcolor='#FFFFFF'
           quality='high'

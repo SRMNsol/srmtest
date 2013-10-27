@@ -156,7 +156,7 @@ Email your favorite websites and watch your cash back grow!</td></tr></table>
 	</div>          
 	<div class="title2">Referral Cash Back</div>
 	<div class="innerbox">
-    <table><tbody><tr><td><strong>Total to Date:</storng></td><td>$<? echo $total[0]['referralavailable']+$total[0]['referralpending'] ?></td></tr></tbody></table>
+    <table><tbody><tr><td><strong>Total to Date:</storng></td><td>$<?php echo $total[0]['referralavailable']+$total[0]['referralpending'] ?></td></tr></tbody></table>
 	<table><tbody><tr><td><strong>Available:</storng></td><td>${referralavailable}</td></tr></tbody></table>
 	</div>
 <?php 
@@ -168,7 +168,7 @@ if((float)$total[0]['available'] > 10){ ?>
 ?>
 
         <div class="Request"><img style="padding-left:50px;padding-top:10px;" src="/images/btn-request-payment-gray.gif"/></div>
-        <div class="RequestNote">You need an additional $<? echo $dif ?> to request a payment.</div>
+        <div class="RequestNote">You need an additional $<?php echo $dif ?> to request a payment.</div>
 <?php } ?>
 	<div style="clear:both;height:10px;"></div>
 </div>    

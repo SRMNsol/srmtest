@@ -160,12 +160,12 @@ $val = (float)$int->format('%a');
             
             
 if(!$purchase_exempt && (float) $total[0]['referralpending'] != 0 && $val>90) { ?>
-<strong>Note:</strong>  You must make a purchase in the next <? 
+<strong>Note:</strong>  You must make a purchase in the next <?php 
 echo 90-$val;
 ?> days in order to make $<?php echo $total[0]['referralpending'] ?> in pending referral cash back available. </span>
 <?php } else { ?>
 <strong>Note:</strong>  Congratulations! Your pending referral cash back will be available as soon as the return period has passed. </span> 
-<? } ?>
+<?php } ?>
 </td></tr></tbody></table>
 	</div>
     <div class="title2">Total Cash Back</div>
@@ -181,7 +181,7 @@ echo 90-$val;
 ?>
 
         <div class="Request"><img style="padding-left:50px;padding-top:10px;" src="/images/btn-request-payment-gray.gif"/></div>
-        <div class="RequestNote">You need an additional $<? echo $dif ?> to request a payment.</div>
+        <div class="RequestNote">You need an additional $<?php echo $dif ?> to request a payment.</div>
 <?php } ?>
 	<div style="clear:both;height:10px;"></div>
 </div>    

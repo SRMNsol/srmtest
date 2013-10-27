@@ -6,8 +6,8 @@
 <body>
 
     <div style="background:#fff;border: 1px solid #999;	margin:0 auto;width:800px;float:left;">
-		<div style="border:0px solid #000;padding-top:15px;padding-left:15px;"><img src="<? echo base_url() ?>images/header-beesavy-logo.gif"/></div>
-        <div style="border:0px solid #000;padding-top:15px;padding-left:15px;"><img src="<? echo base_url() ?>images/newsletter-div.gif"/></div>
+		<div style="border:0px solid #000;padding-top:15px;padding-left:15px;"><img src="<?php echo base_url() ?>images/header-beesavy-logo.gif"/></div>
+        <div style="border:0px solid #000;padding-top:15px;padding-left:15px;"><img src="<?php echo base_url() ?>images/newsletter-div.gif"/></div>
 		<div style="border:0px solid #999;	margin:0 auto;float:left;padding:15px;">
 <p style="margin-top:10px;margin-left:10px;margin-bottom:10px;font-size:15px;font-family:arial;color:#000;">Hi {first_name} {last_name},
 </p>
@@ -15,14 +15,14 @@
 Your <strong>${cashback_amount} Cash Back </strong>has been posted to your BeeSavy account.
 </p>
 
-<p style="margin-top:10px;margin-left:10px;margin-bottom:10px;font-size:15px;font-family:arial;color:#000;">To view your purchase, please visit <a href="" style="color:#e86800;font-weight:normal;text-decoration:underline;"><? echo base_url() ?>account</a>
+<p style="margin-top:10px;margin-left:10px;margin-bottom:10px;font-size:15px;font-family:arial;color:#000;">To view your purchase, please visit <a href="" style="color:#e86800;font-weight:normal;text-decoration:underline;"><?php echo base_url() ?>account</a>
 </p>
 
 <p style="margin-top:10px;margin-left:10px;margin-bottom:10px;font-size:15px;font-family:arial;color:#000;">Thanks,<br/><br/><br/>
 </p>
 
 <p style="margin-top:10px;margin-left:10px;margin-bottom:10px;font-size:15px;font-family:arial;color:#000;">The BeeSavy Team<br/>
-<a href="<? echo base_url()?>" style="color:#e86800;font-weight:normal;text-decoration:underline;">www.beesavy.com</a>
+<a href="<?php echo base_url()?>" style="color:#e86800;font-weight:normal;text-decoration:underline;">www.beesavy.com</a>
 </p>
 
 

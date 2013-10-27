@@ -39,7 +39,7 @@
 <script type='text/javascript'>
 $(document).ready(function(){
     $(".make-home").colorbox();
-        ZeroClipboard.setMoviePath('<? echo base_url() ?>zeroclipboard/ZeroClipboard.swf');
+        ZeroClipboard.setMoviePath('<?php echo base_url() ?>zeroclipboard/ZeroClipboard.swf');
 		var clips = [];
 		
 		function startZC() {

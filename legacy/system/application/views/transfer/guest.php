@@ -37,13 +37,13 @@
 		</div>		
 		<div class="div"></div>
 		<div style="padding:0 15px;"></div>
-<? if($code) { ?>
+<?php if($code) { ?>
 <div style="clear:both" class="message error">
 {errors}
 {message}
 {/errors}
 </div>
-<? } ?>
+<?php } ?>
         <div id="login">
 		    <h2>Sign In</h2>
 		    <form id="standardLoginForm" enctype="application/x-www-form-urlencoded" method="post" action="/transfer/login/{type}/{type_id}">

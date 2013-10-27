@@ -84,7 +84,7 @@
 <div class="inner-outerbox">
 
 	<div class="innerbox">
-    <table><tbody><tr><td><strong>Member since:</strong></td><td>{created}</td></tr><tr><td><strong>Last Login:</strong></td><td>{last_login} </td></tr><tr><td><strong>Last Purchase:</strong></td><td><? if(strtotime($last_cashback)){
+    <table><tbody><tr><td><strong>Member since:</strong></td><td>{created}</td></tr><tr><td><strong>Last Login:</strong></td><td>{last_login} </td></tr><tr><td><strong>Last Purchase:</strong></td><td><?php if(strtotime($last_cashback)){
         echo strftime('%B %e, %Y', strtotime($last_cashback));
     }else{
         echo "-";
@@ -141,7 +141,7 @@ _gwparam["SID"]="{user_id}";
 ?>
 
         <div class="Request"><img style="padding-left:50px;padding-top:10px;" src="/images/btn-request-payment-gray.gif"/></div>
-        <div class="RequestNote">You need an additional $<? echo $dif ?> to request a payment.</div>
+        <div class="RequestNote">You need an additional $<?php echo $dif ?> to request a payment.</div>
 <?php } ?>
 	<div style="clear:both;height:20px;"></div>
 </div>

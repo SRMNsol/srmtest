@@ -54,21 +54,21 @@ class=uppercase href="/stores/storelist/z">z</A> </DIV></DIV>
 {stores1}
   <LI><A href="/stores/details/{id}">{name}</A></LI>
 {/stores1}
-<? }?>
+<?php }?>
 </UL>
 <UL class=sitemap-col>
 <?php if($stores2){?>
 {stores2}
   <LI><A href="/stores/details/{id}">{name}</A></LI>
 {/stores2}
-<? }?>
+<?php }?>
 </UL>
 <UL class=sitemap-col>
 <?php if($stores3){?>
 {stores3}
   <LI><A href="/stores/details/{id}">{name}</A></LI>
 {/stores3}
-<? }?>
+<?php }?>
 </UL>
 </DIV>
 <DIV style="HEIGHT: 10px; CLEAR: both"></DIV></DIV>

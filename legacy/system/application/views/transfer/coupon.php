@@ -54,7 +54,7 @@ alt="{merchant_name}" onerror="this.src ='/images/no-image-100px.gif'">
 <!-- End cookie-->
   </div>
   <div id="equation">  
-  <div id="BeesavyTransfer" class="tall">{name}<?php if($code_prefix){?>, be sure to use Coupon <strong>Code {code} </strong><? } ?> </div>
+  <div id="BeesavyTransfer" class="tall">{name}<?php if($code_prefix){?>, be sure to use Coupon <strong>Code {code} </strong><?php } ?> </div>
   <div id="cashBackTransfer" class="tall"><strong>{cashback_text} Cash Back</strong> will be posted to your BeeSavy account in 1 - 4 days</div>
         </div>
         <div style="clear: both; height: 20px;"></div>

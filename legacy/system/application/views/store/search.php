@@ -103,7 +103,7 @@
        <!-- Right side -->
 
 
-<? $index=0;
+<?php $index=0;
 $ad = 0;
 foreach ($stores as $store){
     if($index==$ad){
@@ -114,11 +114,11 @@ foreach ($stores as $store){
 </script><noscript><a target='_blank' href='http://50.16.95.24/openx/www/delivery/ck.php?n=a88fd39'><img border='0' alt='' src='http://50.16.95.24/openx/www/delivery/avw.php?zoneid=6&amp;n=a88fd39' /></a></noscript>
 <!--<img src="/images/rightbanner.jpg">-->
                 </div>
-<? }
+<?php }
 ?>
              <div class="couponList inactive" >
 	         <div class="logo" >
-             <a href="/stores/details/<? echo $store['id'] ?>"><img class="cdn-image"
+             <a href="/stores/details/<?php echo $store['id'] ?>"><img class="cdn-image"
 onload="
         var width=100;
     var height=32;
@@ -127,24 +127,24 @@ onload="
     var nheight=ratio*this.height;
     this.width=nwidth;
     this.height=nheight;"
- src="<? echo $store['logo_thumb'] ?>" alt="<? echo $store['name'] ?>"></a>
+ src="<?php echo $store['logo_thumb'] ?>" alt="<?php echo $store['name'] ?>"></a>
             </div>
 
             <div class="desc">
-            <h3><a href="/stores/details/<? echo $store['id'] ?>" title="<? echo $store['name'] ?>"><? echo $store['name'] ?></a></h3>
-             <? echo $store['description-abrv']?> <a class="moreLink" href="/stores/details/<? echo $store['id'] ?>">more ›</a>
+            <h3><a href="/stores/details/<?php echo $store['id'] ?>" title="<?php echo $store['name'] ?>"><?php echo $store['name'] ?></a></h3>
+             <?php echo $store['description-abrv']?> <a class="moreLink" href="/stores/details/<?php echo $store['id'] ?>">more ›</a>
             </div>
 
             <div class="coupons">
                 <?php if ($store['coupons']) : ?>
-                <div class="coupon dot"><a href="/stores/details/<? echo $store['id'] ?>"><? echo $store['coupons']?> Coupons</a></div>
+                <div class="coupon dot"><a href="/stores/details/<?php echo $store['id'] ?>"><?php echo $store['coupons']?> Coupons</a></div>
                 <?php else : ?>
                 <div class="coupon"></div>
                 <?php endif ?>
             </div>
 
-            <div class="CashBack" style="border:0px solid #000;"><div class="CashBack-Bt1 BtnCBOrangeBg" <?php if (empty($store['cashback_text'])) : ?>style="visibility:hidden"<?php endif ?>><a href="/stores/details/<? echo $store['id'] ?>" rel="nofollow"><span class="CashBack-value value"><? echo $store['cashback_text']?></span></a></div></div>
-         	   <div class="ShopStore" style><div class="ShopStore-Bt BtnSSOrangeBg"><a class="BtnBlackTxt" href="/stores/details/<? echo $store['id'] ?>" rel="nofollow">SHOP STORE</a></div></div>
+            <div class="CashBack" style="border:0px solid #000;"><div class="CashBack-Bt1 BtnCBOrangeBg" <?php if (empty($store['cashback_text'])) : ?>style="visibility:hidden"<?php endif ?>><a href="/stores/details/<?php echo $store['id'] ?>" rel="nofollow"><span class="CashBack-value value"><?php echo $store['cashback_text']?></span></a></div></div>
+         	   <div class="ShopStore" style><div class="ShopStore-Bt BtnSSOrangeBg"><a class="BtnBlackTxt" href="/stores/details/<?php echo $store['id'] ?>" rel="nofollow">SHOP STORE</a></div></div>
 	    </div>
 
 <?

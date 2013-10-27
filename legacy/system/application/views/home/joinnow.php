@@ -20,7 +20,7 @@
 <p>{message}</p>
 {/errors}
 </div>
-<? } ?>
+<?php } ?>
 		<!-- page Title -->
 <div id="content" class="BGNoCol">
 	<div id="pageTitle">

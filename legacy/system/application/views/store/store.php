@@ -96,7 +96,7 @@ alt="** PLEASE DESCRIBE THIS IMAGE **" onerror="this.src ='../images/no-image-10
 
 
 
-<? $index=0;
+<?php $index=0;
 $ad = 0;
 foreach($coupons as $coupon){
     if($index==$ad){
@@ -108,11 +108,11 @@ foreach($coupons as $coupon){
 </script><noscript><a target='_blank' href='http://50.16.95.24/openx/www/delivery/ck.php?n=a88fd39'><img border='0' alt='' src='http://50.16.95.24/openx/www/delivery/avw.php?zoneid=10&amp;n=050d042' /></a></noscript>
 <!--<img src="/images/rightbanner.jpg">-->
                 </div>
-<? } ?>
+<?php } ?>
 <div class="couponList inactive" style="width: 680px; margin-right: 0pt; margin-left: 20px;">
                 <div class="logo">
-                    <a class="transfer-link" href="/transfer/coupon/<? echo $coupon['cid'] ?>" target="_blank" rel="nofollow">
-                        <img class="cdn-image" src="<? echo $coupon['logo_thumb'] ?>"
+                    <a class="transfer-link" href="/transfer/coupon/<?php echo $coupon['cid'] ?>" target="_blank" rel="nofollow">
+                        <img class="cdn-image" src="<?php echo $coupon['logo_thumb'] ?>"
 onload="
         var width=100;
     var height=32;
@@ -125,15 +125,15 @@ alt="** PLEASE DESCRIBE THIS IMAGE **" onerror="this.src ='../images/no-image-10
                     </a>
                 </div>
                 <div class="cInfo">
-                    <h3><a class="transfer-link" href="/transfer/coupon/<? echo $coupon['cid'] ?>" target="_blank" rel="nofollow"><? echo $coupon['name'] ?></a></h3>
-                    <div class="details"> Expires <? echo $coupon['expiration'] ?> <? echo $coupon['code_prefix'] ?><font color=black><b><? echo $coupon['code'] ?></b></font>
+                    <h3><a class="transfer-link" href="/transfer/coupon/<?php echo $coupon['cid'] ?>" target="_blank" rel="nofollow"><?php echo $coupon['name'] ?></a></h3>
+                    <div class="details"> Expires <?php echo $coupon['expiration'] ?> <?php echo $coupon['code_prefix'] ?><font color=black><b><?php echo $coupon['code'] ?></b></font>
 
 
                                                 <br/>
 <div class="BottomSpace" >
-<a target='_blank' href='/social/coupon/facebook/<? echo $coupon['cid'] ?>'><img src='/images/facebook-refer.png' alt='** PLEASE DESCRIBE THIS IMAGE **'/></a>
-<a target='_blank' href='/social/coupon/twitter/<? echo $coupon['cid'] ?>'><img src='/images/twitter-refer.png' alt='** PLEASE DESCRIBE THIS IMAGE **'/></a>
-<a onclick="$.get($(this).attr('href'),function(data){document.location=data;});return false;" href='/social/coupon/email/<? echo $coupon['cid'] ?>'><img src='/images/email-refer.png' alt='** PLEASE DESCRIBE THIS IMAGE **'/></a>
+<a target='_blank' href='/social/coupon/facebook/<?php echo $coupon['cid'] ?>'><img src='/images/facebook-refer.png' alt='** PLEASE DESCRIBE THIS IMAGE **'/></a>
+<a target='_blank' href='/social/coupon/twitter/<?php echo $coupon['cid'] ?>'><img src='/images/twitter-refer.png' alt='** PLEASE DESCRIBE THIS IMAGE **'/></a>
+<a onclick="$.get($(this).attr('href'),function(data){document.location=data;});return false;" href='/social/coupon/email/<?php echo $coupon['cid'] ?>'><img src='/images/email-refer.png' alt='** PLEASE DESCRIBE THIS IMAGE **'/></a>
 </div>
                                             </div>
                 </div>
@@ -141,14 +141,14 @@ alt="** PLEASE DESCRIBE THIS IMAGE **" onerror="this.src ='../images/no-image-10
                 <div class="CtA">
                 <table cellspacing=0 cellpadding=0>
                 <tr><td>
-<div class="ClickToCopyCode"><div style="position:relative" class="click-contain ClickToCopyCode-Bt BtnCTCCOrangeBg-coupon"><a class="click-button BtnBlackTxt" href="/transfer/coupon/<? echo $coupon['cid'] ?>" target="_blank" rel="nofollow"><? echo $coupon['action_text'] ?></a></div></div>
+<div class="ClickToCopyCode"><div style="position:relative" class="click-contain ClickToCopyCode-Bt BtnCTCCOrangeBg-coupon"><a class="click-button BtnBlackTxt" href="/transfer/coupon/<?php echo $coupon['cid'] ?>" target="_blank" rel="nofollow"><?php echo $coupon['action_text'] ?></a></div></div>
     	               </td></tr><tr><td>
-    	       <div class="instructions"><? echo $coupon['code_prefix'] ?><a class="click-text couponCode transfer-link" href="" target="_blank" rel="nofollow"><? echo $coupon['code'] ?></a>     </div>
+    	       <div class="instructions"><?php echo $coupon['code_prefix'] ?><a class="click-text couponCode transfer-link" href="" target="_blank" rel="nofollow"><?php echo $coupon['code'] ?></a>     </div>
                </td></tr></table>
 
                 </div>
             </div>
-<? $index++; } ?>
+<?php $index++; } ?>
 
                         <div style="clear: both;"></div>
                    </div>

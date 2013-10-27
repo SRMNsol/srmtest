@@ -78,14 +78,14 @@ echo "<a id='large-image' href='#'><img class='cdn-image' src='$image' alt='** P
 		</ul>
 	</div>
 	<div id="tabFilter">
-<? if($zip){?>
+<?php if($zip){?>
                 <div id="calculateZip">
                     <form id="zipForm" action="/product/compare/{id}" method="get">
                     <div style="float:left;font-weight:normal;margin-top:4px;margin-left:50px;border:0px solid #000;">Include Tax &amp; Shipping with Prices: {zip}&nbsp;&nbsp;</div>
                          <input id="zipButton" type="image" src="/images/btn-edit.gif" alt="Edit Zip Code" />
                                             </form>
                 </div>
-<? } else {?>
+<?php } else {?>
 		<div id="calculateZip">
 			<form id="zipForm" action="/product/compare/{id}" method="get">
 				<span>Include Tax &amp; Shipping with Prices: </span>
@@ -93,7 +93,7 @@ echo "<a id='large-image' href='#'><img class='cdn-image' src='$image' alt='** P
 				<input id="zipButton" src="/images/btn-calculate.gif" alt="Calculate" type="image"/>
 							</form>
 		</div>
-<? } ?>
+<?php } ?>
 
 	</div>
 

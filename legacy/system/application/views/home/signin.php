@@ -14,13 +14,13 @@
 
 
 <!-- content -->
-<? if($code) { ?>
+<?php if($code) { ?>
 <div style="clear:both" class="message error">
 {errors}
 {message}
 {/errors}
 </div>
-<? } ?>
+<?php } ?>
 		<!-- page Title -->
 
 		<div id="content" class="BGNoCol">

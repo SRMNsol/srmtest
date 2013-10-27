@@ -134,7 +134,7 @@
         </div>
         <div class="pInfo">
             <h3>
-            <a href="<?php echo escape($compare_url, 'html_attr') ?>" title="<? echo escape($product['name'], 'html_attr') ?>">
+            <a href="<?php echo escape($compare_url, 'html_attr') ?>" title="<?php echo escape($product['name'], 'html_attr') ?>">
                 <?php echo escape($product['name-abrv']) ?></a>
             </h3>
             <span class="desc"><?php echo escape($product['description-abrv']) ?> <a href="<?php echo escape($compare_url, 'html_attr') ?>" class="more">more ›</a></span>
