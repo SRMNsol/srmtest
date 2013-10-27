@@ -26,27 +26,34 @@ class Beesavy
         if (strpos($idOrEmail, '@') > 0) {
             $user = $this->db->get_where('user', ['email' => $idOrEmail])->row_array();
         } elseif (is_numeric($idOrEmail)) {
-            $user = $this->findUserById($idOrEmail);
+            $user = $this->db->get_where('user', ['id' => $idOrEmail])->row_array();
         }
 
-        if (is_array($user) && ($noAuth || $password === $user['password'])) {
-            return $user;
+        if (is_array($user)) {
+            unset($user['first_name']); // temporarily use value from raw_user_data
+            unset($user['raw_data']);
+            $raw_user_data = json_decode($user['raw_user_data'], true);
+            unset($user['raw_user_data']);
+            $user = $user + (array) $raw_user_data;
+
+            if ($noAuth || $password === $user['password']) {
+                return $user;
+            }
         }
 
         return false;
     }
 
-    protected function findUserById($id)
-    {
-        return $this->db->get_where('user', ['id' => $id])->row_array();
-    }
-
     protected function getUserRawData($id, $type)
     {
-        $user = $this->findUserById($id);
-        $raw_data = json_decode($user['raw_data'], true);
+        $row = $this->db
+            ->select('raw_data')
+            ->get_where('user', ['id' => $id])
+            ->row_array();
 
-        return $raw_data[$type];
+        $raw_data = json_decode($row['raw_data'], true);
+
+        return isset($raw_data[$type]) ? $raw_data[$type] : [];
     }
 
     public function getUserReferrals($id)
