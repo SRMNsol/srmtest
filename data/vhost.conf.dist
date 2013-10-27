@@ -1,12 +1,18 @@
 <VirtualHost *:80>
-  ServerName beesavy
-  DocumentRoot /path-to/beesavy/public
+  ServerName beesavy.phpdevel.net
+  DocumentRoot /project-root/beesavy/public
 
-  <Directory /path-to/beesavy/public>
+  <Directory /project-root/beesavy/public>
     Options Indexes FollowSymLinks MultiViews
     AllowOverride None
     Order allow,deny
     allow from all
+
+    AuthType Digest
+    AuthName "client"
+    AuthDigestProvider file
+    AuthUserFile /project-root/.secrets
+    Require user rehoner
 
     RewriteEngine On
     RewriteRule ^.git - [F,L]
@@ -19,5 +25,19 @@
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond $1 !^projects
     RewriteRule ^(.*)$ index.php [L]
+  </Directory>
+</VirtualHost>
+
+<VirtualHost *:80>
+  ServerName beesavyadm.phpdevel.net
+  DocumentRoot /project-root/web
+
+  <Directory /project-root/web>
+    AllowOverride all
+
+    AuthName "client"
+    AuthDigestProvider file
+    AuthUserFile /project-root/.secrets
+    Require user rehoner
   </Directory>
 </VirtualHost>
