@@ -147,7 +147,7 @@ onload="
          	   <div class="ShopStore" style><div class="ShopStore-Bt BtnSSOrangeBg"><a class="BtnBlackTxt" href="/stores/details/<?php echo $store['id'] ?>" rel="nofollow">SHOP STORE</a></div></div>
 	    </div>
 
-<?
+<?php 
 
     $index += 1;}
  ?>

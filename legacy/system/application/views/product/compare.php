@@ -41,7 +41,7 @@ $price = $cheapest['final_amount'];
 $product_url = $cheapest['link'];
 ?>
 
-<?
+<?php 
 echo "<a id='large-image' href='#'><img class='cdn-image' src='$image' alt='** PLEASE DESCRIBE THIS IMAGE **' onerror=\"this.src='/images/no-image-100px.gif'\"/></a>
 	</div>
 	<div id='product-info'>

@@ -136,7 +136,7 @@ alt='$store' onerror="this.src ='../images/no-image-100px.gif'"/>
 	            </div>
 	        </div>
 	    </div>
-<?
+<?php 
 
     $index += 1;}
  ?>

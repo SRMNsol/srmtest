@@ -1,4 +1,4 @@
-<?
+<?php 
 $states = array(
     'how'=>'',
     'lm'=>'',
