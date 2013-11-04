@@ -19,7 +19,7 @@ App\Popshops\Merchant:
     commission:
       type: decimal
       scale: 2
-    commissionHigh:
+    commissionMax:
       type: decimal
       scale: 2
     commissionType:

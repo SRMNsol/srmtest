@@ -17,13 +17,13 @@ class Merchant implements DomCrawlerInterface
     protected $url;
     protected $description;
     protected $commission = 0.00;
-    protected $commissionHigh = 0.00;
+    protected $commissionMax = 0.00;
     protected $commissionType = self::COMMISSION_TYPE_FIXED;
 
     const COMMISSION_TYPE_FIXED = 'fixed';
     const COMMISSION_TYPE_PERCENTAGE = 'percentage';
-    const COMMISSION_TYPE_FIXED_RANGE = 'fixed_range';
-    const COMMISSION_TYPE_PERCENTAGE_RANGE = 'percentage_range';
+    const COMMISSION_TYPE_FIXED_VAR = 'fixed_var';
+    const COMMISSION_TYPE_PERCENTAGE_VAR = 'percentage_var';
 
     public function __construct(Crawler $node = null)
     {
@@ -128,14 +128,14 @@ class Merchant implements DomCrawlerInterface
         return $this;
     }
 
-    public function getCommissionHigh()
+    public function getCommissionMax()
     {
-        return $this->commissionHigh;
+        return $this->commissionMax;
     }
 
-    public function setCommissionHigh($value)
+    public function setCommissionMax($value)
     {
-        $this->commissionHigh = (float) $value;
+        $this->commissionMax = (float) $value;
 
         return $this;
     }
@@ -174,7 +174,7 @@ class Merchant implements DomCrawlerInterface
     public function getCashbackText($sharePct = 100, $currency = '$')
     {
         $text = number_format($this->commission * ($sharePct / 100), 2);
-        $textHigh = number_format($this->commissionHigh * ($sharePct / 100), 2);
+        $textMax = number_format($this->commissionMax * ($sharePct / 100), 2);
 
         if ($text === '0.00') {
             return null;
@@ -188,16 +188,16 @@ class Merchant implements DomCrawlerInterface
                 $text = preg_replace('/0+$/', '', $text);
                 $text = preg_replace('/\.$/', '', $text);
                 return "$text%";
-            case self::COMMISSION_TYPE_FIXED_RANGE :
+            case self::COMMISSION_TYPE_FIXED_VAR :
                 $text = preg_replace('/\.00$/', '', $text);
-                $textHigh = preg_replace('/\.00$/', '', $textHigh);
-                return "$currency$text - $currency$textHigh";
-            case self::COMMISSION_TYPE_PERCENTAGE_RANGE :
+                $textMax = preg_replace('/\.00$/', '', $textMax);
+                return "$currency$text - $currency$textMax";
+            case self::COMMISSION_TYPE_PERCENTAGE_VAR :
                 $text = preg_replace('/0+$/', '', $text);
                 $text = preg_replace('/\.$/', '', $text);
-                $textHigh = preg_replace('/0+$/', '', $textHigh);
-                $textHigh = preg_replace('/\.$/', '', $textHigh);
-                return "$text% - $textHigh%";
+                $textMax = preg_replace('/0+$/', '', $textMax);
+                $textMax = preg_replace('/\.$/', '', $textMax);
+                return "$text% - $textMax%";
         }
 
         return null;
