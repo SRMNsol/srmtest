@@ -191,13 +191,13 @@ class Merchant implements DomCrawlerInterface
             case self::COMMISSION_TYPE_FIXED_VAR :
                 $text = preg_replace('/\.00$/', '', $text);
                 $textMax = preg_replace('/\.00$/', '', $textMax);
-                return "$currency$text - $currency$textMax";
+                return "$currency$text-$currency$textMax";
             case self::COMMISSION_TYPE_PERCENTAGE_VAR :
                 $text = preg_replace('/0+$/', '', $text);
                 $text = preg_replace('/\.$/', '', $text);
                 $textMax = preg_replace('/0+$/', '', $textMax);
                 $textMax = preg_replace('/\.$/', '', $textMax);
-                return "$text% - $textMax%";
+                return "$text%-$textMax%";
         }
 
         return null;
