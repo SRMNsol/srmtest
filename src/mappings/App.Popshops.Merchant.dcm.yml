@@ -19,5 +19,8 @@ App\Popshops\Merchant:
     commission:
       type: decimal
       scale: 2
+    commissionHigh:
+      type: decimal
+      scale: 2
     commissionType:
       type: string(10)
