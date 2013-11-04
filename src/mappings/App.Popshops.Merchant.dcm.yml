@@ -23,4 +23,4 @@ App\Popshops\Merchant:
       type: decimal
       scale: 2
     commissionType:
-      type: string(10)
+      type: string(20)

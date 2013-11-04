@@ -21,7 +21,6 @@ class MerchantType extends AbstractType
                 'constraints' => [new Assert\NotBlank()],
             ])
             ->add('commissionMax', 'number', [
-                'label' => 'Comm. (max)',
                 'precision' => 2,
                 'constraints' => [new Assert\NotBlank()],
             ])

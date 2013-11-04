@@ -1,8 +1,28 @@
-{% extends 'form_div_layout.html.twig' %}
+{% use 'form_div_layout.html.twig' %}
+
+{% block form_widget_simple %}
+{% spaceless %}
+  {% set attr = attr|merge({ class: 'form-control ' ~ attr.class|default }) %}
+  {% set div_attr = div_attr|default({})|merge({ class: div_attr.class|default|grid('col-md-8') }) %}
+  <div{% for attrname, attrvalue in div_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
+    {{ parent() }}
+  </div>
+{% endspaceless %}
+{% endblock form_widget_simple %}
+
+{% block form_widget_compound %}
+{% spaceless %}
+  {% if form.parent is empty %}
+    {{ form_errors(form) }}
+  {% endif %}
+  {{ block('form_rows') }}
+  {{ form_rest(form) }}
+{% endspaceless %}
+{% endblock form_widget_compound %}
 
 {% block form_start %}
 {% spaceless %}
-  {% set attr = attr|add_class('form-horizontal') %}
+  {% set attr = attr|merge({ role: 'form', class: 'form-horizontal ' ~ attr.class|default }) %}
   {{ parent() }}
 {% endspaceless %}
 {% endblock form_start %}
@@ -19,26 +39,16 @@
 
 {% block form_label %}
 {% spaceless %}
-  {% set label_attr = label_attr|add_class('control-label') %}
+  {% set label_attr = label_attr|merge({ class: 'control-label ' ~ label_attr.class|default|grid('col-md-2')}) %}
   {{ parent() }}
 {% endspaceless %}
 {% endblock form_label %}
 
-{% block form_widget_simple %}
-{% spaceless %}
-  {% set wrap_attr = wrap_attr|default({}) %}
-  {% set attr = attr|add_class('form-control') %}
-  <div{% for attrname, attrvalue in wrap_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
-    {{ parent() }}
-  </div>
-{% endspaceless %}
-{% endblock form_widget_simple %}
-
 {% block choice_widget_collapsed %}
 {% spaceless %}
-  {% set wrap_attr = wrap_attr|default({}) %}
-  {% set attr = attr|add_class('form-control') %}
-  <div{% for attrname, attrvalue in wrap_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
+  {% set attr = attr|merge({ class: 'form-control ' ~ attr.class|default }) %}
+  {% set div_attr = div_attr|default({})|merge({ class: div_attr.class|default|grid('col-md-8') }) %}
+  <div{% for attrname, attrvalue in div_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
     {{ parent() }}
   </div>
 {% endspaceless %}
@@ -46,19 +56,114 @@
 
 {% block textarea_widget %}
 {% spaceless %}
-  {% set wrap_attr = wrap_attr|default({}) %}
-  {% set attr = attr|add_class('form-control') %}
-  <div{% for attrname, attrvalue in wrap_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
+  {% set attr = attr|merge({ class: 'form-control ' ~ attr.class|default }) %}
+  {% set div_attr = div_attr|default({})|merge({ class: div_attr.class|default|grid('col-md-8') }) %}
+  <div{% for attrname, attrvalue in div_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
     {{ parent() }}
   </div>
 {% endspaceless %}
 {% endblock textarea_widget %}
 
+{% block date_widget %}
+{% spaceless %}
+  {% if widget == 'single_text' %}
+    {{ block('form_widget_simple') }}
+  {% else %}
+    <div {{ block('widget_container_attributes') }}>
+      {{ date_pattern|replace({
+        '{{ year }}':  form_widget(form.year,  { div_attr: { class: 'col-md-1' } }),
+        '{{ month }}': form_widget(form.month, { div_attr: { class: 'col-md-1' } }),
+        '{{ day }}':   form_widget(form.day,   { div_attr: { class: 'col-md-1' } }),
+      })|raw }}
+    </div>
+  {% endif %}
+{% endspaceless %}
+{% endblock date_widget %}
+
+{% block time_widget %}
+{% spaceless %}
+  {% if widget == 'single_text' %}
+    {{ block('form_widget_simple') }}
+  {% else %}
+    {% set vars = widget == 'text' ? { attr: { size: 1 } } : { div_attr: { class: 'col-md-1' } } %}
+    <div {{ block('widget_container_attributes') }}>
+      {{ form_widget(form.hour, vars) }}{% if with_minutes %}{{ form_widget(form.minute, vars) }}{% endif %}{% if with_seconds %}:{{ form_widget(form.second, vars) }}{% endif %}
+    </div>
+  {% endif %}
+{% endspaceless %}
+{% endblock time_widget %}
+
+{% block choice_widget_expanded %}
+{% spaceless %}
+  {% set attr = attr|merge({ class: attr.class|default|grid('col-md-8') }) %}
+  <div {{ block('widget_container_attributes') }}>
+  {% for child in form %}
+    {{ form_widget(child, { mode: 'choice' }) }}
+  {% endfor %}
+  </div>
+{% endspaceless %}
+{% endblock choice_widget_expanded %}
+
+{% block radio_widget %}
+{% spaceless %}
+  {% set mode = mode|default('normal') %}
+  {% if mode == 'normal' %}
+    {% set div_attr = div_attr|default({})|merge({ class: div_attr.class|default|grid('col-md-8') }) %}
+  {% endif %}
+
+  {% if mode == 'normal' %}<div{% for attrname, attrvalue in div_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>{% endif %}
+    <div class="radio">
+      <label>
+        {{ parent() }} {{ label }}
+      </label>
+    </div>
+  {% if mode == 'normal' %}</div>{% endif %}
+{% endspaceless %}
+{% endblock radio_widget %}
+
+{% block checkbox_widget %}
+{% spaceless %}
+  {% set mode = mode|default('normal') %}
+  {% if mode == 'normal' %}
+    {% set div_attr = div_attr|default({})|merge({ class: div_attr.class|default|grid('col-md-8') }) %}
+  {% endif %}
+
+  {% if mode == 'normal' %}<div{% for attrname, attrvalue in div_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>{% endif %}
+    <div class="checkbox">
+      <label>
+        {{ parent() }} {{ label }} {{ test|default }}
+      </label>
+    </div>
+  {% if mode == 'normal' %}</div>{% endif %}
+{% endspaceless %}
+{% endblock checkbox_widget %}
+
+{% block button_widget %}
+{% spaceless %}
+  {% set attr = attr|merge({ class: 'btn ' ~ attr.class|default }) %}
+  {{ parent() }}
+{% endspaceless %}
+{% endblock button_widget %}
+
+{% block button_row %}
+{% spaceless %}
+  <div class="form-group">
+    {% set div_attr = div_attr|default({})|merge({ class: div_attr.class|default|grid('col-md-8 col-md-offset-2') }) %}
+    <div{% for attrname, attrvalue in div_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
+    {{ form_widget(form) }}
+  </div>
+{% endspaceless %}
+{% endblock button_row %}
+
 {% block form_errors %}
 {% spaceless %}
     {% if errors|length > 0 %}
     {% set error = errors|first %}
-    <span class="help-block">{{ error.message }}</span>
+      {% if form.parent is empty %}
+        <div class="alert alert-danger">{{ error.message }}</div>
+      {% else %}
+        <span class="help-block">{{ error.message }}</span>
+      {% endif %}
     {% endif %}
 {% endspaceless %}
 {% endblock form_errors %}
