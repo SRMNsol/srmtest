@@ -3,6 +3,9 @@
 namespace App\Popshops;
 
 use Symfony\Component\DomCrawler\Crawler;
+use Symfony\Component\Validator\Mapping\ClassMetadata;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Form\FormInterface;
 
 class Merchant implements DomCrawlerInterface
 {
@@ -242,5 +245,28 @@ class Merchant implements DomCrawlerInterface
         }
 
         return $this;
+    }
+
+    static public function loadValidatorMetadata(ClassMetadata $metadata)
+    {
+        $metadata->addPropertyConstraint('commission', new Assert\NotBlank());
+        $metadata->addPropertyConstraint('commission', new Assert\GreaterThanOrEqual(['value' => 0]));
+        $metadata->addPropertyConstraint('commission', new Assert\LessThanOrEqual(['value' => 100, 'groups' => ['Percentage']]));
+
+        $metadata->addPropertyConstraint('commissionMax', new Assert\NotBlank());
+        $metadata->addPropertyConstraint('commissionMax', new Assert\GreaterThanOrEqual(['value' => 0]));
+        $metadata->addPropertyConstraint('commissionMax', new Assert\LessThanOrEqual(['value' => 100, 'groups' => ['Percentage']]));
+    }
+
+    static public function determineValidationGroups(FormInterface $form)
+    {
+        $merchant = $form->getData();
+        $groups = ['Default'];
+        if ($merchant->getCommissionType() === self::COMMISSION_TYPE_PERCENTAGE
+            || $merchant->getCommissionType() === self::COMMISSION_TYPE_PERCENTAGE_VAR
+        ) {
+            $groups[] = 'Percentage';
+        }
+        return $groups;
     }
 }

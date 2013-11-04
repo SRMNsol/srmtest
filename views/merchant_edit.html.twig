@@ -10,7 +10,7 @@
 <div class="row">
   <div class="col-md-9">
     {{ form_start(form, { attr: { class: 'merchant-edit' } }) }}
-
+      {{ form_errors(form) }}
       <div class="form-group">
         <label class="col-md-2 control-label">Store Name</label>
         <div class="col-md-6">
@@ -19,12 +19,8 @@
       </div>
       {{ form_row(form.description, { attr: { rows: 6 }, label_attr: { class: 'col-md-2' }, div_attr: { class: 'col-md-5' } }) }}
 
-      <div class="form-group">
-        {{ form_label(form.commission, form.vars.label, { label_attr: { class: 'col-md-2' } }) }}
-        {{ form_widget(form.commission, { div_attr: { class: 'col-md-2' } }) }}
-        {{ form_label(form.commissionMax, 'Max', { label_attr: { class: 'col-md-1' } }) }}
-        {{ form_widget(form.commissionMax, {  div_attr: { class: 'col-md-2' } }) }}
-      </div>
+      {{ form_row(form.commission, { div_attr: { class: 'col-md-3' } }) }}
+      {{ form_row(form.commissionMax, { label: 'Up to',  div_attr: { class: 'col-md-3' } }) }}
 
       {{ form_row(form.commissionType, { label: 'Type', label_attr: { class: 'col-md-2' }, div_attr: { class: 'col-md-3' } }) }}
       <div class="form-group">
