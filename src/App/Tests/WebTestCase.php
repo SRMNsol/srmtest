@@ -3,20 +3,26 @@
 namespace App\Tests;
 
 use Silex\WebTestCase as SilexWebTestCase;
-use Silex\Provider\TwigServiceProvider;
 use Silex\Provider\ServiceControllerServiceProvider;
+use App\Application;
+use App\TemplatingProvider;
 
 class WebTestCase extends SilexWebTestCase
 {
     public function createApplication()
     {
-        $app = require __DIR__ . '/../../app.php';
+        $app = new Application();
         $app['debug'] = true;
         $app['exception_handler']->disable();
         $app['session.test'] = true;
 
-        $app->register(new TwigServiceProvider(), ['twig.path' => $app['template_dir']]);
+        Application::registerBaseServices($app);
+        $app->register(new TemplatingProvider());
         $app->register(new ServiceControllerServiceProvider());
+
+        Application::loadConfig($app, __DIR__ . '/../../../config', [
+            'root_dir' => realpath(__DIR__ . '/../../..'),
+        ]);
 
         return $app;
     }
