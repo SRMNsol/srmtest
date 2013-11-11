@@ -14,6 +14,7 @@ use Silex\Provider\ValidatorServiceProvider;
 use Silex\Provider\TranslationServiceProvider;
 use Silex\Provider\ServiceControllerServiceProvider;
 use Igorw\Silex\ConfigServiceProvider;
+use Popshops\Silex\PopshopsServiceProvider;
 
 class Application extends SilexApplication
 {
@@ -26,7 +27,7 @@ class Application extends SilexApplication
     {
         $app->register(new OrmProvider());
         $app->register(new CacheProvider());
-        $app->register(new PopshopsProvider());
+        $app->register(new PopshopsServiceProvider());
     }
 
     public static function registerWebServices(Application $app)

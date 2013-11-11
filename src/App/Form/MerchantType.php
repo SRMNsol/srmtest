@@ -9,7 +9,7 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use App\Popshops\Merchant;
+use App\Entity\Merchant;
 
 class MerchantType extends AbstractType
 {
@@ -39,8 +39,8 @@ class MerchantType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'App\Popshops\Merchant',
-            'validation_groups' => ['App\Popshops\Merchant', 'determineValidationGroups'],
+            'data_class' => 'App\Entity\Merchant',
+            'validation_groups' => ['App\Entity\Merchant', 'determineValidationGroups'],
         ));
     }
 

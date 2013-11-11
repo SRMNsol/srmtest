@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Form\FormFactory;
 use Doctrine\ORM\EntityManager;
-use App\Popshops\Merchant;
+use App\Entity\Merchant;
 use App\Form\MerchantType;
 
 class MerchantController
@@ -21,7 +21,7 @@ class MerchantController
 
     public function listMerchants(Application $app)
     {
-        $merchants = $this->em->getRepository('App\Popshops\Merchant')->findBy([], ['name' => 'ASC']);
+        $merchants = $this->em->getRepository('App\Entity\Merchant')->findBy([], ['name' => 'ASC']);
 
         return new Response($app['twig']->render('merchant_list.html.twig', [
             'merchants' => $merchants,
@@ -30,7 +30,7 @@ class MerchantController
 
     public function editMerchant($merchantId, Request $request, Application $app)
     {
-        $merchant = $this->em->find('App\Popshops\Merchant', $merchantId);
+        $merchant = $this->em->find('App\Entity\Merchant', $merchantId);
         $form = $app['form.factory']->create(new MerchantType(), $merchant);
 
         try {

@@ -17,8 +17,8 @@ class MainController
 
     public function dashboard(Application $app)
     {
-        $merchants['total'] = $this->em->createQuery('SELECT COUNT(m) FROM App\Popshops\Merchant m')->getSingleScalarResult();
-        $merchants['totalNoCashback'] = $this->em->createQuery('SELECT COUNT(m) FROM App\Popshops\Merchant m WHERE m.commission = 0')->getSingleScalarResult();
+        $merchants['total'] = $this->em->createQuery('SELECT COUNT(m) FROM App\Entity\Merchant m')->getSingleScalarResult();
+        $merchants['totalNoCashback'] = $this->em->createQuery('SELECT COUNT(m) FROM App\Entity\Merchant m WHERE m.commission = 0')->getSingleScalarResult();
 
         return new Response($app['twig']->render('dashboard.html.twig', [
             'merchants' => $merchants,
