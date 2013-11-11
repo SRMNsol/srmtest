@@ -15,7 +15,11 @@ class OrmProvider implements ServiceProviderInterface
         $app->register(new DoctrineOrmServiceProvider());
 
         // handle enum
-        $app['db']->getDatabasePlatform()->registerDoctrineTypeMapping('enum', 'string');
+        $app['db'] = $app->share($app->extend('db', function ($db, $app) {
+            $db->getDatabasePlatform()->registerDoctrineTypeMapping('enum', 'string');
+
+            return $db;
+        }));
     }
 
     public function boot(SilexApp $app)
