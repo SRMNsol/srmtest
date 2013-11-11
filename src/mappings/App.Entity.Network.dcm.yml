@@ -1,0 +1,19 @@
+# Network
+App\Entity\Network:
+  type: entity
+  id:
+    id:
+      type: integer
+  fields:
+    name:
+      type: string
+  oneToMany:
+    merchants:
+      targetEntity: Merchant
+      mappedBy: network
+    transactions:
+      targetEntity: Transaction
+      mappedBy: network
+    payments:
+      targetEntity: Payment
+      mappedBy: network

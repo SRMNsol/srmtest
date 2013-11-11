@@ -29,6 +29,15 @@ popshops.catalog_keys:
   all_stores:  74762wn6w9utgw6khg2ta92gz
   hot_coupons: b0oe38oleq6ginsuaf78sj258
   hot_deals:   3lmudy8xyefrwgs3u67li8uft
+popshops.entity_manager_key: orm.em
+popshops.cache_dir: %root_dir%/data/cache/popshops
+popshops.log_dir: %root_dir%/data/log
+popshops.classnames:
+  entity.merchant: App\Entity\Merchant
+  entity.network: App\Entity\Network
+  entity.product: App\Entity\Product
+  entity.transaction: App\Entity\Transaction
+  entity.payment: App\Entity\Payment
 
 # dbal
 db.options:
@@ -43,11 +52,8 @@ db.options:
 orm.proxies_dir: %root_dir%/data/cache/doctrine
 orm.em.options:
   mappings:
-    - type: annotation
-      namespace: App\Entity
-      path: %root_dir%/src/App/Entity
     - type: yml
-      namespace: App\Popshops
+      namespace: App\Entity
       path: %root_dir%/src/mappings
 
 # user provider

@@ -18,8 +18,14 @@
         "symfony/validator": "2.3.6",
         "symfony/security": "2.3.6",
         "symfony/translation": "2.3.6",
-        "symfony/config": "2.3.6"
+        "symfony/config": "2.3.6",
+        "doblebjp/popshops-api": "dev-master"
     },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "repositories": [
+      { "type": "vcs", "url": "https://github.com/doblebjp/popshops-api.git" }
+    ],
     "scripts": {
       "post-install-cmd": "App\\Setup\\WritePermissions::checkPaths",
       "post-update-cmd": "App\\Setup\\WritePermissions::checkPaths"

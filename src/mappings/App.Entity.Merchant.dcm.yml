@@ -1,5 +1,5 @@
 # Merchant
-App\Popshops\Merchant:
+App\Entity\Merchant:
   type: entity
   id:
     id:
@@ -23,4 +23,15 @@ App\Popshops\Merchant:
       type: decimal
       scale: 2
     commissionType:
-      type: string(20)
+      type: string(10)
+  manyToOne:
+    network:
+      targetEntity: Network
+      inversedBy: merchants
+  oneToMany:
+    transactions:
+      targetEntity: Transaction
+      mappedBy: merchant
+    payments:
+      targetEntity: Payment
+      mappedBy: merchant

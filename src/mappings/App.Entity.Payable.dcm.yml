@@ -1,0 +1,40 @@
+# Payable
+App\Entity\Payable:
+  type: entity
+  repositoryClass: App\Repository\PayableRepository
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    amount:
+      type: decimal
+      scale: 2
+    concept:
+      type: string
+      nullable: true
+    share:
+      type: decimal
+      scale: 2
+      nullable: true
+    createdAt:
+      type: datetime
+    updatedAt:
+      type: datetime
+      nullable: true
+    status:
+      type: string(20)
+  manyToOne:
+    user:
+      targetEntity: User
+      inversedBy: payables
+      joinColumn:
+        referencedColumnName: uid
+  oneToOne:
+    transaction:
+      targetEntity: Transaction
+      inversedBy: payable
+  lifecycleCallbacks:
+    prePersist: [onCreate]
+    preUpdate: [onUpdate]
