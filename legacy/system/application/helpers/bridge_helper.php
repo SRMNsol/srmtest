@@ -13,6 +13,7 @@ function silex()
 
     if (!isset($app)) {
         $app = require __DIR__ . '/../../../../src/app.php';
+        $app->boot();
     }
 
     return $app;
@@ -23,7 +24,7 @@ function silex()
  */
 function serialize_merchants(\Doctrine\Common\Collections\Collection $merchants)
 {
-    return array_values($merchants->map(function (\App\Popshops\Merchant $merchant) {
+    return array_values($merchants->map(function (\Popshops\Merchant $merchant) {
         return [
             'id' => $merchant->getId(),
             'name' => $merchant->getName(),
@@ -31,9 +32,9 @@ function serialize_merchants(\Doctrine\Common\Collections\Collection $merchants)
             'logo_thumb' => $merchant->getLogoUrl(),
             'description' => $merchant->getDescription(),
             'description-abrv' => truncate_str($merchant->getDescription()),
-            'cashback_percent' => $merchant->getCashbackPercentage(50),
-            'cashback_flat' => $merchant->getCashbackFixed(50),
-            'cashback_text' => $merchant->getCashbackText(50),
+            'cashback_percent' => $merchant->getCommissionSharePercentage(50),
+            'cashback_flat' => $merchant->getCommissionShareFixed(50),
+            'cashback_text' => $merchant->getCommissionShareText(50),
             'coupons' => $merchant->getDealCount(),
             'link' => '/transfer/store/' . $merchant->getId(),
             'url' => $merchant->getUrl(),
@@ -46,7 +47,7 @@ function serialize_merchants(\Doctrine\Common\Collections\Collection $merchants)
  */
 function serialize_merchant_types(Doctrine\Common\Collections\Collection $merchantTypes)
 {
-    return array_values($merchantTypes->map(function (App\Popshops\MerchantType $merchantType) {
+    return array_values($merchantTypes->map(function (Popshops\MerchantType $merchantType) {
         return [
             'id' => $merchantType->getId(),
             'name' => $merchantType->getName(),
@@ -60,7 +61,7 @@ function serialize_merchant_types(Doctrine\Common\Collections\Collection $mercha
  */
 function serialize_deals(\Doctrine\Common\Collections\Collection $deals)
 {
-    return array_values($deals->map(function (\App\Popshops\Deal $deal) {
+    return array_values($deals->map(function (\Popshops\Deal $deal) {
         $merchant = $deal->getMerchant();
 
         return [
@@ -70,8 +71,8 @@ function serialize_deals(\Doctrine\Common\Collections\Collection $deals)
             'name' => $deal->getName(),
             'code' => $deal->getCode(),
             'link' => '/transfer/coupon/' . $deal->getId() . '-' . ($merchant ? $merchant->getId() : 0),
-            'cashback_flat' => $merchant ? $merchant->getCashbackFixed(50) : null,
-            'cashback_percent' => $merchant ? $merchant->getCashbackPercentage(50) : null,
+            'cashback_flat' => $merchant ? $merchant->getCommissionShareFixed(50) : null,
+            'cashback_percent' => $merchant ? $merchant->getCommissionSharePercentage(50) : null,
             'logo' => $merchant ? $merchant->getLogoUrl() : null,
             'logo_thumb' => $merchant ? $merchant->getLogoUrl() : null,
             'merchant_name' => $merchant ? $merchant->getName() : null,
@@ -79,7 +80,7 @@ function serialize_deals(\Doctrine\Common\Collections\Collection $deals)
             'end_date' => $deal->getEndOn()->format('m/d/Y'),
             'restrictions' => $deal->getDescription(),
             'code_prefix' => $deal->getCode() ? 'Coupon: ' : '',
-            'cashback_text' => $merchant ? $merchant->getCashbackText(50) : null,
+            'cashback_text' => $merchant ? $merchant->getCommissionShareText(50) : null,
             'linkstore' => '/stores/details/' . ($merchant ? $merchant->getId() : null),
             'name-abrv' => truncate_str($deal->getName()),
             'exp_date_short' => $deal->getEndOn() < new \DateTime('1 month') ? $deal->getEndOn()->diff(new DateTime())->format('Expires in %a days') : '',
@@ -94,7 +95,7 @@ function serialize_deals(\Doctrine\Common\Collections\Collection $deals)
  */
 function serialize_products(Doctrine\Common\Collections\Collection $products)
 {
-    return array_values($products->map(function (\App\Popshops\Product $product) {
+    return array_values($products->map(function (\Popshops\Product $product) {
         return [
             'id' => $product->getId(),
             'groupID' => $product->getGroupId(),
@@ -122,7 +123,7 @@ function serialize_products(Doctrine\Common\Collections\Collection $products)
  */
 function serialize_brands(\Doctrine\Common\Collections\Collection $brands)
 {
-    return array_values($brands->map(function (\App\Popshops\Brand $brand) {
+    return array_values($brands->map(function (\Popshops\Brand $brand) {
         return [
             'id' => $brand->getId(),
             'name' => $brand->getName(),
@@ -134,11 +135,11 @@ function serialize_brands(\Doctrine\Common\Collections\Collection $brands)
 /**
  * build comparison result
  */
-function comparison_result(\App\Popshops\ProductSearchResult $result)
+function comparison_result(\Popshops\ProductSearchResult $result)
 {
     $comparison = [];
     foreach ($result->getProducts() as $product) {
-        $deal = $result->getDeals()->filter(function (\App\Popshops\Deal $deal) use ($product) {
+        $deal = $result->getDeals()->filter(function (\Popshops\Deal $deal) use ($product) {
             return $deal->getMerchant() === $product->getMerchant();
         })->current();
 
