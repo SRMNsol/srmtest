@@ -8,13 +8,11 @@ class Payable
     protected $user;
     protected $amount = 0.00;
     protected $concept;
-    protected $transaction;
-    protected $share;
     protected $createdAt;
     protected $updatedAt;
     protected $status = self::STATUS_PENDING;
 
-    const STATUS_PENDING = 'inprocess';
+    const STATUS_PENDING = 'pending';
     const STATUS_AVAILABLE = 'available';
     const STATUS_PROCESSING = 'processing';
     const STATUS_PAID = 'paid';
@@ -52,30 +50,6 @@ class Payable
     public function setConcept($concept)
     {
         $this->concept = $concept;
-
-        return $this;
-    }
-
-    public function getTransaction()
-    {
-        return $this->transaction;
-    }
-
-    public function setTransaction(Transaction $transaction = null)
-    {
-        $this->transaction = $transaction;
-
-        return $this;
-    }
-
-    public function getShare()
-    {
-        return $this->share;
-    }
-
-    public function setShare($share)
-    {
-        $this->share = $share;
 
         return $this;
     }

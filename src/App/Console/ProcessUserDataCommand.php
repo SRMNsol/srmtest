@@ -8,7 +8,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use App\Entity\Transaction;
-use App\Entity\Payable;
+use App\Entity\Cashback;
 
 class ProcessUserDataCommand extends Command
 {
@@ -61,10 +61,11 @@ class ProcessUserDataCommand extends Command
 
                 $em->persist($transaction);
 
-                // Level 1 payable
-                $payable = $transaction->getPayable() ?: new Payable();
+                // Level 1 cashback
+                $cashback = $transaction->getCashbackLevel(1) ?: new Cashback();
 
-                $payable
+                $cashback
+                    ->setLevel(1)
                     ->setUser($user)
                     ->setTransaction($transaction)
                     ->setConcept($transactionData['merchant'])
@@ -73,25 +74,25 @@ class ProcessUserDataCommand extends Command
 
                 switch ($transactionData['status']) {
                     case 'Pending' :
-                        $payable->setStatus(Payable::STATUS_PENDING);
+                        $cashback->setStatus(Cashback::STATUS_PENDING);
                         break;
                     case 'Available' :
-                        $payable->setStatus(Payable::STATUS_AVAILABLE);
+                        $cashback->setStatus(Cashback::STATUS_AVAILABLE);
                         break;
                     case 'Processing' :
-                        $payable->setStatus(Payable::STATUS_PROCESSING);
+                        $cashback->setStatus(Cashback::STATUS_PROCESSING);
                         break;
                     case 'Paid' :
-                        $payable->setStatus(Payable::STATUS_PAID);
+                        $cashback->setStatus(Cashback::STATUS_PAID);
                         break;
                     case 'Returned' :
-                        $payable->setStatus(Payable::STATUS_CANCELLED);
+                        $cashback->setStatus(Cashback::STATUS_CANCELLED);
                         break;
                     default :
                         throw new \Exception('Unexpected status ' . $transactionData['status']);
                 }
 
-                $em->persist($payable);
+                $em->persist($cashback);
 
                 $table->addRow([
                     $transaction->getRegisteredAt()->format('m/d/Y'),

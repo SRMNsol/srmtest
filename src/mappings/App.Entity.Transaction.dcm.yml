@@ -37,11 +37,10 @@ App\Entity\Transaction:
     network:
       targetEntity: Network
       inversedBy: transactions
-  oneToOne:
-    payable:
-      targetEntity: Payable
-      mappedBy: transaction
   oneToMany:
+    cashbacks:
+      targetEntity: Cashback
+      mappedBy: transaction
     payments:
       targetEntity: Payment
       mappedBy: transaction

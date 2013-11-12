@@ -1,0 +1,13 @@
+# Cashback
+App\Entity\Cashback:
+  type: entity
+  fields:
+    share:
+      type: decimal
+      scale: 2
+    level:
+      type: smallint
+  manyToOne:
+    transaction:
+      targetEntity: Transaction
+      inversedBy: cashbacks

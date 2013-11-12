@@ -1,6 +1,13 @@
 # Payable
 App\Entity\Payable:
   type: entity
+  inheritanceType: SINGLE_TABLE
+  discriminatorColumn:
+    name: payableType
+    type: string
+  discriminatorMap:
+    payable: Payable
+    cashback: Cashback
   id:
     id:
       type: integer
@@ -12,10 +19,6 @@ App\Entity\Payable:
       scale: 2
     concept:
       type: string
-      nullable: true
-    share:
-      type: decimal
-      scale: 2
       nullable: true
     createdAt:
       type: datetime
@@ -30,10 +33,6 @@ App\Entity\Payable:
       inversedBy: payables
       joinColumn:
         referencedColumnName: uid
-  oneToOne:
-    transaction:
-      targetEntity: Transaction
-      inversedBy: payable
   lifecycleCallbacks:
     prePersist: [onCreate]
     preUpdate: [onUpdate]

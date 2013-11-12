@@ -3,20 +3,43 @@
 namespace App\Entity;
 
 use Popshops\Transaction as BaseTransaction;
+use Doctrine\Common\Collections\Criteria;
+use Doctrine\Common\Collections\ArrayCollection;
 
 class Transaction extends BaseTransaction
 {
-    protected $payable;
+    protected $cashbacks;
 
-    public function getPayable()
+    public function __construct()
     {
-        return $this->payable;
+        parent::__construct();
+
+        $this->cashbacks = new ArrayCollection();
     }
 
-    public function setPayable(Payable $payable = null)
+    public function getCashbacks()
     {
-        $this->payable = $payable;
+        return $this->cashbacks;
+    }
+
+    public function addCashback(Cashback $cashback)
+    {
+        $this->cashbacks[] = $cashback;
 
         return $this;
+    }
+
+    public function removeCashback(Cashback $cashback)
+    {
+        $this->cashbacks->removeElement($cashback);
+    }
+
+    public function getCashbackLevel($level)
+    {
+        $criteria = Criteria::create()
+            ->where(Criteria::expr()->eq('level', $level))
+        ;
+
+        return $this->cashbacks->matching($criteria)->first();
     }
 }
