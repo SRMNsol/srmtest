@@ -1,17 +1,19 @@
 <?php
 /**
  */
-class Cashback extends Controller {
-
-	function Cashback()	{
-		parent::Controller();
+class Cashback extends Controller
+{
+    public function Cashback()
+    {
+        parent::Controller();
         $this->load->library('beesavy');
         $this->load->model('user');
         $this->user_id = $this->user->get_field('id');
-	}
+    }
 
-    function __get_header(&$data){
-        if(!$this->user->login_status()){
+    public function __get_header(&$data)
+    {
+        if (!$this->user->login_status()) {
             redirect('main/signin?user=&code=20');
         }
         $blocks = $this->blocks->getBlocks();
@@ -21,19 +23,20 @@ class Cashback extends Controller {
         $data =array_merge($data, $this->user->info());
     }
 
-    function index(){
-		$data = $this->cache->library('beesavy', 'getUserStats', array($this->user_id), 3600);
+    public function index()
+    {
+        $data = $this->cache->library('beesavy', 'getUserStats', array($this->user_id), 3600);
         $this->__get_header($data);
         #Have columns: Month, Type, Status, Cash Back, Payment date
         $transactions = $data['transactions'];
-        foreach($transactions as &$trans){
+        foreach ($transactions as &$trans) {
             $month = $trans['created'];
             $type  = "Personal";
             $status = $trans['status'];
             $cashback = $trans['cashback'];
-            if($status == "Paid"){
+            if ($status == "Paid") {
                 $payment = $trans['date'];
-            }else{
+            } else {
                 $payment = 'N/A';
             }
             $trans = array(
@@ -48,15 +51,15 @@ class Cashback extends Controller {
 
         $reftransactions = $data['reftransactions'];
         $newref = array();
-        foreach($reftransactions as &$trans){
+        foreach ($reftransactions as &$trans) {
             $month = $trans['date'];
             $type  = "Referral Total";
             $payment = 'N/A';
             $stati = array("Paid"=>"referralpaid",
                 "Pending"=>"referralpending",
                 "Available"=>"referralavailable");
-            foreach($stati as $k=>$v){
-                if($trans[$v]!="0.00"){
+            foreach ($stati as $k=>$v) {
+                if ($trans[$v]!="0.00") {
                     $newref[] = array(
                         'month'=>$month,
                         'transtype'=>$type,
@@ -72,20 +75,24 @@ class Cashback extends Controller {
 
         $this->parser->parse('cashback/base', $data);
     }
-    function personal(){
+
+    public function personal()
+    {
         $data = $this->beesavy->getUserStats($this->user_id);
         $this->__get_header($data);
         $data['type'] = "personal";
         $this->parser->parse('cashback/base', $data);
     }
-    function referral(){
+
+    public function referral()
+    {
         $data = $this->beesavy->getUserStats($this->user_id);
         $this->__get_header($data);
         $data['type'] = "referral";
 
         $reftransactions = $data['reftransactions'];
         $newref = array();
-        foreach($reftransactions as &$trans){
+        foreach ($reftransactions as &$trans) {
             $date = $trans['date'];
             $level = "Referral Total";
             $status = "";
@@ -94,15 +101,15 @@ class Cashback extends Controller {
                 "Pending"=>"referralpending",
                 "Processing"=>"referralprocessing",
                 "Available"=>"referralavailable");
-            foreach($stati as $k=>$v){
+            foreach ($stati as $k=>$v) {
                 $cashback += (float) $trans[$v];
-                if($trans[$v] != "0.00" && !$status){
+                if ($trans[$v] != "0.00" && !$status) {
                     $status = $k;
-                }else if($trans[$v] != "0.00" && $status){
+                } elseif ($trans[$v] != "0.00" && $status) {
                     $status = "Mixed";
                 }
             }
-            if($cashback!=0){
+            if ($cashback!=0) {
                 $newref[] = array(
                     'date'=>$date,
                     'level'=>$level,
@@ -110,10 +117,10 @@ class Cashback extends Controller {
                     'cashback'=>number_format($cashback, 2)
                 );
             }
-            if($cashback!=0){
+            if ($cashback!=0) {
                 $levi = array('Level 1'=>'referralcommissiondirect',
                     'Level 2-7'=>'referralcommissionindirect');
-                foreach($levi as $lev=>$lev_index){
+                foreach ($levi as $lev=>$lev_index) {
                     $newref[] = array(
                         'date'=>$date,
                         'level'=>$lev,
@@ -127,4 +134,3 @@ class Cashback extends Controller {
         $this->parser->parse('cashback/base', $data);
     }
 }
-?>

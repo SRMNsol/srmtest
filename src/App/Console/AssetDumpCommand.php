@@ -2,7 +2,7 @@
 
 namespace App\Console;
 
-use Symfony\Component\Console\Command\Command;
+use Knp\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -21,7 +21,7 @@ class AssetDumpCommand extends Command
 
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $app = $this->getHelperSet()->get('container')->getContainer();
+        $app = $this->getSilexApplication();
         $app->register(new TemplatingProvider());
 
         $dumper = $app['assetic.dumper'];
