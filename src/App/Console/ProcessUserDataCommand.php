@@ -31,7 +31,6 @@ class ProcessUserDataCommand extends Command
             $users = $em->getRepository('App\Entity\User')->findAll();
         }
 
-        $counter = 0;
         $table = $this->getHelperSet()->get('table');
         $table->setHeaders(['Date', 'Order #', 'Amount', 'Cashback', 'Tag']);
 
@@ -39,7 +38,7 @@ class ProcessUserDataCommand extends Command
             $output->writeln($user->getEmail());
             $data = json_decode($user->getExtrabuxRawData(), true);
 
-            if (!isset($data['summary']['transactions']) || !is_array($data['summary']['transactions'])) {
+            if (!isset($data['summary']['transactions']) || !is_array($data['summary']['transactions']) || count($data['summary']['transactions']) === 0) {
                 $output->writeln('No transactions');
                 continue;
             }
@@ -66,17 +65,12 @@ class ProcessUserDataCommand extends Command
                     sprintf('%.2f', $transaction->getCommission()),
                     $transaction->getTag(),
                 ]);
-
-                $counter++;
-                if ($counter > 100) {
-                    $em->flush();
-                    $em->clear();
-                }
             }
 
+            $em->flush();
+            $em->clear();
             $table->render($output);
         }
 
-        $em->flush();
     }
 }
