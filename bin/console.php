@@ -25,6 +25,7 @@ $console->setHelperSet(new HelperSet([
 
 $console->addCommands([
     new App\Console\AssetDumpCommand(),
+    new App\Console\ProcessUserDataCommand(),
 ]);
 
 $console->run();
