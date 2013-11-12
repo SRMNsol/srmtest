@@ -23,10 +23,10 @@ class Stores extends Controller
         $catalogs = $this->container['popshops.catalog_keys'];
 
         $result = $client->findMerchants($catalogs['all_stores'], ['merchant_id' => $id]);
-        $store_search = random_slice(serialize_merchants($client->findMerchants($catalogs['all_stores'])->getMerchants()), 8);
-        $store = current(serialize_merchants($result->getMerchants()));
+        $store_search = random_slice(result_merchants($client->findMerchants($catalogs['all_stores'])->getMerchants()), 8);
+        $store = current(result_merchants($result->getMerchants()));
 
-        $store['coupons'] = serialize_deals($result->getDeals());
+        $store['coupons'] = result_deals($result->getDeals());
         $store['restrictions'] = null;
 
         $top_stores = $store_search;
@@ -88,8 +88,8 @@ class Stores extends Controller
 
         $result = $client->findMerchants($catalogs['all_stores'], $params);
         $merchants = $result->getMerchants()->filterByNamePrefix($search === '0' ? '*' : $search);
-        $stores = serialize_merchants($merchants->slice($limit * ($page - 1), $limit));
-        $merchantTypes = serialize_merchant_types($result->getMerchantTypes());
+        $stores = result_merchants($merchants->slice($limit * ($page - 1), $limit));
+        $merchantTypes = result_merchant_types($result->getMerchantTypes());
         $count = $merchants->getTotalCount();
 
         //Load the page
@@ -136,7 +136,7 @@ class Stores extends Controller
 
         $result = $client->findMerchants($catalogs['all_stores']);
         $merchants = $result->getMerchants()->filterByNamePrefix($search === '0' ? '*' : $search);
-        $stores = serialize_merchants($merchants->slice($limit * ($page - 1), $limit));
+        $stores = result_merchants($merchants->slice($limit * ($page - 1), $limit));
 
         $count = count($stores)/3;
         $split = array_chunk($stores,$count);

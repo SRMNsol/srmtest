@@ -27,9 +27,9 @@ class Main extends Controller
         $client = $this->container['popshops.client'];
         $catalogs = $this->container['popshops.catalog_keys'];
 
-        $data['stores'] = random_slice(serialize_merchants($client->findMerchants($catalogs['all_stores'])->getMerchants()), $num_stores);
-        $data['coupons'] = random_slice(serialize_deals($client->findDeals($catalogs['hot_coupons'])->getDeals()), 5);
-        $data['deals'] = random_slice(serialize_deals($client->findDeals($catalogs['hot_deals'])->getDeals()), 2);
+        $data['stores'] = random_slice(result_merchants($client->findMerchants($catalogs['all_stores'])->getMerchants()), $num_stores);
+        $data['coupons'] = random_slice(result_deals($client->findDeals($catalogs['hot_coupons'])->getDeals()), 5);
+        $data['deals'] = random_slice(result_deals($client->findDeals($catalogs['hot_deals'])->getDeals()), 2);
         $data['home'] = $home['vars'];
         $data['referral'] = $this->input->get('referral');
         if(!$data['referral']) {
@@ -47,7 +47,7 @@ class Main extends Controller
         $client = $this->container['popshops.client'];
         $catalogs = $this->container['popshops.catalog_keys'];
         $data = $this->blocks->getBlocks();
-        $data['deals'] = random_slice(serialize_deals($client->findDeals($catalogs['hot_deals'])->getDeals()), 24);
+        $data['deals'] = random_slice(result_deals($client->findDeals($catalogs['hot_deals'])->getDeals()), 24);
         $this->parser->parse('/home/deal', $data);
     }
 

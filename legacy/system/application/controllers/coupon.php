@@ -78,9 +78,9 @@ class Coupon extends Controller
         }
 
         $result = $client->findDeals($catalogKey, $params);
-        $stores = serialize_merchants($result->getMerchants());
+        $stores = result_merchants($result->getMerchants());
         $count = $result->getDeals()->getTotalCount();
-        $coupons = serialize_deals($result->getDeals());
+        $coupons = result_deals($result->getDeals());
 
         foreach ($coupons as &$coupon) {
             if ($coupon['code']) {

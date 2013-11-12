@@ -24,7 +24,7 @@ class Blocks extends Model
 
         $client = $this->container['popshops.client'];
         $catalogs = $this->container['popshops.catalog_keys'];
-        $merchantTypes = serialize_merchant_types($client->findMerchants($catalogs['all_stores'])->getMerchantTypes());
+        $merchantTypes = result_merchant_types($client->findMerchants($catalogs['all_stores'])->getMerchantTypes());
 
         $data['banner'] = $this->parser->parse($banner['page'], $banner['vars'],TRUE);
         if ($class=="product" && $method =="compare") {

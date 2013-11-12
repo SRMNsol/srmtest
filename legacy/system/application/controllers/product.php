@@ -67,9 +67,9 @@ class Product extends Controller
             'product_limit' => $limit,
         ]);
 
-        $brands = serialize_brands($result->getBrands());
-        $categories = serialize_merchant_types($result->getMerchantTypes());
-        $products = serialize_products($result->getProducts());
+        $brands = result_brands($result->getBrands());
+        $categories = result_merchant_types($result->getMerchantTypes());
+        $products = result_products($result->getProducts());
         $count = $result->getProducts()->getTotalCount();
 
         //Load the page
@@ -171,10 +171,10 @@ class Product extends Controller
             'product_limit' => $limit,
         ]);
 
-        $brands = serialize_brands($result->getBrands());
-        $stores = random_slice(serialize_merchants($result->getMerchants()), 10);
-        $categories = serialize_merchant_types($result->getMerchantTypes());
-        $products = serialize_products($result->getProducts());
+        $brands = result_brands($result->getBrands());
+        $stores = random_slice(result_merchants($result->getMerchants()), 10);
+        $categories = result_merchant_types($result->getMerchantTypes());
+        $products = result_products($result->getProducts());
         $count = $result->getProducts()->getTotalCount();
 
         //Load the page

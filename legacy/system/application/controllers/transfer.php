@@ -177,7 +177,7 @@ class Transfer extends Controller
         $client = $this->container['popshops.client'];
         $catalogs = $this->container['popshops.catalog_keys'];
 
-        $merchant = current(serialize_merchants($client->findMerchants($catalogs['all_stores'], ['merchant_id' => $id])->getMerchants()));
+        $merchant = current(result_merchants($client->findMerchants($catalogs['all_stores'], ['merchant_id' => $id])->getMerchants()));
 
         return $merchant;
     }
@@ -189,7 +189,7 @@ class Transfer extends Controller
 
         list($dealId, $merchantId) = explode('-', $id);
 
-        $deal = current(serialize_deals($client->findMerchants($catalogs['all_stores'], ['merchant_id' => $merchantId])->getDeals()->filter(function ($deal) use ($dealId) {
+        $deal = current(result_deals($client->findMerchants($catalogs['all_stores'], ['merchant_id' => $merchantId])->getDeals()->filter(function ($deal) use ($dealId) {
             if ($deal->getId() == $dealId) {
                 return $deal;
             }

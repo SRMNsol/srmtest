@@ -22,7 +22,7 @@ function silex()
 /**
  * Serialize merchants into array
  */
-function serialize_merchants(\Doctrine\Common\Collections\Collection $merchants)
+function result_merchants(\Doctrine\Common\Collections\Collection $merchants)
 {
     return array_values($merchants->map(function (\Popshops\Merchant $merchant) {
         return [
@@ -45,7 +45,7 @@ function serialize_merchants(\Doctrine\Common\Collections\Collection $merchants)
 /**
  * serialize merchant types to array
  */
-function serialize_merchant_types(Doctrine\Common\Collections\Collection $merchantTypes)
+function result_merchant_types(Doctrine\Common\Collections\Collection $merchantTypes)
 {
     return array_values($merchantTypes->map(function (Popshops\MerchantType $merchantType) {
         return [
@@ -59,7 +59,7 @@ function serialize_merchant_types(Doctrine\Common\Collections\Collection $mercha
 /**
  * Serialize deals into array
  */
-function serialize_deals(\Doctrine\Common\Collections\Collection $deals)
+function result_deals(\Doctrine\Common\Collections\Collection $deals)
 {
     return array_values($deals->map(function (\Popshops\Deal $deal) {
         $merchant = $deal->getMerchant();
@@ -93,7 +93,7 @@ function serialize_deals(\Doctrine\Common\Collections\Collection $deals)
 /**
  * serialize products to array
  */
-function serialize_products(Doctrine\Common\Collections\Collection $products)
+function result_products(Doctrine\Common\Collections\Collection $products)
 {
     return array_values($products->map(function (\Popshops\Product $product) {
         return [
@@ -121,7 +121,7 @@ function serialize_products(Doctrine\Common\Collections\Collection $products)
 /**
  * serialize brands to array
  */
-function serialize_brands(\Doctrine\Common\Collections\Collection $brands)
+function result_brands(\Doctrine\Common\Collections\Collection $brands)
 {
     return array_values($brands->map(function (\Popshops\Brand $brand) {
         return [
