@@ -1,7 +1,6 @@
 # Payable
 App\Entity\Payable:
   type: entity
-  repositoryClass: App\Repository\PayableRepository
   id:
     id:
       type: integer

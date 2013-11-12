@@ -8,6 +8,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use App\Entity\Transaction;
+use App\Entity\Payable;
 
 class ProcessUserDataCommand extends Command
 {
@@ -35,6 +36,8 @@ class ProcessUserDataCommand extends Command
         $table->setHeaders(['Date', 'Order #', 'Amount', 'Cashback', 'Tag']);
 
         foreach ($users as $user) {
+            $user = $em->merge($user);
+
             $output->writeln($user->getEmail());
             $data = json_decode($user->getExtrabuxRawData(), true);
 
@@ -57,6 +60,38 @@ class ProcessUserDataCommand extends Command
                 ;
 
                 $em->persist($transaction);
+
+                // Level 1 payable
+                $payable = $transaction->getPayable() ?: new Payable();
+
+                $payable
+                    ->setUser($user)
+                    ->setTransaction($transaction)
+                    ->setConcept($transactionData['merchant'])
+                    ->setAmount((float) $transactionData['cashback'])
+                ;
+
+                switch ($transactionData['status']) {
+                    case 'Pending' :
+                        $payable->setStatus(Payable::STATUS_PENDING);
+                        break;
+                    case 'Available' :
+                        $payable->setStatus(Payable::STATUS_AVAILABLE);
+                        break;
+                    case 'Processing' :
+                        $payable->setStatus(Payable::STATUS_PROCESSING);
+                        break;
+                    case 'Paid' :
+                        $payable->setStatus(Payable::STATUS_PAID);
+                        break;
+                    case 'Returned' :
+                        $payable->setStatus(Payable::STATUS_CANCELLED);
+                        break;
+                    default :
+                        throw new \Exception('Unexpected status ' . $transactionData['status']);
+                }
+
+                $em->persist($payable);
 
                 $table->addRow([
                     $transaction->getRegisteredAt()->format('m/d/Y'),

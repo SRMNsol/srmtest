@@ -12,12 +12,13 @@ class Payable
     protected $share;
     protected $createdAt;
     protected $updatedAt;
-    protected $status = self::STATUS_INPROCESS;
+    protected $status = self::STATUS_PENDING;
 
-    const STATUS_INPROCESS = 'inprocess';
+    const STATUS_PENDING = 'inprocess';
     const STATUS_AVAILABLE = 'available';
+    const STATUS_PROCESSING = 'processing';
     const STATUS_PAID = 'paid';
-    const STATUS_INVALID = 'invalid';
+    const STATUS_CANCELLED = 'cancelled';
 
     public function getUser()
     {
@@ -133,7 +134,7 @@ class Payable
                 $this->status = self::STATUS_AVAILABLE;
             } elseif ($this->transaction->getCommission() > 0) {
                 $this->amount = $this->share * $this->transaction->getCommission();
-                $this->status = self::STATUS_INPROCESS;
+                $this->status = self::STATUS_PENDING;
             }
         } else {
             $this->amount = 0.00;
