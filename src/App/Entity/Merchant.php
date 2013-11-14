@@ -8,10 +8,19 @@ use Symfony\Component\Validator\Mapping\ClassMetadata;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Form\FormInterface;
 
+/**
+ * @Entity
+ * @AttributeOverrides({
+ *   @AttributeOverride(name="commissionType", column=@Column(length=20))
+ * })
+ */
 class Merchant extends BaseMerchant
 {
     use MerchantCommissionShareTrait;
 
+    /**
+     * @Column(type="decimal", scale=2)
+     */
     protected $commissionMax = 0.00;
 
     const COMMISSION_TYPE_FIXED_VAR = 'fixed_var';

@@ -6,8 +6,14 @@ use Popshops\Transaction as BaseTransaction;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\Common\Collections\ArrayCollection;
 
+/**
+ * @Entity
+ */
 class Transaction extends BaseTransaction
 {
+    /**
+     * @OneToMany(targetEntity="Cashback", mappedBy="transaction")
+     */
     protected $cashbacks;
 
     public function __construct()

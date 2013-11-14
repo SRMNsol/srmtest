@@ -2,36 +2,155 @@
 
 namespace App\Entity;
 
+/**
+ * @Entity
+ * @Table(name="user")
+ */
 class User
 {
+    /**
+     * @Id @Column(name="uid", type="integer") @GeneratedValue
+     */
     protected $id;
+
+    /**
+     * @Column(name="id", type="integer", length=11, nullable=true)
+     */
     protected $extrabuxId;
+
+    /**
+     * @Column(length=250)
+     */
     protected $email;
+
+    /**
+     * @Column(name="facebook_auto", type="boolean")
+     */
     protected $facebookAuto = false;
+
+    /**
+     * @Column(name="twitter_auto", type="boolean")
+     */
     protected $twitterAuto = false;
+
+    /**
+     * @Column(name="payment_method")
+     */
     protected $paymentMethod;
+
+    /**
+     * @Column(name="paypal_email", length=250)
+     */
     protected $paypalEmail;
+
+    /**
+     * @Column(length=50)
+     */
     protected $alias;
+
+    /**
+     * @Column(name="charity_id", type="integer")
+     */
     protected $extrabuxCharityId;
+
+    /**
+     * @Column(type="boolean")
+     */
     protected $admin = false;
+
+    /**
+     * @Column(name="send_reminders", type="boolean")
+     */
     protected $sendReminders = false;
+
+    /**
+     * @Column(name="send_updates", type="boolean")
+     */
     protected $sendUpdates = false;
+
+    /**
+     * @Column(name="last_login", type="datetime")
+     */
     protected $lastLoginAt;
+
+    /**
+     * @Column(name="last_refer", type="datetime")
+     */
     protected $lastReferAt;
+
+    /**
+     * @Column(name="created", type="datetime")
+     */
     protected $createdAt;
+
+    /**
+     * @Column(name="fb_access_token")
+     */
     protected $facebookAccessToken;
+
+    /**
+     * @Column(name="twitter_token_secret")
+     */
     protected $twitterTokenSecret;
+
+    /**
+     * @Column(name="twitter_access_token")
+     */
     protected $twitterAccessToken;
+
+    /**
+     * @Column
+     */
     protected $password;
+
+    /**
+     * @Column(name="purchase_exempt", type="boolean")
+     */
     protected $purchaseExempt = false;
+
+    /**
+     * @Column(name="email_refer_info", type="boolean")
+     */
     protected $emailReferInfo = false;
+
+    /**
+     * @Column(name="email_83", type="boolean")
+     */
     protected $email83 = false;
+
+    /**
+     * @Column(name="email_60", type="boolean")
+     */
     protected $email60 = false;
+
+    /**
+     * @Column(name="last_cashback", type="datetime")
+     */
     protected $lastCashbackAt;
+
+    /**
+     * @Column(name="raw_data", type="text", nullable=true)
+     */
     protected $extrabuxRawData;
+
+    /**
+     * @Column(name="last_sync", type="datetime", nullable=true)
+     */
     protected $extrabuxLastSyncAt;
+
+    /**
+     * @Column(name="first_name", length=20, nullable=true)
+     */
     protected $firstName;
+
+    /**
+     * @Column(name="raw_user_data", type="text", nullable=true)
+     */
     protected $extrabuxRawUserData;
+
+    /**
+     * @OneToMany(targetEntity="Payable", mappedBy="user")
+     */
     protected $payables;
 
     /**

@@ -52,9 +52,9 @@ db.options:
 orm.proxies_dir: %root_dir%/data/cache/doctrine
 orm.em.options:
   mappings:
-    - type: yml
+    - type: annotation
       namespace: App\Entity
-      path: %root_dir%/src/mappings
+      path: %root_dir%/src/App/Entity
 
 # user provider
 user.provider:

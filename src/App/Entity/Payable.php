@@ -2,14 +2,49 @@
 
 namespace App\Entity;
 
+/**
+ * @Entity
+ * @HasLifecycleCallbacks
+ * @InheritanceType("SINGLE_TABLE")
+ * @DiscriminatorColumn(name="payableType")
+ * @DiscriminatorMap({"payable"="Payable", "cashback"="Cashback"})
+ */
 class Payable
 {
+    /**
+     * @Id @Column(type="integer") @GeneratedValue
+     */
     protected $id;
+
+    /**
+     * @ManyToOne(targetEntity="User", inversedBy="payables")
+     * @JoinColumn(referencedColumnName="uid")
+     */
     protected $user;
+
+    /**
+     * @Column(type="decimal", scale=2)
+     */
     protected $amount = 0.00;
+
+    /**
+     * @Column(nullable=true)
+     */
     protected $concept;
+
+    /**
+     * @Column(type="datetime")
+     */
     protected $createdAt;
+
+    /**
+     * @Column(type="datetime", nullable=true)
+     */
     protected $updatedAt;
+
+    /**
+     * @Column(length=20)
+     */
     protected $status = self::STATUS_PENDING;
 
     const STATUS_PENDING = 'pending';
@@ -78,11 +113,17 @@ class Payable
         return $this;
     }
 
+    /**
+     * @PrePersist
+     */
     public function onCreate()
     {
         $this->createdAt = new \DateTime();
     }
 
+    /**
+     * @PreUpdate
+     */
     public function onUpdate()
     {
         $this->updatedAt = new \DateTime();
