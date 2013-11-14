@@ -66,6 +66,7 @@ class ProcessUserDataCommand extends Command
 
                 $cashback
                     ->setLevel(1)
+                    ->setShare(1)
                     ->setUser($user)
                     ->setTransaction($transaction)
                     ->setConcept($transactionData['merchant'])
