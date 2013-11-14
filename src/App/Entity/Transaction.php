@@ -3,49 +3,42 @@
 namespace App\Entity;
 
 use Popshops\Transaction as BaseTransaction;
-use Doctrine\Common\Collections\Criteria;
-use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @Entity
+ * @Entity @HasLifecycleCallbacks
  */
 class Transaction extends BaseTransaction
 {
     /**
-     * @OneToMany(targetEntity="Cashback", mappedBy="transaction")
+     * @ManyToOne(targetEntity="Cashback", inversedBy="transactions")
      */
-    protected $cashbacks;
+    protected $cashback;
 
-    public function __construct()
+    public function getCashback()
     {
-        parent::__construct();
-
-        $this->cashbacks = new ArrayCollection();
+        return $this->cashback;
     }
 
-    public function getCashbacks()
+    public function setCashback(Cashback $cashback = null)
     {
-        return $this->cashbacks;
-    }
-
-    public function addCashback(Cashback $cashback)
-    {
-        $this->cashbacks[] = $cashback;
+        $this->cashback = $cashback;
 
         return $this;
     }
 
-    public function removeCashback(Cashback $cashback)
+    /**
+     * @PrePersist
+     */
+    public function onCreate()
     {
-        $this->cashbacks->removeElement($cashback);
+        return parent::onCreate();
     }
 
-    public function getCashbackLevel($level)
+    /**
+     * @PreUpdate
+     */
+    public function onUpdate()
     {
-        $criteria = Criteria::create()
-            ->where(Criteria::expr()->eq('level', $level))
-        ;
-
-        return $this->cashbacks->matching($criteria)->first();
+        return parent::onUpdate();
     }
 }

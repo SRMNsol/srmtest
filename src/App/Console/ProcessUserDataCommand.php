@@ -49,7 +49,10 @@ class ProcessUserDataCommand extends Command
             $table->setRows([]);
 
             foreach ($data['summary']['transactions'] as $transactionData) {
-                $transaction = $em->getRepository('App\Entity\Transaction')->findOneByOrderNumber($transactionData['order_id']) ?: new Transaction();
+                $transaction = $em->getRepository('App\Entity\Transaction')->findOneBy([
+                    'orderNumber' => $transactionData['order_id'],
+                    'tag' => $transactionData['click_id'],
+                ]) ?: new Transaction();
 
                 $transaction
                     ->setOrderNumber($transactionData['order_id'])
@@ -59,40 +62,64 @@ class ProcessUserDataCommand extends Command
                     ->setRegisteredAt(\DateTime::createFromFormat('m/d/Y', $transactionData['report_date']))
                 ;
 
-                $em->persist($transaction);
-
                 // Level 1 cashback
-                $cashback = $transaction->getCashbackLevel(1) ?: new Cashback();
+                $cashback = $transaction->getCashback() ?: new Cashback();
+
+                $transaction->setCashback($cashback);
 
                 $cashback
-                    ->setLevel(1)
                     ->setShare(1)
                     ->setUser($user)
-                    ->setTransaction($transaction)
                     ->setConcept($transactionData['merchant'])
                     ->setAmount((float) $transactionData['cashback'])
                 ;
 
                 switch ($transactionData['status']) {
                     case 'Pending' :
-                        $cashback->setStatus(Cashback::STATUS_PENDING);
+                        $cashback
+                            ->setPending($cashback->getAmount())
+                            ->setAvailable(0.00)
+                            ->setProcessing(0.00)
+                            ->setPaid(0.00)
+                            ->setStatus(Cashback::STATUS_PENDING);
                         break;
                     case 'Available' :
-                        $cashback->setStatus(Cashback::STATUS_AVAILABLE);
+                        $cashback
+                            ->setPending(0.00)
+                            ->setAvailable($cashback->getAmount())
+                            ->setProcessing(0.00)
+                            ->setPaid(0.00)
+                            ->setStatus(Cashback::STATUS_AVAILABLE);
                         break;
                     case 'Processing' :
-                        $cashback->setStatus(Cashback::STATUS_PROCESSING);
+                        $cashback
+                            ->setPending(0.00)
+                            ->setAvailable(0.00)
+                            ->setProcessing($cashback->getAmount())
+                            ->setPaid(0.00)
+                            ->setStatus(Cashback::STATUS_PROCESSING);
                         break;
                     case 'Paid' :
-                        $cashback->setStatus(Cashback::STATUS_PAID);
+                        $cashback
+                            ->setPending(0.00)
+                            ->setAvailable(0.00)
+                            ->setProcessing(0.00)
+                            ->setPaid($cashback->getAmount())
+                            ->setStatus(Cashback::STATUS_PAID);
                         break;
                     case 'Returned' :
-                        $cashback->setStatus(Cashback::STATUS_CANCELLED);
+                        $cashback
+                            ->setPending(0.00)
+                            ->setAvailable(0.00)
+                            ->setProcessing(0.00)
+                            ->setPaid(0.00)
+                            ->setStatus(Cashback::STATUS_CANCELLED);
                         break;
                     default :
                         throw new \Exception('Unexpected status ' . $transactionData['status']);
                 }
 
+                $em->persist($transaction);
                 $em->persist($cashback);
 
                 $table->addRow([

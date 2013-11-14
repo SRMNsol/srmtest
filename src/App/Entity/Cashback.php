@@ -2,31 +2,43 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+
 /**
  * @Entity
  */
 class Cashback extends Payable
 {
     /**
-     * @ManyToOne(targetEntity="Transaction", inversedBy="cashbacks")
+     * @OneToMany(targetEntity="Transaction", mappedBy="cashback")
      */
-    protected $transaction;
+    protected $transactions;
 
     /**
      * @Column(type="decimal", scale=2)
      */
     protected $share = 0.00;
 
-    public function getTransaction()
+    public function __construct()
     {
-        return $this->transaction;
+        $this->transactions = new ArrayCollection();
     }
 
-    public function setTransaction(Transaction $transaction = null)
+    public function getTransactions()
     {
-        $this->transaction = $transaction;
+        return $this->transactions;
+    }
+
+    public function addTransaction(Transaction $transaction)
+    {
+        $this->transactions[] = $transaction;
 
         return $this;
+    }
+
+    public function removeTransaction(Transaction $transaction)
+    {
+        $this->transactions->removeElement($transaction);
     }
 
     public function getShare()
@@ -37,18 +49,6 @@ class Cashback extends Payable
     public function setShare($share)
     {
         $this->share = $share;
-
-        return $this;
-    }
-
-    public function getLevel()
-    {
-        return $this->level;
-    }
-
-    public function setLevel($level)
-    {
-        $this->level = $level;
 
         return $this;
     }
