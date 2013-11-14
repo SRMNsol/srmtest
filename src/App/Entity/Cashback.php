@@ -17,11 +17,6 @@ class Cashback extends Payable
      */
     protected $share = 0.00;
 
-    /**
-     * @Column(type="smallint")
-     */
-    protected $level = 1;
-
     public function getTransaction()
     {
         return $this->transaction;
@@ -57,4 +52,22 @@ class Cashback extends Payable
 
         return $this;
     }
+
+    public function calculateAmount()
+    {
+        if (null !== $this->transaction) {
+            if ($this->transaction->getPayment() > 0) {
+                $this->amount = $this->share * $this->transaction->getPayment();
+                $this->status = self::STATUS_AVAILABLE;
+            } elseif ($this->transaction->getCommission() > 0) {
+                $this->amount = $this->share * $this->transaction->getCommission();
+                $this->status = self::STATUS_PENDING;
+            }
+        } else {
+            $this->amount = 0.00;
+        }
+
+        return $this;
+    }
+
 }

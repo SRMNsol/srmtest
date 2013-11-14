@@ -46,6 +46,8 @@ class ProcessUserDataCommand extends Command
                 continue;
             }
 
+            die(var_dump($data['summary']));
+
             $table->setRows([]);
 
             foreach ($data['summary']['transactions'] as $transactionData) {

@@ -7,7 +7,7 @@ namespace App\Entity;
  * @HasLifecycleCallbacks
  * @InheritanceType("SINGLE_TABLE")
  * @DiscriminatorColumn(name="payableType")
- * @DiscriminatorMap({"payable"="Payable", "cashback"="Cashback"})
+ * @DiscriminatorMap({"payable"="Payable", "cashback"="Cashback", "referral" = "Referral"})
  */
 class Payable
 {
@@ -26,6 +26,26 @@ class Payable
      * @Column(type="decimal", scale=2)
      */
     protected $amount = 0.00;
+
+    /**
+     * @Column(type="decimal", scale=2)
+     */
+    protected $pending = 0.00;
+
+    /**
+     * @Column(type="decimal", scale=2)
+     */
+    protected $available = 0.00;
+
+    /**
+     * @Column(type="decimal", scale=2)
+     */
+    protected $processing = 0.00;
+
+    /**
+     * @Column(type="decimal", scale=2)
+     */
+    protected $paid = 0.00;
 
     /**
      * @Column(nullable=true)
@@ -141,20 +161,105 @@ class Payable
         return $this;
     }
 
-    public function calculateAmount()
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
     {
-        if (null !== $this->transaction) {
-            if ($this->transaction->getPayment() > 0) {
-                $this->amount = $this->share * $this->transaction->getPayment();
-                $this->status = self::STATUS_AVAILABLE;
-            } elseif ($this->transaction->getCommission() > 0) {
-                $this->amount = $this->share * $this->transaction->getCommission();
-                $this->status = self::STATUS_PENDING;
-            }
-        } else {
-            $this->amount = 0.00;
-        }
+        return $this->id;
+    }
+
+    /**
+     * Set pending
+     *
+     * @param string $pending
+     * @return Payable
+     */
+    public function setPending($pending)
+    {
+        $this->pending = $pending;
 
         return $this;
+    }
+
+    /**
+     * Get pending
+     *
+     * @return string
+     */
+    public function getPending()
+    {
+        return $this->pending;
+    }
+
+    /**
+     * Set available
+     *
+     * @param string $available
+     * @return Payable
+     */
+    public function setAvailable($available)
+    {
+        $this->available = $available;
+
+        return $this;
+    }
+
+    /**
+     * Get available
+     *
+     * @return string
+     */
+    public function getAvailable()
+    {
+        return $this->available;
+    }
+
+    /**
+     * Set processing
+     *
+     * @param string $processing
+     * @return Payable
+     */
+    public function setProcessing($processing)
+    {
+        $this->processing = $processing;
+
+        return $this;
+    }
+
+    /**
+     * Get processing
+     *
+     * @return string
+     */
+    public function getProcessing()
+    {
+        return $this->processing;
+    }
+
+    /**
+     * Set paid
+     *
+     * @param string $paid
+     * @return Payable
+     */
+    public function setPaid($paid)
+    {
+        $this->paid = $paid;
+
+        return $this;
+    }
+
+    /**
+     * Get paid
+     *
+     * @return string
+     */
+    public function getPaid()
+    {
+        return $this->paid;
     }
 }
