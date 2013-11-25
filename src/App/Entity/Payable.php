@@ -262,4 +262,14 @@ class Payable
     {
         return $this->paid;
     }
+
+    /**
+     * @PrePersist @PreUpdate
+     */
+    public function validateAmounts()
+    {
+        if ($this->amount !== $this->pending + $this->available + $this->processing + $this->paid) {
+            throw new \Exception('Amounts incorrect');
+        }
+    }
 }
