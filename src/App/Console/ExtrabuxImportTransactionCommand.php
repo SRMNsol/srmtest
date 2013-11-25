@@ -10,13 +10,13 @@ use Symfony\Component\Console\Output\OutputInterface;
 use App\Entity\Transaction;
 use App\Entity\Cashback;
 
-class ProcessUserDataCommand extends Command
+class ExtrabuxImportTransactionCommand extends Command
 {
     public function configure()
     {
         $this
-            ->setName('migrate:user-data')
-            ->setDescription('Populate db with old user data')
+            ->setName('extrabux:import:transaction')
+            ->setDescription('Populate db with old transaction and cashback data')
             ->addArgument('email', InputArgument::OPTIONAL, 'Process user by email');
     }
 
@@ -72,48 +72,28 @@ class ProcessUserDataCommand extends Command
                     ->setUser($user)
                     ->setConcept($transactionData['merchant'])
                     ->setAmount((float) $transactionData['cashback'])
+                    // resetting values
+                    ->setPending(0.00)
+                    ->setAvailable(0.00)
+                    ->setProcessing(0.00)
+                    ->setPaid(0.00)
                 ;
 
                 switch ($transactionData['status']) {
                     case 'Pending' :
-                        $cashback
-                            ->setPending($cashback->getAmount())
-                            ->setAvailable(0.00)
-                            ->setProcessing(0.00)
-                            ->setPaid(0.00)
-                            ->setStatus(Cashback::STATUS_PENDING);
+                        $cashback->setPending($cashback->getAmount());
                         break;
                     case 'Available' :
-                        $cashback
-                            ->setPending(0.00)
-                            ->setAvailable($cashback->getAmount())
-                            ->setProcessing(0.00)
-                            ->setPaid(0.00)
-                            ->setStatus(Cashback::STATUS_AVAILABLE);
+                        $cashback->setAvailable($cashback->getAmount());
                         break;
                     case 'Processing' :
-                        $cashback
-                            ->setPending(0.00)
-                            ->setAvailable(0.00)
-                            ->setProcessing($cashback->getAmount())
-                            ->setPaid(0.00)
-                            ->setStatus(Cashback::STATUS_PROCESSING);
+                        $cashback->setProcessing($cashback->getAmount());
                         break;
                     case 'Paid' :
-                        $cashback
-                            ->setPending(0.00)
-                            ->setAvailable(0.00)
-                            ->setProcessing(0.00)
-                            ->setPaid($cashback->getAmount())
-                            ->setStatus(Cashback::STATUS_PAID);
+                        $cashback->setPaid($cashback->getAmount());
                         break;
                     case 'Returned' :
-                        $cashback
-                            ->setPending(0.00)
-                            ->setAvailable(0.00)
-                            ->setProcessing(0.00)
-                            ->setPaid(0.00)
-                            ->setStatus(Cashback::STATUS_CANCELLED);
+                        $cashback->setStatus(Cashback::STATUS_CANCELLED);
                         break;
                     default :
                         throw new \Exception('Unexpected status ' . $transactionData['status']);

@@ -3,7 +3,7 @@
 namespace App\Entity;
 
 /**
- * @Entity
+ * @Entity @HasLifecycleCallbacks
  */
 class Referral extends Payable
 {
@@ -61,5 +61,16 @@ class Referral extends Payable
     public function getIndirect()
     {
         return $this->indirect;
+    }
+
+    /**
+     * @PrePersist @PreUpdate
+     */
+    public function validateReferralAmounts()
+    {
+        $sum = $this->direct + $this->indirect;
+        if (round($this->amount, 2) != round($sum, 2)) {
+            throw new \Exception(sprintf('Invalid referral sum %.2f (expected %.2f)', $sum, $this->amount));
+        }
     }
 }

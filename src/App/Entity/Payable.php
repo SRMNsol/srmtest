@@ -71,6 +71,7 @@ class Payable
     const STATUS_AVAILABLE = 'available';
     const STATUS_PROCESSING = 'processing';
     const STATUS_PAID = 'paid';
+    const STATUS_MIXED = 'mixed';
     const STATUS_CANCELLED = 'cancelled';
 
     public function getUser()
@@ -268,8 +269,26 @@ class Payable
      */
     public function validateAmounts()
     {
-        if ($this->amount !== $this->pending + $this->available + $this->processing + $this->paid) {
-            throw new \Exception('Amounts incorrect');
+        $sum = $this->pending + $this->available + $this->processing + $this->paid;
+        if (round($this->amount, 2) !== round($sum, 2)) {
+            throw new \Exception(sprintf('Invalid sum amounts %.2f (expected %.2f)', $sum, $this->amount));
+        }
+    }
+
+    /**
+     * @PrePersist @PreUpdate
+     */
+    public function updateStatusBasedOnAmounts()
+    {
+        foreach (['pending', 'available', 'processing', 'paid'] as $prop) {
+            if ($this->$prop > 0) {
+                if ($this->status !== null) {
+                    $this->status = self::STATUS_MIXED;
+                    return;
+                } else {
+                    $this->status = constant('self::STATUS_' . strtoupper($prop));
+                }
+            }
         }
     }
 }
