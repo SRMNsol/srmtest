@@ -154,6 +154,11 @@ class User
     protected $payables;
 
     /**
+     * @OneToOne(targetEntity="Summary", mappedBy="user")
+     */
+    protected $summary;
+
+    /**
      * Get id
      *
      * @return integer
@@ -823,5 +828,28 @@ class User
     public function getPayables()
     {
         return $this->payables;
+    }
+
+    /**
+     * Set summary
+     *
+     * @param \App\Entity\Summary $summary
+     * @return User
+     */
+    public function setSummary(\App\Entity\Summary $summary = null)
+    {
+        $this->summary = $summary;
+
+        return $this;
+    }
+
+    /**
+     * Get summary
+     *
+     * @return \App\Entity\Summary
+     */
+    public function getSummary()
+    {
+        return $this->summary;
     }
 }
