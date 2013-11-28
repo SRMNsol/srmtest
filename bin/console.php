@@ -27,6 +27,7 @@ $console->addCommands([
     new App\Console\AssetDumpCommand(),
     new App\Console\ExtrabuxImportTransactionCommand(),
     new App\Console\ExtrabuxImportReferralCommand(),
+    new App\Console\ExtrabuxImportAdjustmentCommand(),
 ]);
 
 $console->run();
