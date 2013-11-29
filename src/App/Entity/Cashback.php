@@ -19,6 +19,11 @@ class Cashback extends Payable
      */
     protected $share = 0.00;
 
+    /**
+     * @Column(type="datetime", nullable=false)
+     */
+    protected $availableAt;
+
     public function __construct()
     {
         $this->transactions = new ArrayCollection();
@@ -53,6 +58,18 @@ class Cashback extends Payable
         return $this;
     }
 
+    public function getAvailableAt()
+    {
+        return $this->availableAt;
+    }
+
+    public function setAvailableAt(\DateTime $date)
+    {
+        $this->availableAt = $date;
+
+        return $this;
+    }
+
     public function calculateAmount()
     {
         if (null !== $this->transaction) {
@@ -69,5 +86,4 @@ class Cashback extends Payable
 
         return $this;
     }
-
 }

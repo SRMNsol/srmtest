@@ -72,6 +72,7 @@ class ExtrabuxImportTransactionCommand extends Command
                     ->setUser($user)
                     ->setConcept($transactionData['merchant'])
                     ->setAmount((float) $transactionData['cashback'])
+                    ->setAvailableAt(\DateTime::createFromFormat('F j, Y', preg_replace('/\s+/', ' ', $transactionData['available_date'])))
                     // resetting values
                     ->setPending(0.00)
                     ->setAvailable(0.00)
