@@ -5,7 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @Entity
+ * @Entity @HasLifecycleCallbacks
  */
 class Cashback extends Payable
 {
@@ -53,6 +53,9 @@ class Cashback extends Payable
         return $this;
     }
 
+    /**
+     * @PrePersist @PreUpdate
+     */
     public function calculateAmount()
     {
         $commission = 0.00;
@@ -60,14 +63,22 @@ class Cashback extends Payable
         $adjustment = 0.00;
 
         foreach ($this->transactions as $transaction) {
-            $commission += $transaction->getCommission();
-            $payment += $transaction->calculatePaymentSum();
-            $adjustment += $transaction->calculateAdjustmentSum();
+            $rate = $transaction->getRate();
+            $share = $rate ? $rate->getLevel0() : 0;
+
+            if ($share > 0) {
+                $commission += $share * $transaction->getCommission();
+                $payment += $share * $transaction->calculatePaymentSum();
+                $adjustment += $share * $transaction->calculateAdjustmentSum();
+            }
         }
 
-        $this->total = $commission - $adjustment;
-        $this->available = $payment - $this->paid;
-        $this->pending = $commission - $adjustment - $payment;
+        // this calculation is only run if there is any advertiser payment
+        if ($payment > 0) {
+            $this->total = $commission - $adjustment;
+            $this->available = $payment - $this->processing - $this->paid;
+            $this->pending = $commission - $adjustment - $payment;
+        }
 
         return $this;
     }

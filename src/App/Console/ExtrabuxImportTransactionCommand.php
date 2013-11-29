@@ -106,7 +106,7 @@ class ExtrabuxImportTransactionCommand extends Command
                     $transaction->getRegisteredAt()->format('m/d/Y'),
                     $transaction->getOrderNumber(),
                     sprintf('%.2f', $transaction->getTotal()),
-                    sprintf('%.2f', $transaction->getCommission()),
+                    sprintf('%.2f', $transaction->getCashback()->getAmount()),
                     $transaction->getTag(),
                 ]);
             }
