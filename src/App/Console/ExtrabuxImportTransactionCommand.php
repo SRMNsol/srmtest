@@ -68,7 +68,6 @@ class ExtrabuxImportTransactionCommand extends Command
                 $transaction->setCashback($cashback);
 
                 $cashback
-                    ->setShare(1)
                     ->setUser($user)
                     ->setConcept($transactionData['merchant'])
                     ->setAmount((float) $transactionData['cashback'])

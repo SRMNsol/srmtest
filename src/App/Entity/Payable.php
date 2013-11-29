@@ -3,7 +3,7 @@
 namespace App\Entity;
 
 /**
- * @Entity(repositoryClass="App\Repository\PayableRepository")
+ * @Entity(repositoryClass="PayableRepository")
  * @HasLifecycleCallbacks
  * @InheritanceType("SINGLE_TABLE")
  * @DiscriminatorColumn(name="payableType")

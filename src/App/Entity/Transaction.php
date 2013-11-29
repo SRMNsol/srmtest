@@ -6,6 +6,7 @@ use Popshops\Transaction as BaseTransaction;
 
 /**
  * @Entity @HasLifecycleCallbacks
+ * @EntityListeners({"TransactionListener"})
  */
 class Transaction extends BaseTransaction
 {
@@ -13,6 +14,11 @@ class Transaction extends BaseTransaction
      * @ManyToOne(targetEntity="Cashback", inversedBy="transactions")
      */
     protected $cashback;
+
+    /**
+     * @ManyToOne(targetEntity="Rate")
+     */
+    protected $rate;
 
     public function getCashback()
     {
@@ -22,6 +28,18 @@ class Transaction extends BaseTransaction
     public function setCashback(Cashback $cashback = null)
     {
         $this->cashback = $cashback;
+
+        return $this;
+    }
+
+    public function getRate()
+    {
+        return $this->rate;
+    }
+
+    public function setRate(Rate $rate = null)
+    {
+        $this->rate = $rate;
 
         return $this;
     }

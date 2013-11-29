@@ -15,11 +15,6 @@ class Cashback extends Payable
     protected $transactions;
 
     /**
-     * @Column(type="decimal", scale=2)
-     */
-    protected $share = 0.00;
-
-    /**
      * @Column(type="datetime", nullable=false)
      */
     protected $availableAt;
@@ -46,18 +41,6 @@ class Cashback extends Payable
         $this->transactions->removeElement($transaction);
     }
 
-    public function getShare()
-    {
-        return $this->share;
-    }
-
-    public function setShare($share)
-    {
-        $this->share = $share;
-
-        return $this;
-    }
-
     public function getAvailableAt()
     {
         return $this->availableAt;
@@ -72,17 +55,19 @@ class Cashback extends Payable
 
     public function calculateAmount()
     {
-        if (null !== $this->transaction) {
-            if ($this->transaction->getPayment() > 0) {
-                $this->amount = $this->share * $this->transaction->getPayment();
-                $this->status = self::STATUS_AVAILABLE;
-            } elseif ($this->transaction->getCommission() > 0) {
-                $this->amount = $this->share * $this->transaction->getCommission();
-                $this->status = self::STATUS_PENDING;
-            }
-        } else {
-            $this->amount = 0.00;
+        $commission = 0.00;
+        $payment = 0.00;
+        $adjustment = 0.00;
+
+        foreach ($this->transactions as $transaction) {
+            $commission += $transaction->getCommission();
+            $payment += $transaction->calculatePaymentSum();
+            $adjustment += $transaction->calculateAdjustmentSum();
         }
+
+        $this->total = $commission - $adjustment;
+        $this->available = $payment - $this->paid;
+        $this->pending = $commission - $adjustment - $payment;
 
         return $this;
     }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repository;
+namespace App\Entity;
 
 use Doctrine\ORM\EntityRepository;
 use Doctrine\Orm\NoResultException;
