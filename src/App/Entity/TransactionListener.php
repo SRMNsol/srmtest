@@ -19,7 +19,7 @@ class TransactionListener
 
     public function assignRate(Transaction $transaction, RateRepository $rateRepository)
     {
-        $rate = $rateRepository->getRateForTransaction($transaction);
+        $rate = $rateRepository->findRateForTransaction($transaction);
         if (null !== $rate) {
             $transaction->setRate($rate);
         }

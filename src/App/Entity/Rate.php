@@ -4,7 +4,7 @@ namespace App\Entity;
 
 /**
  * @Entity(repositoryClass="RateRepository")
- * @HasLifecycleCallback
+ * @HasLifecycleCallbacks
  */
 class Rate
 {

@@ -6,7 +6,8 @@ use App\Entity\Transaction;
 class TransactionTest extends OrmTestCase
 {
     /**
-     * Transaction requirements: registerAt, orderNumber
+     * Transaction needs minimum registerAt and orderNumber.
+     * Transaction is assigned rate by entity listener
      */
     public function testPersistingTransaction()
     {
@@ -19,5 +20,6 @@ class TransactionTest extends OrmTestCase
         $this->em->flush();
 
         $this->assertGreaterThan(0, $transaction->getId());
+        $this->assertNotNull($transaction->getRate());
     }
 }
