@@ -5,7 +5,9 @@ namespace App\Entity;
 use Popshops\Transaction as BaseTransaction;
 
 /**
- * @Entity @HasLifecycleCallbacks
+ * @Entity
+ * @Table(name="AdvertiserTransaction")
+ * @HasLifecycleCallbacks
  * @EntityListeners({"TransactionListener"})
  */
 class Transaction extends BaseTransaction

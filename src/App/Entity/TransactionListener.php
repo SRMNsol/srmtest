@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Event\PreUpdateEventArgs;
+use Doctrine\ORM\Event\LifecycleEventArgs;
 
 class TransactionListener
 {

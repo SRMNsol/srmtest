@@ -13,4 +13,10 @@ class ControllerProviderTest extends WebTestCase
         return $app;
     }
 
+    public function testIndexIsProtected()
+    {
+        $client = static::createClient();
+        $crawler = $client->request('GET', '/');
+        $this->assertEquals(302, $client->getResponse()->getStatusCode());
+    }
 }
