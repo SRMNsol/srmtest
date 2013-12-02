@@ -77,12 +77,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:doblebjp/popshops-api.git",
-                "reference": "c439cb2c365da3ff2a999052a65ef6d399430796"
+                "reference": "015e88d4772af06b512b2c542ba39ab04543522e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doblebjp/popshops-api/zipball/c439cb2c365da3ff2a999052a65ef6d399430796",
-                "reference": "c439cb2c365da3ff2a999052a65ef6d399430796",
+                "url": "https://api.github.com/repos/doblebjp/popshops-api/zipball/015e88d4772af06b512b2c542ba39ab04543522e",
+                "reference": "015e88d4772af06b512b2c542ba39ab04543522e",
                 "shasum": ""
             },
             "require": {
@@ -128,7 +128,7 @@
                 "source": "https://github.com/doblebjp/popshops-api/tree/master",
                 "issues": "https://github.com/doblebjp/popshops-api/issues"
             },
-            "time": "2013-11-30 21:59:53"
+            "time": "2013-12-02 16:49:25"
         },
         {
             "name": "doctrine/annotations",

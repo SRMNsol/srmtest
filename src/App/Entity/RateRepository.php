@@ -28,6 +28,21 @@ class RateRepository extends EntityRepository
         return $rate;
     }
 
+    public function getFirstRate()
+    {
+        $queryBuilder = $this->createQueryBuilder('r')
+            ->orderBy('r.id', 'ASC')
+            ->setMaxResults(1);
+
+        try {
+            $rate = $queryBuilder->getQuery()->getSingleResult();
+        } catch (NoResultException $e) {
+            $rate = $this->createDefaultRate();
+        }
+
+        return $rate;
+    }
+
     public function getCurrentRate()
     {
         $queryBuilder = $this->createQueryBuilder('r')
@@ -45,18 +60,23 @@ class RateRepository extends EntityRepository
 
     public function findRateForTransaction(Transaction $transaction)
     {
+        // use subid timestamp when available, fallback on transaction registered at
+        $subid = $transaction->parseTag();
+        $time = $subid->getTimestamp() ?: $transaction->getRegisteredAt();
+
         // get last rate created before transaction
         $queryBuilder = $this->createQueryBuilder('r')
-            ->andWhere('r.createdAt <= :date')
+            ->andWhere('r.createdAt <= :time')
             ->orderBy('r.id', 'DESC')
-            ->setParameter('date', $transaction->getRegisteredAt())
+            ->setParameter('time', $time)
             ->setMaxResults(1);
 
         try {
             $rate = $queryBuilder->getQuery()->getSingleResult();
         } catch (NoResultException $e) {
-            // no result, try if there is current rate
-            $rate = $this->getCurrentRate();
+            // no result, transaction is created before rate
+            // return the first rate created
+            $rate = $this->getFirstRate();
         }
 
         return $rate;

@@ -34,8 +34,14 @@ class RateRepositoryTest extends OrmTestCase
     public function testAutomaticallyCreateDefaultRate()
     {
         $repo = $this->em->getRepository('App\Entity\Rate');
+
+        // test if a default rate is created
         $rate = $repo->getCurrentRate();
         $this->assertInstanceOf('App\Entity\Rate', $rate);
+
+        // test if we are not recreating default rate
+        $rate2 = $repo->getCurrentRate();
+        $this->assertEquals($rate2, $rate);
     }
 
     public function testGetCurrentRate()
@@ -66,7 +72,12 @@ class RateRepositoryTest extends OrmTestCase
     {
         $this->createSchema(['App\Entity\Transaction']);
         $repo = $this->em->getRepository('App\Entity\Rate');
+
+        $timeBefore = new DateTime();
+        sleep(1);
         $defaultRate = $repo->createDefaultRate();
+        sleep(1);
+        $timeAfter = new DateTime();
 
         $transaction = new Transaction();
         $transaction->setRegisteredAt(new DateTime());
@@ -76,6 +87,7 @@ class RateRepositoryTest extends OrmTestCase
 
         $this->assertEquals($defaultRate, $transaction->getRate());
 
+        sleep(1);
         $newRate = new Rate();
         $newRate->setLevel0(0.6);
         $newRate->setLevel1(0.6);
@@ -94,6 +106,25 @@ class RateRepositoryTest extends OrmTestCase
         $this->em->persist($transaction);
         $this->em->flush();
 
+        $this->assertEquals($newRate, $transaction->getRate());
+
+        // set back timestamp on before default rate
+        // will assign default rate
+        $transaction->setTag(sprintf('t%d', $timeBefore->format('U')));
+        $this->em->flush();
+        $this->assertEquals($defaultRate, $transaction->getRate());
+
+        // set back timestamp after default rate
+        // will assign default rate using subid
+        $transaction->setTag(sprintf('t%d', $timeAfter->format('U')));
+        $this->em->flush();
+        $this->assertEquals($defaultRate, $transaction->getRate());
+
+        // set timestamp to after new rate
+        // will assign new rate
+        $time = new DateTime();
+        $transaction->setTag(sprintf('t%d', $time->format('U')));
+        $this->em->flush();
         $this->assertEquals($newRate, $transaction->getRate());
     }
 }
