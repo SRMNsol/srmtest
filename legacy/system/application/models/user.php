@@ -12,7 +12,7 @@ class User extends Model
     public $table = "user";
 
     public $uinterface = array(
-        'id', 'email', 'facebook_auto', 'twitter_auto',
+        'uid', 'email', 'facebook_auto', 'twitter_auto',
         'paypal_email', 'payment_method', 'alias', 'charity_id',
         'admin', 'send_reminders', 'send_updates','created','last_long',
         'last_refer','purchase_exempt','password',
@@ -83,12 +83,11 @@ class User extends Model
         $response = $this->beesavy->getUser($id, $password);
         if ($response) {
             $id = $response['id'];
-            $q = "UPDATE user set last_login = CURRENT_TIMESTAMP where email=?";
+            $timestamp = date('Y-m-d H:i:s');
+            $q = "UPDATE user set last_login = '$timestamp' where email=?";
             $this->db->query($q, array($email));
             $q = "UPDATE user set password = ? where email=?";
             $this->db->query($q, array($password, $email));
-            $q = "UPDATE user set id = ? where email=?";
-            $this->db->query($q, array($id, $email));
             $last_login = $res[0]['last_login'];
             $this->db_session->set_userdata('login',
                 array(
@@ -96,7 +95,7 @@ class User extends Model
                     'login'=>True,
                     'admin'=>$res[0]['admin'],
                     'email'=>$email,
-                    'id'=>$response['id'],
+                    'id'=>$response['uid'],
                     'first_name'=>$response['first_name'],
                     'password'=>$password)
                 );
@@ -115,33 +114,33 @@ class User extends Model
     {
         #Check if a referral was not given
         #If not given check if a user came to site through a referral
-        echo $referral;
         if (!$referral) {
             $ref = $this->db_session->userdata('referral');
             if ($ref) {
-                $sql = "select * from user where alias = ? or id = ?";
+                $sql = "select * from user where alias = ? or uid = ?";
                 $q = $this->db->query($sql, array($referral, $referral));
                 $q = $q->result_array();
                 $user = $q[0];
-                $referral = $user['id'];
+                $referral = $user['uid'];
             } else {
                 $referral = $this->admin->getDefaultId();
             }
         } else {
-                $sql = "select * from user where alias = ? or id = ?";
+                $sql = "select * from user where alias = ? or uid = ?";
                 $q = $this->db->query($sql, array($referral, $referral));
                 $q = $q->result_array();
                 if (!empty($q)) {
                     $user = $q[0];
-                    $referral = $user['id'];
+                    $referral = $user['uid'];
                 }
         }
-        $id = $this->beesavy->createUser('','',$email,$password, $referral,$referral);
-        if ($id==0) {
-            return '20';
-        }
-        $id = addslashes($id);
-        $this->db->insert('user',array('id'=>$id, 'email'=>$email,'alias'=>$id, 'password'=>$password));
+
+        $this->db->insert('user', array(
+            'email' => $email,
+            'password' => $password,
+            'created' => date('Y-m-d H:i:s'),
+            'ref_uid' => $referral,
+        ));
     }
 
     public function set_referral($alias)
@@ -163,7 +162,7 @@ class User extends Model
     {
         $login_status = $this->db_session->userdata('login');
         $id = addslashes($login_status['id']);
-        $q = "select * from user where id=$id;";
+        $q = "select * from user where uid=$id;";
         $res = $this->db->query($q);
         $res = $res->result_array();
         $res = $res[0];
@@ -173,7 +172,7 @@ class User extends Model
 
     public function info_user($id)
     {
-        $q = "select * from user where id=$id;";
+        $q = "select * from user where uid=$id;";
         $res = $this->db->query($q);
         $res = $res->result_array();
         $res = $res[0];
@@ -254,12 +253,12 @@ class User extends Model
                 return "in_use";
             }
             if (empty($q)) {
-               $this->db->update('user', array($setting=>$value), "id = $id");
+               $this->db->update('user', array($setting=>$value), "uid = $id");
             } else {
                 return "in_use";
             }
         } elseif (in_array($setting, $this->uinterface)) {
-            $this->db->update('user', array($setting=>$value), "id = $id");
+            $this->db->update('user', array($setting=>$value), "uid = $id");
         }
         if($setting=="email")
             $email = $value;
@@ -274,15 +273,8 @@ class User extends Model
         $ebinfo = $this->ebinfo_user($id);
         $email = $info['email'];
         $password = $info['password'];
-        echo $password;
-        echo "<br/>";
-        echo $ebinfo['password'];
-        echo "<br/>";
-        print_r($info);
-        print_r($ebinfo);
         if (in_array($setting, $this->uinterface)) {
-            $this->db->update('user', array($setting=>$value), "id = $id");
-            echo $value;
+            $this->db->update('user', array($setting=>$value), "uid = $id");
         }
         if($setting=="email")
             $email = $value;
@@ -321,13 +313,13 @@ class User extends Model
         if(!$id)
 
             return True;
-        $q = "select * from user where id='$id' OR alias='$id';";
+        $q = "select * from user where uid='$id' OR alias='$id';";
         $res = $this->db->query($q);
         $res = $res->result_array();
         if (!empty($res)) {
             $res = $res[0];
 
-            return $res['id'];
+            return $res['uid'];
         }
 
         return False;

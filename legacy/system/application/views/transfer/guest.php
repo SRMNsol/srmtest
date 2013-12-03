@@ -33,8 +33,10 @@
 	<div id="transferWrap">
 		<div id="closeButton"><a href="/transfer/{type}/{type_id}/skip"></a></div>
 		<div id="title">
-        <h1 class="twoLines">Sign Up to Save <?php if(isset($cashback_text)){ ?>{cashback_text}<?}else{?>${cashback_amount}<?}?> Cash Back<br /> at <span class="bold"><?php if(isset($merchant_name)){ ?>{merchant_name}<?}else{?>{name}<?}?></span></h1>
-		</div>		
+        <h1 class="twoLines">Sign Up to Save
+        <?php echo escape(isset($cashback_text) ? $cashback_text : $cashback_amount); ?> Cash Back<br />
+        at <span class="bold"><?php echo escape(isset($merchant_name) ? $merchant_name : $name); ?></span></h1>
+		</div>
 		<div class="div"></div>
 		<div style="padding:0 15px;"></div>
 <?php if($code) { ?>
@@ -54,10 +56,10 @@
                     <dt id="password-label"><label for="password" class="required">Your Password:</label></dt>
                     <dd id="password-element"><input type="password" name="password" id="password" value=""></dd>
                     <dt style="display:inline; float:left; width:150px; padding-top:15px;"><a href="/main/forgot" target="_blank" style="font-size:12px; color:#666; text-decoration:underline;">Forgot your password?</a></dt>
-                    
+
                     <dd><div class="LogIn"><div class="BtnLogInBg BtnLogIn"><INPUT type="submit" name="" value=""/></div></div></dd>
                 </dl>
-            </form>		
+            </form>
         </div>
 		<div id="signup" >
 		    <h2>New Account</h2>
@@ -73,7 +75,7 @@
 				<tr><td><input name="referral" value="{referral}" id="email" class="required email" type="text"></td></tr>
                 <tr><td height=20><font style="font-size:9pt;"><i>Not Case Sensitive</i></font></td></tr>
                 <tr><table cellspacing=0 cellpadding=0 width=100%><tr><td align=left><font size=2>* Required Field </font></td><td valign=top align=right><div class="StartSaving"><div class="BtnStartSavingBg BtnStartSaving"><INPUT type="submit" name="" value=""/></div></div></td></tr></table></td></tr>
-                </table>				
+                </table>
             </dl></form>
         </div>
 		<div id="optOut"><a href="/transfer/{type}/{type_id}/skip">or continue shopping without cash back &raquo;</a></div>
@@ -89,7 +91,7 @@ $(document).ready(function() {
     	var element = $(this);
 		element.find('.BtnLogInRBg').addClass('BtnLogInBg').removeClass('BtnLogInRBg');
     });
-	
+
 	    $("div.StartSaving").mouseover(function () {
         var element = $(this);
  		element.find('.BtnStartSaving').addClass('BtnStartSavingRBg').removeClass('BtnStartSavingBg');
@@ -97,7 +99,7 @@ $(document).ready(function() {
     	var element = $(this);
 		element.find('.BtnStartSavingRBg').addClass('BtnStartSavingBg').removeClass('BtnStartSavingRBg');
     });
-	
+
    	});
 </script>
 </body>

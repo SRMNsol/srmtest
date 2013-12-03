@@ -159,6 +159,11 @@ class User
     protected $summary;
 
     /**
+     * @Column(type="integer", name="ref_uid", nullable=true)
+     */
+    protected $referralId;
+
+    /**
      * Get id
      *
      * @return integer
@@ -851,5 +856,28 @@ class User
     public function getSummary()
     {
         return $this->summary;
+    }
+
+    /**
+     * Set referralId
+     *
+     * @param integer $referralId
+     * @return User
+     */
+    public function setReferralId($referralId)
+    {
+        $this->referralId = $referralId;
+
+        return $this;
+    }
+
+    /**
+     * Get referralId
+     *
+     * @return integer
+     */
+    public function getReferralId()
+    {
+        return $this->referralId;
     }
 }

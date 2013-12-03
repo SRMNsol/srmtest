@@ -26,7 +26,7 @@ class Beesavy
         if (strpos($idOrEmail, '@') > 0) {
             $user = $this->db->get_where('user', ['email' => $idOrEmail])->row_array();
         } elseif (is_numeric($idOrEmail)) {
-            $user = $this->db->get_where('user', ['id' => $idOrEmail])->row_array();
+            $user = $this->db->get_where('user', ['uid' => $idOrEmail])->row_array();
         }
 
         if (is_array($user)) {
@@ -48,7 +48,7 @@ class Beesavy
     {
         $row = $this->db
             ->select('raw_data')
-            ->get_where('user', ['id' => $id])
+            ->get_where('user', ['uid' => $id])
             ->row_array();
 
         $raw_data = json_decode($row['raw_data'], true);

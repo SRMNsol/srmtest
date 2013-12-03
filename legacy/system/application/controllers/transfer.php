@@ -18,7 +18,6 @@ class Transfer extends Controller
         } else {
             $this->user_id = $this->admin->getDefault();
         }
-
         $this->load->helper('bridge');
         $this->load->helper('escape');
         $this->container = silex();
