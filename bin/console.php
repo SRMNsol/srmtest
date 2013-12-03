@@ -28,6 +28,7 @@ $console->addCommands([
     new App\Console\ExtrabuxImportTransactionCommand(),
     new App\Console\ExtrabuxImportReferralCommand(),
     new App\Console\ExtrabuxImportAdjustmentCommand(),
+    new App\Console\ExtrabuxImportUserCommand(),
 ]);
 
 $console->run();

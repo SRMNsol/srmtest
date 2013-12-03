@@ -159,9 +159,44 @@ class User
     protected $summary;
 
     /**
-     * @Column(type="integer", name="ref_uid", nullable=true)
+     * @Column(nullable=true)
      */
-    protected $referralId;
+    protected $address;
+
+    /**
+     * @Column(length=50, nullable=true)
+     */
+    protected $city;
+
+    /**
+     * @Column(length=5, nullable=true)
+     */
+    protected $state;
+
+    /**
+     * @Column(length=10, nullable=true)
+     */
+    protected $zip;
+
+    /**
+     * @Column(length=10)
+     */
+    protected $status = self::STATUS_ACTIVE;
+
+    const STATUS_ACTIVE = 'active';
+    const STATUS_INACTIVE = 'inactive';
+
+    /**
+     * @ManyToOne(targetEntity="User", inversedBy="referredUsers")
+     * @JoinColumn(referencedColumnName="uid", name="ref_uid")
+     */
+    protected $referredBy;
+
+    /**
+     * @OneToMany(targetEntity="User", mappedBy="referredBy")
+     */
+    protected $referredUsers;
+
 
     /**
      * Get id
@@ -859,25 +894,173 @@ class User
     }
 
     /**
-     * Set referralId
+     * Set address
      *
-     * @param integer $referralId
+     * @param string $address
      * @return User
      */
-    public function setReferralId($referralId)
+    public function setAddress($address)
     {
-        $this->referralId = $referralId;
+        $this->address = $address;
 
         return $this;
     }
 
     /**
-     * Get referralId
+     * Get address
      *
-     * @return integer
+     * @return string
      */
-    public function getReferralId()
+    public function getAddress()
     {
-        return $this->referralId;
+        return $this->address;
+    }
+
+    /**
+     * Set city
+     *
+     * @param string $city
+     * @return User
+     */
+    public function setCity($city)
+    {
+        $this->city = $city;
+
+        return $this;
+    }
+
+    /**
+     * Get city
+     *
+     * @return string
+     */
+    public function getCity()
+    {
+        return $this->city;
+    }
+
+    /**
+     * Set state
+     *
+     * @param string $state
+     * @return User
+     */
+    public function setState($state)
+    {
+        $this->state = $state;
+
+        return $this;
+    }
+
+    /**
+     * Get state
+     *
+     * @return string
+     */
+    public function getState()
+    {
+        return $this->state;
+    }
+
+    /**
+     * Set zip
+     *
+     * @param string $zip
+     * @return User
+     */
+    public function setZip($zip)
+    {
+        $this->zip = $zip;
+
+        return $this;
+    }
+
+    /**
+     * Get zip
+     *
+     * @return string
+     */
+    public function getZip()
+    {
+        return $this->zip;
+    }
+
+    /**
+     * Set status
+     *
+     * @param string $status
+     * @return User
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * Get status
+     *
+     * @return string
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * Set referredBy
+     *
+     * @param \App\Entity\User $referredBy
+     * @return User
+     */
+    public function setReferredBy(\App\Entity\User $referredBy = null)
+    {
+        $this->referredBy = $referredBy;
+
+        return $this;
+    }
+
+    /**
+     * Get referredBy
+     *
+     * @return \App\Entity\User
+     */
+    public function getReferredBy()
+    {
+        return $this->referredBy;
+    }
+
+    /**
+     * Add referredUsers
+     *
+     * @param \App\Entity\User $referredUsers
+     * @return User
+     */
+    public function addReferredUser(\App\Entity\User $referredUser)
+    {
+        $this->referredUsers[] = $referredUser;
+
+        return $this;
+    }
+
+    /**
+     * Remove referredUsers
+     *
+     * @param \App\Entity\User $referredUsers
+     */
+    public function removeReferredUser(\App\Entity\User $referredUser)
+    {
+        $this->referredUsers->removeElement($referredUser);
+    }
+
+    /**
+     * Get referredUsers
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getReferredUsers()
+    {
+        return $this->referredUsers;
     }
 }

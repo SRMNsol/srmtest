@@ -140,6 +140,7 @@ class User extends Model
             'password' => $password,
             'created' => date('Y-m-d H:i:s'),
             'ref_uid' => $referral,
+            'status' => 'active',
         ));
     }
 
