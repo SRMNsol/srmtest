@@ -280,15 +280,22 @@ class Payable
      */
     public function updateStatusBasedOnAmounts()
     {
+        $status = null;
         foreach (['pending', 'available', 'processing', 'paid'] as $prop) {
             if ($this->$prop > 0) {
-                if ($this->status !== null) {
-                    $this->status = self::STATUS_MIXED;
+                if ($status !== null) {
+                    $status = self::STATUS_MIXED;
                     return;
                 } else {
-                    $this->status = constant('self::STATUS_' . strtoupper($prop));
+                    $status = constant('self::STATUS_' . strtoupper($prop));
                 }
             }
+        }
+
+        if ($status === null) {
+            $this->status = self::STATUS_CANCELLED;
+        } else {
+            $this->status = $status;
         }
     }
 }

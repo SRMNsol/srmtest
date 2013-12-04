@@ -5,7 +5,8 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @Entity @HasLifecycleCallbacks
+ * @Entity(repositoryClass="App\Entity\CashbackRepository")
+ * @HasLifecycleCallbacks
  */
 class Cashback extends Payable
 {

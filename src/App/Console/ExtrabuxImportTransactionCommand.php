@@ -59,7 +59,7 @@ class ExtrabuxImportTransactionCommand extends Command
                     ->setTotal((float) $transactionData['amount'])
                     ->setCommission((float) $transactionData['cashback'])
                     ->setTag($transactionData['click_id'])
-                    ->setRegisteredAt(\DateTime::createFromFormat('m/d/Y', $transactionData['report_date']))
+                    ->setRegisteredAt(\DateTime::createFromFormat('m/d/Y', $transactionData['created']))
                 ;
 
                 // Level 1 cashback

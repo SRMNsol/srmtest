@@ -3,12 +3,18 @@
  */
 class Cashback extends Controller
 {
+    protected $container;
+
     public function Cashback()
     {
         parent::Controller();
         $this->load->library('beesavy');
         $this->load->model('user');
         $this->user_id = $this->user->get_field('id');
+
+        $this->load->helper('bridge');
+        $this->load->helper('escape');
+        $this->container = silex();
     }
 
     public function __get_header(&$data)
@@ -28,26 +34,24 @@ class Cashback extends Controller
         $data = $this->cache->library('beesavy', 'getUserStats', array($this->user_id), 3600);
         $this->__get_header($data);
         #Have columns: Month, Type, Status, Cash Back, Payment date
-        $transactions = $data['transactions'];
-        foreach ($transactions as &$trans) {
-            $month = $trans['created'];
-            $type  = "Personal";
-            $status = $trans['status'];
-            $cashback = $trans['cashback'];
-            if ($status == "Paid") {
-                $payment = $trans['date'];
-            } else {
-                $payment = 'N/A';
-            }
-            $trans = array(
-                'month'=>$month,
-                'transtype'=>$type,
-                'status'=>$status,
-                'cashback'=>$cashback,
-                'date'=>$payment
-            );
-        }
-        $data['transactions'] = $transactions;
+
+        $em = $this->container['orm.em'];
+
+        $result = $em->getRepository('App\Entity\Cashback')->getMostRecentUserCashback(
+            $em->getReference('App\Entity\User', $this->user_id)
+        );
+
+        $data['transactions'] = array_map(function (App\Entity\Cashback $cashback) {
+            $data['month'] = $cashback->getTransactions()->current()->getRegisteredAt()->format('m/d/Y');
+            $data['transtype'] = 'Personal';
+            $data['status'] = ucfirst($cashback->getStatus());
+            $data['cashback'] = sprintf('%.2f', $cashback->getAmount());
+            $data['date'] = $cashback->getStatus() === App\Entity\Cashback::STATUS_PAID
+                ? $cashback->getTransactions()->current()->getRegisteredAt()->format('m/Y')
+                : 'N/A';
+
+            return $data;
+        }, $result);
 
         $reftransactions = $data['reftransactions'];
         $newref = array();
@@ -72,7 +76,6 @@ class Cashback extends Controller
 
         }
         $data['reftransactions'] = $newref;
-
         $this->parser->parse('cashback/base', $data);
     }
 
