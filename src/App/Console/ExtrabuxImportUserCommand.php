@@ -51,13 +51,7 @@ class ExtrabuxImportUserCommand extends Command
                     $user->setReferredBy($referrer);
                 }
 
-                switch ($data['status']) {
-                    case 'Active' :
-                        $user->setStatus(User::STATUS_ACTIVE);
-                        break;
-                    default :
-                        throw new \Exception('Unknown status ' . $data['status']);
-                }
+                $user->setStatus(strtolower($data['status']));
 
                 $em->persist($user);
             } else {
