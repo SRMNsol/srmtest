@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\Orm\NoResultException;
 
 class CashbackRepository extends EntityRepository
 {
@@ -17,5 +18,27 @@ class CashbackRepository extends EntityRepository
         ;
 
         return $queryBuilder->getQuery()->getResult();
+    }
+
+    public function calculateUserSummary(User $user)
+    {
+        $qb = $this->createQueryBuilder('c')
+            ->select([
+                'SUM(c.amount) AS amount',
+                'SUM(c.pending) AS pending',
+                'SUM(c.available) AS available',
+                'SUM(c.processing) AS processing',
+                'SUM(c.paid) AS paid'
+            ])
+            ->where('c.user = :user')
+            ->groupBy('c.user')
+            ->setParameter('user', $user)
+        ;
+
+        try {
+            return $qb->getQuery()->getSingleResult();
+        } catch (NoResultException $e) {
+            return null;
+        }
     }
 }

@@ -16,4 +16,26 @@ class ReferralRepository extends EntityRepository
 
         return $queryBuilder->getQuery()->getResult();
     }
+
+    public function calculateUserSummary(User $user)
+    {
+        $qb = $this->createQueryBuilder('r')
+            ->select([
+                'SUM(r.amount) AS amount',
+                'SUM(r.pending) AS pending',
+                'SUM(r.available) AS available',
+                'SUM(r.processing) AS processing',
+                'SUM(r.paid) AS paid'
+            ])
+            ->where('r.user = :user')
+            ->groupBy('r.user')
+            ->setParameter('user', $user)
+        ;
+
+        try {
+            return $qb->getQuery()->getSingleResult();
+        } catch (NoResultException $e) {
+            return null;
+        }
+    }
 }
