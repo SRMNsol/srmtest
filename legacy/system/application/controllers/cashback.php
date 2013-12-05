@@ -83,6 +83,26 @@ class Cashback extends Controller
         $data = $this->beesavy->getUserStats($this->user_id);
         $this->__get_header($data);
         $data['type'] = "personal";
+
+        $em = $this->container['orm.em'];
+
+        $result = $em->getRepository('App\Entity\Cashback')->getMostRecentUserCashback(
+            $em->getReference('App\Entity\User', $this->user_id)
+        );
+
+        $data['transactions'] = array_map(function (App\Entity\Cashback $cashback) {
+            $transaction = $cashback->getTransactions()->current();
+
+            $data['report_date'] = $transaction->getRegisteredAt()->format('m/d/Y');
+            $data['merchant'] = $cashback->getConcept();
+            $data['order_id'] = $transaction->getOrderNumber();
+            $data['status'] = ucfirst($cashback->getStatus());
+            $data['amount'] = sprintf('%.2f', $transaction->getTotal());
+            $data['cashback'] = sprintf('%.2f', $cashback->getAmount());
+
+            return $data;
+        }, $result);
+
         $this->parser->parse('cashback/base', $data);
     }
 
