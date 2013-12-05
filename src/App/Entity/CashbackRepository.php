@@ -3,7 +3,6 @@
 namespace App\Entity;
 
 use Doctrine\ORM\EntityRepository;
-use App\Entity\Cashback;
 
 class CashbackRepository extends EntityRepository
 {

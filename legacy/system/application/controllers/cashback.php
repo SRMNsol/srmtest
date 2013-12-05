@@ -53,29 +53,28 @@ class Cashback extends Controller
             return $data;
         }, $result);
 
-        $reftransactions = $data['reftransactions'];
-        $newref = array();
-        foreach ($reftransactions as &$trans) {
-            $month = $trans['date'];
-            $type  = "Referral Total";
-            $payment = 'N/A';
-            $stati = array("Paid"=>"referralpaid",
-                "Pending"=>"referralpending",
-                "Available"=>"referralavailable");
-            foreach ($stati as $k=>$v) {
-                if ($trans[$v]!="0.00") {
-                    $newref[] = array(
-                        'month'=>$month,
-                        'transtype'=>$type,
-                        'status'=>$k,
-                        'cashback'=>$trans[$v],
-                        'date'=>$payment
-                    );
+        $result = $em->getRepository('App\Entity\Referral')->getMostRecentUserReferral(
+            $em->getReference('App\Entity\User', $this->user_id)
+        );
+
+        $referrals = [];
+        array_walk($result, function (App\Entity\Referral $referral) use (&$referrals) {
+            foreach (['pending', 'paid', 'available'] as $status) {
+                $method = 'get' . ucfirst($status);
+                $value = $referral->$method();
+                if ($value > 0) {
+                    $referrals[] = [
+                        'month' => $referral->getAvailableAt()->format('m/Y'),
+                        'transtype' => $referral->getConcept(),
+                        'status' => ucfirst($status),
+                        'cashback' => sprintf('%.2f', $value),
+                        'date' => 'N/A'
+                    ];
                 }
             }
+        });
 
-        }
-        $data['reftransactions'] = $newref;
+        $data['reftransactions'] = $referrals;
         $this->parser->parse('cashback/base', $data);
     }
 

@@ -49,13 +49,14 @@ class ExtrabuxImportReferralCommand extends Command
 
             foreach ($data['summary']['reftransactions'] as $refData) {
                 $referral = $em->getRepository('App\Entity\Referral')->findOneBy([
-                    'concept' => $refData['date'],
+                    'availableAt' => \DateTime::createFromFormat('d/m/Y', '01/' . $refData['date']),
                     'user' => $user,
                 ]) ?: new Referral();
 
                 $referral
                     ->setUser($user)
-                    ->setConcept($refData['date'])
+                    ->setConcept('Referral Total')
+                    ->setAvailableAt(\DateTime::createFromFormat('d/m/Y', '01/' . $refData['date']))
                     ->setAvailable($refData['referralavailable'])
                     ->setPending($refData['referralpending'])
                     ->setProcessing($refData['referralprocessing'])

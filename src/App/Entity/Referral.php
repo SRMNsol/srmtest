@@ -3,10 +3,16 @@
 namespace App\Entity;
 
 /**
- * @Entity @HasLifecycleCallbacks
+ * @Entity(repositoryClass="ReferralRepository")
+ * @HasLifecycleCallbacks
  */
 class Referral extends Payable
 {
+    /**
+     * @Column(type="date", nullable=false)
+     */
+    protected $availableAt;
+
     /**
      * @Column(type="decimal", scale=2)
      */
@@ -16,6 +22,18 @@ class Referral extends Payable
      * @Column(type="decimal", scale=2)
      */
     protected $indirect = 0.00;
+
+    public function getAvailableAt()
+    {
+        return $this->availableAt;
+    }
+
+    public function setAvailableAt(\DateTime $date)
+    {
+        $this->availableAt = $date;
+
+        return $this;
+    }
 
     /**
      * Set direct

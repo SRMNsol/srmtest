@@ -5,7 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @Entity(repositoryClass="App\Entity\CashbackRepository")
+ * @Entity(repositoryClass="CashbackRepository")
  * @HasLifecycleCallbacks
  */
 class Cashback extends Payable
@@ -16,7 +16,7 @@ class Cashback extends Payable
     protected $transactions;
 
     /**
-     * @Column(type="datetime", nullable=false)
+     * @Column(type="date", nullable=false)
      */
     protected $availableAt;
 
