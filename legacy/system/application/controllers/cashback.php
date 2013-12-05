@@ -112,47 +112,29 @@ class Cashback extends Controller
         $this->__get_header($data);
         $data['type'] = "referral";
 
-        $reftransactions = $data['reftransactions'];
-        $newref = array();
-        foreach ($reftransactions as &$trans) {
-            $date = $trans['date'];
-            $level = "Referral Total";
-            $status = "";
-            $cashback = 0;
-            $stati = array("Paid"=>"referralpaid",
-                "Pending"=>"referralpending",
-                "Processing"=>"referralprocessing",
-                "Available"=>"referralavailable");
-            foreach ($stati as $k=>$v) {
-                $cashback += (float) $trans[$v];
-                if ($trans[$v] != "0.00" && !$status) {
-                    $status = $k;
-                } elseif ($trans[$v] != "0.00" && $status) {
-                    $status = "Mixed";
+        $em = $this->container['orm.em'];
+
+        $result = $em->getRepository('App\Entity\Referral')->getMostRecentUserReferral(
+            $em->getReference('App\Entity\User', $this->user_id)
+        );
+
+        $referrals = [];
+        array_walk($result, function (App\Entity\Referral $referral) use (&$referrals) {
+            foreach (['amount', 'direct', 'indirect'] as $field) {
+                $method = 'get' . ucfirst($field);
+                $value = $referral->$method();
+                if ($value > 0) {
+                    $referrals[] = [
+                        'date' => $referral->getAvailableAt()->format('m/Y'),
+                        'level' => $field === 'amount' ? $referral->getConcept() : ($field === 'direct' ? 'Level 1' : 'Level 2-7'),
+                        'status' => ucfirst($referral->getStatus()),
+                        'cashback' => sprintf('%.2f', $value),
+                    ];
                 }
             }
-            if ($cashback!=0) {
-                $newref[] = array(
-                    'date'=>$date,
-                    'level'=>$level,
-                    'status'=>$status,
-                    'cashback'=>number_format($cashback, 2)
-                );
-            }
-            if ($cashback!=0) {
-                $levi = array('Level 1'=>'referralcommissiondirect',
-                    'Level 2-7'=>'referralcommissionindirect');
-                foreach ($levi as $lev=>$lev_index) {
-                    $newref[] = array(
-                        'date'=>$date,
-                        'level'=>$lev,
-                        'status'=>$status,
-                        'cashback'=>$trans[$lev_index]
-                    );
-                }
-            }
-        }
-        $data['reftransactions'] = $newref;
+        });
+
+        $data['reftransactions'] = $referrals;
         $this->parser->parse('cashback/base', $data);
     }
 }

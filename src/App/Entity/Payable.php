@@ -285,7 +285,7 @@ class Payable
             if ($this->$prop > 0) {
                 if ($status !== null) {
                     $status = self::STATUS_MIXED;
-                    return;
+                    break;
                 } else {
                     $status = constant('self::STATUS_' . strtoupper($prop));
                 }
