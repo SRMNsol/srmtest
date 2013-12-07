@@ -29,36 +29,9 @@ class Cashback extends Controller
         $data =array_merge($data, $this->user->info());
     }
 
-    protected function getUserStats()
-    {
-        $em = $this->container['orm.em'];
-        $user = $em->getReference('App\Entity\User', $this->user_id);
-        $summary = $em->getRepository('App\Entity\Payable')->calculateUserSummary($user);
-        $cashback = $em->getRepository('App\Entity\Cashback')->calculateUserSummary($user);
-        $referral = $em->getRepository('App\Entity\Referral')->calculateUserSummary($user);
-
-        $data['type'] = 'all';
-
-        $total = [];
-        $total[0]['pending'] = sprintf('%.2f', $summary['pending']);
-        $total[0]['available'] = sprintf('%.2f', $summary['available']);
-        $total[0]['processing'] = sprintf('%.2f', $summary['processing']);
-        $total[0]['paid'] = sprintf('%.2f', $summary['paid']);
-        $total[0]['UserPending'] = sprintf('%.2f', $cashback['pending']);
-        $total[0]['UserAvailable'] = sprintf('%.2f', $cashback['available']);
-        $total[0]['referralpending'] = sprintf('%.2f', $referral['pending']);
-        $total[0]['referralavailable'] = sprintf('%.2f', $referral['available']);
-
-        $data['total'] = $total;
-        $data['transactions'] = [];
-        $data['reftransactions'] = [];
-
-        return $data;
-    }
-
     public function index()
     {
-        $data = $this->getUserStats();
+        $data = $this->beesavy->getUserStats($this->user_id);
         $this->__get_header($data);
         #Have columns: Month, Type, Status, Cash Back, Payment date
 
@@ -108,7 +81,7 @@ class Cashback extends Controller
 
     public function personal()
     {
-        $data = $this->getUserStats();
+        $data = $this->beesavy->getUserStats($this->user_id);
         $this->__get_header($data);
         $data['type'] = "personal";
 
@@ -136,7 +109,7 @@ class Cashback extends Controller
 
     public function referral()
     {
-        $data = $this->getUserStats();
+        $data = $this->beesavy->getUserStats($this->user_id);
         $this->__get_header($data);
         $data['type'] = "referral";
 

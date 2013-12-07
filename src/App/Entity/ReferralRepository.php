@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\NoResultException;
 
 class ReferralRepository extends EntityRepository
 {

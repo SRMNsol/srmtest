@@ -11,12 +11,15 @@
 class Beesavy
 {
     protected $db;
+    protected $container;
 
     public function __construct()
     {
         $ci = get_instance();
         $ci->load->database();
         $this->db = $ci->db;
+        $ci->load->helper('bridge');
+        $this->container = silex();
     }
 
     public function getUser($idOrEmail, $password, $noAuth = False)
@@ -68,35 +71,30 @@ class Beesavy
 
     public function getUserStats($id)
     {
-        $cashback = $this->getUserRawData($id, 'stats');
+        $em = $this->container['orm.em'];
+        $user = $em->getReference('App\Entity\User', $id);
+        $summary = $em->getRepository('App\Entity\Payable')->calculateUserSummary($user);
+        $cashback = $em->getRepository('App\Entity\Cashback')->calculateUserSummary($user);
+        $referral = $em->getRepository('App\Entity\Referral')->calculateUserSummary($user);
 
-        $total = $cashback['total'];
-        $total[0]['UserPending'] = sprintf("%01.2f",(float) $total[0]['pending']);
-        $total[0]['UserAvailable'] = sprintf("%01.2f",(float) $total[0]['available']);
-        $total[0]['pending'] = sprintf("%01.2f",(float) $total[0]['pending']+(float) $total[0]['referralpending']);
-        $total[0]['available'] = sprintf("%01.2f",(float) $total[0]['available']+(float) $total[0]['referralavailable']);
-        $total[0]['processing'] = sprintf("%01.2f",(float) $total[0]['referralprocessing']+(float) $total[0]['processing']);
-        $total[0]['paid'] = sprintf("%01.2f",(float) $total[0]['referralpaid']+(float) $total[0]['paid']);
-        $total[0]['referralpending'] = sprintf("%01.2f",(float) $total[0]['referralpending']);
-        $total[0]['referralavailable'] = sprintf("%01.2f",(float) $total[0]['referralavailable']);
-        $purchases = $cashback['purchases'];
-        $index= 0 ;
-        for ($i = 0; $i<count($cashback['reftransactions']); $i++) {
-            $sum = 0;
-            $sum += (float) $cashback['reftransactions'][$i]['referralpaid'];
-            $sum += (float) $cashback['reftransactions'][$i]['referralcommissiondirect'];
-            $sum += (float) $cashback['reftransactions'][$i]['referralcommissionindirect'];
-            if ($sum == 0) {
-                unset($cashback['reftransactions'][$i]);
-            }
-        }
+        $data['type'] = 'all';
 
-        return array_merge(array(
-            'type'  => 'all',
-            'total' => $total,
-        ), array(
-            'transactions'    => $purchases,
-            'reftransactions' => $cashback['reftransactions']
-        ));
+        $total = [];
+        $total[0]['pending'] = sprintf('%.2f', $summary['pending']);
+        $total[0]['available'] = sprintf('%.2f', $summary['available']);
+        $total[0]['processing'] = sprintf('%.2f', $summary['processing']);
+        $total[0]['paid'] = sprintf('%.2f', $summary['paid']);
+        $total[0]['UserPending'] = sprintf('%.2f', $cashback['pending']);
+        $total[0]['UserAvailable'] = sprintf('%.2f', $cashback['available']);
+        $total[0]['referralpending'] = sprintf('%.2f', $referral['pending']);
+        $total[0]['referralavailable'] = sprintf('%.2f', $referral['available']);
+        $total[0]['referralcountdirect'] = null;
+        $total[0]['referralcountindirect'] = null;
+
+        $data['total'] = $total;
+        $data['transactions'] = [];
+        $data['reftransactions'] = [];
+
+        return $data;
     }
 }

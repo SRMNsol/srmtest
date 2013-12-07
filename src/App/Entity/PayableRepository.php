@@ -3,7 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\EntityRepository;
-use Doctrine\Orm\NoResultException;
+use Doctrine\ORM\NoResultException;
 
 class PayableRepository extends EntityRepository
 {
