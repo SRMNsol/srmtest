@@ -4,6 +4,16 @@
  * The legacy CI app is located under the root of the new backend.
  */
 
+use Doctrine\Common\Collections\Collection;
+use App\Entity\Rate;
+use App\Entity\Subid;
+use Popshops\Merchant;
+use Popshops\Product;
+use Popshops\Deal;
+use Popshops\MerchantType;
+use Popshops\Brand;
+use Popshops\ProductSearchResult;
+
 /**
  * Silex container loader
  */
@@ -22,9 +32,9 @@ function silex()
 /**
  * Serialize merchants into array
  */
-function result_merchants(\Doctrine\Common\Collections\Collection $merchants)
+function result_merchants(Collection $merchants, Rate $rate, Subid $subid)
 {
-    return array_values($merchants->map(function (\Popshops\Merchant $merchant) {
+    return array_values($merchants->map(function (Merchant $merchant) use ($rate, $subid) {
         return [
             'id' => $merchant->getId(),
             'name' => $merchant->getName(),
@@ -32,12 +42,12 @@ function result_merchants(\Doctrine\Common\Collections\Collection $merchants)
             'logo_thumb' => $merchant->getLogoUrl(),
             'description' => $merchant->getDescription(),
             'description-abrv' => truncate_str($merchant->getDescription()),
-            'cashback_percent' => $merchant->getCommissionSharePercentage(50),
-            'cashback_flat' => $merchant->getCommissionShareFixed(50),
-            'cashback_text' => $merchant->getCommissionShareText(50),
+            'cashback_percent' => $merchant->getCommissionSharePercentage($rate->getLevel0() * 100),
+            'cashback_flat' => $merchant->getCommissionShareFixed($rate->getLevel0() * 100),
+            'cashback_text' => $merchant->getCommissionShareText($rate->getLevel0() * 100),
             'coupons' => $merchant->getDealCount(),
             'link' => '/transfer/store/' . $merchant->getId(),
-            'url' => $merchant->getUrl(),
+            'url' => $merchant->getTrackingUrl($subid),
         ];
     })->toArray());
 }
@@ -45,9 +55,9 @@ function result_merchants(\Doctrine\Common\Collections\Collection $merchants)
 /**
  * serialize merchant types to array
  */
-function result_merchant_types(Doctrine\Common\Collections\Collection $merchantTypes)
+function result_merchant_types(Collection $merchantTypes)
 {
-    return array_values($merchantTypes->map(function (Popshops\MerchantType $merchantType) {
+    return array_values($merchantTypes->map(function (MerchantType $merchantType) {
         return [
             'id' => $merchantType->getId(),
             'name' => $merchantType->getName(),
@@ -59,9 +69,9 @@ function result_merchant_types(Doctrine\Common\Collections\Collection $merchantT
 /**
  * Serialize deals into array
  */
-function result_deals(\Doctrine\Common\Collections\Collection $deals)
+function result_deals(Collection $deals, Rate $rate, Subid $subid)
 {
-    return array_values($deals->map(function (\Popshops\Deal $deal) {
+    return array_values($deals->map(function (Deal $deal) use ($rate, $subid) {
         $merchant = $deal->getMerchant();
 
         return [
@@ -71,8 +81,8 @@ function result_deals(\Doctrine\Common\Collections\Collection $deals)
             'name' => $deal->getName(),
             'code' => $deal->getCode(),
             'link' => '/transfer/coupon/' . $deal->getId() . '-' . ($merchant ? $merchant->getId() : 0),
-            'cashback_flat' => $merchant ? $merchant->getCommissionShareFixed(50) : null,
-            'cashback_percent' => $merchant ? $merchant->getCommissionSharePercentage(50) : null,
+            'cashback_flat' => $merchant ? $merchant->getCommissionShareFixed($rate->getLevel0() * 100) : null,
+            'cashback_percent' => $merchant ? $merchant->getCommissionSharePercentage($rate->getLevel0() * 100) : null,
             'logo' => $merchant ? $merchant->getLogoUrl() : null,
             'logo_thumb' => $merchant ? $merchant->getLogoUrl() : null,
             'merchant_name' => $merchant ? $merchant->getName() : null,
@@ -80,12 +90,12 @@ function result_deals(\Doctrine\Common\Collections\Collection $deals)
             'end_date' => $deal->getEndOn()->format('m/d/Y'),
             'restrictions' => $deal->getDescription(),
             'code_prefix' => $deal->getCode() ? 'Coupon: ' : '',
-            'cashback_text' => $merchant ? $merchant->getCommissionShareText(50) : null,
+            'cashback_text' => $merchant ? $merchant->getCommissionShareText($rate->getLevel0() * 100) : null,
             'linkstore' => '/stores/details/' . ($merchant ? $merchant->getId() : null),
             'name-abrv' => truncate_str($deal->getName()),
             'exp_date_short' => $deal->getEndOn() < new \DateTime('1 month') ? $deal->getEndOn()->diff(new DateTime())->format('Expires in %a days') : '',
             'expiration' => $deal->getEndOn()->format('M d, Y'),
-            'url' => $deal->getUrl(),
+            'url' => $deal->getTrackingUrl($subid),
         ];
     })->toArray());
 }
@@ -93,9 +103,9 @@ function result_deals(\Doctrine\Common\Collections\Collection $deals)
 /**
  * serialize products to array
  */
-function result_products(Doctrine\Common\Collections\Collection $products)
+function result_products(Collection $products)
 {
-    return array_values($products->map(function (\Popshops\Product $product) {
+    return array_values($products->map(function (Product $product) {
         return [
             'id' => $product->getId(),
             'groupID' => $product->getGroupId(),
@@ -121,9 +131,9 @@ function result_products(Doctrine\Common\Collections\Collection $products)
 /**
  * serialize brands to array
  */
-function result_brands(\Doctrine\Common\Collections\Collection $brands)
+function result_brands(Collection $brands)
 {
-    return array_values($brands->map(function (\Popshops\Brand $brand) {
+    return array_values($brands->map(function (Brand $brand) {
         return [
             'id' => $brand->getId(),
             'name' => $brand->getName(),
@@ -135,11 +145,11 @@ function result_brands(\Doctrine\Common\Collections\Collection $brands)
 /**
  * build comparison result
  */
-function comparison_result(\Popshops\ProductSearchResult $result)
+function comparison_result(ProductSearchResult $result, Rate $rate, Subid $subid)
 {
     $comparison = [];
     foreach ($result->getProducts() as $product) {
-        $deal = $result->getDeals()->filter(function (\Popshops\Deal $deal) use ($product) {
+        $deal = $result->getDeals()->filter(function (Deal $deal) use ($product) {
             return $deal->getMerchant() === $product->getMerchant();
         })->current();
 
@@ -157,8 +167,8 @@ function comparison_result(\Popshops\ProductSearchResult $result)
             'group_id' => $product->getGroupId(),
             'product_url' => $product->getUrl(),
             'retail_amount' => number_format($product->getRetailPrice(), 2),
-            'cashback_amount' => number_format($product->getMerchant() ? $product->getMerchant()->calculateCashbackAmount($product->getMerchantPrice(), 50) : 0, 2),
-            'final_amount' => number_format($product->getMerchant() ? $product->getMerchant()->calculateFinalPrice($product->getMerchantPrice(), 50) : 0, 2),
+            'cashback_amount' => number_format($product->calculateCommissionShareAmount($rate->getLevel0() * 100), 2),
+            'final_amount' => number_format($product->calculateFinalPrice($rate->getLevel0() * 100), 2),
             'cashback_amount_half' => 0,
             'final_amount_half' => $product->getMerchantPrice() - 0,
             'merchant_id' => $product->getMerchant() ? $product->getMerchant()->getId() : null,
@@ -174,7 +184,7 @@ function comparison_result(\Popshops\ProductSearchResult $result)
             'image' => $product->getLargeImageUrl(),
             'thumb' => $product->getLargeImageUrl(),
             'link' => '/transfer/product/' . ($product->getGroupId() ?: '0' . $product->getId()) . '-' . $product->getId(),
-            'url' => $product->getUrl(),
+            'url' => $product->getTrackingUrl($subid),
         ];
     }
 
