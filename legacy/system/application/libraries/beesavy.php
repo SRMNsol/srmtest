@@ -61,7 +61,19 @@ class Beesavy
 
     public function getUserReferrals($id)
     {
-        return $this->getUserRawData($id, 'referrals');
+        $user = $this->container['orm.em']->find('App\Entity\User', $id);
+        $criteria = Doctrine\Common\Collections\Criteria::create()
+            ->orderBy(['createdAt' => 'DESC']);
+
+        $referrals = $user->getReferredUsers()->matching($criteria)->map(function (App\Entity\User $user) {
+            return [
+                'ref_email' => $user->getEmail(),
+                'ref_created' => $user->getCreatedAt()->format('m/d/Y'),
+                'sort_date' => (int) $user->getCreatedAt()->format('U'),
+            ];
+        })->toArray();
+
+        return ['referrals' => $referrals];
     }
 
     public function getUserReport($id)
