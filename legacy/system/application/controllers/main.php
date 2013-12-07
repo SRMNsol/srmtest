@@ -26,10 +26,12 @@ class Main extends Controller
 
         $client = $this->container['popshops.client'];
         $catalogs = $this->container['popshops.catalog_keys'];
+        $rate = $this->container['orm.em']->getRepository('App\Entity\Rate')->getCurrentRate();
+        $subid = create_subid($this->user_id);
 
-        $data['stores'] = random_slice(result_merchants($client->findMerchants($catalogs['all_stores'])->getMerchants()), $num_stores);
-        $data['coupons'] = random_slice(result_deals($client->findDeals($catalogs['hot_coupons'])->getDeals()), 5);
-        $data['deals'] = random_slice(result_deals($client->findDeals($catalogs['hot_deals'])->getDeals()), 2);
+        $data['stores'] = random_slice(result_merchants($client->findMerchants($catalogs['all_stores'])->getMerchants(), $rate, $subid), $num_stores);
+        $data['coupons'] = random_slice(result_deals($client->findDeals($catalogs['hot_coupons'])->getDeals(), $rate, $subid), 5);
+        $data['deals'] = random_slice(result_deals($client->findDeals($catalogs['hot_deals'])->getDeals(), $rate, $subid), 2);
         $data['home'] = $home['vars'];
         $data['referral'] = $this->input->get('referral');
         if(!$data['referral']) {
@@ -46,8 +48,11 @@ class Main extends Controller
     {
         $client = $this->container['popshops.client'];
         $catalogs = $this->container['popshops.catalog_keys'];
+        $rate = $this->container['orm.em']->getRepository('App\Entity\Rate')->getCurrentRate();
+        $subid = create_subid($this->user_id);
+
         $data = $this->blocks->getBlocks();
-        $data['deals'] = random_slice(result_deals($client->findDeals($catalogs['hot_deals'])->getDeals()), 24);
+        $data['deals'] = random_slice(result_deals($client->findDeals($catalogs['hot_deals'])->getDeals(), $rate, $subid), 24);
         $this->parser->parse('/home/deal', $data);
     }
 

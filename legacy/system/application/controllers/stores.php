@@ -21,12 +21,14 @@ class Stores extends Controller
         //Run the search query
         $client = $this->container['popshops.client'];
         $catalogs = $this->container['popshops.catalog_keys'];
+        $rate = $this->container['orm.em']->getRepository('App\Entity\Rate')->getCurrentRate();
+        $subid = create_subid($this->user_id);
 
         $result = $client->findMerchants($catalogs['all_stores'], ['merchant_id' => $id]);
-        $store_search = random_slice(result_merchants($client->findMerchants($catalogs['all_stores'])->getMerchants()), 8);
-        $store = current(result_merchants($result->getMerchants()));
+        $store_search = random_slice(result_merchants($client->findMerchants($catalogs['all_stores'])->getMerchants(), $rate, $subid), 8);
+        $store = current(result_merchants($result->getMerchants(), $rate, $subid));
 
-        $store['coupons'] = result_deals($result->getDeals());
+        $store['coupons'] = result_deals($result->getDeals(), $rate, $subid);
         $store['restrictions'] = null;
 
         $top_stores = $store_search;
@@ -80,6 +82,8 @@ class Stores extends Controller
         //Run the search query
         $client = $this->container['popshops.client'];
         $catalogs = $this->container['popshops.catalog_keys'];
+        $rate = $this->container['orm.em']->getRepository('App\Entity\Rate')->getCurrentRate();
+        $subid = create_subid($this->user_id);
 
         $params = [];
         if ($category > 0) {
@@ -88,7 +92,7 @@ class Stores extends Controller
 
         $result = $client->findMerchants($catalogs['all_stores'], $params);
         $merchants = $result->getMerchants()->filterByNamePrefix($search === '0' ? '*' : $search);
-        $stores = result_merchants($merchants->slice($limit * ($page - 1), $limit));
+        $stores = result_merchants($merchants->slice($limit * ($page - 1), $limit), $rate, $subid);
         $merchantTypes = result_merchant_types($result->getMerchantTypes());
         $count = $merchants->getTotalCount();
 
@@ -133,10 +137,12 @@ class Stores extends Controller
         //Run the search query
         $client = $this->container['popshops.client'];
         $catalogs = $this->container['popshops.catalog_keys'];
+        $rate = $this->container['orm.em']->getRepository('App\Entity\Rate')->getCurrentRate();
+        $subid = create_subid($this->user_id);
 
         $result = $client->findMerchants($catalogs['all_stores']);
         $merchants = $result->getMerchants()->filterByNamePrefix($search === '0' ? '*' : $search);
-        $stores = result_merchants($merchants->slice($limit * ($page - 1), $limit));
+        $stores = result_merchants($merchants->slice($limit * ($page - 1), $limit), $rate, $subid);
 
         $count = count($stores)/3;
         $split = array_chunk($stores,$count);

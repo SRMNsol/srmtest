@@ -112,7 +112,7 @@ class Transfer extends Controller
         $data['errors'] = $this->code->get_errors($data['codes']);
         $data['type']= $type;
         $data['type_id'] = $id;
-            $data['referral'] = $this->db_session->userdata('referral');
+        $data['referral'] = $this->db_session->userdata('referral');
         $this->parser->parse('transfer/guest', $data);
     }
 
@@ -153,6 +153,8 @@ class Transfer extends Controller
     {
         $client = $this->container['popshops.client'];
         $catalogs = $this->container['popshops.catalog_keys'];
+        $rate = $this->container['orm.em']->getRepository('App\Entity\Rate')->getCurrentRate();
+        $subid = create_subid($this->user_id);
 
         list($productGroupId, $productId) = explode('-', $id);
         $params = [];
@@ -162,11 +164,18 @@ class Transfer extends Controller
             $params['product_group_id'] = $productGroupId;
         }
 
-        $product = current(array_filter(comparison_result($client->findProducts($catalogs['all_stores'], null, $params)), function ($item) use ($productId) {
-            if ($item['id'] == $productId) {
-                return $item;
+        $product = current(array_filter(
+            comparison_result(
+                $client->findProducts($catalogs['all_stores'], null, $params),
+                $rate,
+                $subid
+            ),
+            function ($item) use ($productId) {
+                if ($item['id'] == $productId) {
+                    return $item;
+                }
             }
-        }));
+        ));
 
         return $product;
     }
@@ -175,8 +184,16 @@ class Transfer extends Controller
     {
         $client = $this->container['popshops.client'];
         $catalogs = $this->container['popshops.catalog_keys'];
+        $rate = $this->container['orm.em']->getRepository('App\Entity\Rate')->getCurrentRate();
+        $subid = create_subid($this->user_id);
 
-        $merchant = current(result_merchants($client->findMerchants($catalogs['all_stores'], ['merchant_id' => $id])->getMerchants()));
+        $merchant = current(
+            result_merchants(
+                $client->findMerchants($catalogs['all_stores'], ['merchant_id' => $id])->getMerchants(),
+                $rate,
+                $subid
+            )
+        );
 
         return $merchant;
     }
@@ -185,14 +202,22 @@ class Transfer extends Controller
     {
         $client = $this->container['popshops.client'];
         $catalogs = $this->container['popshops.catalog_keys'];
+        $rate = $this->container['orm.em']->getRepository('App\Entity\Rate')->getCurrentRate();
+        $subid = create_subid($this->user_id);
 
         list($dealId, $merchantId) = explode('-', $id);
 
-        $deal = current(result_deals($client->findMerchants($catalogs['all_stores'], ['merchant_id' => $merchantId])->getDeals()->filter(function ($deal) use ($dealId) {
-            if ($deal->getId() == $dealId) {
-                return $deal;
-            }
-        })));
+        $deal = current(
+            result_deals(
+                $client->findMerchants($catalogs['all_stores'], ['merchant_id' => $merchantId])
+                    ->getDeals()
+                    ->filter(function ($deal) use ($dealId) {
+                        if ($deal->getId() == $dealId) {
+                            return $deal;
+                        }
+                    })
+            )
+        );
 
         return $deal;
     }

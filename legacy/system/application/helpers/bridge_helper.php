@@ -30,6 +30,17 @@ function silex()
 }
 
 /**
+ *
+ */
+function create_subid($userId)
+{
+    $subid = new Subid();
+    $subid->setUserId($userId);
+
+    return $subid;
+}
+
+/**
  * Serialize merchants into array
  */
 function result_merchants(Collection $merchants, Rate $rate, Subid $subid)

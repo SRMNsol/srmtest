@@ -56,6 +56,8 @@ class Coupon extends Controller
         //Run the search query
         $client = $this->container['popshops.client'];
         $catalogs = $this->container['popshops.catalog_keys'];
+        $rate = $this->container['orm.em']->getRepository('App\Entity\Rate')->getCurrentRate();
+        $subid = create_subid($this->user_id);
 
         $catalogKey = $catalogs['all_stores'];
         $params = [
@@ -78,9 +80,9 @@ class Coupon extends Controller
         }
 
         $result = $client->findDeals($catalogKey, $params);
-        $stores = result_merchants($result->getMerchants());
+        $stores = result_merchants($result->getMerchants(), $rate, $subid);
         $count = $result->getDeals()->getTotalCount();
-        $coupons = result_deals($result->getDeals());
+        $coupons = result_deals($result->getDeals(), $rate, $subid);
 
         foreach ($coupons as &$coupon) {
             if ($coupon['code']) {
