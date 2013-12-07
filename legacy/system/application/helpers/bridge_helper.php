@@ -30,12 +30,13 @@ function silex()
 }
 
 /**
- *
+ * Create subid
  */
 function create_subid($userId)
 {
     $subid = new Subid();
     $subid->setUserId($userId);
+    $subid->setTimestamp(new DateTime());
 
     return $subid;
 }
@@ -43,7 +44,7 @@ function create_subid($userId)
 /**
  * Serialize merchants into array
  */
-function result_merchants(Collection $merchants, Rate $rate, Subid $subid)
+function result_merchants(Collection $merchants, Rate $rate, Subid $subid = null)
 {
     return array_values($merchants->map(function (Merchant $merchant) use ($rate, $subid) {
         return [
@@ -58,7 +59,7 @@ function result_merchants(Collection $merchants, Rate $rate, Subid $subid)
             'cashback_text' => $merchant->getCommissionShareText($rate->getLevel0() * 100),
             'coupons' => $merchant->getDealCount(),
             'link' => '/transfer/store/' . $merchant->getId(),
-            'url' => $merchant->getTrackingUrl($subid),
+            'url' => isset($subid) ? $merchant->getTrackingUrl($subid) : $merchant->getUrl(),
         ];
     })->toArray());
 }
@@ -80,7 +81,7 @@ function result_merchant_types(Collection $merchantTypes)
 /**
  * Serialize deals into array
  */
-function result_deals(Collection $deals, Rate $rate, Subid $subid)
+function result_deals(Collection $deals, Rate $rate, Subid $subid = null)
 {
     return array_values($deals->map(function (Deal $deal) use ($rate, $subid) {
         $merchant = $deal->getMerchant();
@@ -106,7 +107,7 @@ function result_deals(Collection $deals, Rate $rate, Subid $subid)
             'name-abrv' => truncate_str($deal->getName()),
             'exp_date_short' => $deal->getEndOn() < new \DateTime('1 month') ? $deal->getEndOn()->diff(new DateTime())->format('Expires in %a days') : '',
             'expiration' => $deal->getEndOn()->format('M d, Y'),
-            'url' => $deal->getTrackingUrl($subid),
+            'url' => isset($subid) ? $deal->getTrackingUrl($subid) : $deal->getUrl(),
         ];
     })->toArray());
 }
@@ -156,7 +157,7 @@ function result_brands(Collection $brands)
 /**
  * build comparison result
  */
-function comparison_result(ProductSearchResult $result, Rate $rate, Subid $subid)
+function comparison_result(ProductSearchResult $result, Rate $rate, Subid $subid = null)
 {
     $comparison = [];
     foreach ($result->getProducts() as $product) {
@@ -195,7 +196,7 @@ function comparison_result(ProductSearchResult $result, Rate $rate, Subid $subid
             'image' => $product->getLargeImageUrl(),
             'thumb' => $product->getLargeImageUrl(),
             'link' => '/transfer/product/' . ($product->getGroupId() ?: '0' . $product->getId()) . '-' . $product->getId(),
-            'url' => $product->getTrackingUrl($subid),
+            'url' => isset($subid) ? $product->getTrackingUrl($subid) : $product->getUrl(),
         ];
     }
 

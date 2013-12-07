@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Popshops\Merchant as BaseMerchant;
 use Popshops\MerchantCommissionShareTrait;
+use Popshops\SubidTrait;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Form\FormInterface;
@@ -17,6 +18,7 @@ use Symfony\Component\Form\FormInterface;
 class Merchant extends BaseMerchant
 {
     use MerchantCommissionShareTrait;
+    use SubidTrait;
 
     /**
      * @Column(type="decimal", scale=2)

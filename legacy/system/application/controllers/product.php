@@ -59,7 +59,6 @@ class Product extends Controller
         $client = $this->container['popshops.client'];
         $catalogs = $this->container['popshops.catalog_keys'];
         $rate = $this->container['orm.em']->getRepository('App\Entity\Rate')->getCurrentRate();
-        $subid = create_subid($this->user_id);
 
         $result = $client->findProducts($catalogs['all_stores'], $search, [
             'brand_id' => $brand,
@@ -71,7 +70,7 @@ class Product extends Controller
 
         $brands = result_brands($result->getBrands());
         $categories = result_merchant_types($result->getMerchantTypes());
-        $products = result_products($result->getProducts(), $rate, $subid);
+        $products = result_products($result->getProducts(), $rate);
         $count = $result->getProducts()->getTotalCount();
 
         //Load the page
@@ -126,7 +125,6 @@ class Product extends Controller
         $client = $this->container['popshops.client'];
         $catalogs = $this->container['popshops.catalog_keys'];
         $rate = $this->container['orm.em']->getRepository('App\Entity\Rate')->getCurrentRate();
-        $subid = create_subid($this->user_id);
 
         $params = [
             'include_deals' => 1,
@@ -139,7 +137,7 @@ class Product extends Controller
             $params['product_group_id'] = $group_id;
         }
 
-        $results = comparison_result($client->findProducts($catalogs['all_stores'], null, $params), $rate, $subid);
+        $results = comparison_result($client->findProducts($catalogs['all_stores'], null, $params), $rate);
 
         $this->load->helper('url');
         //Load the page
@@ -167,7 +165,6 @@ class Product extends Controller
         $client = $this->container['popshops.client'];
         $catalogs = $this->container['popshops.catalog_keys'];
         $rate = $this->container['orm.em']->getRepository('App\Entity\Rate')->getCurrentRate();
-        $subid = create_subid($this->user_id);
 
         $result = $client->findProducts($catalogs['all_stores'], null, [
             'brand_id' => $brand,
@@ -178,9 +175,9 @@ class Product extends Controller
         ]);
 
         $brands = result_brands($result->getBrands());
-        $stores = random_slice(result_merchants($result->getMerchants(), $rate, $subid), 10);
+        $stores = random_slice(result_merchants($result->getMerchants(), $rate), 10);
         $categories = result_merchant_types($result->getMerchantTypes());
-        $products = result_products($result->getProducts(), $rate, $subid);
+        $products = result_products($result->getProducts(), $rate);
         $count = $result->getProducts()->getTotalCount();
 
         //Load the page

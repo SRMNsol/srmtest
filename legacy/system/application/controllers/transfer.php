@@ -215,7 +215,9 @@ class Transfer extends Controller
                         if ($deal->getId() == $dealId) {
                             return $deal;
                         }
-                    })
+                    }),
+                $rate,
+                $subid
             )
         );
 

@@ -38,6 +38,7 @@ popshops.classnames:
   entity.product: App\Entity\Product
   entity.transaction: App\Entity\Transaction
   entity.payment: App\Entity\Payment
+  entity.deal: App\Entity\Deal
 
 # dbal
 db.options:
