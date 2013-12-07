@@ -34,7 +34,7 @@
 		<div id="closeButton"><a href="/transfer/{type}/{type_id}/skip"></a></div>
 		<div id="title">
         <h1 class="twoLines">Sign Up to Save
-        <?php echo escape(isset($cashback_text) ? $cashback_text : $cashback_amount); ?> Cash Back<br />
+        <?php echo escape($cashback_text); ?> Cash Back<br />
         at <span class="bold"><?php echo escape(isset($merchant_name) ? $merchant_name : $name); ?></span></h1>
 		</div>
 		<div class="div"></div>

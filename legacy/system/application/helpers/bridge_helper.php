@@ -183,6 +183,7 @@ function comparison_result(ProductSearchResult $result, Rate $rate, Subid $subid
             'final_amount' => number_format($product->calculateFinalPrice($rate->getLevel0() * 100), 2),
             'cashback_amount_half' => 0,
             'final_amount_half' => $product->getMerchantPrice() - 0,
+            'cashback_text' => $product->getMerchant() ? $product->getMerchant()->getCommissionShareText($rate->getLevel0() * 100) : null,
             'merchant_id' => $product->getMerchant() ? $product->getMerchant()->getId() : null,
             'merchant_name' => $product->getMerchant() ? $product->getMerchant()->getName() : null,
             'merchant_image' => $product->getMerchant() ? $product->getMerchant()->getLogoUrl() : null,
