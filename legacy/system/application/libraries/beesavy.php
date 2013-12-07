@@ -88,8 +88,8 @@ class Beesavy
         $total[0]['UserAvailable'] = sprintf('%.2f', $cashback['available']);
         $total[0]['referralpending'] = sprintf('%.2f', $referral['pending']);
         $total[0]['referralavailable'] = sprintf('%.2f', $referral['available']);
-        $total[0]['referralcountdirect'] = null;
-        $total[0]['referralcountindirect'] = null;
+        $total[0]['referralcountdirect'] = $user->countDirectReferrals();
+        $total[0]['referralcountindirect'] = $user->countIndirectReferrals();
 
         $data['total'] = $total;
         $data['transactions'] = [];

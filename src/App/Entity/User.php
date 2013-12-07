@@ -1035,4 +1035,33 @@ class User
     {
         return $this->referredUsers;
     }
+
+    /**
+     * Count number of direct referrals (level 1)
+     *
+     * @return int
+     */
+    public function countDirectReferrals()
+    {
+        return $this->referredUsers->count();
+    }
+
+    /**
+     * Count number of indirect referrals (level 2-7)
+     */
+    public function countIndirectReferrals($depth = 7)
+    {
+        $users = $this->referredUsers->toArray();
+        $count = 0;
+        for ($i = 2; $i <= $depth; $i++) {
+            $next = [];
+            foreach ($users as $user) {
+                $count += $user->countDirectReferrals();
+                $next += $user->getReferredUsers()->toArray();
+            }
+            $users = $next;
+        }
+
+        return $count;
+    }
 }
