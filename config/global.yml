@@ -51,6 +51,8 @@ db.options:
 
 # orm
 orm.proxies_dir: %root_dir%/data/cache/doctrine
+orm.default_cache: apc
+orm.auto_generate_proxies: false
 orm.em.options:
   mappings:
     - type: annotation
