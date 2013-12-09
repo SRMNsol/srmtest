@@ -26,17 +26,25 @@ class ExtrabuxImportTransactionCommand extends Command
         $em = $app['orm.em'];
         $email = $input->getArgument('email');
 
+        $queryBuilder = $em->createQueryBuilder()
+            ->select('u')
+            ->from('App\Entity\User', 'u')
+        ;
+
         if (null !== $email) {
-            $users = $em->getRepository('App\Entity\User')->findByEmail($email);
-        } else {
-            $users = $em->getRepository('App\Entity\User')->findAll();
+            $queryBuilder
+                ->where('u.email = :email')
+                ->setParameter('email', $email)
+            ;
         }
+
+        $results = $queryBuilder->getQuery()->iterate();
 
         $table = $this->getHelperSet()->get('table');
         $table->setHeaders(['Date', 'Order #', 'Amount', 'Cashback', 'Tag']);
 
-        foreach ($users as $user) {
-            $user = $em->merge($user);
+        foreach ($results as $row) {
+            $user = $row[0];
 
             $output->writeln($user->getEmail());
             $data = json_decode($user->getExtrabuxRawData(), true);
