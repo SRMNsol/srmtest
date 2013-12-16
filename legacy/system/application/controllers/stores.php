@@ -89,7 +89,9 @@ class Stores extends Controller
         }
 
         $result = $client->findMerchants($catalogs['all_stores'], $params);
-        $merchants = $result->getMerchants()->filterByNamePrefix($search === '0' ? '*' : $search);
+        $merchants = $result->getMerchants()
+            ->sortByMerchantName()
+            ->filterByNamePrefix($search === '0' ? '*' : $search);
         $stores = result_merchants($merchants->slice($limit * ($page - 1), $limit), $rate);
         $merchantTypes = result_merchant_types($result->getMerchantTypes());
         $count = $merchants->getTotalCount();
@@ -138,7 +140,9 @@ class Stores extends Controller
         $rate = $this->container['orm.em']->getRepository('App\Entity\Rate')->getCurrentRate();
 
         $result = $client->findMerchants($catalogs['all_stores']);
-        $merchants = $result->getMerchants()->filterByNamePrefix($search === '0' ? '*' : $search);
+        $merchants = $result->getMerchants()
+            ->sortByMerchantName()
+            ->filterByNamePrefix($search === '0' ? '*' : $search);
         $stores = result_merchants($merchants->slice($limit * ($page - 1), $limit), $rate);
 
         $count = count($stores)/3;

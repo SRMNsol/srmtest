@@ -7,16 +7,16 @@
     "packages": [
         {
             "name": "dflydev/doctrine-orm-service-provider",
-            "version": "v1.0.3",
+            "version": "v1.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dflydev/dflydev-doctrine-orm-service-provider.git",
-                "reference": "529f5f2e9de4de47d01e89ea4935bf622bd038db"
+                "reference": "cbb2e4022ad46675d7406398c024191c6f3539f0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dflydev/dflydev-doctrine-orm-service-provider/zipball/529f5f2e9de4de47d01e89ea4935bf622bd038db",
-                "reference": "529f5f2e9de4de47d01e89ea4935bf622bd038db",
+                "url": "https://api.github.com/repos/dflydev/dflydev-doctrine-orm-service-provider/zipball/cbb2e4022ad46675d7406398c024191c6f3539f0",
+                "reference": "cbb2e4022ad46675d7406398c024191c6f3539f0",
                 "shasum": ""
             },
             "require": {
@@ -69,7 +69,7 @@
                 "pimple",
                 "silex"
             ],
-            "time": "2013-10-25 14:49:03"
+            "time": "2013-12-11 22:49:54"
         },
         {
             "name": "doblebjp/popshops-api",
@@ -77,12 +77,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:doblebjp/popshops-api.git",
-                "reference": "28098b53e307e48598bb6011b881e713746cd353"
+                "reference": "190cdcb08d7301b67a638a689c965a96a25c2a82"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doblebjp/popshops-api/zipball/28098b53e307e48598bb6011b881e713746cd353",
-                "reference": "28098b53e307e48598bb6011b881e713746cd353",
+                "url": "https://api.github.com/repos/doblebjp/popshops-api/zipball/190cdcb08d7301b67a638a689c965a96a25c2a82",
+                "reference": "190cdcb08d7301b67a638a689c965a96a25c2a82",
                 "shasum": ""
             },
             "require": {
@@ -128,7 +128,7 @@
                 "source": "https://github.com/doblebjp/popshops-api/tree/master",
                 "issues": "https://github.com/doblebjp/popshops-api/issues"
             },
-            "time": "2013-12-07 15:49:52"
+            "time": "2013-12-16 13:00:17"
         },
         {
             "name": "doctrine/annotations",
