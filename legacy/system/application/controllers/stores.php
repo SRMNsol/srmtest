@@ -89,9 +89,15 @@ class Stores extends Controller
         }
 
         $result = $client->findMerchants($catalogs['all_stores'], $params);
-        $merchants = $result->getMerchants()
-            ->sortByMerchantName()
-            ->filterByNamePrefix($search === '0' ? '*' : $search);
+        $merchants = $result->getMerchants()->sortByMerchantName();
+        $allStores = array_map(function ($merchant) {
+            return [
+                'id' => $merchant->getId(),
+                'name' => $merchant->getName(),
+            ];
+        }, $merchants->toArray());
+
+        $merchants = $merchants->filterByNamePrefix($search === '0' ? '*' : $search);
         $stores = result_merchants($merchants->slice($limit * ($page - 1), $limit), $rate);
         $merchantTypes = result_merchant_types($result->getMerchantTypes());
         $count = $merchants->getTotalCount();
@@ -112,7 +118,7 @@ class Stores extends Controller
             $end = $count;
         $data['end']=$end;
         $data['stores']=$stores;
-        $data['store_list']=$stores;
+        $data['store_list'] = $allStores;
         $data['base_url'] = "/stores/search?q=$search";
         $data['query_string']=array('search'=>$search,
             'page'=>$page,'sort'=>$sort);
