@@ -40,7 +40,7 @@ class Merchant extends BaseMerchant
         return $this;
     }
 
-    public function getCommissionShareText($sharePct = 100, $currency = '$')
+    public function getCommissionShareText($sharePct = 100, $currency = '$', $rangeTemplate = ':min-:max')
     {
         $text = number_format($this->commission * ($sharePct / 100), 2);
         $textMax = number_format($this->commissionMax * ($sharePct / 100), 2);
@@ -52,21 +52,37 @@ class Merchant extends BaseMerchant
         switch ($this->commissionType) {
             case self::COMMISSION_TYPE_FIXED :
                 $text = preg_replace('/\.00$/', '', $text);
+
                 return "$currency$text";
+                break;
             case self::COMMISSION_TYPE_PERCENTAGE :
                 $text = preg_replace('/0+$/', '', $text);
                 $text = preg_replace('/\.$/', '', $text);
+
                 return "$text%";
+                break;
             case self::COMMISSION_TYPE_FIXED_VAR :
                 $text = preg_replace('/\.00$/', '', $text);
                 $textMax = preg_replace('/\.00$/', '', $textMax);
-                return "$currency$text-$currency$textMax";
+
+                $template = $rangeTemplate;
+                $template = str_replace(':min', "$currency$text", $template);
+                $template = str_replace(':max', "$currency$textMax", $template);
+
+                return $template;
+                break;
             case self::COMMISSION_TYPE_PERCENTAGE_VAR :
                 $text = preg_replace('/0+$/', '', $text);
                 $text = preg_replace('/\.$/', '', $text);
                 $textMax = preg_replace('/0+$/', '', $textMax);
                 $textMax = preg_replace('/\.$/', '', $textMax);
-                return "$text%-$textMax%";
+
+                $template = $rangeTemplate;
+                $template = str_replace(':min', "$text%", $template);
+                $template = str_replace(':max', "$textMax%", $template);
+
+                return $template;
+                break;
         }
 
         return null;

@@ -1,0 +1,12 @@
+#sitemap {
+	PADDING-BOTTOM: 10px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; PADDING-TOP: 10px
+}
+#sitemap UL.sitemap-col {
+	WIDTH: 33%; FLOAT: left
+}
+#sitemap UL.sitemap-col LI {
+	PADDING-BOTTOM: 0px; PADDING-LEFT: 50px; PADDING-RIGHT: 0px; PADDING-TOP: 5px
+}
+#sitemap UL.sitemap-col A {
+	COLOR: #e96d08; FONT-SIZE: 12px
+}

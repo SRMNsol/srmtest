@@ -1,0 +1,724 @@
+
+.slide-container{
+float:left;
+width:922px;	
+height:336px;
+border:3px solid #f5a81a;
+background:url('../images/SlideBg.png') repeat-x;
+margin-top:0px;
+
+}
+
+#CenterBox{
+height:390px;
+border:0px solid #00F;
+width:250px;
+float:left;
+margin-left:5px;	
+margin-top:5px;
+}
+
+#WelcomeUserBg{
+height:135px;
+border:0px solid #00F;
+width:250px;
+float:left;
+margin-left:0px;	
+margin-top:0px;
+
+}
+
+#WelcomeUserBg p{
+font-size:12pt;
+margin-top:15px;
+margin-left:10px;
+color:#fff;	
+}
+
+#Groupon{
+height:250px;
+border:0px solid #00F;
+width:250px;
+float:left;
+margin-left:0px;	
+margin-top:3px;
+}
+
+.slide{
+clear:both;	
+}
+
+.slide-pic {
+    width:514px;
+    float:left;
+	
+}
+
+.slide-text {
+    width:350px;
+    float:right;
+	padding:15px;
+	margin-top:45px;
+	height:150px;
+	margin-right:10px;
+	border:0px solid #0F0;
+
+}
+
+.slide-text h1
+{
+	    width:350px;
+	font-size:2.2em;
+		font-weight:bold;
+		float:left;	
+			border:0px solid #0F0;
+	}
+	
+.slide-text h3{
+	    width:350px;
+margin-top:12px;
+font-size:1.7em;
+float:left;	
+	border:0px solid #0F0;
+}
+
+.slide-link {
+    float:right;
+    width:280px;
+	margin-right:50px;
+	height:45px;
+	margin-top:20px;
+	border:0px solid #C00;
+}
+
+.slide-LearnMore
+{
+	float:left;
+color:#e96d08;
+text-decoration:underline;
+width:120px;
+margin-top:5px;
+font-size: 1.4em;	
+
+}
+
+.or
+{
+float:left;
+width:20px;
+font-size:2em;
+font-style:italic;
+margin-top:12px;
+}
+
+#slide-signup
+{
+	float:left;
+	padding:2px;
+	margin-left:10px;
+border:0px solid #F00;
+height:40px;
+
+}
+
+
+
+#JoinFree {padding-left:20px;}
+.JoinFreeForm 
+{
+border:0px solid #03F;width:100%;margin-top:10px;
+}
+
+.JoinFreeForm h2
+{
+font-size:1.5em;font-weight:bold;
+}
+
+/* -----------------------------------*/
+/* >> ------- CODA Slider -------- << */
+/* -----------------------------------*/
+
+/* Most common stuff you'll need to change */
+
+.coda-slider-wrapper { margin-top0:0px;margin-bottom:5px; }
+.coda-slider { background: #;  }
+
+/* Use this to keep the slider content contained in a box even when JavaScript is disabled */
+.coda-slider-no-js .coda-slider { padding-right: 20px }
+
+/* Change the width of the entire slider (without dynamic arrows) */
+.coda-slider, .coda-slider .panel { width: 928px; height: 342px; background:url('../images/slide-background.png') no-repeat; } 
+
+/* Change margin and width of the slider (with dynamic arrows) */
+.coda-slider-wrapper.arrows .coda-slider, .coda-slider-wrapper.arrows .coda-slider .panel { width: 980px }
+.coda-slider-wrapper.arrows .coda-slider { margin: 0 10px }
+
+/* Arrow styling */
+.coda-nav-left a, .coda-nav-right a { background: #000; color: #fff; padding: 5px; width: 110px;}
+
+/* Tab nav */
+.coda-nav ul li a.current { 
+    border-right:none; 
+    font-weight:bold; 
+
+    background: #f5a81a url('../images/coda-tab.png') repeat-x; 
+    color:#000; 
+	
+}
+
+/* Panel padding */
+.coda-slider .panel-wrapper { padding: 0px }
+
+/* Preloader */
+.coda-slider p.loading { display:none; }
+
+/* Don't change anything below here unless you know what you're doing */
+
+/* Tabbed nav */
+
+.coda-nav ul li { display: inline; }
+.coda-nav ul li a {letter-spacing:-1px;  color: #3f3f3f; display: block; float: left; margin-right: 1px; width:154px; text-align:center; font-size:1.6em; height:35px; line-height:35px; text-decoration: none;}
+
+/* Miscellaneous */
+.coda-slider-wrapper { clear: both; overflow: auto }
+.coda-slider { float: left; overflow: hidden; position: relative }
+.coda-slider .panel { display: block; float: left }
+.coda-slider .panel-container { position: relative }
+.coda-nav-left, .coda-nav-right { float: left }
+.coda-nav-left a, .coda-nav-right a { display: block; text-align: center; text-decoration: none }
+
+
+
+#hot-products-container{
+    background:url('../images/home_productBg.gif') no-repeat top left;
+    float:left; 
+    height:320px;
+	width:307px;
+	margin-left:0px;
+	margin-top:5px;
+	border:0px solid #C00;
+}
+
+#top-stores-container{
+    background:url('../images/home_productBg.gif') no-repeat top left;
+    float:left; 
+    height:320px;
+	width:307px;
+	margin-left:5px;
+	margin-top:5px;
+	border:0px solid #00F;
+}
+
+
+#hot-coupons-container{
+    background:url('../images/home_productBg.gif') no-repeat top left;
+    float:right; 
+    height:320px;
+	width:307px;
+	margin-top:5px;
+	margin-left:2px;
+	border:0px solid #C00;
+	
+}
+
+#daily-deals-SIcontainer{
+    background:url('../images/Daily_DetailsSIBg.jpg') no-repeat top left;
+    float:left; 
+    height:390px;
+	width:360px;
+	margin-left:5px;
+	margin-top:5px;
+	border:0px solid #C00;
+}
+
+#accounts-summary-container{
+    float:left; 
+    height:390px;
+	width:298px;
+	margin-left:10px;
+	margin-top:0px;
+	border:0px solid #00F;
+}
+
+
+
+#welcome-top-stores-container{
+    background:url('../images/welcome_TSBg.gif') no-repeat top left;
+    float:left; 
+    height:320px;
+	width:616px;
+	margin-left:5px;
+	margin-top:5px;
+	border:0px solid #00F;
+}
+
+.HomeDailyDeals {
+    margin:0px 10px 2px 9px;
+    padding:0px 0px;
+	border:	0px solid #00F;
+}
+
+.HomeDailyDeals .savings-container{
+	posistion:absolute;
+	background:url("../images/star.gif") no-repeat;
+	width:65px;
+	height:65px;
+	float:right;
+    padding:0px 0px;
+	margin-right:10px;
+	border:0px solid #00F;
+    text-align:center;
+}
+
+.HomeDailyDeals .btnCouponCode {
+    background:url("/images/BtnOrangeBg.gif") top left repeat-x;
+    border-radius: 8px;
+    border:1px solid #eda92e;
+    float:right;
+    padding:0px 10px;
+}
+
+.HomeDailyDeals .expdate{
+    font-size: 12px;
+    color:#e96d08;
+    float:left;
+    margin:6px 0px 0px;
+}
+
+.HomeDailyDeals .savings-container .percent {
+	FONT-SIZE: 18px; FONT-WEIGHT: bold; PADDING-TOP: 15px;
+}
+.HomeDailyDeals .savings-container .savings {
+	FONT-SIZE: 12px;
+}
+
+.HomeDailyDeals .savings-container2{
+	posistion:absolute;
+	background:url("../images/star.gif") no-repeat;
+	width:65px;
+	height:65px;
+	float:right;
+    padding:0px 5px;
+	border:0px solid #00F;
+}
+
+
+.HomeDailyDeals .savings-container2 .percent {
+	FONT-SIZE: 18px; FONT-WEIGHT: bold; PADDING-TOP: 15px; margin-left:10px;
+}
+.HomeDailyDeals .savings-container2 .savings {
+	FONT-SIZE: 12px;  margin-left:17px;
+}
+
+
+
+.Homecoupon {
+    border: 1px dotted #CCC;
+    margin:0px 10px 2px 9px;
+    padding:0px 0px;
+}
+
+.Homecoupon:hover { border:1px dotted #999; }
+
+.couponList .desc {
+    color:#515151;
+    float:left; 
+    font-size:1.1em;
+    margin:10px 5px 5px 5px;
+    width:220px;
+	border:0px solid #03F;
+	padding-bottom:8px;
+}
+.desc {
+    color:#515151;
+    float:right; 
+    font-size:1.1em;
+    margin:10px 2px 5px 5px;
+    width:167px;
+	border:0px solid #0C0;
+	font-weight:bold;
+}
+
+.desc a.code{
+    color:#000;
+}
+
+.ListPrice{
+font-size:1.1em;float:left;width:140px;margin-top:1px;	
+}
+
+.ListPrice a.code{
+    color:#000;
+}
+
+.SalePrice a.code{
+    color:#b2030a;
+}
+
+.SalePrice {
+	font-size:1.4em;float:left;width:180px;margin-top:5px;color:#b2030a;font-weight:bold;border:0px solid #0C0;
+}
+
+.SaleBackPrice {
+	font-size:1.1em;float:left;width:140px;margin-top:2px;color:#000;font-weight:bold;
+}
+
+.SaleBackPrice2 {
+	font-size:1.2em;float:left;width:140px;margin-top:17px;margin-left:-20px;color:#000;font-weight:normal;
+}
+.DealsText {
+    color:#515151;
+    float:left; 
+    font-size:12px;
+    margin:10px 12px 5px 5px;
+    width:135px;
+	border:0px solid #0C0;
+}
+
+.DealsText .urgentExpire                    {color:#E96D08;}
+
+.home-daily-deals .DealsCt                  {float:left;width:210px;}
+.home-daily-deals .DealsCt .DealsLogo       {float:left;margin:10px;width:100px;}
+.home-daily-deals .DealsCt .DealsText       {float:left;width:70px;}
+.HomeDailyDeals .DealsCt .expires           {font-size:10px;float:none;width:120px;margin:10px 0px 0px;}
+
+.topstoreDesc {
+    float:left; 
+	font-size:1.1em;
+ 	font-weight:bold;
+    margin:10px 5px 5px 5px;
+	color:#505457;
+	border:1px solid #000;
+}
+
+.descimg {
+    float:left; 
+    font-size:1.1em;
+	width:90px;
+	margin:10px 5px 5px 5px;
+	border:0px solid #0C0;
+}
+
+.DealsProduct {
+    float:left; 
+    font-size:1.1em;
+	width:90px;
+	margin:5px 5px 5px 5px;
+	border:0px solid #0C0;
+	height:100px;
+}
+
+.DealsProductUser {
+    float:left; 
+    font-size:1.1em;
+	width:90px;
+	margin:5px 5px 5px 5px;
+	border:0px solid #0C0;
+	height:80px;
+}
+
+.DealsLogo {
+    float:left; 
+    font-size:1.1em;
+	width:75px;
+	margin:10px 30px 5px 5px;
+	border:0px solid #0C0;
+}
+
+#storesJcpenny {
+	float:left;
+    font-size:1.1em;
+	width:255px;
+}
+
+#stores_dsw {
+	float:left;
+    font-size:1.1em;
+	width:255px;
+}
+#storesJcpenny-container {
+	float:left;
+    font-size:1.1em;
+	width:260px;
+	padding:15px 15px;
+}
+
+#stores_dsw-container {
+	float:left;
+    font-size:1.1em;
+	width:260px;
+	padding:15px 15px;
+}
+
+.h1
+{
+	font-size:2em;
+	}
+	
+
+.title {
+    color:#e96d08;
+    font-size:1.15em;
+    margin-bottom:2px;
+    text-decoration:underline;
+}
+
+.ProductName{
+font-size:1.2em;border:0px solid #00F;margin-top:5px;float:left;width:260px;margin-left:9px;text-decoration:underline;	
+}
+
+#hot-products {
+	float:left;
+    height:20px;
+	margin:10px 10px;
+	font-size:2em;
+}
+#hot-coupons {
+	float:left;
+    height:10px;
+	margin:10px 10px;
+	font-size:2em;
+	border:0px solid #00F;
+}
+#top-stores {
+	float:left;
+    height:15px;
+	width:100px;;
+	margin:10px 10px;
+	font-size:2em;
+	border:0px solid #00F;
+}
+
+#welcome-top-stores-container .store {
+
+    background-repeat: no-repeat;
+    float:left;
+    height: 70px;
+    text-align:center;
+	margin-top:10px;
+	margin-left:10px;
+    width: 137px;
+	
+
+}
+
+#welcome-top-stores-container .logo {
+    float:left;
+    text-align:center;
+	margin-top:7px;
+	margin-bottom:5px;
+	margin-left:0px;
+    width: 137px;
+	height:35px;
+	border:0px solid #00F;
+}
+
+#top-stores-container .store {
+
+    background-repeat: no-repeat;
+    float:left;
+    height: 70px;
+    text-align:center;
+	margin-top:10px;
+	margin-left:10px;
+    width: 137px;
+}
+
+#top-stores-container .logo {
+    float:left;
+    text-align:center;
+	margin-top:7px;
+	margin-left:0px;
+    width: 137px;
+	height:40px;
+}
+
+
+.store .cashback a{
+color:#000;
+font-size:1.4em;
+font-weight:bold;
+margin-left:5px;
+text-align:center;
+}
+
+
+.seeAll {
+    height:20px;
+    text-align:right;
+	 margin-top:15px;
+    margin-right:10px;
+	width:120px;;
+	float:right;
+	border:0px solid #03F;
+}
+
+.seeAll a {
+    color:#252525;
+    text-decoration:underline;
+    font-size:1.2em;
+}
+
+.seeAll a:hover {
+    color:#e96d08;
+    text-decoration:none;
+}
+
+#ftr {
+	clear:both;
+	color: #7d7d7d;
+	padding:10px;
+	width:930px;
+	margin:0 auto;
+}
+
+#ftr #disclaimer {
+	font-size:1.1em;
+	line-height:1.3em;
+	clear:both;
+	margin-top:10px;
+}
+
+#ftr #links {
+	font-size:1.2em;
+	float:left;
+}
+
+#ftr a,
+#ftr a:visited {
+	color: #7d7d7d;
+	text-decoration:underline;
+}
+
+#ftr a:hover { text-decoration:none; }
+
+
+#Friend_Container{
+height:500px;
+border:0px solid #00F;
+width:500px;
+float:left;
+margin-left:400px;
+margin-top:130px;
+}
+
+#Friend_Bg
+{
+height:500px;
+width:450px;
+border:0px solid #f6af24;
+float:left;margin-top:-5px;
+-moz-border-radius: 10px 10px 10px 10px;
+-webkit-border-radius: 0px 0px 10px 10px;border-top-right-radius:0px;
+float:left;
+margin-left:25px;	
+margin-top:20px;
+}
+
+
+			
+			
+.Friend_title1 {
+	color:#000;
+	display:block;
+	font-size:11.5pt;
+	font-weight:bold;
+	padding:8px 0 8px 2px;
+	border:0px solid #0F0;
+	text-align:center;
+	}
+	
+	
+	.Friend_innerbox
+	{
+height:304px;
+	width:364px;
+	float:left;
+border:2px solid #f6af24;float:left;margin-top:-5px;
+-moz-border-radius: 10px 10px 10px 10px;
+ -webkit-border-radius: 0px 0px 10px 10px;border-top-right-radius:0px;
+float:left;
+margin-left:35px;	
+margin-top:10px;
+background:url("../images/friend_bg.jpg");
+}
+
+#Friend_topbox
+{
+	float:left;
+ width:445px;
+ height:473px;
+border:2px solid #f6af24;
+background:url("../images/friend_bg.jpg");
+
+	}
+
+#topbox_image
+{
+float:left;
+border:0px solid red;
+margin-top:10px;
+}
+
+#Friend_Bg #textbg
+{
+	float:left;
+	width:311px;
+	margin-top:10px;
+	background:url("../images/textbg.gif");
+	border:0px solid red;
+	height:125px;
+	font-size:1.2em;
+	}
+#Friend_Bg #textbg p
+{
+	float:left;
+	padding:20px 10px 10px 10px;
+	font-size:1.2em;
+	font-weight:bold;
+	text-align:center;
+	border:0px solid #900;
+	}
+
+#Friend_Bg #textbg font.more
+{
+	float:right;
+	
+	font-size:1.2em;
+	font-weight:bold;
+	color:#F00;
+	}
+	
+#Friend_Bg .logo{
+	float:left;border:0px solid #33F;margin-left:40px;margin-top:10px;	
+}
+#Friend_Bg .LogoText{
+	margin-left:130px;margin-top:17px;height:30px;border:0px solid #33F;font-size:1.5em;
+	}
+
+#Friend_Bg .ChainText{
+	margin-left:150px;margin-top:17px;height:30px;border:0px solid #33F;
+}
+
+#Friend_Bg .ReferralLink input[type="text"]{
+		width:180px;
+	height:1.5em;
+	border:1px solid #a2a2a2;
+	background: #E8E8E8 url('../images/login-input-bg-large.gif') repeat-x;
+}
+
+#Friend_Bg .ReferralLink{
+margin-left:50px;margin-top:20px;border:0px solid #000;height:50px;font-size:1.2em;
+}
+
+#Friend_Bg .EmailLink{
+margin-left:50px;margin-top:5px;border:0px solid #000;height:50px;font-size:1.4em;font-weight:bold;Text-decoration:underline;
+}
+
+#Friend_Bg .FacebookLink{
+margin-left:50px;margin-top:5px;border:0px solid #000;height:50px;font-size:1.4em;font-weight:bold;Text-decoration:underline;
+}
+
+#Friend_Bg .TwitterLink{
+margin-left:50px;margin-top:5px;border:0px solid #000;height:50px;font-size:1.4em;font-weight:bold;Text-decoration:underline;
+}

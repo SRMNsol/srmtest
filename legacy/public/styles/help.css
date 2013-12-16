@@ -1,0 +1,343 @@
+#results .title{
+font-size:2.0em;
+color:#e96d08;	
+font-weight:bold;
+float:left;
+margin-top:10px;
+margin-left:10px;
+text-decoration:none;
+border:0px solid #000;
+width:100%;
+}
+
+#results a{
+color:#e96d08;	
+font-weight:bold;
+text-decoration:underline;
+}
+/* -----------------------------------*/
+/* ------------>>> ABOUT US <<<------------*/
+/* -----------------------------------*/
+.about{
+width:700px;
+}
+
+.about h2:first-child,
+.about p:first-child {
+	margin-top:0;
+	padding-top:20px;
+}
+
+.about h2 {
+	font-size:1.6em;
+	font-weight:bold;
+	color:#e96d08;
+	margin:10px 0 5px 20px;
+	padding:10px 0 0 2px;
+	border:0px solid #03F;	
+	width:600px;
+}
+
+.about a {
+	color:#e96d08;
+	text-decoration:underline;
+	
+}
+
+.about a:hover {
+	text-decoration:none;
+}
+
+.about p {
+	margin-left:23px;
+	padding-bottom:20px;
+	font-size:1.5em;
+	line-height:1.4em;
+	color:#252525;
+	border:0px solid #03F;	
+	width:95%;
+
+	
+}
+
+.help p{
+		margin-left:10px;
+	padding-bottom:20px;
+	font-size:1.5em;
+	line-height:1.4em;
+	color:#252525;
+	border:0px solid #03F;	
+	float:left;
+	width:680px;
+}
+
+
+.help h2 {
+	font-size:1.6em;
+	font-weight:bold;
+	color:#e96d08;
+	margin-left:10px;
+	margin-bottom:10px;
+	border:0px solid #03F;	
+	width:700px;
+	float:left;
+}
+
+.help ol {
+	color:#252525;
+	font-size:1.4em;
+	line-height:1.4em;
+	width:700px;
+	margin-left: 40px;
+
+}
+
+.help ul {
+	color:#252525;
+	font-size:1.4em;
+	line-height:1.4em;
+	margin-left: 40px;
+	
+}
+
+.help li {
+	padding:0px 0px 10px 0px;
+	border:0px solid #030;
+	float:left;
+	text-align:justify;	
+	width:650px;
+}
+
+
+/* -----------------------------------*/
+/* --->>> TERMS OF SERVICE <<<--------*/
+/* -----------------------------------*/
+
+.terms p:first-child {
+	padding-top:20px;
+}
+
+.terms p {
+	color:#252525;
+	font-size:1.5em;
+	line-height:1.4em;
+	padding:10px 0 10px 23px;
+	width:670px;
+	text-align:justify;
+}
+
+.terms h2 {
+	color:#e96d08;
+	font-weight:bold;
+	font-size:1.3em;
+	margin:10px 0 0 23px;
+	text-transform:uppercase;
+	width:700px;
+}
+
+.terms ol {
+	color:#252525;
+	font-size:1.3em;
+	line-height:1.4em;
+	padding:10px 0 10px 23px;
+	width:700px;
+	margin-left: 40px;
+}
+
+.terms ul {
+	color:#252525;
+	font-size:1.3em;
+	line-height:1.4em;
+	padding:10px 0 10px 23px;
+	width:700px;
+	margin-left: 40px;
+}
+
+.terms li {
+	padding:0px 23px 10px 0px;
+}
+
+/* -----------------------------------*/
+/* ------------>>> FAQ <<<------------*/
+/* -----------------------------------*/
+.faq li {
+	font-size:1.4em;
+	margin-left:35px;
+	padding:3px;
+
+}
+
+.faq ul li a {
+	color:#e96d08;
+	text-decoration:underline;
+
+}
+
+.faq ul li a:hover { text-decoration:none; }
+
+.faq h2 {
+	
+	color:#252525;
+	font-size:1.7em;
+	font-weight:bold;
+	margin:25px 0 0px 20px;
+	padding:10px 0 10px 2px;
+		float:left;
+	width:670px;
+}
+.faq h2.topic {
+
+	font-size:1.4em;
+	font-weight:bold;
+	margin:8px 0 5px 20px;
+	padding:15px 0 0 2px;
+		float:left;
+	width:670px;
+}
+
+.faq h2.topic:first-child {
+	border:none;
+	margin-top:0;
+	padding-top:20px;
+		float:left;
+	width:670px;
+}
+
+.faq .returnToTop {
+	font-size:1.1em;
+	text-align:right;
+	padding-bottom:5px;
+	float:left;
+	width:700px;
+}
+
+.faq .returnToTop a {
+	color:#999;
+	text-decoration:underline;
+}
+
+.faq .returnToTop a:hover {
+	color:#e96d08;
+	text-decoration:underline;
+}
+
+.faq h3 {
+	border-top:1px dotted #999;
+	color:#252525;
+	font-size:1.4em;
+	font-weight:bold;
+	margin-left:37px;
+	padding:15px 5px 0px 0px;
+	float:left;
+	width:670px;
+}
+
+.faq p {
+	font-size:1.2em;
+	line-height:1.7em;
+	padding:10px 20px 10px 37px;
+	float:left;
+	width:670px;
+}
+
+.faq p a {
+	color:#e96d08;
+	text-decoration:underline;
+
+	width:670px;
+}
+
+.faq p a:hover { text-decoration:none; }
+
+.faq-list {
+	margin-left:40px;
+}
+
+.faq-list li {
+	list-style: disc outside;
+	margin-left:10px;
+}
+
+.contact #wrap {
+	BORDER-BOTTOM: #ccc 1px solid; BORDER-LEFT: #ccc 1px solid; PADDING-BOTTOM: 15px; MARGIN: 25px 100px; PADDING-LEFT: 15px; PADDING-RIGHT: 15px; BACKGROUND: #eee; BORDER-TOP: #ccc 1px solid; BORDER-RIGHT: #ccc 1px solid; PADDING-TOP: 15px; -moz-border-radius: 4px; -webkit-border-radius: 4px;float:left;width:500px;
+}
+
+.contact LABEL {
+	TEXT-ALIGN: right; COLOR: #252525; FONT-SIZE: 1.2em; FONT-WEIGHT: bold
+}
+.contact DD {
+	width:340px;
+	
+	 
+	 
+}
+.contact INPUT {
+	WIDTH: 196px; MARGIN-BOTTOM: 0px; CLEAR: right
+}
+.contact SELECT {
+	WIDTH: 196px; MARGIN-BOTTOM: 0px; CLEAR: right
+}
+.contact TEXTAREA {
+	WIDTH: 150px; MARGIN-BOTTOM: 0px; 
+
+}
+.contact TEXTAREA {
+	WIDTH: 325px; HEIGHT: 100px
+}
+.contact #purchase_subtotal {
+	WIDTH: 50px
+}
+.contact DT {
+	TEXT-ALIGN: right; WIDTH: 150px; FONT-SIZE: 1.1em; MARGIN-RIGHT: 10px; float:left;
+	
+	
+}
+.contact #name-label LABEL {
+	FONT-WEIGHT: normal
+}
+.contact #month-element {
+	WIDTH: 130px; FLOAT: left
+}
+#wrap #name-element input,
+#wrap #email-element input,
+#wrap #subject-element input
+{
+	width:210px;
+	padding:4px 0 4px 13px;
+	margin-bottom:5px;
+	font-size:1.5em;
+	height:1.4em;
+	border:1px solid #a2a2a2;
+	background: #E8E8E8 url('http://static.extrabux.com/images/login-input-bg-large.gif') repeat-x;
+}
+
+.contact #month-label {
+	PADDING-BOTTOM: 0px; WIDTH: 100px; MARGIN-LEFT: 50px; PADDING-TOP: 5px
+}
+.contact #month {
+	WIDTH: 130px
+}
+.contact #day-element {
+	WIDTH: 110px; FLOAT: left
+}
+.contact #day-label {
+	WIDTH: 0px
+}
+.contact #day {
+	WIDTH: 110px
+}
+.contact #year-element {
+	WIDTH: 50px; FLOAT: left
+}
+.contact #year-label {
+	WIDTH: 0px
+}
+.contact #year {
+	WIDTH: 70px
+}
+.contact UL {
+	LIST-STYLE-TYPE: disc; MARGIN-LEFT: 50px; FONT-SIZE: 1.3em
+}
+.contact SELECT#click_id {
+	WIDTH: 215px
+}
