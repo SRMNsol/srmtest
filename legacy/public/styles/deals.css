@@ -47,16 +47,16 @@
 	HEIGHT: 50px; COLOR: #000; text-align:center; margin: auto 0px;
 }
 #dailydeals .deal .details .savings-container .percent {
-	FONT-SIZE: 18px; FONT-WEIGHT: bold; PADDING-TOP: 8px; margin-left:18px;
+	FONT-SIZE: 15px; FONT-WEIGHT: bold; PADDING-TOP: 8px; margin-left: 9px;
 }
 #dailydeals .deal .details .savings-container .savings {
 	FONT-SIZE: 12px;  margin-left:10px;
 }
 #dailydeals .deal .details .deal-price-container {
-	WIDTH: 100px; FLOAT: left; HEIGHT: 40px; PADDING-TOP: 6px; 
+	WIDTH: 100px; FLOAT: left; HEIGHT: 40px; PADDING-TOP: 6px;
 }
 #dailydeals .deal .details .deal-price-container .deal-price {
-	COLOR: #b2030a; FONT-SIZE: 20px; FONT-WEIGHT: bold; 
+	COLOR: #b2030a; FONT-SIZE: 20px; FONT-WEIGHT: bold;
 }
 #dailydeals .deal .details .deal-price-container .cashback {
 	FONT-WEIGHT: bold;

@@ -1,7 +1,7 @@
 
 .slide-container{
 float:left;
-width:922px;	
+width:922px;
 height:336px;
 border:3px solid #f5a81a;
 background:url('../images/SlideBg.png') repeat-x;
@@ -14,7 +14,7 @@ height:390px;
 border:0px solid #00F;
 width:250px;
 float:left;
-margin-left:5px;	
+margin-left:5px;
 margin-top:5px;
 }
 
@@ -23,7 +23,7 @@ height:135px;
 border:0px solid #00F;
 width:250px;
 float:left;
-margin-left:0px;	
+margin-left:0px;
 margin-top:0px;
 
 }
@@ -32,7 +32,7 @@ margin-top:0px;
 font-size:12pt;
 margin-top:15px;
 margin-left:10px;
-color:#fff;	
+color:#fff;
 }
 
 #Groupon{
@@ -40,18 +40,18 @@ height:250px;
 border:0px solid #00F;
 width:250px;
 float:left;
-margin-left:0px;	
+margin-left:0px;
 margin-top:3px;
 }
 
 .slide{
-clear:both;	
+clear:both;
 }
 
 .slide-pic {
     width:514px;
     float:left;
-	
+
 }
 
 .slide-text {
@@ -70,15 +70,15 @@ clear:both;
 	    width:350px;
 	font-size:2.2em;
 		font-weight:bold;
-		float:left;	
+		float:left;
 			border:0px solid #0F0;
 	}
-	
+
 .slide-text h3{
 	    width:350px;
 margin-top:12px;
 font-size:1.7em;
-float:left;	
+float:left;
 	border:0px solid #0F0;
 }
 
@@ -98,7 +98,7 @@ color:#e96d08;
 text-decoration:underline;
 width:120px;
 margin-top:5px;
-font-size: 1.4em;	
+font-size: 1.4em;
 
 }
 
@@ -124,7 +124,7 @@ height:40px;
 
 
 #JoinFree {padding-left:20px;}
-.JoinFreeForm 
+.JoinFreeForm
 {
 border:0px solid #03F;width:100%;margin-top:10px;
 }
@@ -147,7 +147,7 @@ font-size:1.5em;font-weight:bold;
 .coda-slider-no-js .coda-slider { padding-right: 20px }
 
 /* Change the width of the entire slider (without dynamic arrows) */
-.coda-slider, .coda-slider .panel { width: 928px; height: 342px; background:url('../images/slide-background.png') no-repeat; } 
+.coda-slider, .coda-slider .panel { width: 928px; height: 342px; background:url('../images/slide-background.png') no-repeat; }
 
 /* Change margin and width of the slider (with dynamic arrows) */
 .coda-slider-wrapper.arrows .coda-slider, .coda-slider-wrapper.arrows .coda-slider .panel { width: 980px }
@@ -157,13 +157,13 @@ font-size:1.5em;font-weight:bold;
 .coda-nav-left a, .coda-nav-right a { background: #000; color: #fff; padding: 5px; width: 110px;}
 
 /* Tab nav */
-.coda-nav ul li a.current { 
-    border-right:none; 
-    font-weight:bold; 
+.coda-nav ul li a.current {
+    border-right:none;
+    font-weight:bold;
 
-    background: #f5a81a url('../images/coda-tab.png') repeat-x; 
-    color:#000; 
-	
+    background: #f5a81a url('../images/coda-tab.png') repeat-x;
+    color:#000;
+
 }
 
 /* Panel padding */
@@ -191,7 +191,7 @@ font-size:1.5em;font-weight:bold;
 
 #hot-products-container{
     background:url('../images/home_productBg.gif') no-repeat top left;
-    float:left; 
+    float:left;
     height:320px;
 	width:307px;
 	margin-left:0px;
@@ -201,7 +201,7 @@ font-size:1.5em;font-weight:bold;
 
 #top-stores-container{
     background:url('../images/home_productBg.gif') no-repeat top left;
-    float:left; 
+    float:left;
     height:320px;
 	width:307px;
 	margin-left:5px;
@@ -212,18 +212,18 @@ font-size:1.5em;font-weight:bold;
 
 #hot-coupons-container{
     background:url('../images/home_productBg.gif') no-repeat top left;
-    float:right; 
+    float:right;
     height:320px;
 	width:307px;
 	margin-top:5px;
 	margin-left:2px;
 	border:0px solid #C00;
-	
+
 }
 
 #daily-deals-SIcontainer{
     background:url('../images/Daily_DetailsSIBg.jpg') no-repeat top left;
-    float:left; 
+    float:left;
     height:390px;
 	width:360px;
 	margin-left:5px;
@@ -232,7 +232,7 @@ font-size:1.5em;font-weight:bold;
 }
 
 #accounts-summary-container{
-    float:left; 
+    float:left;
     height:390px;
 	width:298px;
 	margin-left:10px;
@@ -244,7 +244,7 @@ font-size:1.5em;font-weight:bold;
 
 #welcome-top-stores-container{
     background:url('../images/welcome_TSBg.gif') no-repeat top left;
-    float:left; 
+    float:left;
     height:320px;
 	width:616px;
 	margin-left:5px;
@@ -286,7 +286,7 @@ font-size:1.5em;font-weight:bold;
 }
 
 .HomeDailyDeals .savings-container .percent {
-	FONT-SIZE: 18px; FONT-WEIGHT: bold; PADDING-TOP: 15px;
+	FONT-SIZE: 16px; FONT-WEIGHT: bold; PADDING-TOP: 12px;
 }
 .HomeDailyDeals .savings-container .savings {
 	FONT-SIZE: 12px;
@@ -322,7 +322,7 @@ font-size:1.5em;font-weight:bold;
 
 .couponList .desc {
     color:#515151;
-    float:left; 
+    float:left;
     font-size:1.1em;
     margin:10px 5px 5px 5px;
     width:220px;
@@ -331,7 +331,7 @@ font-size:1.5em;font-weight:bold;
 }
 .desc {
     color:#515151;
-    float:right; 
+    float:right;
     font-size:1.1em;
     margin:10px 2px 5px 5px;
     width:167px;
@@ -344,7 +344,7 @@ font-size:1.5em;font-weight:bold;
 }
 
 .ListPrice{
-font-size:1.1em;float:left;width:140px;margin-top:1px;	
+font-size:1.1em;float:left;width:140px;margin-top:1px;
 }
 
 .ListPrice a.code{
@@ -368,7 +368,7 @@ font-size:1.1em;float:left;width:140px;margin-top:1px;
 }
 .DealsText {
     color:#515151;
-    float:left; 
+    float:left;
     font-size:12px;
     margin:10px 12px 5px 5px;
     width:135px;
@@ -383,7 +383,7 @@ font-size:1.1em;float:left;width:140px;margin-top:1px;
 .HomeDailyDeals .DealsCt .expires           {font-size:10px;float:none;width:120px;margin:10px 0px 0px;}
 
 .topstoreDesc {
-    float:left; 
+    float:left;
 	font-size:1.1em;
  	font-weight:bold;
     margin:10px 5px 5px 5px;
@@ -392,7 +392,7 @@ font-size:1.1em;float:left;width:140px;margin-top:1px;
 }
 
 .descimg {
-    float:left; 
+    float:left;
     font-size:1.1em;
 	width:90px;
 	margin:10px 5px 5px 5px;
@@ -400,7 +400,7 @@ font-size:1.1em;float:left;width:140px;margin-top:1px;
 }
 
 .DealsProduct {
-    float:left; 
+    float:left;
     font-size:1.1em;
 	width:90px;
 	margin:5px 5px 5px 5px;
@@ -409,7 +409,7 @@ font-size:1.1em;float:left;width:140px;margin-top:1px;
 }
 
 .DealsProductUser {
-    float:left; 
+    float:left;
     font-size:1.1em;
 	width:90px;
 	margin:5px 5px 5px 5px;
@@ -418,7 +418,7 @@ font-size:1.1em;float:left;width:140px;margin-top:1px;
 }
 
 .DealsLogo {
-    float:left; 
+    float:left;
     font-size:1.1em;
 	width:75px;
 	margin:10px 30px 5px 5px;
@@ -454,7 +454,7 @@ font-size:1.1em;float:left;width:140px;margin-top:1px;
 {
 	font-size:2em;
 	}
-	
+
 
 .title {
     color:#e96d08;
@@ -464,7 +464,7 @@ font-size:1.1em;float:left;width:140px;margin-top:1px;
 }
 
 .ProductName{
-font-size:1.2em;border:0px solid #00F;margin-top:5px;float:left;width:260px;margin-left:9px;text-decoration:underline;	
+font-size:1.2em;border:0px solid #00F;margin-top:5px;float:left;width:260px;margin-left:9px;text-decoration:underline;
 }
 
 #hot-products {
@@ -498,7 +498,7 @@ font-size:1.2em;border:0px solid #00F;margin-top:5px;float:left;width:260px;marg
 	margin-top:10px;
 	margin-left:10px;
     width: 137px;
-	
+
 
 }
 
@@ -611,13 +611,13 @@ float:left;margin-top:-5px;
 -moz-border-radius: 10px 10px 10px 10px;
 -webkit-border-radius: 0px 0px 10px 10px;border-top-right-radius:0px;
 float:left;
-margin-left:25px;	
+margin-left:25px;
 margin-top:20px;
 }
 
 
-			
-			
+
+
 .Friend_title1 {
 	color:#000;
 	display:block;
@@ -627,8 +627,8 @@ margin-top:20px;
 	border:0px solid #0F0;
 	text-align:center;
 	}
-	
-	
+
+
 	.Friend_innerbox
 	{
 height:304px;
@@ -638,7 +638,7 @@ border:2px solid #f6af24;float:left;margin-top:-5px;
 -moz-border-radius: 10px 10px 10px 10px;
  -webkit-border-radius: 0px 0px 10px 10px;border-top-right-radius:0px;
 float:left;
-margin-left:35px;	
+margin-left:35px;
 margin-top:10px;
 background:url("../images/friend_bg.jpg");
 }
@@ -683,14 +683,14 @@ margin-top:10px;
 #Friend_Bg #textbg font.more
 {
 	float:right;
-	
+
 	font-size:1.2em;
 	font-weight:bold;
 	color:#F00;
 	}
-	
+
 #Friend_Bg .logo{
-	float:left;border:0px solid #33F;margin-left:40px;margin-top:10px;	
+	float:left;border:0px solid #33F;margin-left:40px;margin-top:10px;
 }
 #Friend_Bg .LogoText{
 	margin-left:130px;margin-top:17px;height:30px;border:0px solid #33F;font-size:1.5em;
