@@ -113,7 +113,7 @@ alt='$store' onerror="this.src ='../images/no-image-100px.gif'"/>
 
 
 	            <a  href='/transfer/coupon/<?php echo $coupon['id'] ?>' target='_blank' rel='nofollow'>
-	                <span style="position:absolute;border:0px solid #000" class="CashBack-value value"><?php echo $coupon['cashback_text'] ?></span>
+	                <span class="CashBack-value value"><?php echo $coupon['cashback_text'] ?></span>
 	            </a>
 	        </div></div>
 
@@ -136,7 +136,7 @@ alt='$store' onerror="this.src ='../images/no-image-100px.gif'"/>
 	            </div>
 	        </div>
 	    </div>
-<?php 
+<?php
 
     $index += 1;}
  ?>
