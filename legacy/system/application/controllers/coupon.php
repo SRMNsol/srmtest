@@ -79,7 +79,7 @@ class Coupon extends Controller
         }
 
         $result = $client->findDeals($catalogKey, $params);
-        $stores = result_merchants($result->getMerchants(), $rate);
+        $stores = result_merchants($result->getMerchants()->sortByMerchantName(), $rate);
         $count = $result->getDeals()->getTotalCount();
         $coupons = result_deals($result->getDeals(), $rate);
 
