@@ -28,7 +28,8 @@
   "minimum-stability": "dev",
   "prefer-stable": true,
   "repositories": [
-    { "type": "vcs", "url": "https://github.com/doblebjp/popshops-api.git" }
+    { "type": "vcs", "url": "https://github.com/doblebjp/popshops-api.git" },
+    { "type": "vcs", "url": "https://github.com/doblebjp/easy-csv.git" }
   ],
   "scripts": {
     "post-install-cmd": "App\\Setup\\WritePermissions::checkPaths",
