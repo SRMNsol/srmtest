@@ -1,9 +1,16 @@
 <?php
 
-use Popshops\Silex\PopshopsExtraServiceProvider;
+require __DIR__ . '/../vendor/autoload.php';
 
-$app = require __DIR__ . '/../src/app.php';
+use App\Application;
 
-$app->register(new PopshopsExtraServiceProvider());
+$app = new Application();
+Application::registerBaseServices($app);
+Application::registerReportingServices($app);
+
+Application::loadConfig($app, __DIR__ . '/../config', [
+    'root_dir' => realpath(__DIR__ . '/..'),
+    'date' => date('Ymd'),
+]);
 
 return $app;

@@ -15,6 +15,7 @@ use Silex\Provider\TranslationServiceProvider;
 use Silex\Provider\ServiceControllerServiceProvider;
 use Igorw\Silex\ConfigServiceProvider;
 use Popshops\Silex\PopshopsServiceProvider;
+use Popshops\Silex\PopshopsExtraServiceProvider;
 
 class Application extends SilexApplication
 {
@@ -39,6 +40,11 @@ class Application extends SilexApplication
         $app->register(new ValidatorServiceProvider());
         $app->register(new TranslationServiceProvider());
         $app->register(new ServiceControllerServiceProvider());
+    }
+
+    public static function registerReportingServices(Application $app)
+    {
+        $app->register(new PopshopsExtraServiceProvider());
     }
 
     public static function loadConfig(Application $app, $dir, $params)
