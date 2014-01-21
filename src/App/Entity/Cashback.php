@@ -33,6 +33,7 @@ class Cashback extends Payable
     public function addTransaction(Transaction $transaction)
     {
         $this->transactions[] = $transaction;
+        $transaction->setCashback($this);
 
         return $this;
     }
@@ -40,6 +41,9 @@ class Cashback extends Payable
     public function removeTransaction(Transaction $transaction)
     {
         $this->transactions->removeElement($transaction);
+        $transaction->setCashback(/* null */);
+
+        return $this;
     }
 
     public function getAvailableAt()

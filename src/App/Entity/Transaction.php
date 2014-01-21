@@ -13,7 +13,7 @@ use Popshops\Transaction as BaseTransaction;
 class Transaction extends BaseTransaction
 {
     /**
-     * @ManyToOne(targetEntity="Cashback", inversedBy="transactions")
+     * @ManyToOne(targetEntity="Cashback", inversedBy="transactions", cascade={"persist"})
      */
     protected $cashback;
 

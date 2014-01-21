@@ -77,12 +77,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:doblebjp/popshops-api.git",
-                "reference": "73f0c3f23096c9bb05be61e4ce6b8727325d08c4"
+                "reference": "3e869bb7875b34d8ab0bc185b3e18dd18e646cff"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doblebjp/popshops-api/zipball/73f0c3f23096c9bb05be61e4ce6b8727325d08c4",
-                "reference": "73f0c3f23096c9bb05be61e4ce6b8727325d08c4",
+                "url": "https://api.github.com/repos/doblebjp/popshops-api/zipball/3e869bb7875b34d8ab0bc185b3e18dd18e646cff",
+                "reference": "3e869bb7875b34d8ab0bc185b3e18dd18e646cff",
                 "shasum": ""
             },
             "require": {
@@ -128,7 +128,7 @@
                 "source": "https://github.com/doblebjp/popshops-api/tree/master",
                 "issues": "https://github.com/doblebjp/popshops-api/issues"
             },
-            "time": "2013-12-19 17:40:40"
+            "time": "2014-01-21 16:05:28"
         },
         {
             "name": "doctrine/annotations",
@@ -1021,16 +1021,16 @@
         },
         {
             "name": "mheap/silex-assetic",
-            "version": "1.0.2",
+            "version": "1.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mheap/Silex-Assetic.git",
-                "reference": "7e6a537de646a480830deb0e2f2719e5d694d191"
+                "reference": "9b894a976279fbebd0ab1293298c0c9c8db083fe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mheap/Silex-Assetic/zipball/7e6a537de646a480830deb0e2f2719e5d694d191",
-                "reference": "7e6a537de646a480830deb0e2f2719e5d694d191",
+                "url": "https://api.github.com/repos/mheap/Silex-Assetic/zipball/9b894a976279fbebd0ab1293298c0c9c8db083fe",
+                "reference": "9b894a976279fbebd0ab1293298c0c9c8db083fe",
                 "shasum": ""
             },
             "require": {
@@ -1074,7 +1074,7 @@
                 "assetic",
                 "silex"
             ],
-            "time": "2013-08-29 11:11:16"
+            "time": "2014-01-11 21:35:41"
         },
         {
             "name": "monolog/monolog",

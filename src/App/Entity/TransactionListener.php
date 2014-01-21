@@ -9,12 +9,16 @@ class TransactionListener
 {
     public function prePersist(Transaction $transaction, LifecycleEventArgs $event)
     {
-        $this->assignRate($transaction, $event->getEntityManager()->getRepository('App\Entity\Rate'));
+        $em = $event->getEntityManager();
+        $this->assignRate($transaction, $em->getRepository('App\Entity\Rate'));
+        $this->assignCashback($transaction, $em->getRepository('App\Entity\Cashback'));
     }
 
     public function preUpdate(Transaction $transaction, PreUpdateEventArgs $event)
     {
-        $this->assignRate($transaction, $event->getEntityManager()->getRepository('App\Entity\Rate'));
+        $em = $event->getEntityManager();
+        $this->assignRate($transaction, $em->getRepository('App\Entity\Rate'));
+        $this->assignCashback($transaction, $em->getRepository('App\Entity\Cashback'));
     }
 
     public function assignRate(Transaction $transaction, RateRepository $rateRepository)
@@ -22,6 +26,19 @@ class TransactionListener
         $rate = $rateRepository->findRateForTransaction($transaction);
         if (null !== $rate) {
             $transaction->setRate($rate);
+        }
+    }
+
+    public function assignCashback(Transaction $transaction, CashbackRepository $cashbackRepository)
+    {
+        $cashback = $cashbackRepository->findCashbackForTransaction($transaction);
+
+        if (null === $cashback) {
+            $cashback = new Cashback();
+        }
+
+        if (false === $cashback->getTransactions()->contains($transaction)) {
+            $cashback->addTransaction($transaction);
         }
     }
 }
