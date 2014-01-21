@@ -40,5 +40,7 @@ class TransactionListener
         if (false === $cashback->getTransactions()->contains($transaction)) {
             $cashback->addTransaction($transaction);
         }
+
+        $cashback->calculateAmount();
     }
 }

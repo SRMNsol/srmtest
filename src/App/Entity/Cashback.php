@@ -6,7 +6,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @Entity(repositoryClass="CashbackRepository")
- * @HasLifecycleCallbacks
  */
 class Cashback extends Payable
 {
@@ -41,32 +40,31 @@ class Cashback extends Payable
         return $this;
     }
 
-    /**
-     * @PrePersist @PreUpdate
-     */
     public function calculateAmount()
     {
         $commission = 0.00;
         $payment = 0.00;
         $adjustment = 0.00;
+        $availableAt = null;
 
         foreach ($this->transactions as $transaction) {
             $rate = $transaction->getRate();
             $share = $rate ? $rate->getLevel0() : 0;
 
-            if ($share > 0) {
+            if ($transaction->getCommission() > 0 && $share > 0) {
                 $commission += $share * $transaction->getCommission();
                 $payment += $share * $transaction->calculatePaymentSum();
                 $adjustment += $share * $transaction->calculateAdjustmentSum();
+                if (null === $availableAt || $transaction->getRegisteredAt() > $availableAt) {
+                    $availableAt = clone $transaction->getRegisteredAt();
+                }
             }
         }
 
-        // this calculation is only run if there is any advertiser payment
-        if ($payment > 0) {
-            $this->total = $commission - $adjustment;
-            $this->available = $payment - $this->processing - $this->paid;
-            $this->pending = $commission - $adjustment - $payment;
-        }
+        $this->amount = $commission - $adjustment;
+        $this->available = $payment - $this->processing - $this->paid;
+        $this->pending = $this->amount - $this->available;
+        $this->availableAt = $availableAt->add(\DateInterval::createFromDateString('90 days'));
 
         return $this;
     }
