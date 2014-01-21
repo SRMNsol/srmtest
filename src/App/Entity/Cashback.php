@@ -15,11 +15,6 @@ class Cashback extends Payable
      */
     protected $transactions;
 
-    /**
-     * @Column(type="date", nullable=false)
-     */
-    protected $availableAt;
-
     public function __construct()
     {
         $this->transactions = new ArrayCollection();
@@ -42,18 +37,6 @@ class Cashback extends Payable
     {
         $this->transactions->removeElement($transaction);
         $transaction->setCashback(/* null */);
-
-        return $this;
-    }
-
-    public function getAvailableAt()
-    {
-        return $this->availableAt;
-    }
-
-    public function setAvailableAt(\DateTime $date)
-    {
-        $this->availableAt = $date;
 
         return $this;
     }

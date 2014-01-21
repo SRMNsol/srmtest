@@ -63,6 +63,11 @@ class Payable
     protected $updatedAt;
 
     /**
+     * @Column(type="date", nullable=true)
+     */
+    protected $availableAt;
+
+    /**
      * @Column(length=20)
      */
     protected $status = self::STATUS_PENDING;
@@ -148,6 +153,18 @@ class Payable
     public function onUpdate()
     {
         $this->updatedAt = new \DateTime();
+    }
+
+    public function getAvailableAt()
+    {
+        return $this->availableAt;
+    }
+
+    public function setAvailableAt(\DateTime $date)
+    {
+        $this->availableAt = $date;
+
+        return $this;
     }
 
     public function getStatus()
