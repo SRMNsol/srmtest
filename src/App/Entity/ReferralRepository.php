@@ -39,4 +39,9 @@ class ReferralRepository extends EntityRepository
             return null;
         }
     }
+
+    public function calculateUserReferral(User $user, $level, $month, $year)
+    {
+
+    }
 }

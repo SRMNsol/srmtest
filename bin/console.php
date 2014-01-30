@@ -29,6 +29,7 @@ $console->addCommands([
     new App\Console\ExtrabuxImportReferralCommand(),
     new App\Console\ExtrabuxImportAdjustmentCommand(),
     new App\Console\ExtrabuxImportUserCommand(),
+    new App\Console\ReferralCalculationCommand(),
 ]);
 
 $console->run();

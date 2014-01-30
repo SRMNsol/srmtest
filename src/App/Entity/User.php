@@ -1057,11 +1057,33 @@ class User
             $next = [];
             foreach ($users as $user) {
                 $count += $user->countDirectReferrals();
-                $next += $user->getReferredUsers()->toArray();
+                $next = array_merge($next, $user->getReferredUsers()->toArray());
             }
             $users = $next;
         }
 
         return $count;
+    }
+
+    public function getReferralTree($level = 7)
+    {
+        $users = $this->referredUsers->toArray();
+        $refUsers[1] = $users;
+
+        for ($i = 2; $i <= $level; $i++) {
+            $next = [];
+            foreach ($users as $user) {
+                $next = array_merge($next, $user->getReferredUsers()->toArray());
+            }
+            $users = $next;
+            $refUsers[$i] = $users;
+        }
+
+        return $refUsers;
+    }
+
+    public function __toString()
+    {
+        return (string) $this->email;
     }
 }
