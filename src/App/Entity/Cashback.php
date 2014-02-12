@@ -40,16 +40,21 @@ class Cashback extends Payable
         return $this;
     }
 
-    public function calculateAmount()
+    public function calculateTransactionValues($rateLevel = 0)
     {
         $commission = 0.00;
         $payment = 0.00;
         $adjustment = 0.00;
         $availableAt = null;
 
+        $method = "getLevel$rateLevel"; // getLevel0 -> getLevel7
+        if (!method_exists($rate, $method)) {
+            throw new \RuntimeException("Invalid rate level $rateLevel");
+        }
+
         foreach ($this->transactions as $transaction) {
             $rate = $transaction->getRate();
-            $share = $rate ? $rate->getLevel0() : 0;
+            $share = $rate ? $rate->$method() : 0;
 
             if ($transaction->getCommission() > 0 && $share > 0) {
                 $commission += $share * $transaction->getCommission();
@@ -60,6 +65,14 @@ class Cashback extends Payable
                 }
             }
         }
+
+        return compact('commission', 'payment', 'adjustment', 'availableAt');
+    }
+
+    public function calculateAmount()
+    {
+        // extract $commission, $payment, $adjustment, $availableAt
+        extract($this->calculateTransactionValues());
 
         $this->amount = $commission - $adjustment;
         $this->available = $payment - $this->processing - $this->paid;

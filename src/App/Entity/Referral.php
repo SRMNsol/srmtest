@@ -19,6 +19,11 @@ class Referral extends Payable
     protected $indirect = 0.00;
 
     /**
+     * @Column(length=6, nullable=true)
+     */
+    protected $month;
+
+    /**
      * Set direct
      *
      * @param string $direct
@@ -62,6 +67,29 @@ class Referral extends Payable
     public function getIndirect()
     {
         return $this->indirect;
+    }
+
+    /**
+     * Get month
+     *
+     * @return string
+     */
+    public function getMonth()
+    {
+        return $this->month;
+    }
+
+    /**
+     * Set month
+     *
+     * @param string $month
+     * @return string
+     */
+    public function setMonth($month)
+    {
+        $this->month = $month;
+
+        return $this;
     }
 
     /**
