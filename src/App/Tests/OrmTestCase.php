@@ -35,6 +35,6 @@ class OrmTestCase extends BaseOrmTestCase
     public function setUp()
     {
         $this->setUpOrm();
+        $this->createFullSchema();
     }
-
 }

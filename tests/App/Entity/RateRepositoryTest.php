@@ -7,13 +7,6 @@ use App\Entity\RateRepository;
 
 class RateRepositoryTest extends OrmTestCase
 {
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->createSchema(['App\Entity\Rate']);
-    }
-
     public function testCreateDefaultRate()
     {
         $repo = $this->em->getRepository('App\Entity\Rate');
@@ -70,7 +63,6 @@ class RateRepositoryTest extends OrmTestCase
 
     public function testFindRateForTransaction()
     {
-        $this->createSchema(['App\Entity\Transaction']);
         $repo = $this->em->getRepository('App\Entity\Rate');
 
         $timeBefore = new DateTime();

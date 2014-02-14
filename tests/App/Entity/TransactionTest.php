@@ -11,8 +11,6 @@ class TransactionTest extends OrmTestCase
      */
     public function testPersistingTransaction()
     {
-        $this->createSchema(['App\Entity\Transaction', 'App\Entity\Rate']);
-
         $transaction = new Transaction();
         $transaction->setRegisteredAt(new DateTime());
         $transaction->setOrderNumber('T123');

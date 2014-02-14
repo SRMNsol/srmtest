@@ -48,7 +48,7 @@ class Cashback extends Payable
         $availableAt = null;
 
         $method = "getLevel$rateLevel"; // getLevel0 -> getLevel7
-        if (!method_exists($rate, $method)) {
+        if (!method_exists('App\Entity\Rate', $method)) {
             throw new \RuntimeException("Invalid rate level $rateLevel");
         }
 
@@ -77,7 +77,9 @@ class Cashback extends Payable
         $this->amount = $commission - $adjustment;
         $this->available = $payment - $this->processing - $this->paid;
         $this->pending = $this->amount - $this->available;
-        $this->availableAt = $availableAt->add(\DateInterval::createFromDateString('90 days'));
+        $this->availableAt = (null !== $availableAt)
+            ? $availableAt->add(\DateInterval::createFromDateString('90 days'))
+            : null;
 
         return $this;
     }

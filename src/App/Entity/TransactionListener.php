@@ -32,7 +32,11 @@ class TransactionListener
 
     public function assignCashback(Transaction $transaction, CashbackRepository $cashbackRepository, EntityRepository $userRepository)
     {
-        $cashback = $cashbackRepository->findCashbackForTransaction($transaction);
+        $cashback = $transaction->getCashback();
+
+        if (null === $cashback) {
+            $cashback = $cashbackRepository->findCashbackForTransaction($transaction);
+        }
 
         if (null === $cashback) {
             $cashback = new Cashback();

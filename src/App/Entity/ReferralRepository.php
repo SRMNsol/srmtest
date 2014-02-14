@@ -43,7 +43,7 @@ class ReferralRepository extends EntityRepository
     public function calculateUserReferral(User $user, $month, $year, $level = 7)
     {
         $em = $this->getEntityManager();
-        $cashbackRepository = $this->getRepository('App\Entity\Cashback');
+        $cashbackRepository = $em->getRepository('App\Entity\Cashback');
 
         $commission = 0.00;
         $payment = 0.00;
@@ -80,8 +80,13 @@ class ReferralRepository extends EntityRepository
 
         $referral->setConcept('Referral Total')
             ->setAmount($commission - $adjustment)
-            ->setAvailable($payment - $this->getProcessing() - $this->getPaid())
-            ->setPending($this->getAmount() - $this->getAvailable())
-            ->setAvailableAt($availableAt);
+            ->setAvailable($payment - $referral->getProcessing() - $referral->getPaid())
+            ->setPending($referral->getAmount() - $referral->getAvailable())
+            ->setIndirect($indirect)
+            ->setDirect($direct)
+            //->setAvailableAt($availableAt)
+        ;
+
+        return $referral;
     }
 }

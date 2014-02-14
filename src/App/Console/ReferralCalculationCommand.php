@@ -17,6 +17,7 @@ class ReferralCalculationCommand extends Command
         $this
             ->setName('beesavy:referral:calculate')
             ->setDescription('Calculate referral commission')
+            ->addArgument('month', InputArgument::REQUIRED, 'Year month format YYYYmm')
             ->addArgument('email', InputArgument::OPTIONAL, 'Process user by email')
         ;
     }
@@ -26,32 +27,24 @@ class ReferralCalculationCommand extends Command
         $app = $this->getSilexApplication();
         $em = $app['orm.em'];
         $email = $input->getArgument('email');
+        $yearMonth = $input->getArgument('month');
+        $year = substr($yearMonth, 0, 4);
+        $month = substr($yearMonth, 4, 2);
 
         $userRepository = $em->getRepository('App\Entity\User');
         $user = $userRepository->findOneByEmail($email);
 
+        $referralRepository = $em->getRepository('App\Entity\Referral');
+        $referral = $referralRepository->calculateUserReferral($user, $month, $year);
         $table = $this->getHelperSet()->get('table');
-        $table->setHeaders(['#', 'Level', 'Email', 'Referred By']);
 
-        $level = 7;
-        $tree = $user->getReferralTree($level);
-        $count = 0;
-        foreach ($tree as $level => $children) {
-            foreach ($children as $child) {
-                $count++;
-                $table->addRow([
-                    $count,
-                    $level,
-                    $child->getEmail(),
-                    $child->getReferredBy()->getEmail(),
-                ]);
-            }
-        }
-        $table->render($output);
+        $output->writeln(sprintf('Concept: %s (%s)', $referral->getConcept(), $yearMonth));
+        $output->writeln(sprintf('Amount: $%.2f', $referral->getAmount()));
+        $output->writeln(sprintf('Available: $%.2f', $referral->getAvailable()));
+        $output->writeln(sprintf('Pending: $%.2f', $referral->getPending()));
+        $output->writeln(sprintf('Indirect: $%.2f', $referral->getIndirect()));
+        $output->writeln(sprintf('Direct: $%.2f', $referral->getDirect()));
 
-        $output->writeln(sprintf('Direct referrals: %d', $user->countDirectReferrals()));
-        $output->writeln(sprintf('Indirect referrals 2-%d: %d', $level, $user->countIndirectReferrals($level)));
-        $output->writeln(sprintf('Total referral network: %d', $count));
         $output->writeln('DONE');
     }
 }
