@@ -48,7 +48,7 @@ class ReferralRepository extends EntityRepository
         $commission = 0.00;
         $payment = 0.00;
         $adjustment = 0.00;
-        $availableAt = null;
+        $registeredAt = null;
         $direct = 0.00;
         $indirect = 0.00;
 
@@ -63,8 +63,8 @@ class ReferralRepository extends EntityRepository
                     $commission += $values['commission'];
                     $payment += $values['payment'];
                     $adjustment += $values['adjustment'];
-                    if (null === $availableAt || $values['availableAt'] > $availableAt) {
-                        $availableAt = clone $values['availableAt'];
+                    if (null === $registeredAt || $values['registeredAt'] > $registeredAt) {
+                        $registeredAt = clone $values['registeredAt'];
                     }
 
                     if ($level === 0) {
@@ -84,7 +84,6 @@ class ReferralRepository extends EntityRepository
             ->setPending($referral->getAmount() - $referral->getAvailable())
             ->setIndirect($indirect)
             ->setDirect($direct)
-            //->setAvailableAt($availableAt)
         ;
 
         return $referral;

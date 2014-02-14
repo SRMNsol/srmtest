@@ -63,6 +63,11 @@ class Payable
     protected $updatedAt;
 
     /**
+     * @Column(type="datetime", nullable=true)
+     */
+    protected $registeredAt;
+
+    /**
      * @Column(type="date", nullable=true)
      */
     protected $availableAt;
@@ -78,6 +83,8 @@ class Payable
     const STATUS_PAID = 'paid';
     const STATUS_MIXED = 'mixed';
     const STATUS_CANCELLED = 'cancelled';
+
+    const AVAILABLE_DAYS = 0;
 
     public function getUser()
     {
@@ -135,6 +142,18 @@ class Payable
     public function setUpdatedAt($updatedAt)
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getRegisteredAt()
+    {
+        return $this->registeredAt;
+    }
+
+    public function setRegisteredAt($registeredAt)
+    {
+        $this->registeredAt = $registeredAt;
 
         return $this;
     }
@@ -313,6 +332,17 @@ class Payable
             $this->status = self::STATUS_CANCELLED;
         } else {
             $this->status = $status;
+        }
+    }
+
+    /**
+     * @PrePersist @PreUpdate
+     */
+    public function updateAvailableDate()
+    {
+        if (isset($this->registeredAt)) {
+            $this->availableAt = clone $this->registeredAt;
+            $this->availableAt->add(\DateInterval::createFromDateString(sprintf('%d days', static::AVAILABLE_DAYS)));
         }
     }
 }

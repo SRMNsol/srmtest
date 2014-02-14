@@ -69,10 +69,14 @@ class CashbackRepository extends EntityRepository
             ->setParameter('user', $user);
 
         if ($month !== null && $year !== null) {
-            $qb->andWhere('c.createdAt >= :start')
-                ->andWhere('c.createdAt < :end')
-                ->setParameter('start', $start = \DateTime::createFromFormat('Y-m-d', "$year-$month-01"))
-                ->setParameter('end', $start->add(\DateInterval::createFromDateString('+1 month')));
+            $start = \DateTime::createFromFormat('Y-m-d', "$year-$month-01");
+            $end = clone $start;
+            $end->add(\DateInterval::createFromDateString('+1 month'));
+
+            $qb->andWhere('c.registeredAt >= :start')
+                ->andWhere('c.registeredAt < :end')
+                ->setParameter('start', $start)
+                ->setParameter('end', $end);
         }
 
         return $qb->getQuery()->getResult();

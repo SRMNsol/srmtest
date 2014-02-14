@@ -14,6 +14,8 @@ class Cashback extends Payable
      */
     protected $transactions;
 
+    const AVAILABLE_DAYS = 90;
+
     public function __construct()
     {
         $this->transactions = new ArrayCollection();
@@ -45,7 +47,7 @@ class Cashback extends Payable
         $commission = 0.00;
         $payment = 0.00;
         $adjustment = 0.00;
-        $availableAt = null;
+        $registeredAt = null;
 
         $method = "getLevel$rateLevel"; // getLevel0 -> getLevel7
         if (!method_exists('App\Entity\Rate', $method)) {
@@ -60,26 +62,24 @@ class Cashback extends Payable
                 $commission += $share * $transaction->getCommission();
                 $payment += $share * $transaction->calculatePaymentSum();
                 $adjustment += $share * $transaction->calculateAdjustmentSum();
-                if (null === $availableAt || $transaction->getRegisteredAt() > $availableAt) {
-                    $availableAt = clone $transaction->getRegisteredAt();
+                if (null === $registeredAt || $transaction->getRegisteredAt() > $registeredAt) {
+                    $registeredAt = clone $transaction->getRegisteredAt();
                 }
             }
         }
 
-        return compact('commission', 'payment', 'adjustment', 'availableAt');
+        return compact('commission', 'payment', 'adjustment', 'registeredAt');
     }
 
     public function calculateAmount()
     {
-        // extract $commission, $payment, $adjustment, $availableAt
+        // extract $commission, $payment, $adjustment, $registeredAt
         extract($this->calculateTransactionValues());
 
         $this->amount = $commission - $adjustment;
         $this->available = $payment - $this->processing - $this->paid;
         $this->pending = $this->amount - $this->available;
-        $this->availableAt = (null !== $availableAt)
-            ? $availableAt->add(\DateInterval::createFromDateString('90 days'))
-            : null;
+        $this->registeredAt = $registeredAt;
 
         return $this;
     }
