@@ -84,6 +84,7 @@ class ReferralRepository extends EntityRepository
             ->setPending($referral->getAmount() - $referral->getAvailable())
             ->setIndirect($indirect)
             ->setDirect($direct)
+            ->setRegisteredAt($registeredAt)
         ;
 
         return $referral;

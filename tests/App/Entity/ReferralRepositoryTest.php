@@ -56,7 +56,7 @@ class ReferralRepositoryTest extends OrmTestCase
     public function testDirectReferral()
     {
         $transact1 = new Transaction();
-        $transact1->setRegisteredAt(new \DateTime());
+        $transact1->setRegisteredAt($regdate1 = new \DateTime('2014-02-01'));
         $transact1->setOrderNumber(123);
         $transact1->setTag('u2');
         $transact1->setTotal(100.00);
@@ -68,11 +68,11 @@ class ReferralRepositoryTest extends OrmTestCase
 
         $user = $this->em->find('App\Entity\User', 1);
         $referralRepository = $this->em->getRepository('App\Entity\Referral');
-        $referral = $referralRepository->calculateUserReferral($user, date('m'), date('Y'));
+        $referral = $referralRepository->calculateUserReferral($user, '02', '2014');
         $this->assertEquals($rate->getLevel1() * $transact1->getCommission(), $referral->getAmount());
 
         $transact2 = new Transaction();
-        $transact2->setRegisteredAt(new \DateTime());
+        $transact2->setRegisteredAt($regdate2 = new \DateTime('2014-02-02'));
         $transact2->setOrderNumber(123);
         $transact2->setTag('u2');
         $transact2->setTotal(200.00);
@@ -80,7 +80,27 @@ class ReferralRepositoryTest extends OrmTestCase
         $this->em->persist($transact2);
         $this->em->flush();
 
-        $referral = $referralRepository->calculateUserReferral($user, date('m'), date('Y'));
+        $referral = $referralRepository->calculateUserReferral($user, '02', '2014');
         $this->assertEquals($rate->getLevel1() * ($transact1->getCommission() + $transact2->getCommission()), $referral->getAmount());
+        $this->assertEquals($regdate2, $referral->getRegisteredAt());
+    }
+
+    public function testIndirectReferral()
+    {
+        $transact1 = new Transaction();
+        $transact1->setRegisteredAt(new \DateTime('2014-02-01'));
+        $transact1->setOrderNumber(123);
+        $transact1->setTag('u3');
+        $transact1->setTotal(100.00);
+        $transact1->setCommission(10.00);
+        $this->em->persist($transact1);
+        $this->em->flush();
+
+        $rate = $transact1->getRate();
+
+        $user = $this->em->find('App\Entity\User', 1);
+        $referralRepository = $this->em->getRepository('App\Entity\Referral');
+        $referral = $referralRepository->calculateUserReferral($user, '02', '2014');
+        $this->assertEquals($rate->getLevel2() * $transact1->getCommission(), $referral->getAmount());
     }
 }

@@ -34,7 +34,7 @@ class CashbackRepositoryTest extends OrmTestCase
         $this->em->flush();
 
         $transaction = new Transaction();
-        $transaction->setRegisteredAt(new \DateTime());
+        $transaction->setRegisteredAt(new \DateTime('2014-02-01'));
         $transaction->setOrderNumber(123);
         $transaction->setTag('u1');
         $transaction->setTotal(100.00);
@@ -44,7 +44,7 @@ class CashbackRepositoryTest extends OrmTestCase
 
         $user = $this->em->find('App\Entity\User', 1);
         $cashbackRepository = $this->em->getRepository('App\Entity\Cashback');
-        $cashbacks = $cashbackRepository->findCashbackForUser($user, date('m'), date('Y'));
+        $cashbacks = $cashbackRepository->findCashbackForUser($user, '02', '2014');
         $this->assertTrue($cashbacks[0] === $transaction->getCashback());
     }
 }

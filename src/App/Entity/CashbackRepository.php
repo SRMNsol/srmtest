@@ -69,7 +69,7 @@ class CashbackRepository extends EntityRepository
             ->setParameter('user', $user);
 
         if ($month !== null && $year !== null) {
-            $start = \DateTime::createFromFormat('Y-m-d', "$year-$month-01");
+            $start = new \DateTime("$year-$month-01");
             $end = clone $start;
             $end->add(\DateInterval::createFromDateString('+1 month'));
 
