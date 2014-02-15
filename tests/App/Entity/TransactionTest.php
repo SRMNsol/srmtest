@@ -7,9 +7,8 @@ class TransactionTest extends OrmTestCase
 {
     /**
      * Transaction needs minimum registerAt and orderNumber.
-     * Transaction is assigned rate by entity listener
      */
-    public function testPersistingTransaction()
+    public function testMinimumRequirements()
     {
         $transaction = new Transaction();
         $transaction->setRegisteredAt(new DateTime());
@@ -18,6 +17,5 @@ class TransactionTest extends OrmTestCase
         $this->em->flush();
 
         $this->assertGreaterThan(0, $transaction->getId());
-        $this->assertNotNull($transaction->getRate());
     }
 }
