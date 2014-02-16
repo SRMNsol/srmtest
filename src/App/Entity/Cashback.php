@@ -44,6 +44,7 @@ class Cashback extends Payable
 
     public function calculateTransactionValues($rateLevel = 0)
     {
+        $total = 0.00;
         $commission = 0.00;
         $payment = 0.00;
         $adjustment = 0.00;
@@ -57,6 +58,7 @@ class Cashback extends Payable
         foreach ($this->transactions as $transaction) {
             $rate = $transaction->getRate();
             $share = $rate ? $rate->$method() : 0;
+            $total += $transaction->getTotal();
 
             if ($transaction->getCommission() > 0 && $share > 0) {
                 $commission += $share * $transaction->getCommission();
@@ -68,7 +70,7 @@ class Cashback extends Payable
             }
         }
 
-        return compact('commission', 'payment', 'adjustment', 'registeredAt');
+        return compact('total', 'commission', 'payment', 'adjustment', 'registeredAt');
     }
 
     public function calculateAmount()
@@ -82,5 +84,15 @@ class Cashback extends Payable
         $this->registeredAt = $registeredAt;
 
         return $this;
+    }
+
+    public function calculateTransactionTotal()
+    {
+        $total = 0.00;
+        foreach ($this->transactions as $transaction) {
+            $total += $transaction->getTotal();
+        }
+
+        return $total;
     }
 }

@@ -93,12 +93,13 @@ class Cashback extends Controller
 
         $data['transactions'] = array_map(function (App\Entity\Cashback $cashback) {
             $transaction = $cashback->getTransactions()->current();
+            $reportDate = $cashback->getRegisteredAt() ?: $transaction->getRegisteredAt();
 
-            $data['report_date'] = $transaction->getRegisteredAt()->format('m/d/Y');
+            $data['report_date'] = $reportDate ? $reportDate->format('m/d/Y') : null;
             $data['merchant'] = $cashback->getConcept();
             $data['order_id'] = $transaction->getOrderNumber();
             $data['status'] = ucfirst($cashback->getStatus());
-            $data['amount'] = sprintf('%.2f', $transaction->getTotal());
+            $data['amount'] = sprintf('%.2f', $cashback->calculateTransactionTotal());
             $data['cashback'] = sprintf('%.2f', $cashback->getAmount());
 
             return $data;

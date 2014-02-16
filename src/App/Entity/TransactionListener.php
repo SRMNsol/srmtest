@@ -55,5 +55,16 @@ class TransactionListener
         }
 
         $cashback->calculateAmount();
+
+        if (null === $cashback->getConcept()) {
+            $merchant = $transaction->getMerchant();
+            if (isset($merchant)) {
+                $cashback->setConcept($merchant->getName());
+            }
+        }
+
+        if (null === $cashback->getRegisteredAt()) {
+            $cashback->setRegisteredAt($transaction->getRegisteredAt());
+        }
     }
 }
