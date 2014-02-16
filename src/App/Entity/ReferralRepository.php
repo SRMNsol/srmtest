@@ -67,10 +67,10 @@ class ReferralRepository extends EntityRepository
                         $registeredAt = clone $values['registeredAt'];
                     }
 
-                    if ($level === 0) {
-                        $direct += $commission - $adjustment;
+                    if ($level === 1) {
+                        $direct += $values['commission'] - $values['adjustment'];
                     } else {
-                        $indirect += $commission - $adjustment;
+                        $indirect += $values['commission'] - $values['adjustment'];
                     }
                 }
             }
@@ -79,6 +79,8 @@ class ReferralRepository extends EntityRepository
         $referral = $this->findOneBy(['user' => $user, 'month' => "$year$month"]) ?: new Referral();
 
         $referral->setConcept('Referral Total')
+            ->setUser($user)
+            ->setMonth("$year$month")
             ->setAmount($commission - $adjustment)
             ->setAvailable($payment - $referral->getProcessing() - $referral->getPaid())
             ->setPending($referral->getAmount() - $referral->getAvailable())
@@ -86,6 +88,9 @@ class ReferralRepository extends EntityRepository
             ->setDirect($direct)
             ->setRegisteredAt($registeredAt)
         ;
+
+        $em->persist($referral);
+        $em->flush();
 
         return $referral;
     }
