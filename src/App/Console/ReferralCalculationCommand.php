@@ -28,22 +28,45 @@ class ReferralCalculationCommand extends Command
         $em = $app['orm.em'];
         $email = $input->getArgument('email');
         $yearMonth = $input->getArgument('month');
-        $year = substr($yearMonth, 0, 4);
-        $month = substr($yearMonth, 4, 2);
+        if (preg_match('/[0-9]{6}/', $yearMonth)) {
+            $year = substr($yearMonth, 0, 4);
+            $month = substr($yearMonth, 4, 2);
+        } else {
+            throw new \RuntimeException("Invalid year-month format");
+        }
 
         $userRepository = $em->getRepository('App\Entity\User');
-        $user = $userRepository->findOneByEmail($email);
+        if (null !== $email) {
+            $users[] = $userRepository->findOneByEmail($email);
+        } else {
+            $users = $userRepository->findAll();
+        }
 
-        $referralRepository = $em->getRepository('App\Entity\Referral');
-        $referral = $referralRepository->calculateUserReferral($user, $month, $year);
+        $em->clear();
+
         $table = $this->getHelperSet()->get('table');
+        $table->setHeaders(['User', 'Amount', 'Available', 'Pending', 'Direct', 'Indirect']);
 
-        $output->writeln(sprintf('Concept: %s (%s)', $referral->getConcept(), $yearMonth));
-        $output->writeln(sprintf('Amount: $%.2f', $referral->getAmount()));
-        $output->writeln(sprintf('Available: $%.2f', $referral->getAvailable()));
-        $output->writeln(sprintf('Pending: $%.2f', $referral->getPending()));
-        $output->writeln(sprintf('Indirect: $%.2f', $referral->getIndirect()));
-        $output->writeln(sprintf('Direct: $%.2f', $referral->getDirect()));
+        foreach ($users as $user) {
+            $user = $em->merge($user);
+            $output->writeln(sprintf('User: %s (%s)', $user->getEmail(), $yearMonth));
+
+            $referralRepository = $em->getRepository('App\Entity\Referral');
+            $referral = $referralRepository->calculateUserReferral($user, $month, $year);
+
+            $table->setRows([[
+                sprintf('%-20.20s', $user->getEmail()),
+                sprintf('$%.2f', $referral->getAmount()),
+                sprintf('$%.2f', $referral->getAvailable()),
+                sprintf('$%.2f', $referral->getPending()),
+                sprintf('$%.2f', $referral->getDirect()),
+                sprintf('$%.2f', $referral->getIndirect()),
+            ]]);
+
+            $table->render($output);
+
+            $em->clear();
+        }
 
         $output->writeln('DONE');
     }
