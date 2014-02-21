@@ -31,6 +31,12 @@ $console->addCommands([
     new App\Console\ExtrabuxImportUserCommand(),
     new App\Console\ReferralTreeCommand(),
     new App\Console\ReferralCalculationCommand(),
+    new Popshops\Console\MerchantCommand(),
+    new Popshops\Console\ProductCommand(),
+    new Popshops\Console\DealCommand(),
+    new Popshops\Console\NetworkCommand(),
+    new Popshops\Console\LinkshareTransactionReportCommand(),
+    new Popshops\Console\LinksharePaymentReportCommand(),
 ]);
 
 $console->run();
