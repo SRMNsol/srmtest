@@ -17,7 +17,7 @@ class ReferralCalculationCommand extends Command
         $this
             ->setName('beesavy:referral:calculate')
             ->setDescription('Calculate referral commission')
-            ->addArgument('month', InputArgument::REQUIRED, 'Year month format YYYYmm')
+            ->addOption('month', null, InputOption::VALUE_REQUIRED, 'Year month format YYYYmm')
             ->addArgument('email', InputArgument::OPTIONAL, 'Process user by email')
         ;
     }
@@ -27,7 +27,7 @@ class ReferralCalculationCommand extends Command
         $app = $this->getSilexApplication();
         $em = $app['orm.em'];
         $email = $input->getArgument('email');
-        $yearMonth = $input->getArgument('month');
+        $yearMonth = $input->getOption('month') ?: date('Ym');
         if (preg_match('/[0-9]{6}/', $yearMonth)) {
             $year = substr($yearMonth, 0, 4);
             $month = substr($yearMonth, 4, 2);
