@@ -1,6 +1,6 @@
 <?php
 
-$app = require __DIR__ . '/../src/app.php';
+$app = require __DIR__ . '/../config/popshops-cli-config.php';
 
 use Symfony\Component\Console\Helper\HelperSet;
 use Symfony\Component\Console\Helper\TableHelper;
@@ -13,6 +13,7 @@ $app->register(new ConsoleServiceProvider(), [
     'console.version' => 'n/a',
     'console.project_directory' => realpath(__DIR__ . '/..'),
 ]);
+
 
 $console = $app['console'];
 $console->setCatchExceptions(true);
