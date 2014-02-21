@@ -35,19 +35,25 @@ class ReferralCalculationCommand extends Command
             throw new \RuntimeException("Invalid year-month format");
         }
 
-        $userRepository = $em->getRepository('App\Entity\User');
+        $queryBuilder = $em->createQueryBuilder()
+            ->select('u')
+            ->from('App\Entity\User', 'u')
+        ;
+
         if (null !== $email) {
-            $users[] = $userRepository->findOneByEmail($email);
-        } else {
-            $users = $userRepository->findAll();
+            $queryBuilder
+                ->where('u.email = :email')
+                ->setParameter('email', $email)
+            ;
         }
 
-        $em->clear();
+        $results = $queryBuilder->getQuery()->iterate();
 
         $table = $this->getHelperSet()->get('table');
         $table->setHeaders(['User', 'Amount', 'Available', 'Pending', 'Direct', 'Indirect']);
 
-        foreach ($users as $user) {
+        foreach ($results as $row) {
+            $user = $row[0];
             $user = $em->merge($user);
             $output->writeln(sprintf('User: %s (%s)', $user->getEmail(), $yearMonth));
 
