@@ -18,6 +18,7 @@ class ReferralCalculationCommand extends Command
             ->setName('beesavy:referral:calculate')
             ->setDescription('Calculate referral commission')
             ->addOption('month', null, InputOption::VALUE_REQUIRED, 'Year month format YYYYmm')
+            ->addOption('exclude', null, InputOption::VALUE_REQUIRED, 'Exclude these email address (comma separated)')
             ->addArgument('email', InputArgument::OPTIONAL, 'Process user by email')
         ;
     }
@@ -44,6 +45,17 @@ class ReferralCalculationCommand extends Command
             $queryBuilder
                 ->where('u.email = :email')
                 ->setParameter('email', $email)
+            ;
+        }
+
+        $exclude = $input->getOption('exclude');
+        if (null !== $exclude) {
+            $excludeEmails = explode(',', $exclude);
+            $excludeEmails = array_map('trim', $excludeEmails);
+
+            $queryBuilder
+                ->andWhere("u.email NOT IN (:excludes)")
+                ->setParameter('excludes', $excludeEmails)
             ;
         }
 
