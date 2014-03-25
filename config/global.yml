@@ -40,6 +40,7 @@ popshops.classnames:
   entity.payment: App\Entity\Payment
   entity.deal: App\Entity\Deal
 popshops.linkshare_security_token: SECURITY_TOKEN
+popshops.cj_developer_key: DEVELOPER_KEY
 
 # dbal
 db.options:
