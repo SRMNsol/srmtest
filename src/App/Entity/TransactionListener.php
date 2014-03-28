@@ -2,20 +2,12 @@
 
 namespace App\Entity;
 
-use Doctrine\ORM\Event\PreUpdateEventArgs;
-use Doctrine\ORM\Event\LifecycleEventArgs;
+use Doctrine\ORM\Event\PreFlushEventArgs;
 use Doctrine\ORM\EntityRepository;
 
 class TransactionListener
 {
-    public function prePersist(Transaction $transaction, LifecycleEventArgs $event)
-    {
-        $em = $event->getEntityManager();
-        $this->assignRate($transaction, $em->getRepository('App\Entity\Rate'));
-        $this->assignCashback($transaction, $em->getRepository('App\Entity\Cashback'), $em->getRepository('App\Entity\User'));
-    }
-
-    public function preUpdate(Transaction $transaction, PreUpdateEventArgs $event)
+    public function preFlush(Transaction $transaction, PreFlushEventArgs $event)
     {
         $em = $event->getEntityManager();
         $this->assignRate($transaction, $em->getRepository('App\Entity\Rate'));
