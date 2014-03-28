@@ -12,9 +12,11 @@ class CashbackRepository extends EntityRepository
         $queryBuilder = $this->createQueryBuilder('c')
             ->innerJoin('c.transactions', 't')
             ->where('c.user = :user')
+            ->andWhere('c.status <> :invalid')
             ->orderBy('t.registeredAt', 'DESC')
             ->groupBy('c')
             ->setParameter('user', $user)
+            ->setParameter('invalid', Cashback::STATUS_INVALID)
         ;
 
         return $queryBuilder->getQuery()->getResult();
@@ -31,8 +33,10 @@ class CashbackRepository extends EntityRepository
                 'SUM(c.paid) AS paid'
             ])
             ->where('c.user = :user')
+            ->andWhere('c.status <> :invalid')
             ->groupBy('c.user')
             ->setParameter('user', $user)
+            ->setParameter('invalid', Cashback::STATUS_INVALID)
         ;
 
         try {
@@ -75,8 +79,11 @@ class CashbackRepository extends EntityRepository
 
             $qb->andWhere('c.registeredAt >= :start')
                 ->andWhere('c.registeredAt < :end')
+                ->andWhere('c.status <> :invalid')
                 ->setParameter('start', $start)
-                ->setParameter('end', $end);
+                ->setParameter('end', $end)
+                ->setParameter('invalid', Cashback::STATUS_INVALID)
+            ;
         }
 
         return $qb->getQuery()->getResult();

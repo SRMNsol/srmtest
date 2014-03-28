@@ -75,13 +75,17 @@ class Cashback extends Payable
 
     public function calculateAmount()
     {
-        // extract $commission, $payment, $adjustment, $registeredAt
+        // extract $total, $commission, $payment, $adjustment, $registeredAt
         extract($this->calculateTransactionValues());
 
         $this->amount = $commission - $adjustment;
         $this->available = $payment - $this->processing - $this->paid;
         $this->pending = $this->amount - $this->available;
         $this->registeredAt = $registeredAt;
+
+        if ($this->amount > 0 && $total <= 0) {
+            $this->status = self::STATUS_INVALID;
+        }
 
         return $this;
     }

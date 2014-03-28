@@ -83,6 +83,7 @@ class Payable
     const STATUS_PAID = 'paid';
     const STATUS_MIXED = 'mixed';
     const STATUS_CANCELLED = 'cancelled';
+    const STATUS_INVALID = 'invalid';
 
     const AVAILABLE_DAYS = 0;
 
@@ -316,6 +317,10 @@ class Payable
      */
     public function updateStatusBasedOnAmounts()
     {
+        if ($this->status === self::STATUS_INVALID) {
+            return;
+        }
+
         $status = null;
         foreach (['pending', 'available', 'processing', 'paid'] as $prop) {
             if ($this->$prop > 0) {
