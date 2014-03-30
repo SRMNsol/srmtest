@@ -60,7 +60,7 @@ class Cashback extends Payable
             $share = $rate ? $rate->$method() : 0;
             $total += $transaction->getTotal();
 
-            if ($transaction->getCommission() > 0 && $share > 0) {
+            if ($transaction->getCommission() >= 0.01 && $share >= 0.01) {
                 $commission += $share * $transaction->getCommission();
                 $payment += $share * $transaction->calculatePaymentSum();
                 $adjustment += $share * $transaction->calculateAdjustmentSum();
@@ -83,7 +83,7 @@ class Cashback extends Payable
         $this->pending = $this->amount - $this->available;
         $this->registeredAt = $registeredAt;
 
-        if ($this->amount > 0 && $total <= 0) {
+        if ($this->amount >= 0.01 && $total <= 0.01) {
             $this->status = self::STATUS_INVALID;
         }
 

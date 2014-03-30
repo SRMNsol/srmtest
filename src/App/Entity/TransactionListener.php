@@ -2,16 +2,28 @@
 
 namespace App\Entity;
 
-use Doctrine\ORM\Event\PreFlushEventArgs;
 use Doctrine\ORM\EntityRepository;
 
 class TransactionListener
 {
-    public function preFlush(Transaction $transaction, PreFlushEventArgs $event)
+    /** @PrePersist @PreUpdate */
+    public function createRelatedEntity(Transaction $transaction, $event)
     {
         $em = $event->getEntityManager();
         $this->assignRate($transaction, $em->getRepository('App\Entity\Rate'));
         $this->assignCashback($transaction, $em->getRepository('App\Entity\Cashback'), $em->getRepository('App\Entity\User'));
+    }
+
+    /**
+     * We need an additional flush to push Cashback changes that
+     * did not make it to the flush for the Transaction
+     *
+     * @PostUpdate
+     **/
+    public function flushCashback($transaction, $event)
+    {
+        $em = $event->getEntityManager();
+        $em->flush();
     }
 
     public function assignRate(Transaction $transaction, RateRepository $rateRepository)

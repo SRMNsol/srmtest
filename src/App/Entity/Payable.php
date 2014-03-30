@@ -323,7 +323,7 @@ class Payable
 
         $status = null;
         foreach (['pending', 'available', 'processing', 'paid'] as $prop) {
-            if ($this->$prop > 0) {
+            if ($this->$prop >= 0.01) {
                 if ($status !== null) {
                     $status = self::STATUS_MIXED;
                     break;
