@@ -46,8 +46,6 @@ class Cashback extends Payable
     {
         $total = 0.00;
         $commission = 0.00;
-        $payment = 0.00;
-        $adjustment = 0.00;
         $registeredAt = null;
 
         $method = "getLevel$rateLevel"; // getLevel0 -> getLevel7
@@ -60,28 +58,35 @@ class Cashback extends Payable
             $share = $rate ? $rate->$method() : 0;
             $total += $transaction->getTotal();
 
-            if ($transaction->getCommission() >= 0.01 && $share >= 0.01) {
-                $commission += $share * $transaction->getCommission();
-                $payment += $share * $transaction->calculatePaymentSum();
-                $adjustment += $share * $transaction->calculateAdjustmentSum();
+            if ($transaction->getRealCommission() >= 0.01 && $share >= 0.01) {
+                $commission += $share * $transaction->getRealCommission();
                 if (null === $registeredAt || $transaction->getRegisteredAt() > $registeredAt) {
                     $registeredAt = clone $transaction->getRegisteredAt();
                 }
             }
         }
 
-        return compact('total', 'commission', 'payment', 'adjustment', 'registeredAt');
+        return compact('total', 'commission', 'registeredAt');
     }
 
     public function calculateAmount()
     {
-        // extract $total, $commission, $payment, $adjustment, $registeredAt
+        // extract $total, $commission, $registeredAt
         extract($this->calculateTransactionValues());
 
-        $this->amount = $commission - $adjustment;
-        $this->available = $payment - $this->processing - $this->paid;
-        $this->pending = $this->amount - $this->available;
         $this->registeredAt = $registeredAt;
+        $this->updateAvailableDate();
+
+        $this->amount = $commission;
+
+        // past 90 days
+        if ($this->availableAt <= new \DateTime()) {
+            $this->available = $commission;
+            $this->pending = 0.00;
+        } else {
+            $this->available = 0.00;
+            $this->pending = $commission;
+        }
 
         if ($this->amount >= 0.01 && $total <= 0.01) {
             $this->status = self::STATUS_INVALID;
