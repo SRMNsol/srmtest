@@ -41,6 +41,7 @@ popshops.classnames:
   entity.deal: App\Entity\Deal
 popshops.linkshare_security_token: SECURITY_TOKEN
 popshops.cj_developer_key: DEVELOPER_KEY
+popshops.pepperjam_publisher_api_key: KEY
 
 # dbal
 db.options:
