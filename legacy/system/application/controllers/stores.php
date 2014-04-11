@@ -149,7 +149,7 @@ class Stores extends Controller
         $merchants = $result->getMerchants()
             ->sortByMerchantName()
             ->filterByNamePrefix($search === '0' ? '*' : $search);
-        $stores = result_merchants($merchants->slice($limit * ($page - 1), $limit), $rate);
+        $stores = result_merchants($merchants, $rate);
 
         $count = count($stores)/3;
         $split = array_chunk($stores,$count);
