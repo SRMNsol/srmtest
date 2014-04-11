@@ -142,6 +142,12 @@ class User extends Model
             'ref_uid' => $referral,
             'status' => 'active',
         ));
+
+        $userId = $this->db->insert_id();
+        $this->db->where('uid', $userId);
+        $this->db->update('user', array(
+            'alias' => sprintf('U%d', $userId)
+        ));
     }
 
     public function set_referral($alias)
