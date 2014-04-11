@@ -42,6 +42,9 @@ popshops.classnames:
 popshops.linkshare_security_token: SECURITY_TOKEN
 popshops.cj_developer_key: DEVELOPER_KEY
 popshops.pepperjam_publisher_api_key: KEY
+popshops.shareasale_affiliate_id: ID
+popshops.shareasale_token: TOKEN
+popshops.shareasale_api_secret: SECRET
 
 # dbal
 db.options:
