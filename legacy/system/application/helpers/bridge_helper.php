@@ -178,6 +178,7 @@ function comparison_result(ProductSearchResult $result, Rate $rate, Subid $subid
             'condition' => null,
             'group_id' => $product->getGroupId(),
             'product_url' => $product->getUrl(),
+            'cashback_type' => $product->getMerchant() ? ($product->getMerchant()->hasVariableCommission() ? 'variable' : 'fixed') : null,
             'retail_amount' => number_format($product->getRetailPrice(), 2),
             'cashback_amount' => number_format($product->calculateCommissionShareAmount($rate->getLevel0() * 100), 2),
             'final_amount' => number_format($product->calculateFinalPrice($rate->getLevel0() * 100), 2),

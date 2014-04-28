@@ -41,7 +41,7 @@ $price = $cheapest['final_amount'];
 $product_url = $cheapest['link'];
 ?>
 
-<?php 
+<?php
 echo "<a id='large-image' href='#'><img class='cdn-image' src='$image' alt='** PLEASE DESCRIBE THIS IMAGE **' onerror=\"this.src='/images/no-image-100px.gif'\"/></a>
 	</div>
 	<div id='product-info'>
@@ -123,7 +123,7 @@ $first = true;
 for($i=0; $i<count($compare); $i++){
     $result = $compare[$i];
     $store_price = $result['retail_amount'];
-    $cashback_amount =$result['cashback_amount'];
+    $cashback_amount = ($result['cashback_type'] === 'variable' ? 'Up to ' : '') . '$' . $result['cashback_amount'];
     $price = (float) $store_price;
     $cb = (float) $cashback_amount;
     $cashp = round(($cb / $price) * 100, 1);
@@ -173,7 +173,7 @@ onload=\"
 				</td>
 				<td class='base-price'>$$store_price</td>
 				<td class='coupons'>$coupon_html</td>
-				<td class='cashback1'><a href='$url' target='_blank' class='tooltip transfer-link'>$$cashback_amount <span class='percentTip'>$cashback_text</span></a></td>
+				<td class='cashback1'><a href='$url' target='_blank' class='tooltip transfer-link'>$cashback_amount <span class='percentTip'>$cashback_text</span></a></td>
 				<td class='tax'>$ts</td>
 				<td class='final-price'>
 					<span class='final'>$$final</span><br/>

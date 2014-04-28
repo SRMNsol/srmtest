@@ -40,6 +40,38 @@ class Merchant extends BaseMerchant
         return $this;
     }
 
+    public function hasVariableCommission()
+    {
+        return $this->commissionType === self::COMMISSION_TYPE_FIXED_VAR
+            || $this->commissionType === self::COMMISSION_TYPE_PERCENTAGE_VAR;
+    }
+
+    public function calculateCommissionShareAmount($price, $sharePct = 100)
+    {
+        $amount = 0;
+
+        switch ($this->commissionType) {
+            case self::COMMISSION_TYPE_FIXED :
+                $cashback = $this->commission * ($sharePct / 100);
+                $amount = $cashback;
+                break;
+            case self::COMMISSION_TYPE_PERCENTAGE :
+                $cashback = $this->commission * ($sharePct / 100);
+                $amount = $price * ($cashback / 100);
+                break;
+            case self::COMMISSION_TYPE_FIXED_VAR :
+                $cashback = $this->commissionMax * ($sharePct / 100);
+                $amount = $cashback;
+                break;
+            case self::COMMISSION_TYPE_PERCENTAGE_VAR :
+                $cashback = $this->commissionMax * ($sharePct / 100);
+                $amount = $price * ($cashback / 100);
+                break;
+        }
+
+        return $amount;
+    }
+
     public function getCommissionShareText($sharePct = 100, $currency = '$', $rangeTemplate = ':min-:max')
     {
         $text = number_format($this->commission * ($sharePct / 100), 2);
@@ -87,6 +119,7 @@ class Merchant extends BaseMerchant
 
         return null;
     }
+
 
     static public function loadValidatorMetadata(ClassMetadata $metadata)
     {
