@@ -350,4 +350,10 @@ class Payable
             $this->availableAt->add(\DateInterval::createFromDateString(sprintf('%d days', static::AVAILABLE_DAYS)));
         }
     }
+
+    public function isLocked()
+    {
+        return $this->status === self::STATUS_PROCESSING
+            || $this->status === self::STATUS_PAID;
+    }
 }

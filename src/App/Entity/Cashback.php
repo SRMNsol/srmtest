@@ -71,6 +71,11 @@ class Cashback extends Payable
 
     public function calculateAmount()
     {
+        // if cashback is locked don't update
+        if ($this->isLocked()) {
+            return $this;
+        }
+
         // extract $total, $commission, $registeredAt
         extract($this->calculateTransactionValues());
 
@@ -83,9 +88,11 @@ class Cashback extends Payable
         if ($this->availableAt <= new \DateTime()) {
             $this->available = $commission;
             $this->pending = 0.00;
+            $this->status = self::STATUS_AVAILABLE;
         } else {
             $this->available = 0.00;
             $this->pending = $commission;
+            $this->status = self::STATUS_PENDING;
         }
 
         if ($this->amount >= 0.01 && $total <= 0.01) {
