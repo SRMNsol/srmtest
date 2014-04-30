@@ -101,7 +101,7 @@ class ExtrabuxImportTransactionCommand extends Command
                         $cashback->setPaid($cashback->getAmount());
                         break;
                     case 'Returned' :
-                        $cashback->setStatus(Cashback::STATUS_CANCELLED);
+                        $cashback->setStatus(Cashback::STATUS_CANCELED);
                         break;
                     default :
                         throw new \Exception('Unexpected status ' . $transactionData['status']);

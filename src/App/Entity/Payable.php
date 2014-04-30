@@ -82,7 +82,7 @@ class Payable
     const STATUS_PROCESSING = 'processing';
     const STATUS_PAID = 'paid';
     const STATUS_MIXED = 'mixed';
-    const STATUS_CANCELLED = 'cancelled';
+    const STATUS_CANCELED = 'canceled';
     const STATUS_INVALID = 'invalid';
 
     const AVAILABLE_DAYS = 0;
@@ -334,7 +334,7 @@ class Payable
         }
 
         if ($status === null) {
-            $this->status = self::STATUS_CANCELLED;
+            $this->status = self::STATUS_CANCELED;
         } else {
             $this->status = $status;
         }
