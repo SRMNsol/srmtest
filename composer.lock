@@ -77,12 +77,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:doblebjp/popshops-api.git",
-                "reference": "a4ee01aa76506952f04e76e00af4216977b0aca8"
+                "reference": "24f41c6c7872cbadf02aa134d5332f9c8cceca91"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doblebjp/popshops-api/zipball/a4ee01aa76506952f04e76e00af4216977b0aca8",
-                "reference": "a4ee01aa76506952f04e76e00af4216977b0aca8",
+                "url": "https://api.github.com/repos/doblebjp/popshops-api/zipball/24f41c6c7872cbadf02aa134d5332f9c8cceca91",
+                "reference": "24f41c6c7872cbadf02aa134d5332f9c8cceca91",
                 "shasum": ""
             },
             "require": {
@@ -128,7 +128,7 @@
                 "source": "https://github.com/doblebjp/popshops-api/tree/master",
                 "issues": "https://github.com/doblebjp/popshops-api/issues"
             },
-            "time": "2014-04-30 09:59:08"
+            "time": "2014-05-08 15:59:56"
         },
         {
             "name": "doctrine/annotations",
@@ -675,16 +675,16 @@
         },
         {
             "name": "guzzle/guzzle",
-            "version": "v3.9.0",
+            "version": "v3.9.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/guzzle3.git",
-                "reference": "e4d12d7d6acccf75a5e504114e2df9195e494108"
+                "reference": "92d9934f2fca1da15178c91239576ae26e505e60"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle3/zipball/e4d12d7d6acccf75a5e504114e2df9195e494108",
-                "reference": "e4d12d7d6acccf75a5e504114e2df9195e494108",
+                "url": "https://api.github.com/repos/guzzle/guzzle3/zipball/92d9934f2fca1da15178c91239576ae26e505e60",
+                "reference": "92d9934f2fca1da15178c91239576ae26e505e60",
                 "shasum": ""
             },
             "require": {
@@ -763,7 +763,7 @@
                 "rest",
                 "web service"
             ],
-            "time": "2014-04-23 21:43:40"
+            "time": "2014-05-07 17:04:22"
         },
         {
             "name": "igorw/config-service-provider",

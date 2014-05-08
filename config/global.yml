@@ -38,7 +38,6 @@ popshops.classnames:
   entity.product: App\Entity\Product
   entity.transaction: App\Entity\Transaction
   entity.transactionHistory: App\Entity\TransactionHistory
-  entity.payment: App\Entity\Payment
   entity.deal: App\Entity\Deal
 popshops.linkshare_security_token: SECURITY_TOKEN
 popshops.cj_developer_key: DEVELOPER_KEY

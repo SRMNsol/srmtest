@@ -37,7 +37,6 @@ $console->addCommands([
     new Popshops\Console\DealCommand(),
     new Popshops\Console\NetworkCommand(),
     new Popshops\Console\LinkshareTransactionReportCommand(),
-    new Popshops\Console\LinksharePaymentReportCommand(),
     new Popshops\Console\CommissionJunctionTransactionReportCommand(),
     new Popshops\Console\PepperjamTransactionReportCommand(),
     new Popshops\Console\ShareasaleTransactionReportCommand(),
