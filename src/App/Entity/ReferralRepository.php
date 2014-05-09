@@ -46,8 +46,7 @@ class ReferralRepository extends EntityRepository
         $cashbackRepository = $em->getRepository('App\Entity\Cashback');
 
         $commission = 0.00;
-        $payment = 0.00;
-        $adjustment = 0.00;
+        $available = 0.00;
         $registeredAt = null;
         $direct = 0.00;
         $indirect = 0.00;
@@ -61,16 +60,18 @@ class ReferralRepository extends EntityRepository
                     $values = $cashback->calculateTransactionValues($level);
 
                     $commission += $values['commission'];
-                    $payment += $values['payment'];
-                    $adjustment += $values['adjustment'];
+                    if ($cashback->getStatus() === Cashback::STATUS_AVAILABLE) {
+                        $available += $commission;
+                    }
+
                     if (null === $registeredAt || $values['registeredAt'] > $registeredAt) {
                         $registeredAt = clone $values['registeredAt'];
                     }
 
                     if ($level === 1) {
-                        $direct += $values['commission'] - $values['adjustment'];
+                        $direct += $values['commission'];
                     } else {
-                        $indirect += $values['commission'] - $values['adjustment'];
+                        $indirect += $values['commission'];
                     }
                 }
             }
@@ -78,12 +79,14 @@ class ReferralRepository extends EntityRepository
 
         $referral = $this->findOneBy(['user' => $user, 'month' => "$year$month"]) ?: new Referral();
 
+        $payment = $referral->getProcessing() + $referral->getPaid();
+
         $referral->setConcept('Referral Total')
             ->setUser($user)
             ->setMonth("$year$month")
-            ->setAmount($commission - $adjustment)
-            ->setAvailable($payment - $referral->getProcessing() - $referral->getPaid())
-            ->setPending($referral->getAmount() - $referral->getAvailable())
+            ->setAmount($commission)
+            ->setAvailable($available - $payment)
+            ->setPending($commission - $available - $payment)
             ->setIndirect($indirect)
             ->setDirect($direct)
             ->setRegisteredAt($registeredAt)

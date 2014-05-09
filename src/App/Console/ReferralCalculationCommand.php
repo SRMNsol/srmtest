@@ -36,6 +36,10 @@ class ReferralCalculationCommand extends Command
             throw new \RuntimeException("Invalid year-month format");
         }
 
+        // make cashback available
+        $em->getRepository('App\Entity\Cashback')->makeCashbackAvailable(new \DateTime());
+
+        // pull users
         $queryBuilder = $em->createQueryBuilder()
             ->select('u')
             ->from('App\Entity\User', 'u')
@@ -62,7 +66,7 @@ class ReferralCalculationCommand extends Command
         $results = $queryBuilder->getQuery()->iterate();
 
         $table = $this->getHelperSet()->get('table');
-        $table->setHeaders(['User', 'Amount', 'Available', 'Pending', 'Direct', 'Indirect']);
+        $table->setHeaders(['User', 'Month', 'Amount', 'Available', 'Pending', 'Direct', 'Indirect', 'Status']);
 
         foreach ($results as $row) {
             $user = $row[0];
@@ -74,11 +78,13 @@ class ReferralCalculationCommand extends Command
 
             $table->setRows([[
                 sprintf('%-20.20s', $user->getEmail()),
+                $referral->getMonth(),
                 sprintf('$%.2f', $referral->getAmount()),
                 sprintf('$%.2f', $referral->getAvailable()),
                 sprintf('$%.2f', $referral->getPending()),
                 sprintf('$%.2f', $referral->getDirect()),
                 sprintf('$%.2f', $referral->getIndirect()),
+                $referral->getStatus(),
             ]]);
 
             $table->render($output);
