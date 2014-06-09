@@ -4,9 +4,7 @@
 {% spaceless %}
   {% set attr = attr|merge({ class: 'form-control ' ~ attr.class|default }) %}
   {% set div_attr = div_attr|default({})|merge({ class: div_attr.class|default|grid('col-md-8') }) %}
-  <div{% for attrname, attrvalue in div_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
-    {{ parent() }}
-  </div>
+  {{ parent() }}
 {% endspaceless %}
 {% endblock form_widget_simple %}
 
@@ -22,7 +20,7 @@
 
 {% block form_start %}
 {% spaceless %}
-  {% set attr = attr|merge({ role: 'form', class: 'form-horizontal ' ~ attr.class|default }) %}
+  {% set attr = attr|merge({ role: 'form', class: 'form-inline ' ~ attr.class|default }) %}
   {{ parent() }}
 {% endspaceless %}
 {% endblock form_start %}
@@ -39,7 +37,7 @@
 
 {% block form_label %}
 {% spaceless %}
-  {% set label_attr = label_attr|merge({ class: 'control-label ' ~ label_attr.class|default|grid('col-md-2')}) %}
+  {% set label_attr = label_attr|merge({ class: 'sr-only'}) %}
   {{ parent() }}
 {% endspaceless %}
 {% endblock form_label %}
@@ -48,9 +46,7 @@
 {% spaceless %}
   {% set attr = attr|merge({ class: 'form-control ' ~ attr.class|default }) %}
   {% set div_attr = div_attr|default({})|merge({ class: div_attr.class|default|grid('col-md-8') }) %}
-  <div{% for attrname, attrvalue in div_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
-    {{ parent() }}
-  </div>
+  {{ parent() }}
 {% endspaceless %}
 {% endblock choice_widget_collapsed %}
 
@@ -58,9 +54,7 @@
 {% spaceless %}
   {% set attr = attr|merge({ class: 'form-control ' ~ attr.class|default }) %}
   {% set div_attr = div_attr|default({})|merge({ class: div_attr.class|default|grid('col-md-8') }) %}
-  <div{% for attrname, attrvalue in div_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
-    {{ parent() }}
-  </div>
+  {{ parent() }}
 {% endspaceless %}
 {% endblock textarea_widget %}
 

@@ -1,9 +1,27 @@
 {% extends 'common/layout.html.twig' %}
 
+{% form_theme searchForm 'common/form_inline.html.twig' %}
+
 {% block content %}
 <div class="page-header">
   <h1>User Info <small></small></h1>
 </div>
 
+<div class="row">
+  <div class="col-md-9">
+    {{ form_start(searchForm, { attr: { class: 'user-search' } }) }}
+      {{ form_errors(searchForm) }}
+      {{ form_row(searchForm.email, { attr: { placeholder: 'Enter user email' } }) }}
+      {{ form_row(searchForm.startDate) }}
+      {{ form_row(searchForm.endDate) }}
+
+      <div class="form-group">
+        <div class="col-md-6 col-md-offset-2">
+          <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+      </div>
+    {{ form_end(searchForm) }}
+  </div>
+</div>
 
 {% endblock content %}

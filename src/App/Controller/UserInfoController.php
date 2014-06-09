@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Form\FormFactory;
 use Doctrine\ORM\EntityManager;
+use App\Form\UserSearchType;
 
 class UserInfoController
 {
@@ -17,10 +18,19 @@ class UserInfoController
         $this->em = $em;
     }
 
-    public function display(Application $app)
+    public function display(Request $request, Application $app)
     {
-        return new Response($app['twig']->render('user_info.html.twig', [
+        $searchForm = $app['form.factory']->create(new UserSearchType());
 
+        $searchForm->handleRequest($request);
+        if ($searchForm->isValid()) {
+            // search user
+        } else {
+
+        }
+
+        return new Response($app['twig']->render('user_info.html.twig', [
+            'searchForm' => $searchForm->createView(),
         ]));
     }
 }
