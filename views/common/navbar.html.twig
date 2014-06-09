@@ -13,6 +13,10 @@
     <div class="collapse navbar-collapse">
       <ul class="nav navbar-nav">
         <li><a href="{{ path('merchant_list') }}">Merchants</a></li>
+        <li><a href="#">Payment Requests</a></li>
+        <li><a href="#">Referral Cash Back</a></li>
+        <li><a href="#">Site Statistics</a></li>
+        <li><a href="{{ path('user_info') }}">User Info</a></li>
       </ul>
       <a href="{{ path('logout') }}" class="btn btn-default navbar-btn navbar-right">Logout</a>
       <p class="navbar-text pull-right">Signed in as <b>{{ app.security.token.user.username }}</b> &nbsp;</p>

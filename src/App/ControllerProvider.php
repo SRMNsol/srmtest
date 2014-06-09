@@ -23,6 +23,10 @@ class ControllerProvider implements ControllerProviderInterface
             return new Controller\MerchantController($app['orm.em']);
         });
 
+        $app['user_info.controller'] = $app->share(function () use ($app) {
+            return new Controller\UserInfoController($app['orm.em']);
+        });
+
         $controllers->get('/', 'main.controller:dashboard')
             ->bind('homepage');
 
@@ -34,6 +38,9 @@ class ControllerProvider implements ControllerProviderInterface
 
         $controllers->match('/merchant/edit/{merchantId}', 'merchant.controller:editMerchant')
             ->bind('merchant_edit');
+
+        $controllers->get('/user-info', 'user_info.controller:display')
+            ->bind('user_info');
 
         return $controllers;
     }
