@@ -8,8 +8,6 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-use App\TemplatingProvider;
-
 class AssetDumpCommand extends Command
 {
     public function configure()
@@ -22,7 +20,6 @@ class AssetDumpCommand extends Command
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $app = $this->getSilexApplication();
-        $app->register(new TemplatingProvider());
 
         $dumper = $app['assetic.dumper'];
         $dumper->addTwigAssets();
