@@ -33,8 +33,14 @@
     { "type": "vcs", "url": "https://github.com/doblebjp/easy-csv.git" }
   ],
   "scripts": {
-    "post-install-cmd": "App\\Setup\\WritePermissions::checkPaths",
-    "post-update-cmd": "App\\Setup\\WritePermissions::checkPaths"
+    "post-install-cmd": [
+      "App\\Setup\\WritePermissions::checkPaths",
+      "php bin/console.php asset:dump"
+    ],
+    "post-update-cmd": [
+      "App\\Setup\\WritePermissions::checkPaths",
+      "php bin/console.php asset:dump"
+    ]
   },
   "autoload": {
     "psr-0": {
