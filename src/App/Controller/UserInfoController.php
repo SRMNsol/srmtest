@@ -22,20 +22,28 @@ class UserInfoController
     {
         $searchForm = $app['form.factory']->create(new UserSearchType());
         $em = $app['orm.em'];
-        $userRepository = $em->getRepository('App\Entity\User');
+        $totalCashback = 0.00;
+        $cashbackList = [];
+        $user = null;
 
         $searchForm->handleRequest($request);
         if ($searchForm->isValid()) {
             // search user
             $data = $searchForm->getData();
-            $user = $userRepository->findOneByEmail($data['email']);
+            $user = $em->getRepository('App\Entity\User')->findOneByEmail($data['email']);
+            $cashbackList = $em->getRepository('App\Entity\Cashback')->findCashbackForUserByDateRange($user);
+            foreach ($cashbackList as $cashback) {
+                $totalCashback += $cashback->getAmount();
+            }
         } else {
 
         }
 
         return new Response($app['twig']->render('user_info.html.twig', [
             'searchForm' => $searchForm->createView(),
-            'user' => isset($user) ? $user : null,
+            'user' => $user,
+            'cashbackList' => $cashbackList,
+            'totalCashback' => $totalCashback,
         ]));
     }
 }

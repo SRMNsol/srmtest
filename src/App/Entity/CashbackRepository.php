@@ -68,22 +68,36 @@ class CashbackRepository extends EntityRepository
 
     public function findCashbackForUser(User $user, $month = null, $year = null)
     {
-        $qb = $this->createQueryBuilder('c')
-            ->where('c.user = :user')
-            ->setParameter('user', $user);
+        $start = null;
+        $end = null;
 
         if ($month !== null && $year !== null) {
             $start = new \DateTime("$year-$month-01");
             $end = clone $start;
             $end->add(\DateInterval::createFromDateString('+1 month'));
+        }
 
-            $qb->andWhere('c.registeredAt >= :start')
-                ->andWhere('c.registeredAt < :end')
-                ->andWhere('c.status <> :invalid')
-                ->setParameter('start', $start)
-                ->setParameter('end', $end)
-                ->setParameter('invalid', Cashback::STATUS_INVALID)
-            ;
+        return $this->findCashbackForUserByDateRange($user, $start, $end);
+    }
+
+    public function findCashbackForUserByDateRange(User $user, \DateTime $from = null, \DateTime $to = null)
+    {
+        $qb = $this->createQueryBuilder('c');
+        $qb->where('c.user = :user');
+        $qb->setParameter('user', $user);
+        $qb->andWhere('c.status <> :invalid');
+        $qb->setParameter('invalid', Cashback::STATUS_INVALID);
+
+        if (isset($from)) {
+            $from->setTime(0, 0);
+            $qb->andWhere('c.registeredAt >= :start');
+            $qb->setParameter('start', $start);
+        }
+
+        if (isset($to)) {
+            $to->setTime(0, 0);
+            $qb->andWhere('c.registeredAt < :end');
+            $qb->setParameter('end', $start);
         }
 
         return $qb->getQuery()->getResult();
