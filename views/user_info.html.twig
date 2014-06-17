@@ -24,4 +24,47 @@
   </div>
 </div>
 
+{% if user is not null %}
+<br>
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th class="col-md-1">User ID</th>
+      <th class="col-md-3">Email Address</th>
+      <th class="col-md-3">Referral Alias</th>
+      <th class="col-md-5">Referred By</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>{{ user.id }}</td>
+      <td>{{ user.email }}</td>
+      <td>{{ user.alias }}</td>
+      <td>{{ user.referredBy.email }}</td>
+    </tr>
+  </tbody>
+</table>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th class="col-md-1">Spend</th>
+      <th class="col-md-3">Personal Cashback Earned</th>
+      <th class="col-md-3">Referral Cashback Earned</th>
+      <th class="col-md-3">Total Cashback Earned</th>
+      <th class="col-md-2">Paid</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>$ 0.00</td>
+      <td>$ 0.00</td>
+      <td>$ 0.00</td>
+      <td>$ 0.00</td>
+      <td>$ 0.00</td>
+    </tr>
+  </tbody>
+</table>
+{% endif %}
+
 {% endblock content %}
