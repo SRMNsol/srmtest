@@ -31,7 +31,7 @@ class UserInfoController
             // search user
             $data = $searchForm->getData();
             $user = $em->getRepository('App\Entity\User')->findOneByEmail($data['email']);
-            $cashbackList = $em->getRepository('App\Entity\Cashback')->findCashbackForUserByDateRange($user);
+            $cashbackList = $em->getRepository('App\Entity\Cashback')->findCashbackForUserByDateRange($user, null, null, 'latest');
             foreach ($cashbackList as $cashback) {
                 $totalCashback += $cashback->getAmount();
             }

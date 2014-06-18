@@ -80,7 +80,7 @@ class CashbackRepository extends EntityRepository
         return $this->findCashbackForUserByDateRange($user, $start, $end);
     }
 
-    public function findCashbackForUserByDateRange(User $user, \DateTime $from = null, \DateTime $to = null)
+    public function findCashbackForUserByDateRange(User $user, \DateTime $from = null, \DateTime $to = null, $order = null)
     {
         $qb = $this->createQueryBuilder('c');
         $qb->where('c.user = :user');
@@ -98,6 +98,14 @@ class CashbackRepository extends EntityRepository
             $to->setTime(0, 0);
             $qb->andWhere('c.registeredAt < :end');
             $qb->setParameter('end', $start);
+        }
+
+        switch ($order) {
+            case 'latest' :
+                $qb->orderBy('c.registeredAt', 'DESC');
+                break;
+            default :
+                break;
         }
 
         return $qb->getQuery()->getResult();

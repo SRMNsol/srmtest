@@ -111,4 +111,15 @@ class Cashback extends Payable
 
         return $total;
     }
+
+    public function getTransactionNumbers()
+    {
+        $nums = [];
+
+        foreach ($this->transactions as $transaction) {
+            $nums[$transaction->getOrderNumber()] = 1;
+        }
+
+        return array_keys($nums);
+    }
 }

@@ -65,6 +65,32 @@
     </tr>
   </tbody>
 </table>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th class="col-md-1">Date</th>
+      <th class="col-md-3">Store</th>
+      <th class="col-md-3">Order</th>
+      <th class="col-md-2">Amount</th>
+      <th class="col-md-2">Cashback</th>
+      <th class="col-md-1">Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for cashback in cashbackList %}
+    <tr>
+      <td>{{ cashback.registeredAt|date('m/d/Y') }}</td>
+      <td>{{ cashback.concept }}</td>
+      <td>{{ cashback.transactionNumbers|join(', ') }}</td>
+      <td>$ {{ cashback.calculateTransactionTotal|number_format(2) }}</td>
+      <td>$ {{ cashback.amount|number_format(2) }}</td>
+      <td>{{ cashback.status }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
 {% endif %}
 
 {% endblock content %}
