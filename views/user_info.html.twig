@@ -57,11 +57,11 @@
   </thead>
   <tbody>
     <tr>
-      <td>$ 0.00</td>
+      <td>$ {{ totalSpending|number_format(2) }}</td>
       <td>$ {{ totalCashback|number_format(2) }}</td>
-      <td>$ 0.00</td>
-      <td>$ 0.00</td>
-      <td>$ 0.00</td>
+      <td>$ {{ totalReferral|number_format(2) }}</td>
+      <td>$ {{ totalEarning|number_format(2) }}</td>
+      <td>$ {{ totalPayment|number_format(2) }}</td>
     </tr>
   </tbody>
 </table>

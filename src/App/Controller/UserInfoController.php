@@ -23,6 +23,9 @@ class UserInfoController
         $searchForm = $app['form.factory']->create(new UserSearchType());
         $em = $app['orm.em'];
         $totalCashback = 0.00;
+        $totalSpending = 0.00;
+        $totalPayment = 0.00;
+        $totalReferral = 0.00;
         $cashbackList = [];
         $user = null;
 
@@ -39,6 +42,8 @@ class UserInfoController
                 $cashbackList = $em->getRepository('App\Entity\Cashback')->findCashbackForUserByDateRange($user, $data['startDate'], $data['endDate'], 'latest');
                 foreach ($cashbackList as $cashback) {
                     $totalCashback += $cashback->getAmount();
+                    $totalSpending += $cashback->calculateTransactionTotal();
+                    $totalPayment += $cashback->getPaid();
                 }
             } catch (\Exception $e) {
                 $app['session']->getFlashBag()->add('danger', $e->getMessage());
@@ -50,7 +55,11 @@ class UserInfoController
             'searchForm' => $searchForm->createView(),
             'user' => $user,
             'cashbackList' => $cashbackList,
+            'totalSpending' => $totalSpending,
             'totalCashback' => $totalCashback,
+            'totalReferral' => $totalReferral,
+            'totalPayment' => $totalPayment,
+            'totalEarning' => $totalCashback + $totalReferral,
         ]));
     }
 }
