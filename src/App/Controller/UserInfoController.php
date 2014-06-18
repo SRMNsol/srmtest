@@ -29,14 +29,21 @@ class UserInfoController
         $searchForm->handleRequest($request);
         if ($searchForm->isValid()) {
             // search user
-            $data = $searchForm->getData();
-            $user = $em->getRepository('App\Entity\User')->findOneByEmail($data['email']);
-            $cashbackList = $em->getRepository('App\Entity\Cashback')->findCashbackForUserByDateRange($user, null, null, 'latest');
-            foreach ($cashbackList as $cashback) {
-                $totalCashback += $cashback->getAmount();
+            try {
+                $data = $searchForm->getData();
+                $user = $em->getRepository('App\Entity\User')->findOneByEmail($data['email']);
+                if ($user === null) {
+                    throw new \RuntimeException('User not found');
+                }
+
+                $cashbackList = $em->getRepository('App\Entity\Cashback')->findCashbackForUserByDateRange($user, $data['startDate'], $data['endDate'], 'latest');
+                foreach ($cashbackList as $cashback) {
+                    $totalCashback += $cashback->getAmount();
+                }
+            } catch (\Exception $e) {
+                $app['session']->getFlashBag()->add('danger', $e->getMessage());
             }
         } else {
-
         }
 
         return new Response($app['twig']->render('user_info.html.twig', [
