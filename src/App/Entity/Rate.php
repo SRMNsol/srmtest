@@ -282,4 +282,32 @@ class Rate
     {
         $this->createdAt = new \DateTime();
     }
+
+    public function createCopy()
+    {
+        $rate = new Rate();
+        $rate->setLevel0($this->getLevel0());
+        $rate->setLevel1($this->getLevel1());
+        $rate->setLevel2($this->getLevel2());
+        $rate->setLevel3($this->getLevel3());
+        $rate->setLevel4($this->getLevel4());
+        $rate->setLevel5($this->getLevel5());
+        $rate->setLevel6($this->getLevel6());
+        $rate->setLevel7($this->getLevel7());
+
+        return $rate;
+    }
+
+    public function hasSameValues(Rate $rate)
+    {
+        return ($this->getLevel0() == $rate->getLevel0())
+            && ($this->getLevel1() == $rate->getLevel1())
+            && ($this->getLevel2() == $rate->getLevel2())
+            && ($this->getLevel3() == $rate->getLevel3())
+            && ($this->getLevel4() == $rate->getLevel4())
+            && ($this->getLevel5() == $rate->getLevel5())
+            && ($this->getLevel6() == $rate->getLevel6())
+            && ($this->getLevel7() == $rate->getLevel7())
+        ;
+    }
 }

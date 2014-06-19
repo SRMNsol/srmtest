@@ -46,7 +46,7 @@ class ControllerProvider implements ControllerProviderInterface
         $controllers->get('/user-info', 'user_info.controller:display')
             ->bind('user_info');
 
-        $controllers->get('/referral-cashback', 'referral_cashback.controller:display')
+        $controllers->match('/referral-cashback', 'referral_cashback.controller:display')
             ->bind('referral_cashback');
 
         return $controllers;
