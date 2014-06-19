@@ -27,6 +27,10 @@ class ControllerProvider implements ControllerProviderInterface
             return new Controller\UserInfoController($app['orm.em']);
         });
 
+        $app['referral_cashback.controller'] = $app->share(function () use ($app) {
+            return new Controller\ReferralCashbackController($app['orm.em']);
+        });
+
         $controllers->get('/', 'main.controller:dashboard')
             ->bind('homepage');
 
@@ -41,6 +45,9 @@ class ControllerProvider implements ControllerProviderInterface
 
         $controllers->get('/user-info', 'user_info.controller:display')
             ->bind('user_info');
+
+        $controllers->get('/referral-cashback', 'referral_cashback.controller:display')
+            ->bind('referral_cashback');
 
         return $controllers;
     }
