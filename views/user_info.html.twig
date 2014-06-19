@@ -91,6 +91,24 @@
   </tbody>
 </table>
 
+<h4>Level 1 referrals ({{ user.referredUsers.count }} users)</h4>
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <td class="col-md-1">Id</td>
+      <td class="col-md-10">Email</td>
+    </tr>
+  </thead>
+  <tbody>
+    {% for referredUser in user.referredUsers %}
+    <tr>
+      <td>{{ referredUser.id }}</td>
+      <td>{{ referredUser.email }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
 {% endif %}
 
 {% endblock content %}
