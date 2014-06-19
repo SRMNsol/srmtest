@@ -40,7 +40,7 @@ class ReferralRepository extends EntityRepository
         }
     }
 
-    public function calculateUserReferral(User $user, \DateTime $from, \DateTime $to, $level = 7)
+    public function calculateUserReferral(User $user, \DateTime $from = null, \DateTime $to = null, $level = 7)
     {
         $em = $this->getEntityManager();
         $cashbackRepository = $em->getRepository('App\Entity\Cashback');
@@ -77,7 +77,13 @@ class ReferralRepository extends EntityRepository
             }
         }
 
-        return [$commission, $available, $indirect, $direct, $registeredAt];
+        return [
+            'commission' => $commission,
+            'available' => $available,
+            'indirect' => $indirect,
+            'direct' => $direct,
+            'registeredAt' => $registeredAt,
+        ];
     }
 
     public function createUserReferral(User $user, $month, $year, $level = 7)
@@ -85,7 +91,7 @@ class ReferralRepository extends EntityRepository
         $from = new \DateTime("$year-$month-01");
         $to = new \DateTime($from->format('Y-m-t'));
 
-        list($commission, $available, $indirect, $direct, $registeredAt) = $this->calculateUserReferral($user, $from, $to, $level);
+        $values = $this->calculateUserReferral($user, $from, $to, $level);
 
         $em = $this->getEntityManager();
 
@@ -96,12 +102,12 @@ class ReferralRepository extends EntityRepository
         $referral->setConcept('Referral Total')
             ->setUser($user)
             ->setMonth("$year$month")
-            ->setAmount($commission)
-            ->setAvailable($available - $payment)
-            ->setPending($commission - $available - $payment)
-            ->setIndirect($indirect)
-            ->setDirect($direct)
-            ->setRegisteredAt($registeredAt)
+            ->setAmount($values['commission'])
+            ->setAvailable($values['available'] - $payment)
+            ->setPending($values['commission'] - $values['available'] - $payment)
+            ->setIndirect($values['indirect'])
+            ->setDirect($values['direct'])
+            ->setRegisteredAt($values['registeredAt'])
         ;
 
         $em->persist($referral);

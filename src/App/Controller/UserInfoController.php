@@ -45,6 +45,10 @@ class UserInfoController
                     $totalSpending += $cashback->calculateTransactionTotal();
                     $totalPayment += $cashback->getPaid();
                 }
+
+                $referral = $em->getRepository('App\Entity\Referral')->calculateUserReferral($user, $data['startDate'], $data['endDate']);
+                $totalReferral = $referral['commission'];
+
             } catch (\Exception $e) {
                 $app['session']->getFlashBag()->add('danger', $e->getMessage());
             }
