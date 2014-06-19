@@ -40,7 +40,7 @@ class ReferralRepository extends EntityRepository
         }
     }
 
-    public function calculateUserReferral(User $user, $month, $year, $level = 7)
+    public function calculateUserReferral(User $user, \DateTime $from, \DateTime $to, $level = 7)
     {
         $em = $this->getEntityManager();
         $cashbackRepository = $em->getRepository('App\Entity\Cashback');
@@ -54,7 +54,7 @@ class ReferralRepository extends EntityRepository
         $tree = $user->getReferralTree($level);
         foreach ($tree as $level => $children) {
             foreach ($children as $child) {
-                $cashbacks = $cashbackRepository->findCashbackForUser($child, $month, $year);
+                $cashbacks = $cashbackRepository->findCashbackForUserByDateRange($child, $from, $to);
 
                 foreach ($cashbacks as $cashback) {
                     $values = $cashback->calculateTransactionValues($level);
@@ -76,6 +76,18 @@ class ReferralRepository extends EntityRepository
                 }
             }
         }
+
+        return [$commission, $available, $indirect, $direct, $registeredAt];
+    }
+
+    public function createUserReferral(User $user, $month, $year, $level = 7)
+    {
+        $from = new \DateTime("$year-$month-01");
+        $to = new \DateTime($from->format('Y-m-t'));
+
+        list($commission, $available, $indirect, $direct, $registeredAt) = $this->calculateUserReferral($user, $from, $to, $level);
+
+        $em = $this->getEntityManager();
 
         $referral = $this->findOneBy(['user' => $user, 'month' => "$year$month"]) ?: new Referral();
 

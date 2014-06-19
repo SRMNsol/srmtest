@@ -74,7 +74,7 @@ class ReferralCalculationCommand extends Command
             $output->writeln(sprintf('User: %s (%s)', $user->getEmail(), $yearMonth));
 
             $referralRepository = $em->getRepository('App\Entity\Referral');
-            $referral = $referralRepository->calculateUserReferral($user, $month, $year);
+            $referral = $referralRepository->createUserReferral($user, $month, $year);
 
             $table->setRows([[
                 sprintf('%-20.20s', $user->getEmail()),
