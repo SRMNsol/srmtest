@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "dflydev/doctrine-orm-service-provider",
-            "version": "v1.0.4",
+            "version": "v1.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dflydev/dflydev-doctrine-orm-service-provider.git",
-                "reference": "cbb2e4022ad46675d7406398c024191c6f3539f0"
+                "reference": "c5820e9e14884ebca9419bc3ceafe52899be6d5a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dflydev/dflydev-doctrine-orm-service-provider/zipball/cbb2e4022ad46675d7406398c024191c6f3539f0",
-                "reference": "cbb2e4022ad46675d7406398c024191c6f3539f0",
+                "url": "https://api.github.com/repos/dflydev/dflydev-doctrine-orm-service-provider/zipball/c5820e9e14884ebca9419bc3ceafe52899be6d5a",
+                "reference": "c5820e9e14884ebca9419bc3ceafe52899be6d5a",
                 "shasum": ""
             },
             "require": {
@@ -34,11 +34,6 @@
                 "dflydev/psr0-resource-locator-service-provider": "1.0.*@dev"
             },
             "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0-dev"
-                }
-            },
             "autoload": {
                 "psr-0": {
                     "Dflydev\\Cilex\\Provider\\DoctrineOrm": "src",
@@ -63,6 +58,7 @@
                 }
             ],
             "description": "Doctrine ORM Service Provider",
+            "homepage": "http://dflydev.com/projects/doctrine-orm-service-provider/",
             "keywords": [
                 "cilex",
                 "doctrine",
@@ -70,7 +66,7 @@
                 "pimple",
                 "silex"
             ],
-            "time": "2013-12-11 22:49:54"
+            "time": "2014-06-17 22:52:19"
         },
         {
             "name": "doblebjp/popshops-api",
