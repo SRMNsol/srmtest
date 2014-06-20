@@ -21,11 +21,16 @@ class CacheProvider implements ServiceProviderInterface
             return $storage;
         });
 
-        // popshops cache will use doctrine result cache implementation
-        $app['popshops.cache_storage'] = $app->share(function () use ($app) {
-            $storage = $app['orm.em']->getConfiguration()->getResultCacheImpl();
+        // default cache storage uses doctrine result cache implementation
+        $app['cache.create_storage'] = $app->protect(function () use ($app) {
+            $storage = $app['orm.cache.locator']('default', 'result', $app['orm.em.options']);
 
             return $storage;
+        });
+
+        // popshops cache uses default cache storage
+        $app['popshops.cache_storage'] = $app->share(function () use ($app) {
+            return $app['cache.create_storage']();
         });
     }
 
