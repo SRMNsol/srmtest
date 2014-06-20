@@ -20,6 +20,13 @@ class CacheProvider implements ServiceProviderInterface
 
             return $storage;
         });
+
+        // popshops cache will use doctrine result cache implementation
+        $app['popshops.cache_storage'] = $app->share(function () use ($app) {
+            $storage = $app['orm.em']->getConfiguration()->getResultCacheImpl();
+
+            return $storage;
+        });
     }
 
     public function boot(SilexApp $app)
