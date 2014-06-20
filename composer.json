@@ -35,7 +35,8 @@
   "scripts": {
     "post-install-cmd": [
       "App\\Setup\\WritePermissions::checkPaths",
-      "php bin/console.php asset:dump"
+      "php bin/console.php asset:dump",
+      "vendor/bin/doctrine migrations:migrate --no-interaction 20140620144945"
     ],
     "post-update-cmd": [
       "App\\Setup\\WritePermissions::checkPaths",
