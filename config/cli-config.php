@@ -9,6 +9,9 @@ $app = require __DIR__ . '/../src/app.php';
 // initialize db to register enum type
 $db = $app['db'];
 
+// exclude legacy tables
+$db->getConfiguration()->setFilterSchemaAssetsExpression('/^(?!(cashback|email|ci_sessions|refer|store))/');
+
 $helperSet = ConsoleRunner::createHelperSet($app['orm.em']);
 
 // add dialog
