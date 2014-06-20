@@ -1,0 +1,4 @@
+name: Beesavy DB Migrations
+migrations_namespace: DoctrineMigrations
+table_name: db_versions
+migrations_directory: data/migrations
