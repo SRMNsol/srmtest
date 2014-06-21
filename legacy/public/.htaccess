@@ -1,0 +1,11 @@
+RewriteEngine On
+RewriteRule ^.git - [F,L]
+RewriteBase /
+RewriteCond %{ENV:REDIRECT_APP_PATH} !^$
+RewriteRule ^(.*)$ - [E=APP_PATH:%{ENV:REDIRECT_APP_PATH}]
+RewriteCond %{ENV:APP_PATH} ^$
+RewriteRule ^(.*)$ - [E=APP_PATH:/$1]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond $1 !^projects
+RewriteRule ^(.*)$ index.php [L]
