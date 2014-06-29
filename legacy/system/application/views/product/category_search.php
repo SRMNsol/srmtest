@@ -26,8 +26,8 @@
 	<form id="facetForm" name="facetForm" action="//categories?category=62" method="get">
     <div class="facet" >
     	<div id="catagory-bt" class="cat-bg">
-        <div id="cat-left-curve"><img src="/images/cat-left-curve.jpg" width="4" height="35" alt="** PLEASE DESCRIBE THIS IMAGE **"/></div>
-        <div id="cat-right-curve"><img src="/images/cat-right-curve.jpg" width="4" height="35" alt="** PLEASE DESCRIBE THIS IMAGE **"/></div>
+        <div id="cat-left-curve"><img src="<?php echo s3path("/images/cat-left-curve.jpg") ?>" width="4" height="35" alt="** PLEASE DESCRIBE THIS IMAGE **"/></div>
+        <div id="cat-right-curve"><img src="<?php echo s3path("/images/cat-right-curve.jpg") ?>" width="4" height="35" alt="** PLEASE DESCRIBE THIS IMAGE **"/></div>
         <div class="parent">Category</div>
 </div>
 
@@ -93,7 +93,7 @@
 {stores}
 	    <div class="store">
 		<div class="logo">
-            <a href="/stores/details/{id}"><img class="cdn-image" src="{logo_thumb}" alt="{name}" onerror="this.src ='/images/no-image-100px.gif'"/></a>
+            <a href="/stores/details/{id}"><img class="cdn-image" src="{logo_thumb}" alt="{name}" onerror="this.src="<?php echo s3path("/images/no-image-100px.gif") ?>""/></a>
 		</div>
 		<div class="cashback">
 			<a href="/stores/details/{id}">{cashback_text} Cash Back</a>
@@ -121,7 +121,7 @@
     <script type='text/javascript'>
         OA_show(11);
     </script><noscript><a target='_blank' href='http://50.16.95.24/openx/www/delivery/ck.php?n=a88fd39'><img border='0' alt='' src='http://50.16.95.24/openx/www/delivery/avw.php?zoneid=11&amp;n=a88fd39' /></a></noscript>
-    <!--<img src="/images/rightbanner.jpg">-->
+    <!--<img src="<?php echo s3path("/images/rightbanner.jpg") ?>">-->
     </div>
     <?php endif ?>
     <div class="productResult inactive">
@@ -129,7 +129,7 @@
         <input name="group_id" value="<?php echo escape($product['groupID'], 'html_attr') ?>" type="hidden"/>
         <div class="thumb">
             <a href="<?php echo escape($compare_url, 'html_attr') ?>">
-                <img class="cdn-image" src="<?php echo escape($product['image'], 'html_attr') ?>" alt="** PLEASE DESCRIBE THIS IMAGE **" onerror="this.src ='/images/no-image-100px.gif'"/>
+                <img class="cdn-image" src="<?php echo escape($product['image'], 'html_attr') ?>" alt="** PLEASE DESCRIBE THIS IMAGE **" onerror="this.src="<?php echo s3path("/images/no-image-100px.gif") ?>""/>
             </a>
         </div>
         <div class="pInfo">

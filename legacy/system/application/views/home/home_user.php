@@ -18,7 +18,7 @@
     <div>
     <div id="daily-deals-SIcontainer">
     <div style="width:100%;height:41px;border:0px solid #00C;">
-     	<div style="float:left;margin-top:5px;margin-left:10px;"><img src="/images/clock.gif"></div>
+     	<div style="float:left;margin-top:5px;margin-left:10px;"><img src="<?php echo s3path("/images/clock.gif") ?>"></div>
       <div id="hot-products" class="biggerTitle">Daily Deals</div>
       <div class="seeAll"><a href="/main/deal">See All Deals »</a></div>
       </div>
@@ -42,7 +42,7 @@
                         this.width=nwidth;
                         this.height=nheight;
                     "
-                    onerror="this.src='/images/no-image-100px.gif'"
+                    onerror="this.src="<?php echo s3path("/images/no-image-100px.gif") ?>""
                     alt="** PLEASE DESCRIBE THIS IMAGE **"
                 />
             </div>
@@ -77,8 +77,8 @@
 
         <div id="WelcomeUserBg">
 <div  class="orangegradiant-bg">
-	<div id="cat-left-curve"><img src="/images/cat-orange-left-curve.jpg" width="4" height="35" alt="** PLEASE DESCRIBE THIS IMAGE **"/></div>
-	<div id="cat-right-curve"><img src="/images/cat-orange-right-curve.jpg" width="4" height="35" alt="** PLEASE DESCRIBE THIS IMAGE **"/></div>
+	<div id="cat-left-curve"><img src="<?php echo s3path("/images/cat-orange-left-curve.jpg") ?>" width="4" height="35" alt="** PLEASE DESCRIBE THIS IMAGE **"/></div>
+	<div id="cat-right-curve"><img src="<?php echo s3path("/images/cat-orange-right-curve.jpg") ?>" width="4" height="35" alt="** PLEASE DESCRIBE THIS IMAGE **"/></div>
     <div class="title1"><font color=#000>Welcome back!</font></div>
 </div>
 <div class="inner-outerbox">
@@ -117,8 +117,8 @@ _gwparam["SID"]="{user_id}";
     <div id="accounts-summary-container">
 <div class="TotalBox">
 <div  class="blockgradiant-bg">
-	<div id="cat-left-curve"><img src="/images/cat-left-curve.jpg" width="4" height="35" alt="** PLEASE DESCRIBE THIS IMAGE **"/></div>
-	<div id="cat-right-curve"><img src="/images/cat-right-curve.jpg" width="4" height="35" alt="** PLEASE DESCRIBE THIS IMAGE **"/></div>
+	<div id="cat-left-curve"><img src="<?php echo s3path("/images/cat-left-curve.jpg") ?>" width="4" height="35" alt="** PLEASE DESCRIBE THIS IMAGE **"/></div>
+	<div id="cat-right-curve"><img src="<?php echo s3path("/images/cat-right-curve.jpg") ?>" width="4" height="35" alt="** PLEASE DESCRIBE THIS IMAGE **"/></div>
 	<div class="title1">Account Summary</div>
 </div>
 <div class="outerbox">
@@ -140,7 +140,7 @@ _gwparam["SID"]="{user_id}";
     $dif = number_format(10 - (float)$total[0]['available'],2);
 ?>
 
-        <div class="Request"><img style="padding-left:50px;padding-top:10px;" src="/images/btn-request-payment-gray.gif"/></div>
+        <div class="Request"><img style="padding-left:50px;padding-top:10px;" src="<?php echo s3path("/images/btn-request-payment-gray.gif") ?>"/></div>
         <div class="RequestNote">You need an additional $<?php echo $dif ?> to request a payment.</div>
 <?php } ?>
 	<div style="clear:both;height:20px;"></div>
@@ -167,7 +167,7 @@ onload="
     var nwidth=ratio*this.width;
     var nheight=ratio*this.height;
     this.width=nwidth;
-    this.height=nheight;"  onerror="this.src='/images/no-image-100px.gif'"
+    this.height=nheight;"  onerror="this.src="<?php echo s3path("/images/no-image-100px.gif") ?>""
 src="{logo_thumb}" alt="{name}"/></a></div>
 		          <div class="cashback"><a href="/stores/details/{id}">{cashback_text} Cash Back</a></div>
 	          </div>
@@ -192,7 +192,7 @@ onload="
     var nwidth=ratio*this.width;
     var nheight=ratio*this.height;
     this.width=nwidth;
-    this.height=nheight;"  onerror="this.src='/images/no-image-100px.gif'"
+    this.height=nheight;"  onerror="this.src="<?php echo s3path("/images/no-image-100px.gif") ?>""
 alt="** PLEASE DESCRIBE THIS IMAGE **"/></a></div>
 	        <div class="desc"> <a class="title" href="{linkstore}"  rel="nofollow"> {name-abrv} </a> <br/>{code_prefix}<a class="code" href=""  rel="nofollow">{code}</a>
 			</div>
