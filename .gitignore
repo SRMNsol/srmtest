@@ -5,3 +5,4 @@ vendor
 .secrets
 *~
 opsworks.php
+.s3cfg
