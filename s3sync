@@ -17,5 +17,6 @@ s3cmd -c .s3cfg \
 --include=results.css \
 --include=script_files/* \
 --include=scroll/* \
+--include=styles/* \
 --include=zeroclipboard/* \
 sync legacy/public/ s3://static.beesavy.com/
