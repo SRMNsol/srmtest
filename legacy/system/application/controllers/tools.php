@@ -10,6 +10,7 @@ class Tools extends Controller {
         $this->load->model('user');
         $this->load->model('facebook');
         $this->load->model('twitter');
+        $this->load->helper('s3');
         $this->user_id = $this->user->get_field('id');
 	}
 

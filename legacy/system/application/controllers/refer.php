@@ -7,6 +7,7 @@ class Refer extends Controller {
 		parent::Controller();
         $this->load->helper('url');
         $this->load->model('user');
+        $this->load->helper('s3');
 	}
 
     function r($id){

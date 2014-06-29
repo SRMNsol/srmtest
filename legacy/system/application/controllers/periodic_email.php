@@ -8,6 +8,7 @@ class Periodic_Email extends Controller {
         $this->load->library('beesavy');
         $this->load->model('emailer');
         $this->load->model('user');
+        $this->load->helper('s3');
     }
     function index(){
         //Check for 7 day offer email

@@ -25,6 +25,7 @@ class Coupon extends Controller
 
         $this->load->helper('bridge');
         $this->load->helper('escape');
+        $this->load->helper('s3');
         $this->container = silex();
     }
 
