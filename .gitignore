@@ -4,3 +4,4 @@ vendor
 !.gitignore
 .secrets
 *~
+.s3cfg
