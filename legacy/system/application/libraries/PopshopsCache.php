@@ -44,7 +44,7 @@ class PopshopsCache
 
     protected function load($class, $method, $arguments, $expires)
     {
-        $key = sprintf('beesavy_%s_%s_%s',
+        $key = sprintf('WWW_%s_%s_%s',
             strtolower($class),
             strtolower($method),
             md5(strtolower(serialize($arguments)))
