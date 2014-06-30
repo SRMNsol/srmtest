@@ -22,9 +22,7 @@ class Blocks extends Model
         $class = $this->router->class;
         $banner = $this->get_banner();
 
-        $client = $this->container['popshops.client'];
-        $catalogs = $this->container['popshops.catalog_keys'];
-        $merchantTypes = result_merchant_types($client->findMerchants($catalogs['all_stores'])->getMerchantTypes());
+        $merchantTypes = cached_merchant_types();
 
         $data['banner'] = $this->parser->parse($banner['page'], $banner['vars'],TRUE);
         if ($class=="product" && $method =="compare") {
