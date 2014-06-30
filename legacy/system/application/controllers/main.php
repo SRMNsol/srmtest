@@ -25,6 +25,12 @@ class Main extends Controller
         $data = $this->blocks->getBlocks();
         $data = array_merge($home['vars'], $data);
 
+        $data = array_merge(
+            $this->popshopscache->library('beesavy', 'getUserStats', array($this->user->get_field('id')), 3600),
+            $this->popshopscache->library('beesavy', 'getUser', array($this->user->get_field('id'),'', TRUE), 3600),
+            $data
+        );
+
         $client = $this->container['popshops.client'];
         $catalogs = $this->container['popshops.catalog_keys'];
         $rate = $this->container['orm.em']->getRepository('App\Entity\Rate')->getCurrentRate();
