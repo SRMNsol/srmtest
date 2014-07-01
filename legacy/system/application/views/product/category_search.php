@@ -142,7 +142,7 @@
         <div class="CtA">
             <span class="details">from</span> <a href="<?php echo escape($compare_url, 'html_attr') ?>" class="price">$<?php echo escape($product['lowprice']) ?></a><br/>
             <div class="BtnOrangeBg BtnComparePrice">
-                <a class="BtnBlackTxt" href="<?php escape($compare_url, 'html_attr')  ?>" rel="nofollow">COMPARE PRICES</a>
+                <a class="BtnBlackTxt" href="<?php echo escape($compare_url, 'html_attr')  ?>" rel="nofollow">COMPARE PRICES</a>
             </div>
             <span class="details">available at <a href="<?php echo escape($compare_url, 'html_attr') ?>"><?php echo escape($product['numchildproducts']) ?> stores</a></span>
         </div>
