@@ -42,7 +42,7 @@ $product_url = $cheapest['link'];
 ?>
 
 <?php
-echo "<a id='large-image' href='#'><img class='cdn-image' src='$image' alt='** PLEASE DESCRIBE THIS IMAGE **' onerror=\"this.src="<?php echo s3path("/images/no-image-100px.gif") ?>"\"/></a>
+echo "<a id='large-image' href='#'><img class='cdn-image' src='$image' alt='** PLEASE DESCRIBE THIS IMAGE **' onerror=\"this.src='" . s3path("/images/no-image-100px.gif") ."'\"/></a>
 	</div>
 	<div id='product-info'>
 				<span id='price-range'><a href='#compare'>$price_range</a> ($count $store_word)</span><br/><br/>
@@ -168,7 +168,7 @@ onload=\"
     var nheight=ratio*this.height;
     this.width=nwidth;
     this.height=nheight;\"
-                    src='$image' alt='** PLEASE DESCRIBE THIS IMAGE **' onerror='this.src="<?php echo s3path("/../images/no-image-100px.gif") ?>"'/></a><br/>
+                    src='$image' alt='** PLEASE DESCRIBE THIS IMAGE **' onerror=\"this.src='" . s3path("/../images/no-image-100px.gif") . "'\"/></a><br/>
 					</div>
 				</td>
 				<td class='base-price'>$$store_price</td>
