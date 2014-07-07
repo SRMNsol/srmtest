@@ -31,8 +31,8 @@
 
     <div class="facet" >
     	<div id="catagory-bt" class="cat-bg">
-        <div id="cat-left-curve"><img src="/images/cat-left-curve.jpg" width="4" height="35" alt="** PLEASE DESCRIBE THIS IMAGE **"/></div>
-        <div id="cat-right-curve"><img src="/images/cat-right-curve.jpg" width="4" height="35" alt="** PLEASE DESCRIBE THIS IMAGE **"/></div>
+        <div id="cat-left-curve"><img src="<?php echo s3path("/images/cat-left-curve.jpg") ?>" width="4" height="35" alt="** PLEASE DESCRIBE THIS IMAGE **"/></div>
+        <div id="cat-right-curve"><img src="<?php echo s3path("/images/cat-right-curve.jpg") ?>" width="4" height="35" alt="** PLEASE DESCRIBE THIS IMAGE **"/></div>
         <div class="parent">Jump to a Store</div>
    		 </div>
 
@@ -77,7 +77,7 @@ foreach($coupons as $coupon){
 <script type='text/javascript'>
     OA_show(8);
 </script><noscript><a target='_blank' href='http://50.16.95.24/openx/www/delivery/ck.php?n=a88fd39'><img border='0' alt='' src='http://50.16.95.24/openx/www/delivery/avw.php?zoneid=8&amp;n=a88fd39' /></a></noscript>
-<!--<img src="/images/rightbanner.jpg">-->
+<!--<img src="<?php echo s3path("/images/rightbanner.jpg") ?>">-->
                 </div>
 <?php }
 ?>
@@ -93,7 +93,7 @@ onload="
     var nheight=ratio*this.height;
     this.width=nwidth;
     this.height=nheight;"
-alt='$store' onerror="this.src ='../images/no-image-100px.gif'"/>
+alt='$store' onerror="this.src="<?php echo s3path("/../images/no-image-100px.gif") ?>""/>
 	            </a>
 	        </div>
 	        <div class='cInfo'>
@@ -101,10 +101,10 @@ alt='$store' onerror="this.src ='../images/no-image-100px.gif'"/>
 	            <div class='details'>
 	                <span>Expires <?php echo $coupon['expiration'] ?> </span>
                     <br/><div style='padding-top: 3px;'>
-                    <img src='/images/tell-a-friend.png' alt='** PLEASE DESCRIBE THIS IMAGE **' onerror="this.src ='/images/no-image-100px.gif'"/>
-<a target='_blank' href='/social/coupon/facebook/<?php echo $coupon['id'] ?>'><img src='/images/facebook-refer.png' alt='** PLEASE DESCRIBE THIS IMAGE **'/></a>
-<a target='_blank' href='/social/coupon/twitter/<?php echo $coupon['id'] ?>'><img src='/images/twitter-refer.png' alt='** PLEASE DESCRIBE THIS IMAGE **'/></a>
-<a onclick="$.get($(this).attr('href'),function(data){document.location=data;});return false;" href='/social/coupon/email/<?php echo $coupon['id'] ?>'><img src='/images/email-refer.png' alt='** PLEASE DESCRIBE THIS IMAGE **'/></a>
+                    <img src="<?php echo s3path("/images/tell-a-friend.png") ?>" alt='** PLEASE DESCRIBE THIS IMAGE **' onerror="this.src="<?php echo s3path("/images/no-image-100px.gif") ?>""/>
+<a target='_blank' href='/social/coupon/facebook/<?php echo $coupon['id'] ?>'><img src="<?php echo s3path("/images/facebook-refer.png") ?>" alt='** PLEASE DESCRIBE THIS IMAGE **'/></a>
+<a target='_blank' href='/social/coupon/twitter/<?php echo $coupon['id'] ?>'><img src="<?php echo s3path("/images/twitter-refer.png") ?>" alt='** PLEASE DESCRIBE THIS IMAGE **'/></a>
+<a onclick="$.get($(this).attr('href'),function(data){document.location=data;});return false;" href='/social/coupon/email/<?php echo $coupon['id'] ?>'><img src="<?php echo s3path("/images/email-refer.png") ?>" alt='** PLEASE DESCRIBE THIS IMAGE **'/></a>
                     </div>
                      	            </div>
 	        </div>
@@ -144,7 +144,7 @@ alt='$store' onerror="this.src ='../images/no-image-100px.gif'"/>
 <script type='text/javascript'>
     OA_show(9);
 </script><noscript><a target='_blank' href='http://50.16.95.24/openx/www/delivery/ck.php?n=a88fd39'><img border='0' alt='' src='http://50.16.95.24/openx/www/delivery/avw.php?zoneid=9&amp;n=a88fd39' /></a></noscript>
-<!--<img src="/images/rightbanner.jpg">-->
+<!--<img src="<?php echo s3path("/images/rightbanner.jpg") ?>">-->
                 </div>
 
 

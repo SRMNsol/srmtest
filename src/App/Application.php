@@ -27,8 +27,8 @@ class Application extends SilexApplication
     public static function registerBaseServices(Application $app)
     {
         $app->register(new OrmProvider());
-        $app->register(new CacheProvider());
         $app->register(new PopshopsServiceProvider());
+        $app->register(new CacheProvider());
     }
 
     public static function registerWebServices(Application $app)

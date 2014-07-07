@@ -6,13 +6,13 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
 <meta name="description" content="Save money on millions of products from thousands of top online stores at beesavy.com with comparison shopping, cash back, and coupons." />
-<link rel="shortcut icon" href="/images/favicon.ico" />
+<link rel="shortcut icon" href="<?php echo s3path("/images/favicon.ico") ?>" />
 <title>BeeSavy - Taking the sting out of online shopping</title>
-<link href="/styles/main.css" media="screen" rel="stylesheet" type="text/css" />
-<link href="/styles/home.css" media="screen" rel="stylesheet" type="text/css" />
-<link href="/styles/transfer.css" media="screen" rel="stylesheet" type="text/css" />
-<link href="/styles/account.css" media="screen" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="/script_files/extrabux.js"></script>
+<link href="<?php echo s3path("/styles/main.css") ?>" media="screen" rel="stylesheet" type="text/css" />
+<link href="<?php echo s3path("/styles/home.css") ?>" media="screen" rel="stylesheet" type="text/css" />
+<link href="<?php echo s3path("/styles/transfer.css") ?>" media="screen" rel="stylesheet" type="text/css" />
+<link href="<?php echo s3path("/styles/account.css") ?>" media="screen" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="<?php echo s3path("/script_files/extrabux.js") ?>"></script>
 <script type="text/javascript">
 
   var _gaq = _gaq || [];
@@ -26,30 +26,30 @@
   })();
 
 </script>
-<link href="/styles/button.css" media="screen" rel="stylesheet" type="text/css" />
+<link href="<?php echo s3path("/styles/button.css") ?>" media="screen" rel="stylesheet" type="text/css" />
 </head>
 <body>
 <div id="container">
     <div id="transfer">
 	<div id="title">
 	<h1 class="oneLine">Transferring You to <span class="bold">{merchant_name}</span></h1>
-		<img src="/images/loading.gif">
-	</div>		
-	<div style="height:30px; clear: both;"></div>	
-	
+		<img src="<?php echo s3path("/images/loading.gif") ?>">
+	</div>
+	<div style="height:30px; clear: both;"></div>
+
 	<div class="div"></div>
 
 	<div id="productThumb" class="thumb">
-    <img class="cdn-image" src="{thumb}" 
+    <img class="cdn-image" src="{thumb}"
 onload="
         var width=100;
-    var height=32; 
+    var height=32;
     var ratio= Math.min(width/this.width, height/this.height);
-    var nwidth=ratio*this.width; 
-    var nheight=ratio*this.height; 
-    this.width=nwidth; 
-    this.height=nheight;" 
-alt="Mobile Edge Express Backpack - Yellow" onerror="this.src ='/images/no-image-100px.gif'">
+    var nwidth=ratio*this.width;
+    var nheight=ratio*this.height;
+    this.width=nwidth;
+    this.height=nheight;"
+alt="Mobile Edge Express Backpack - Yellow" onerror="this.src="<?php echo s3path("/images/no-image-100px.gif") ?>"">
 <!-- Load cookie -->
 <!-- End cookie-->
 	</div>
@@ -57,7 +57,7 @@ alt="Mobile Edge Express Backpack - Yellow" onerror="this.src ='/images/no-image
 		<dl class="grad-bg">
 			<dt>STORE PRICE</dt>
 			<dd class="base">${retail_amount}</dd>
-		</dl>	
+		</dl>
 		<dl>
 			<dt>COUPON SAVINGS</dt>
 			<dd>
@@ -74,7 +74,7 @@ alt="Mobile Edge Express Backpack - Yellow" onerror="this.src ='/images/no-image
 		<div class="priceMessage">
 			Store Price is the price you will see at checkout		</div>
 	</div>
-	<div style="clear: both;"></div>	
+	<div style="clear: both;"></div>
 	<div id="cashbackMessage">
 	<span class="bold">${cashback_amount} Cash Back</span> will be posted to your BeeSavy account in 1 - 4 days
 			</div>
@@ -88,7 +88,7 @@ $(document).ready(function() {
     	var element = $(this);
 		element.find('.BtnLogInRBg').addClass('BtnLogInBg').removeClass('BtnLogInRBg');
     });
-	
+
 	    $("div.SignUp").mouseover(function () {
         var element = $(this);
  		element.find('.BtnSignUp').addClass('BtnSignUpRBg').removeClass('BtnSignUpBg');
@@ -97,7 +97,7 @@ $(document).ready(function() {
 		element.find('.BtnSignUpRBg').addClass('BtnSignUpBg').removeClass('BtnSignUpRBg');
     });
     setTimeout("transfer()", 3000);
-	
+
    	});
 function transfer(){
     window.location = '{cookie_url}';

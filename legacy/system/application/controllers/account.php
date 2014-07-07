@@ -13,6 +13,7 @@ class Account extends Controller
         $this->load->model('facebook');
         $this->load->model('twitter');
         $this->load->model('emailer');
+        $this->load->helper('s3');
         $this->error = array();
         $this->user_id = $this->user->get_field('id');
     }

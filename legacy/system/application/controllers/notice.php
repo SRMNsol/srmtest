@@ -8,6 +8,7 @@ class Notice extends Controller {
         $this->load->model('emailer');
         $this->load->model('twitter');
         $this->load->model('facebook');
+        $this->load->helper('s3');
 
 	}
     function index(){

@@ -19,7 +19,7 @@
 		<DIV id="content" class="BGNoCol">
 <DIV id="pageTitle">
 <DIV id=pageTitleLeft></DIV>
-<div style="float:left;margin-top:12px;margin-left:10px;"><img src="/images/clock.gif"></div>
+<div style="float:left;margin-top:12px;margin-left:10px;"><img src="<?php echo s3path("/images/clock.gif") ?>"></div>
 <H1>Daily Deals</H1>
 <DIV id=pageTitleRight></DIV></DIV>
 <DIV style="PADDING-LEFT: 18px" id=dailydeals>

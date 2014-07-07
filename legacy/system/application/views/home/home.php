@@ -20,7 +20,7 @@
         <div class="panel-wrapper">
         <div class="slide-container">
           <div class="slide">
-            <div class="slide-pic"><img src="images/slide-1a.png" alt="Get Cash Back &amp; Coupons From your Favorite Stores" width="514" height="336" /></div>
+            <div class="slide-pic"><img src="<?php echo s3path("/images/slide-1a.png") ?>" alt="Get Cash Back &amp; Coupons From your Favorite Stores" width="514" height="336" /></div>
             <div class="slide-text">
             <h1>Get Cash Back &amp; Coupons From Your Favorite Stores!</h1>
             <h3>Find the best price on any product, get cash back from over 1,500 trusted online retailers, and find exclusive money-saving coupons at BeeSavy!	</h3>
@@ -40,7 +40,7 @@
         <div class="panel-wrapper">
           <div class="slide-container">
           <div class="slide">
-            <div class="slide-pic"><img src="images/slide-2a.png" alt="Get Cash Back &amp; Coupons From your Favorite Stores" width="514" height="336" /></div>
+            <div class="slide-pic"><img src="<?php echo s3path("/images/slide-2a.png") ?>" alt="Get Cash Back &amp; Coupons From your Favorite Stores" width="514" height="336" /></div>
             <div class="slide-text">
             <h1>How Cash Back Works </h1>
             <h3>Stores pay BeeSavy a sales commission for sending shoppers their way, and BeeSavy uses the commission to pay you cash back. We just need an email address so we can notify you when your cash back has been credited.</h3>
@@ -59,7 +59,7 @@
         <div class="panel-wrapper">
         <div class="slide-container">
           <div class="slide">
-            <div class="slide-pic"><img src="images/slide-3a.png" alt="Get Cash Back &amp; Coupons From your Favorite Stores" width="514" height="336" /></div>
+            <div class="slide-pic"><img src="<?php echo s3path("/images/slide-3a.png") ?>" alt="Get Cash Back &amp; Coupons From your Favorite Stores" width="514" height="336" /></div>
             <div class="slide-text">
             <h1>Find Any Product At The Best Price!</h1>
             <h3>With one search, BeeSavy compares prices from trusted stores, finds you the best coupons, and gets you cash back!</h3>
@@ -79,7 +79,7 @@
         <div class="panel-wrapper">
         <div class="slide-container">
           <div class="slide">
-            <div class="slide-pic"><img src="images/slide-4a.png" alt="Get Cash Back &amp; Coupons From your Favorite Stores" width="514" height="336" /></div>
+            <div class="slide-pic"><img src="<?php echo s3path("/images/slide-4a.png") ?>" alt="Get Cash Back &amp; Coupons From your Favorite Stores" width="514" height="336" /></div>
             <div class="slide-text">
             <h1>Coupons You'll Find Nowhere Else!</h1>
             <h3>BeeSavy not only scours the web for the best coupons, we also work directly with retailers to get you exclusive coupons you won't find anywhere else.</h3>
@@ -99,7 +99,7 @@
         <div class="panel-wrapper">
         <div class="slide-container">
           <div class="slide">
-            <div class="slide-pic"><img src="images/slide-5a.png" alt="Get Cash Back &amp; Coupons From your Favorite Stores" width="514" height="336" /></div>
+            <div class="slide-pic"><img src="<?php echo s3path("/images/slide-5a.png") ?>" alt="Get Cash Back &amp; Coupons From your Favorite Stores" width="514" height="336" /></div>
             <div class="slide-text">
             <h1>Refer Friends and Earn Commission Forever!</h1>
             <h3>Other sites pay you a small, one-time commission for referring friends.  BeeSavy pays you great commission on all of your referrals forever.  We even pay you on all of their referrals up to seven (7) levels deep!</h3>
@@ -119,7 +119,7 @@
         <div class="panel-wrapper">
         <div class="slide-container">
           <div class="slide" >
-            <div class="slide-pic"><img src="images/slide-6a.png" alt="Get Cash Back &amp; Coupons From your Favorite Stores" width="514" height="336"/></div>
+            <div class="slide-pic"><img src="<?php echo s3path("/images/slide-6a.png") ?>" alt="Get Cash Back &amp; Coupons From your Favorite Stores" width="514" height="336"/></div>
             <div id="fullRegister" style="width:350px;margin-top:20px;border:0px solid #00F;">
 				<div class="heading"><h3>Join BeeSavy For Free!</h3></div>
 				<div class="JoinFreeForm">
@@ -137,7 +137,7 @@
 
                 </dd></dl></form>
             </div>
-            <div style="float:left;margin-top:15px;width:430px;border:0px solid #00F;margin-left:-60px;"><div style="float:left;margin-top:-8px;"><img src="images/lock.gif" alt="** PLEASE DESCRIBE THIS IMAGE **" /></div>
+            <div style="float:left;margin-top:15px;width:430px;border:0px solid #00F;margin-left:-60px;"><div style="float:left;margin-top:-8px;"><img src="<?php echo s3path("/images/lock.gif") ?>" alt="** PLEASE DESCRIBE THIS IMAGE **" /></div>
             <div>BeeSavy will always be free and your E-mail address will never be shared with anyone</div></div>
             </div>
           </div>
@@ -186,7 +186,7 @@
     <!-- Daily Deals -->
     <div id="hot-products-container" class="home-daily-deals">
         <div style="width:100%;height:40px;">
-            <div style="float:left;margin-top:5px;margin-left:10px;"><img src="images/clock.gif"></div>
+            <div style="float:left;margin-top:5px;margin-left:10px;"><img src="<?php echo s3path("/images/clock.gif") ?>"></div>
             <div id="hot-products" class="biggerTitle">Daily Deals</div>
             <div class="seeAll"><a href="/main/deal">See All Deals »</a></div>
         </div>
@@ -209,7 +209,7 @@
                         this.width=nwidth;
                         this.height=nheight;
                     "
-                    onerror="this.src='/images/no-image-100px.gif'"
+                    onerror="this.src="<?php echo s3path("/images/no-image-100px.gif") ?>""
                     alt="** PLEASE DESCRIBE THIS IMAGE **"
                 />
                 </div>
@@ -256,7 +256,7 @@ onload="
     var nheight=ratio*this.height;
     this.width=nwidth;
     this.height=nheight;"
-         onerror="this.src='/images/no-image-100px.gif'"
+         onerror="this.src="<?php echo s3path("/images/no-image-100px.gif") ?>""
 src="{logo_thumb}" alt="{name}"/></a></div>
 		          <div class="cashback"><a href="/stores/details/{id}">{cashback_text} Cash Back</a></div>
 	          </div>
@@ -281,7 +281,7 @@ onload="
     var nheight=ratio*this.height;
     this.width=nwidth;
     this.height=nheight;"
- onerror="this.src='/images/no-image-100px.gif'"
+ onerror="this.src="<?php echo s3path("/images/no-image-100px.gif") ?>""
  alt="** PLEASE DESCRIBE THIS IMAGE **"/></a></div>
 	        <div class="desc"> <a class="title" href="{linkstore}" rel="nofollow"> {name-abrv} </a> <br/>{code_prefix}<font class="code" color=black ref=""  rel="nofollow">{code}</font>
 			</div>
@@ -353,8 +353,8 @@ $(document).ready(function() {
     });
     });
 </script>
-<script type="text/javascript" src="script_files/jquery.easing.1.3.js"></script>
-<script type="text/javascript" src="script_files/jquery.coda-slider-2.0.js"></script>
+<script type="text/javascript" src="<?php echo s3path("/script_files/jquery.easing.1.3.js") ?>"></script>
+<script type="text/javascript" src="<?php echo s3path("/script_files/jquery.coda-slider-2.0.js") ?>"></script>
 
 <script type="text/javascript">
 var codaS;

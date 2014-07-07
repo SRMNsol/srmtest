@@ -6,12 +6,12 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
 <meta name="description" content="Save money on millions of products from thousands of top online stores at beesavy.com with comparison shopping, cash back, and coupons." />
-<link rel="shortcut icon" href="/images/favicon.ico" />
+<link rel="shortcut icon" href="<?php echo s3path("/images/favicon.ico") ?>" />
 <title>BeeSavy - Taking the sting out of online shopping</title>
-<link href="/styles/main.css" media="screen" rel="stylesheet" type="text/css" />
-<link href="/styles/transfer.css" media="screen" rel="stylesheet" type="text/css" />
-<link href="/styles/account.css" media="screen" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="/script_files/extrabux.js"></script>
+<link href="<?php echo s3path("/styles/main.css") ?>" media="screen" rel="stylesheet" type="text/css" />
+<link href="<?php echo s3path("/styles/transfer.css") ?>" media="screen" rel="stylesheet" type="text/css" />
+<link href="<?php echo s3path("/styles/account.css") ?>" media="screen" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="<?php echo s3path("/script_files/extrabux.js") ?>"></script>
 <script type="text/javascript">
 
   var _gaq = _gaq || [];
@@ -25,7 +25,7 @@
   })();
 
 </script>
-<link href="/styles/button.css" media="screen" rel="stylesheet" type="text/css" />
+<link href="<?php echo s3path("/styles/button.css") ?>" media="screen" rel="stylesheet" type="text/css" />
 </head>
 <body>
 <div id="container">

@@ -1,0 +1,22 @@
+#!/bin/bash
+
+# sync to s3 https://github.com/s3tools/s3cmd
+
+if ! [ -f .s3cfg ]
+then
+  s3cmd -c .s3cfg --configure
+fi
+
+s3cmd -c .s3cfg \
+--exclude=* \
+--include=Banner/* \
+--include=colorbox/* \
+--include=coupons_files/* \
+--include=css/* \
+--include=images/* \
+--include=results.css \
+--include=script_files/* \
+--include=scroll/* \
+--include=styles/* \
+--include=zeroclipboard/* \
+sync legacy/public/ s3://static.beesavy.com/
