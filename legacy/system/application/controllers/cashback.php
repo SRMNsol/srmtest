@@ -13,8 +13,6 @@ class Cashback extends Controller
         $this->user_id = $this->user->get_field('id');
 
         $this->load->helper('bridge');
-        $this->load->helper('escape');
-        $this->load->helper('s3');
         $this->container = silex();
     }
 
@@ -74,7 +72,6 @@ class Cashback extends Controller
                 }
             }
         });
-
 
         $data['reftransactions'] = $referrals;
         $this->parser->parse('cashback/base', $data);

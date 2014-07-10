@@ -1,21 +1,22 @@
 <?php
 /**
  */
-class Periodic_Email extends Controller {
-
-    function Periodic_Email(){
-		parent::Controller();
+class Periodic_Email extends Controller
+{
+    public function Periodic_Email()
+    {
+        parent::Controller();
         $this->load->library('beesavy');
         $this->load->model('emailer');
         $this->load->model('user');
-        $this->load->helper('s3');
     }
-    function index(){
+    public function index()
+    {
         //Check for 7 day offer email
         $sql = "select * from user where date(created)+Interval 14 day < current_date and email_refer_info=0";
         $q = $this->db->query($sql);
         $res = $q->result_array();
-        foreach($res as $r){
+        foreach ($res as $r) {
             $id = $r['id'];
             $email = $r['email'];
             $sql = "update user set email_refer_info = 1 where id='$id';";
@@ -32,8 +33,9 @@ class Periodic_Email extends Controller {
             $stats = $this->beesavy->getUserStats(88481);
 
         $res = $q->result_array();
+
         return;
-        foreach($res as $r){
+        foreach ($res as $r) {
             $id = $r['id'];
             $email = $r['email'];
             $data =$this->user->ebinfo_user($id);
@@ -50,7 +52,7 @@ class Periodic_Email extends Controller {
         $sql = "select * from user where date(last_cashback)+Interval 83 day < current_date and email_83 = 0 and purchase_exempt=0 and last_cashback!=0;";
         $q = $this->db->query($sql);
         $res = $q->result_array();
-        foreach($res as $r){
+        foreach ($res as $r) {
             $id = $r['id'];
             $email = $r['email'];
             $data =$this->user->ebinfo_user($id);
@@ -65,4 +67,3 @@ class Periodic_Email extends Controller {
         }
     }
 }
-?>

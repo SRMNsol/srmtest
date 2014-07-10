@@ -1,20 +1,20 @@
 <?php
 /**
  */
-class Emaillist extends Controller {
-
-	function Emaillist()	{
-		parent::Controller();
+class Emaillist extends Controller
+{
+    public function Emaillist()
+    {
+        parent::Controller();
         $this->load->library('beesavy');
         $this->load->model('emailer');
         $this->data = array();
         $info = end($this->uri->segments);
         $this->data = $this->blocks->getBlocks();
         $this->data['side_nav'] = $this->parser->parse('blocks/side_bar',array('info'=>$info), TRUE);
-	}
+    }
 
-    function index(){
-
+    public function index()
+    {
     }
 }
-?>

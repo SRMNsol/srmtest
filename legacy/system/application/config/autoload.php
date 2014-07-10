@@ -51,7 +51,7 @@ $autoload['libraries'] = array('database', 'parser', 'db_session', 'cache', 'Pop
 |	$autoload['helper'] = array('url', 'file');
 */
 
-$autoload['helper'] = array('url' );
+$autoload['helper'] = array('url', 'escape', 's3');
 
 
 /*
