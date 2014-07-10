@@ -14,8 +14,6 @@ class Info extends Controller
         $this->data['side_nav'] = $this->parser->parse('blocks/side_bar',array('info'=>$info), TRUE);
 
         $this->load->helper('bridge');
-        $this->load->helper('escape');
-        $this->load->helper('s3');
         $this->container = silex();
     }
 

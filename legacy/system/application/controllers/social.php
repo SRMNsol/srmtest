@@ -9,7 +9,6 @@ class Social extends Controller {
         $this->load->model('refer');
         $this->load->model('user');
         $this->id = $this->user->get_field('id');
-        $this->load->helper('s3');
 	}
 
     function store($type, $id){

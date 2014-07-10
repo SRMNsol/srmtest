@@ -6,11 +6,9 @@ class Tools extends Controller {
 	function Tools()	{
 		parent::Controller();
         $this->load->library('beesavy');
-        $this->load->helper('url');
         $this->load->model('user');
         $this->load->model('facebook');
         $this->load->model('twitter');
-        $this->load->helper('s3');
         $this->user_id = $this->user->get_field('id');
 	}
 
