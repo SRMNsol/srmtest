@@ -73,7 +73,6 @@ class Cashback extends Controller
             }
         });
 
-
         $data['reftransactions'] = $referrals;
         $this->parser->parse('cashback/base', $data);
     }
