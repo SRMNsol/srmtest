@@ -9,6 +9,7 @@ use Symfony\Component\Form\FormFactory;
 use Doctrine\ORM\EntityManager;
 use App\Form\UserSearchType;
 use App\Form\UserAccountType;
+use App\Form\Model\UserAccount;
 
 class UserInfoController
 {
@@ -76,11 +77,18 @@ class UserInfoController
             return $app->abort(404, 'Invalid user id');
         }
 
-        $form = $app['form.factory']->create(new UserAccountType(), $user);
+        $account = new UserAccount();
+        $account->setUser($user);
+
+        $form = $app['form.factory']->create(new UserAccountType(), $account);
         $form->handleRequest($request);
         if ($form->isValid()) {
             try {
-                $user = $form->getData();
+                $account = $form->getData();
+                $user = $account->getUser();
+
+                // processing password
+
                 $app['orm.em']->flush();
 
                 $app['session']->getFlashBag()->add('success', 'User data updated');

@@ -7,27 +7,28 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use App\Entity\User;
 
-class UserAccountType extends AbstractType
+class UserType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('user', new UserType());
-        $builder->add('editPassword', 'checkbox', [
+        $builder->add('email', 'email');
+        $builder->add('alias');
+        $builder->add('firstName', 'text', [
             'required' => false,
         ]);
-        $builder->add('newPassword', 'repeated', [
-            'type' => 'password',
-            'invalid_message' => 'The password fields must match.',
-            'required' => false,
-            'first_options'  => ['label' => 'New Password'],
-            'second_options' => ['label' => 'Repeat'],
+        $builder->add('address');
+        $builder->add('city');
+        $builder->add('state');
+        $builder->add('zip');
+        $builder->add('status', 'choice', [
+            'choices' => [User::STATUS_ACTIVE, User::STATUS_INACTIVE]
         ]);
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => 'App\Form\Model\UserAccount',
+            'data_class' => 'App\Entity\User',
         ]);
     }
 

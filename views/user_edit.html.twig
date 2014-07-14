@@ -11,7 +11,16 @@
   <div class="col-md-9">
     {{ form_start(form, { attr: { class: 'user-account' } }) }}
       {{ form_errors(form) }}
-      {{ form_rest(form) }}
+      {{ form_row(form.user.email) }}
+      {{ form_row(form.user.alias) }}
+      {{ form_row(form.user.firstName) }}
+      {{ form_row(form.user.address) }}
+      {{ form_row(form.user.city) }}
+      {{ form_row(form.user.state) }}
+      {{ form_row(form.user.zip) }}
+      {{ form_row(form.user.status) }}
+      {{ form_row(form.editPassword) }}
+      {{ form_row(form.newPassword) }}
       <div class="form-group">
         <div class="col-md-6 col-md-offset-2">
           <button type="submit" class="btn btn-primary">Update</button>
