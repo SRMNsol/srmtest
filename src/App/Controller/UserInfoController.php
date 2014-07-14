@@ -80,6 +80,9 @@ class UserInfoController
 
         $account = new UserAccount();
         $account->setUser($user);
+        if ($user->getReferredBy() !== null) {
+            $account->setReferrerEmail($user->getReferredBy()->getEmail());
+        }
 
         $form = $app['form.factory']->create(new UserAccountType(), $account);
         $form->handleRequest($request);
@@ -93,14 +96,28 @@ class UserInfoController
                     $user->setPassword(User::passwordHash($account->getNewPassword()));
                 }
 
+                // processing referral
+                $currentReferrerEmail = ($user->getReferredBy() !== null) ? $user->getReferredBy()->getEmail() : null;
+                if ($account->getReferrerEmail() !== $currentReferrerEmail) {
+                    if ($account->getReferrerEmail() === null) {
+                        $user->setReferredBy(); // nullify
+                    } else {
+                        $referrer = $app['orm.em']->getRepository('App\Entity\User')->findOneByEmail($account->getReferrerEmail());
+                        if ($referrer !== null) {
+                            $user->setReferredBy($referrer);
+                        }
+                    }
+                }
+
                 $app['orm.em']->flush();
 
                 $app['session']->getFlashBag()->add('success', 'User data updated');
+
+                return $app->redirect($app['url_generator']->generate('user_edit', ['userId' => $userId]));
+
             } catch (\Exception $e) {
                 $app['session']->getFlashBag()->add('danger', sprintf('User update failed. %s', $e->getMessage()));
             }
-
-            return $app->redirect($app['url_generator']->generate('user_edit', ['userId' => $userId]));
         }
 
         return $app['twig']->render('user_edit.html.twig', [
