@@ -1,7 +1,7 @@
       <script type=text/javascript">
 $(document).ready(function() {
 
-	
+
 	    $("div.Request").mouseover(function () {
         var element = $(this);
  		element.find('.BtnRequestBg').addClass('BtnRequestRBg').removeClass('BtnRequestBg');
@@ -9,7 +9,7 @@ $(document).ready(function() {
     	var element = $(this);
 		element.find('.BtnRequestRBg').addClass('BtnRequestBg').removeClass('BtnRequestRBg');
     });
-	
+
     $("div.ShopByStore").mouseover(function () {
         var element = $(this);
 		element.find('.nav-ShopByStore-Bt').addClass('BtnSBSOrangeRBg').removeClass('BtnSBSOrangeBg');
@@ -17,7 +17,7 @@ $(document).ready(function() {
     	var element = $(this);
 		element.find('.nav-ShopByStore-Bt').addClass('BtnSBSOrangeBg').removeClass('BtnSBSOrangeRBg');
     });
-	
+
 	    $("div.FindCoupons").mouseover(function () {
         var element = $(this);
 		element.find('.nav-FindCoupons-Bt').addClass('BtnFCOrangeRBg').removeClass('BtnFCOrangeBg');
@@ -26,11 +26,11 @@ $(document).ready(function() {
 		element.find('.nav-FindCoupons-Bt').addClass('BtnFCOrangeBg').removeClass('BtnFCOrangeRBg');
     });
     $(".make-home").colorbox();
-	
+
 	});
-</script>   
-<div id="header">	
-              <div id="header-beesavy-logo"><a href="/" name="top"><img src="/images/header-beesavy-logo.gif" alt="beesavy.com" width="356" height="93" /></a></div>
+</script>
+<div id="header">
+              <div id="header-beesavy-logo"><a href="/" name="top"><img src="<?php echo s3path("/images/header-beesavy-logo.gif") ?>" alt="beesavy.com" width="356" height="93" /></a></div>
                             <div id="header-links">
               <div id="header-links1">
               <div><a class="help" href="/info/how">Help</a></div>
@@ -50,12 +50,12 @@ $(document).ready(function() {
 // ]]> --></script><noscript><a target='_blank' href='http://50.16.95.24/openx/www/delivery/ck.php?n=a88fd39'><img border='0' alt='' src='http://50.16.95.24/openx/www/delivery/avw.php?zoneid=2&amp;n=a88fd39' /></a></noscript>
 </a></div>
             </div>
-				
-              <div id="facebook"><a target='_blank' href='http://www.facebook.com/pages/BeeSavy/139324182791301'><img src="/images/facebooktop.gif"></a></div>
-              <div id="tweeter"><a target='_blank' href='http://www.twitter.com/#!/beesavy'><img src="/images/twittertop.gif"></a></div>        
-		      <div id="youtube"><a target='_blank' href='http://www.youtube.com/user/BeeSavy'><img src="/images/youtubetop.gif"></a></div>
-              
+
+              <div id="facebook"><a target='_blank' href='http://www.facebook.com/pages/BeeSavy/139324182791301'><img src="<?php echo s3path("/images/facebooktop.gif") ?>"></a></div>
+              <div id="tweeter"><a target='_blank' href='http://www.twitter.com/#!/beesavy'><img src="<?php echo s3path("/images/twittertop.gif") ?>"></a></div>
+		      <div id="youtube"><a target='_blank' href='http://www.youtube.com/user/BeeSavy'><img src="<?php echo s3path("/images/youtubetop.gif") ?>"></a></div>
+
       </div>
-      
-      
-      
+
+
+

@@ -1,7 +1,7 @@
 <html xml:lang='en' xmlns='http://www.w3.org/1999/xhtml' lang='en'>
 <head>
 <meta name='generator' content='HTML Tidy for Linux (vers 6 November 2007), see www.w3.org' />
-<link rel="shortcut icon" href="/images/favicon.ico" />
+<link rel="shortcut icon" href="<?php echo s3path("/images/favicon.ico") ?>" />
 <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
 <meta http-equiv='content-type' content='text/html; charset=ISO-8859-1'>
 <meta name='description' content='Save money on millions of products from thousands of top online stores at BeeSavy.com with comparison shopping, cash back, and coupons.' />
@@ -30,123 +30,123 @@ var i=0;
     // set image list
 images = new Array();
 imageObj1 = new Image();
-   imageObj1.src="../images/btn-compare-prices.gif";
+   imageObj1.src="<?php echo s3path("/images/btn-compare-prices.gif") ?>";
    imageObj2 = new Image();
-   imageObj2.src="../images/btn-compare-pricesR.gif"
+   imageObj2.src="<?php echo s3path("/images/btn-compare-pricesR.gif") ?>"
    imageObj3 = new Image();
-   imageObj3.src="../images/shopbystoreBt.gif"
+   imageObj3.src="<?php echo s3path("/images/shopbystoreBt.gif") ?>"
    imageObj4 = new Image();
-   imageObj4.src="../images/shopbystoreBtR.gif"
+   imageObj4.src="<?php echo s3path("/images/shopbystoreBtR.gif") ?>"
    imageObj5 = new Image();
-   imageObj5.src= "../images/FindCouponsBt.gif"
+   imageObj5.src="<?php echo s3path("/../images/FindCouponsBt.gif") ?>"
    imageObj6 = new Image();
-   imageObj6.src= "../images/FindCouponsBtR.gif"
+   imageObj6.src="<?php echo s3path("/../images/FindCouponsBtR.gif") ?>"
    imageObj7 = new Image();
-   imageObj7.src= "../images/ClickToCopyCodeBt.gif"
+   imageObj7.src="<?php echo s3path("/../images/ClickToCopyCodeBt.gif") ?>"
    imageObj8 = new Image();
-   imageObj8.src= "../images/ClickToCopyCodeBtR.gif"
+   imageObj8.src="<?php echo s3path("/../images/ClickToCopyCodeBtR.gif") ?>"
    imageObj9 = new Image();
-   imageObj9.src= "../images/CashBackBtR.gif"
+   imageObj9.src="<?php echo s3path("/../images/CashBackBtR.gif") ?>"
    imageObj10 = new Image();
-   imageObj10.src= "../images/CashBackBt.gif"
+   imageObj10.src="<?php echo s3path("/../images/CashBackBt.gif") ?>"
    imageObj11 = new Image();
-   imageObj11.src= "../images/ShopNowBtR.gif"
+   imageObj11.src="<?php echo s3path("/../images/ShopNowBtR.gif") ?>"
    imageObj12 = new Image();
-   imageObj12.src="../images/ShopNowBt.gif"
+   imageObj12.src="<?php echo s3path("/images/ShopNowBt.gif") ?>"
    imageObj13 = new Image();
-   imageObj13.src="../images/ShopNowBtR.gif"
+   imageObj13.src="<?php echo s3path("/images/ShopNowBtR.gif") ?>"
    imageObj14 = new Image();
-   imageObj14.src= "../images/ShopNowBt.gif"
+   imageObj14.src="<?php echo s3path("/../images/ShopNowBt.gif") ?>"
    imageObj15 = new Image();
-   imageObj15.src="../images/ShopCashBackBtR.gif"
+   imageObj15.src="<?php echo s3path("/images/ShopCashBackBtR.gif") ?>"
    imageObj16 = new Image();
-   imageObj16.src="../images/ShopCashBackBt.gif"
+   imageObj16.src="<?php echo s3path("/images/ShopCashBackBt.gif") ?>"
    imageObj17 = new Image();
-   imageObj17.src= "../images/BtnSaveChangesBg.gif"
+   imageObj17.src="<?php echo s3path("/../images/BtnSaveChangesBg.gif") ?>"
    imageObj18 = new Image();
-   imageObj18.src="../images/BtnSaveChangesRBg.gif"
+   imageObj18.src="<?php echo s3path("/images/BtnSaveChangesRBg.gif") ?>"
    imageObj19 = new Image();
-   imageObj19.src="../images/BtnLogIn.gif"
+   imageObj19.src="<?php echo s3path("/images/BtnLogIn.gif") ?>"
    imageObj20 = new Image();
-   imageObj20.src="../images/BtnLogInR.gif"
+   imageObj20.src="<?php echo s3path("/images/BtnLogInR.gif") ?>"
    imageObj21 = new Image();
-   imageObj21.src="../images/BtnSignUp.gif"
+   imageObj21.src="<?php echo s3path("/images/BtnSignUp.gif") ?>"
    imageObj22 = new Image();
-   imageObj22.src="../images/BtnSignUpR.gif"
+   imageObj22.src="<?php echo s3path("/images/BtnSignUpR.gif") ?>"
    imageObj23 = new Image();
-   imageObj23.src="../images/BtnSlideSignUp.gif"
+   imageObj23.src="<?php echo s3path("/images/BtnSlideSignUp.gif") ?>"
    imageObj24 = new Image();
-   imageObj24.src="../images/BtnSlideSignUpR.gif"
+   imageObj24.src="<?php echo s3path("/images/BtnSlideSignUpR.gif") ?>"
    imageObj25 = new Image();
-   imageObj25.src="../images/BtnSendMessage.gif"
+   imageObj25.src="<?php echo s3path("/images/BtnSendMessage.gif") ?>"
    imageObj26 = new Image();
-   imageObj26.src="../images/BtnSendMessageR.gif"
+   imageObj26.src="<?php echo s3path("/images/BtnSendMessageR.gif") ?>"
    imageObj27 = new Image();
-   imageObj27.src="../images/BtnStartSaving.gif"
+   imageObj27.src="<?php echo s3path("/images/BtnStartSaving.gif") ?>"
    imageObj28 = new Image();
-   imageObj28.src="../images/BtnStartSavingR.gif"
+   imageObj28.src="<?php echo s3path("/images/BtnStartSavingR.gif") ?>"
    imageObj29 = new Image();
-   imageObj29.src="../images/BtnSendPassword.gif"
+   imageObj29.src="<?php echo s3path("/images/BtnSendPassword.gif") ?>"
    imageObj30 = new Image();
-   imageObj30.src="../images/BtnSendPasswordR.gif"
+   imageObj30.src="<?php echo s3path("/images/BtnSendPasswordR.gif") ?>"
    imageObj31 = new Image();
-   imageObj31.src="../images/BtnRequestBg.gif"
+   imageObj31.src="<?php echo s3path("/images/BtnRequestBg.gif") ?>"
    imageObj32 = new Image();
-   imageObj32.src="../images/BtnRequestRBg.gif"
+   imageObj32.src="<?php echo s3path("/images/BtnRequestRBg.gif") ?>"
    imageObj33 = new Image();
-   imageObj33.src="../images/BtnRequestGrayBg.gif"
+   imageObj33.src="<?php echo s3path("/images/BtnRequestGrayBg.gif") ?>"
    imageObj34 = new Image();
-   imageObj34.src="../images/BtnRequestGrayRBg.gif"
+   imageObj34.src="<?php echo s3path("/images/BtnRequestGrayRBg.gif") ?>"
    imageObj35 = new Image();
-   imageObj35.src="../images/BtnPreviewBg.gif"
+   imageObj35.src="<?php echo s3path("/images/BtnPreviewBg.gif") ?>"
    imageObj36 = new Image();
-   imageObj36.src="../images/BtnPreviewRBg.gif"
+   imageObj36.src="<?php echo s3path("/images/BtnPreviewRBg.gif") ?>"
    imageObj37 = new Image();
-   imageObj37.src="../images/BtnGetStartedBg.gif"
+   imageObj37.src="<?php echo s3path("/images/BtnGetStartedBg.gif") ?>"
    imageObj38 = new Image();
-   imageObj38.src="../images/BtnGetStartedRBg.gif"
+   imageObj38.src="<?php echo s3path("/images/BtnGetStartedRBg.gif") ?>"
    imageObj39 = new Image();
-   imageObj39.src="../images/BtnPreviewBg.gif"
+   imageObj39.src="<?php echo s3path("/images/BtnPreviewBg.gif") ?>"
    imageObj40 = new Image();
-   imageObj40.src="../images/BtnPreviewRBg.gif"
+   imageObj40.src="<?php echo s3path("/images/BtnPreviewRBg.gif") ?>"
    imageObj41 = new Image();
-   imageObj41.src="../images/BtnGrayBg.gif"
+   imageObj41.src="<?php echo s3path("/images/BtnGrayBg.gif") ?>"
 }
 </script>
-<link rel="shortcut icon" href="images/favicon.ico" />
-<link href='/styles/pagination.css' media='screen' rel='stylesheet' type='text/css' />
-<link href='/styles/main.css' media='screen' rel='stylesheet' type='text/css' />
-<link href='/styles/home.css' media='screen' rel='stylesheet' type='text/css' />
-<link href='/styles/results.css' media='screen' rel='stylesheet' type='text/css' />
-<link href='/styles/button.css' media='screen' rel='stylesheet' type='text/css' />
-<link href='/styles/account.css' media='screen' rel='stylesheet' type='text/css' />
-<link href='/styles/deals.css' media='screen' rel='stylesheet' type='text/css' />
-<link href='/styles/shopping.css' media='screen' rel='stylesheet' type='text/css' />
-<link rel='stylesheet' type='text/css' media='all' href='/scroll/styles/jScrollPane.css' />
-<link rel='stylesheet' type='text/css' media='all' href='/scroll/styles/scrollstyles.css' />
-<link media="screen" rel="stylesheet" href="/styles/colorbox.css" />
+    <link rel="shortcut icon" href="<?php echo s3path("images/favicon.ico") ?>" />
+<link href="<?php echo s3path("/styles/pagination.css") ?>" media='screen' rel='stylesheet' type='text/css' />
+<link href="<?php echo s3path("/styles/main.css") ?>" media='screen' rel='stylesheet' type='text/css' />
+<link href="<?php echo s3path("/styles/home.css") ?>" media='screen' rel='stylesheet' type='text/css' />
+<link href="<?php echo s3path("/styles/results.css") ?>" media='screen' rel='stylesheet' type='text/css' />
+<link href="<?php echo s3path("/styles/button.css") ?>" media='screen' rel='stylesheet' type='text/css' />
+<link href="<?php echo s3path("/styles/account.css") ?>" media='screen' rel='stylesheet' type='text/css' />
+<link href="<?php echo s3path("/styles/deals.css") ?>" media='screen' rel='stylesheet' type='text/css' />
+<link href="<?php echo s3path("/styles/shopping.css") ?>" media='screen' rel='stylesheet' type='text/css' />
+<link rel='stylesheet' type='text/css' media='all' href="<?php echo s3path("/scroll/styles/jScrollPane.css") ?>" />
+<link rel='stylesheet' type='text/css' media='all' href="<?php echo s3path("/scroll/styles/scrollstyles.css") ?>" />
+<link media="screen" rel="stylesheet" href="<?php echo s3path("/styles/colorbox.css") ?>" />
 <script type='text/javascript' src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
-<script type='text/javascript' src="/colorbox/jquery.colorbox.js"></script>
-<script type='text/javascript' src='/script_files/nav_bar.js'></script>
+<script type='text/javascript' src="<?php echo s3path("/colorbox/jquery.colorbox.js") ?>"></script>
+<script type='text/javascript' src="<?php echo s3path("/script_files/nav_bar.js") ?>"></script>
 <?php if($this->router->class == "product"){?>
-    <script type="text/javascript" src="/scroll/scripts/jquery.mousewheel.js"></script>
-    <script type="text/javascript" src="/scroll/scripts/jScrollPane.js"></script>
-    <script type="text/javascript" src="/script_files/jquery.pagination.js"></script>
-    <link rel="stylesheet" type="text/css" media="all" href="/scroll/styles/jScrollPane.css" />
-    <link rel="stylesheet" type="text/css" media="all" href="/scroll/styles/scrollstyles.css" />
+    <script type="text/javascript" src="<?php echo s3path("/scroll/scripts/jquery.mousewheel.js") ?>"></script>
+    <script type="text/javascript" src="<?php echo s3path("/scroll/scripts/jScrollPane.js") ?>"></script>
+    <script type="text/javascript" src="<?php echo s3path("/script_files/jquery.pagination.js") ?>"></script>
+    <link rel="stylesheet" type="text/css" media="all" href="<?php echo s3path("/scroll/styles/jScrollPane.css") ?>" />
+    <link rel="stylesheet" type="text/css" media="all" href="<?php echo s3path("/scroll/styles/scrollstyles.css") ?>" />
     <script>
         $(function() {
             // this initialises the demo scollpanes on the page.
              $('#pane1').jScrollPane({ showArrows: true, scrollbarWidth: 15, arrowSize: 16 });
             $('#pane2').jScrollPane({ showArrows: true, scrollbarWidth: 15, arrowSize: 16 });
-        }); 
-    </script> 
+        });
+    </script>
 <?php }?>
 <?php if($this->router->class == "stores"){?>
-<script type="text/javascript" src="/scroll/scripts/jquery.mousewheel.js"></script>
-<script type="text/javascript" src="/scroll/scripts/jScrollPane.js"></script>
-<script type="text/javascript" src="/scroll/scripts/jScrollPane.js"></script>
-<script type="text/javascript" src="/script_files/jquery.pagination.js"></script>
+<script type="text/javascript" src="<?php echo s3path("/scroll/scripts/jquery.mousewheel.js") ?>"></script>
+<script type="text/javascript" src="<?php echo s3path("/scroll/scripts/jScrollPane.js") ?>"></script>
+<script type="text/javascript" src="<?php echo s3path("/scroll/scripts/jScrollPane.js") ?>"></script>
+<script type="text/javascript" src="<?php echo s3path("/script_files/jquery.pagination.js") ?>"></script>
 
 
 <script>
@@ -154,24 +154,24 @@ imageObj1 = new Image();
         // this initialises the demo scollpanes on the page.
          $('#pane1').jScrollPane({ showArrows: true, scrollbarWidth: 15, arrowSize: 16 });
         $('#pane2').jScrollPane({ showArrows: true, scrollbarWidth: 15, arrowSize: 16 });
-    }); 
-</script> 
+    });
+</script>
 
-<link rel="stylesheet" type="text/css" media="all" href="scroll-styles/jScrollPane.css" />
+    <link rel="stylesheet" type="text/css" media="all" href="<?php echo s3path("/scroll-styles/jScrollPane.css") ?>" />
 
 <script>
     $(function() {
         // this initialises the demo scollpanes on the page.
          $('#pane1').jScrollPane({ showArrows: true, scrollbarWidth: 15, arrowSize: 16 });
         $('#pane2').jScrollPane({ showArrows: true, scrollbarWidth: 15, arrowSize: 16 });
-    }); 
-</script> 
+    });
+</script>
 <?php }?>
 <?php if($this->router->class == "coupon"){?>
-<script type="text/javascript" src="/scroll/scripts/jquery.mousewheel.js"></script>
-<script type="text/javascript" src="/scroll/scripts/jScrollPane.js"></script>
-<script type="text/javascript" src="/script_files/jquery.pagination.js"></script>
-<script type="text/javascript" src="/zeroclipboard/ZeroClipboard.js">
+<script type="text/javascript" src="<?php echo s3path("/scroll/scripts/jquery.mousewheel.js") ?>"></script>
+<script type="text/javascript" src="<?php echo s3path("/scroll/scripts/jScrollPane.js") ?>"></script>
+<script type="text/javascript" src="<?php echo s3path("/script_files/jquery.pagination.js") ?>"></script>
+<script type="text/javascript" src="<?php echo s3path("/zeroclipboard/ZeroClipboard.js") ?>">
 </script>
 <script>
     $(function() {
@@ -180,7 +180,7 @@ imageObj1 = new Image();
         $('#pane2').jScrollPane({ showArrows: true, scrollbarWidth: 15, arrowSize: 16 });
         ZeroClipboard.setMoviePath('<?php echo base_url() ?>zeroclipboard/ZeroClipboard.swf');
 		var clips = [];
-		
+
 		function startZC() {
             var elements = $(".couponList");
             var container = $(".couponList .click-contain");
@@ -189,7 +189,7 @@ imageObj1 = new Image();
             for(var i=0; i<elements.length; i++){
                 var clip = new ZeroClipboard.Client();
                 clip.setHandCursor( true );
-                
+
                 clip.addEventListener('load', function (client) {
                     debugstr("Flash movie loaded and ready.");
                 });
@@ -209,7 +209,7 @@ imageObj1 = new Image();
                         window.open(someurl);
                     };
                 };
-                
+
                 clip.addEventListener('mouseOver', cb(clip, newval));
                 clip.addEventListener('onComplete', my_complete(newlink) );
                 clip.glue( buttons[i], container[i]);
@@ -218,8 +218,8 @@ imageObj1 = new Image();
 			//clip.glue( $('#l1sc'), $('#l1st') );
 		}
     startZC();
-    }); 
-</script> 
+    });
+</script>
 
 <script type="text/javascript">
 var _gaq = _gaq || [];
@@ -232,7 +232,7 @@ _gaq.push(['_trackPageview']);
     ga.setAttribute('async', 'true');
     document.documentElement.firstChild.appendChild(ga);
 })();
-</script><script async src="/images/ga.js"></script>
+</script><script async src="<?php echo s3path("/images/ga.js") ?>"></script>
 <?php }?>
 <?php if($this->router->class == "stores"){?>
 <?php }?>
@@ -250,7 +250,7 @@ $(document).ready(function() {
     	var element = $(this);
 		element.find('.BtnSaveChangesRBg').addClass('BtnSaveChangesBg').removeClass('BtnSaveChangesRBg');
     });
-	
+
     $("div.Request").mouseover(function () {
         var element = $(this);
  		element.find('.BtnRequestBg').addClass('BtnRequestRBg').removeClass('BtnRequestBg');
@@ -258,7 +258,7 @@ $(document).ready(function() {
     	var element = $(this);
 		element.find('.BtnRequestRBg').addClass('BtnRequestBg').removeClass('BtnRequestRBg');
     });
-			
+
 	    $("div.ShopByStore").mouseover(function () {
         var element = $(this);
 		element.find('.nav-ShopByStore-Bt').addClass('BtnSBSOrangeRBg').removeClass('BtnSBSOrangeBg');
@@ -266,7 +266,7 @@ $(document).ready(function() {
     	var element = $(this);
 		element.find('.nav-ShopByStore-Bt').addClass('BtnSBSOrangeBg').removeClass('BtnSBSOrangeRBg');
     });
-	
+
 	    $("div.FindCoupons").mouseover(function () {
         var element = $(this);
 		element.find('.nav-FindCoupons-Bt').addClass('BtnFCOrangeRBg').removeClass('BtnFCOrangeBg');

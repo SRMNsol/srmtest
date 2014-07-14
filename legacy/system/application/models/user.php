@@ -40,13 +40,7 @@ class User extends Model
     {
         $login_status = $this->db_session->userdata('login');
         if ($login_status) {
-            $info = $this->info();
-            $login_status = $this->db_session->userdata('login');
-            $id = $login_status['id'];
-            $password = $login_status['password'];
-            $user   = $this->beesavy->getUser($id, $password, TRUE);
-            $stats = $this->beesavy->getUserStats($id);
-            $data = array_merge($user, $stats, $info);
+            $data = $this->info();
             $data['stores'] =12;
             $data['deals'] = 3;
             if (!strtotime($login_status['last_login'])) {

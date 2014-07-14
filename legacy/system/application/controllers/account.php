@@ -7,7 +7,6 @@ class Account extends Controller
     {
         parent::Controller();
         $this->load->library('beesavy');
-        $this->load->helper('url_helper');
         $this->load->model('user');
         $this->load->model('code');
         $this->load->model('facebook');

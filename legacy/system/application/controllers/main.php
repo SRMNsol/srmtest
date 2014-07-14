@@ -11,7 +11,6 @@ class Main extends Controller
         $this->load->model('user');
 
         $this->load->helper('bridge');
-        $this->load->helper('escape');
         $this->container = silex();
     }
 
@@ -24,6 +23,14 @@ class Main extends Controller
         $data = $this->blocks->getBlocks();
         $data = array_merge($home['vars'], $data);
 
+        if ($this->db_session->userdata('login')) {
+            $data = array_merge(
+                $this->popshopscache->library('beesavy', 'getUserStats', array($this->user->get_field('id')), 3600),
+                $this->popshopscache->library('beesavy', 'getUser', array($this->user->get_field('id'),'', TRUE), 3600),
+                $data
+            );
+        }
+
         $client = $this->container['popshops.client'];
         $catalogs = $this->container['popshops.catalog_keys'];
         $rate = $this->container['orm.em']->getRepository('App\Entity\Rate')->getCurrentRate();
@@ -33,7 +40,7 @@ class Main extends Controller
         $data['deals'] = random_slice(result_deals($client->findDeals($catalogs['hot_deals'])->getDeals(), $rate), 2);
         $data['home'] = $home['vars'];
         $data['referral'] = $this->input->get('referral');
-        if(!$data['referral']) {
+        if (!$data['referral']) {
             $data['referral'] = $this->db_session->userdata('referral');
         }
         if (isset($data['id'])) {
@@ -75,7 +82,7 @@ class Main extends Controller
         $data = $this->blocks->getBlocks();
         $data['email'] = $this->input->get('email');
         $data['referral'] = $this->input->get('referral');
-        if(!$data['referral']) {
+        if (!$data['referral']) {
             $data['referral'] = $this->db_session->userdata('referral');
         }
 
@@ -104,7 +111,7 @@ class Main extends Controller
         }
         $data['errors'] = $this->code->get_errors($data['codes']);
         $data['referral'] = $this->input->get('referral');
-        if(!$data['referral']) {
+        if (!$data['referral']) {
             $data['referral'] = $this->db_session->userdata('referral');
         }
         $this->parser->parse('/home/forgot', $data);

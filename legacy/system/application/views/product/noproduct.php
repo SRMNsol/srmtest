@@ -6,26 +6,26 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="description" content="Save money on millions of products from thousands of top online stores at BeeSavy.com with comparison shopping, cash back, and coupons." />
 <title>BeeSavy – Taking the sting out of online shopping</title>
-<link rel="shortcut icon" href="/images/favicon.ico" />
-<link href="/styles/main.css" media="screen" rel="stylesheet" type="text/css" />
-<link href="/styles/home.css" media="screen" rel="stylesheet" type="text/css" />
-<link href="/styles/results.css" media="screen" rel="stylesheet" type="text/css" />
-<link href="/styles/button.css" media="screen" rel="stylesheet" type="text/css" />
-<link href="/styles/view.css" media="screen" rel="stylesheet" type="text/css" />
-<link media="screen" rel="stylesheet" href="/styles/colorbox.css" />
+<link rel="shortcut icon" href="<?php echo s3path("/images/favicon.ico") ?>" />
+<link href="<?php echo s3path("/styles/main.css") ?>" media="screen" rel="stylesheet" type="text/css" />
+<link href="<?php echo s3path("/styles/home.css") ?>" media="screen" rel="stylesheet" type="text/css" />
+<link href="<?php echo s3path("/styles/results.css") ?>" media="screen" rel="stylesheet" type="text/css" />
+<link href="<?php echo s3path("/styles/button.css") ?>" media="screen" rel="stylesheet" type="text/css" />
+<link href="<?php echo s3path("/styles/view.css") ?>" media="screen" rel="stylesheet" type="text/css" />
+<link media="screen" rel="stylesheet" href="<?php echo s3path("/styles/colorbox.css") ?>" />
 		<style type="text/css" title="currentStyle">
 			@import "/css/matrix_table.css";
 		</style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
-<script src="/colorbox/jquery.colorbox.js"></script>
-<script type='text/javascript' src='/script_files/nav_bar.js'></script>
-<script type="text/javascript" src="/zeroclipboard/ZeroClipboard.js"></script>
-		<script type="text/javascript" language="javascript" src="/script_files/jquery.dataTables.js"></script>
-<script type='text/javascript' src='/script_files/money.js'></script>
+<script src="<?php echo s3path("/colorbox/jquery.colorbox.js") ?>"></script>
+<script type='text/javascript' src="<?php echo s3path("/script_files/nav_bar.js") ?>"></script>
+<script type="text/javascript" src="<?php echo s3path("/zeroclipboard/ZeroClipboard.js") ?>"></script>
+		<script type="text/javascript" language="javascript" src="<?php echo s3path("/script_files/jquery.dataTables.js") ?>"></script>
+<script type='text/javascript' src="<?php echo s3path("/script_files/money.js") ?>"></script>
 </head>
 <body>
 <div id="container">
-<!-- Header -->      
+<!-- Header -->
       {banner}
 <!-- /Header -->
 
@@ -36,7 +36,7 @@
 
 <!-- content -->
 		<!-- page Title -->
- 		
+
 		<DIV id=content class=BGNoCol>
 <DIV id=pageTitle>
 <DIV id=pageTitleLeft></DIV>
@@ -45,14 +45,14 @@
 
 <DIV id=error class=BGNoCol>
 <table cellspacing=0 cellpadding=0 style="margin-left:10px;">
-<tr><td><img src="/images/sorry_bee.jpg"></td><td>
+<tr><td><img src="<?php echo s3path("/images/sorry_bee.jpg") ?>"></td><td>
 <P>
 Sorry, we did not find any results that matched your search query</P>
 </td></tr></table>
 <DIV style="CLEAR: both"></DIV></DIV>
 
 <DIV style="HEIGHT: 10px; CLEAR: both"></DIV></DIV>
-		
+
 
        <!-- Right side -->
 
@@ -60,19 +60,19 @@ Sorry, we did not find any results that matched your search query</P>
 
 
 <!-- /content -->
-<!-- footer -->  
+<!-- footer -->
     {footer}
-<!-- /footer --> 
-  
-<SCRIPT type=text/javascript 
-src="Extrabux_com%20-%20Page%20Not%20Found_files/extrabux.main.layout.7120.js"></SCRIPT>
+<!-- /footer -->
+
+<SCRIPT type=text/javascript
+src="<?php echo s3path("/Extrabux_com%20-%20Page%20Not%20Found_files/extrabux.main.layout.7120.js") ?>"></SCRIPT>
 
 <SCRIPT type=text/javascript>_qoptions={qacct:"p-1cqtECMNlCeJ2"};</SCRIPT>
 
-<SCRIPT type=text/javascript 
-src="Extrabux_com%20-%20Page%20Not%20Found_files/quant.js"></SCRIPT>
+<SCRIPT type=text/javascript
+src="<?php echo s3path("/Extrabux_com%20-%20Page%20Not%20Found_files/quant.js") ?>"></SCRIPT>
 
-<SCRIPT type=text/javascript 
+<SCRIPT type=text/javascript
 src="Extrabux_com%20-%20Page%20Not%20Found_files/pixel"></SCRIPT>
 
 <SCRIPT type=text/javascript>
@@ -86,13 +86,13 @@ var google_conversion_value = 0;
 /* ]]> */
 </SCRIPT>
 
-<SCRIPT type=text/javascript 
-src="Extrabux_com%20-%20Page%20Not%20Found_files/conversion.js">
+<SCRIPT type=text/javascript
+src="<?php echo s3path("/Extrabux_com%20-%20Page%20Not%20Found_files/conversion.js") ?>">
 </SCRIPT>
 <NOSCRIPT>
-<DIV style="DISPLAY: inline"><IMG 
-style="BORDER-BOTTOM-STYLE: none; BORDER-RIGHT-STYLE: none; BORDER-TOP-STYLE: none; BORDER-LEFT-STYLE: none" 
-alt="" src="Extrabux_com%20-%20Page%20Not%20Found_files/1062158219.gif" width=1 
+<DIV style="DISPLAY: inline"><IMG
+style="BORDER-BOTTOM-STYLE: none; BORDER-RIGHT-STYLE: none; BORDER-TOP-STYLE: none; BORDER-LEFT-STYLE: none"
+alt="" src="<?php echo s3path("/Extrabux_com%20-%20Page%20Not%20Found_files/1062158219.gif") ?>" width=1
 height=1> </DIV></NOSCRIPT>
 
 

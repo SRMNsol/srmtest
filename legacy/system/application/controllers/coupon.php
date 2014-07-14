@@ -24,7 +24,6 @@ class Coupon extends Controller
         $this->page_info = $page_info;
 
         $this->load->helper('bridge');
-        $this->load->helper('escape');
         $this->container = silex();
     }
 

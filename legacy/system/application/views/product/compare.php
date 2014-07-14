@@ -13,10 +13,10 @@
         <h1><?php echo $compare[0]['name']?></h1>
 		<div id="pageTitleRight"></div>
       <div style="float: right; margin-top: 20px;" id="referral-popup" >
-                    <img src='/images/tell-a-friend.png' alt='** PLEASE DESCRIBE THIS IMAGE **'/>
-<a target='_blank' href='/social/product/facebook/{id}'><img src='/images/facebook-refer.png' alt='** PLEASE DESCRIBE THIS IMAGE **'/></a>
-<a target='_blank' href='/social/product/twitter/{id}'><img src='/images/twitter-refer.png' alt='** PLEASE DESCRIBE THIS IMAGE **'/></a>
-<a onClick="$.get($(this).attr('href'),function(data){document.location=data;});return false;" href='/social/product/email/{id}'><img src='/images/email-refer.png' alt='** PLEASE DESCRIBE THIS IMAGE **'/></a>
+                    <img src="<?php echo s3path("/images/tell-a-friend.png") ?>" alt='** PLEASE DESCRIBE THIS IMAGE **'/>
+<a target='_blank' href='/social/product/facebook/{id}'><img src="<?php echo s3path("/images/facebook-refer.png") ?>" alt='** PLEASE DESCRIBE THIS IMAGE **'/></a>
+<a target='_blank' href='/social/product/twitter/{id}'><img src="<?php echo s3path("/images/twitter-refer.png") ?>" alt='** PLEASE DESCRIBE THIS IMAGE **'/></a>
+<a onClick="$.get($(this).attr('href'),function(data){document.location=data;});return false;" href='/social/product/email/{id}'><img src="<?php echo s3path("/images/email-refer.png") ?>" alt='** PLEASE DESCRIBE THIS IMAGE **'/></a>
 </div>
 	</div>
    		<!-- /page Title -->
@@ -42,7 +42,7 @@ $product_url = $cheapest['link'];
 ?>
 
 <?php
-echo "<a id='large-image' href='#'><img class='cdn-image' src='$image' alt='** PLEASE DESCRIBE THIS IMAGE **' onerror=\"this.src='/images/no-image-100px.gif'\"/></a>
+echo "<a id='large-image' href='#'><img class='cdn-image' src='$image' alt='** PLEASE DESCRIBE THIS IMAGE **' onerror=\"this.src='" . s3path("/images/no-image-100px.gif") ."'\"/></a>
 	</div>
 	<div id='product-info'>
 				<span id='price-range'><a href='#compare'>$price_range</a> ($count $store_word)</span><br/><br/>
@@ -82,7 +82,7 @@ echo "<a id='large-image' href='#'><img class='cdn-image' src='$image' alt='** P
                 <div id="calculateZip">
                     <form id="zipForm" action="/product/compare/{id}" method="get">
                     <div style="float:left;font-weight:normal;margin-top:4px;margin-left:50px;border:0px solid #000;">Include Tax &amp; Shipping with Prices: {zip}&nbsp;&nbsp;</div>
-                         <input id="zipButton" type="image" src="/images/btn-edit.gif" alt="Edit Zip Code" />
+                         <input id="zipButton" type="image" src="<?php echo s3path("/images/btn-edit.gif") ?>" alt="Edit Zip Code" />
                                             </form>
                 </div>
 <?php } else {?>
@@ -90,7 +90,7 @@ echo "<a id='large-image' href='#'><img class='cdn-image' src='$image' alt='** P
 			<form id="zipForm" action="/product/compare/{id}" method="get">
 				<span>Include Tax &amp; Shipping with Prices: </span>
                 <input name="zip" id="zip-input" value="Zip Code" type="text" onFocus="this.value=''"/>
-				<input id="zipButton" src="/images/btn-calculate.gif" alt="Calculate" type="image"/>
+				<input id="zipButton" src="<?php echo s3path("/images/btn-calculate.gif") ?>" alt="Calculate" type="image"/>
 							</form>
 		</div>
 <?php } ?>
@@ -108,7 +108,7 @@ echo "<a id='large-image' href='#'><img class='cdn-image' src='$image' alt='** P
 				<th class="TH-borderLeft header" >Store Name</th>
 				<th class="header">Store Price</th>
 				<th class="header">Coupons&nbsp;&nbsp;</th>
-				<th class="header"><a class="tooltip">Cash Back <img style="margin: -4px; padding-left: 3px;padding-right:20px;"  alt="** PLEASE DESCRIBE THIS IMAGE **" src="/images/cashback-question.png" width="16" height="16" /><span id="cashbackTip">When
+				<th class="header"><a class="tooltip">Cash Back <img style="margin: -4px; padding-left: 3px;padding-right:20px;"  alt="** PLEASE DESCRIBE THIS IMAGE **" src="<?php echo s3path("/images/cashback-question.png") ?>" width="16" height="16" /><span id="cashbackTip">When
  you shop through BeeSavy at one of our trusted stores, we earn a sales
  commission on anything you purchase from that store. We pass the
 majority of this commission back to you as "cash back".</span></a></th>
@@ -168,7 +168,7 @@ onload=\"
     var nheight=ratio*this.height;
     this.width=nwidth;
     this.height=nheight;\"
-                    src='$image' alt='** PLEASE DESCRIBE THIS IMAGE **' onerror='this.src ='../images/no-image-100px.gif''/></a><br/>
+                    src='$image' alt='** PLEASE DESCRIBE THIS IMAGE **' onerror=\"this.src='" . s3path("/../images/no-image-100px.gif") . "'\"/></a><br/>
 					</div>
 				</td>
 				<td class='base-price'>$$store_price</td>

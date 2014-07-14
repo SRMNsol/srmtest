@@ -1,16 +1,19 @@
 <?php
 /**
  */
-class Email_Test extends Controller {
-
-	function Email_Test()	{
-		parent::Controller();
+class Email_Test extends Controller
+{
+    public function Email_Test()
+    {
+        parent::Controller();
         $this->load->model('emailer');
-	}
-
-    function index(){
     }
-    function slide01(){
+
+    public function index()
+    {
+    }
+    public function slide01()
+    {
         $email = "rehoner@gmail.com";
         $msg = $this->parser->parse('email/incomplete', array());
         #$this->emailer->sendMessage($msg,"", $email, "BeeSavy - You've got cash back!");
@@ -31,4 +34,3 @@ class Email_Test extends Controller {
     }
 
 }
-?>

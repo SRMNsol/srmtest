@@ -79,6 +79,27 @@ function result_merchant_types(Collection $merchantTypes)
 }
 
 /**
+ * cached merchant types
+ */
+function cached_merchant_types()
+{
+    $container = silex();
+    $cache = $container['popshops.cache_storage'];
+    $key = 'WWW_MERCHANT_TYPES';
+    if ($cache->contains($key)) {
+        return $cache->fetch($key);
+    }
+
+    $client = $container['popshops.client'];
+    $catalogs = $container['popshops.catalog_keys'];
+    $merchantTypes = result_merchant_types($client->findMerchants($catalogs['all_stores'])->getMerchantTypes());
+
+    $cache->save($key, $merchantTypes, 12*3600);
+
+    return $merchantTypes;
+}
+
+/**
  * Serialize deals into array
  */
 function result_deals(Collection $deals, Rate $rate, Subid $subid = null)

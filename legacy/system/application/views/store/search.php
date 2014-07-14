@@ -37,8 +37,8 @@
 
     <div class="facet" >
     	<div id="catagory-bt" class="cat-bg">
-        <div id="cat-left-curve"><img src="/images/cat-left-curve.jpg" width="4" height="35" alt="** PLEASE DESCRIBE THIS IMAGE **"/></div>
-        <div id="cat-right-curve"><img src="/images/cat-right-curve.jpg" width="4" height="35" alt="** PLEASE DESCRIBE THIS IMAGE **"/></div>
+        <div id="cat-left-curve"><img src="<?php echo s3path("/images/cat-left-curve.jpg") ?>" width="4" height="35" alt="** PLEASE DESCRIBE THIS IMAGE **"/></div>
+        <div id="cat-right-curve"><img src="<?php echo s3path("/images/cat-right-curve.jpg") ?>" width="4" height="35" alt="** PLEASE DESCRIBE THIS IMAGE **"/></div>
         <div class="parent">Jump to a Store</div>
     </div>
 
@@ -112,7 +112,7 @@ foreach ($stores as $store){
 <!-- <script type='text/javascript'>
     OA_show(6);
 </script><noscript><a target='_blank' href='http://50.16.95.24/openx/www/delivery/ck.php?n=a88fd39'><img border='0' alt='' src='http://50.16.95.24/openx/www/delivery/avw.php?zoneid=6&amp;n=a88fd39' /></a></noscript>
-<!--<img src="/images/rightbanner.jpg">-->
+<!--<img src="<?php echo s3path("/images/rightbanner.jpg") ?>">-->
                 </div>
 <?php }
 ?>
@@ -147,7 +147,7 @@ onload="
          	   <div class="ShopStore" style><div class="ShopStore-Bt BtnSSOrangeBg"><a class="BtnBlackTxt" href="/stores/details/<?php echo $store['id'] ?>" rel="nofollow">SHOP STORE</a></div></div>
 	    </div>
 
-<?php 
+<?php
 
     $index += 1;}
  ?>
@@ -155,7 +155,7 @@ onload="
 <!-- <script type='text/javascript'>
     OA_show(7);
 </script><noscript><a target='_blank' href='http://50.16.95.24/openx/www/delivery/ck.php?n=a88fd39'><img border='0' alt='' src='http://50.16.95.24/openx/www/delivery/avw.php?zoneid=7&amp;n=a88fd39' /></a></noscript>
-<!--<img src="/images/rightbanner.jpg">-->
+<!--<img src="<?php echo s3path("/images/rightbanner.jpg") ?>">-->
                 </div>
   <div class="pag">
 

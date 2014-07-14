@@ -24,11 +24,11 @@ assetic.options:
 monolog.logfile: %root_dir%/data/log/app_%date%.log
 
 # popshops
-popshops.public_key: PUBLIC_KEY
+popshops.public_key: 7otijzbtj2q6uv4hhlwcz58ua
 popshops.catalog_keys:
-  all_stores:  CATALOG_KEY
-  hot_coupons: CATALOG_KEY
-  hot_deals:   CATALOG_KEY
+  all_stores:  74762wn6w9utgw6khg2ta92gz
+  hot_coupons: b0oe38oleq6ginsuaf78sj258
+  hot_deals:   3lmudy8xyefrwgs3u67li8uft
 popshops.entity_manager_key: orm.em
 popshops.cache_dir: %root_dir%/data/cache/popshops
 popshops.log_dir: %root_dir%/data/log
@@ -39,12 +39,12 @@ popshops.classnames:
   entity.transaction: App\Entity\Transaction
   entity.transactionHistory: App\Entity\TransactionHistory
   entity.deal: App\Entity\Deal
-popshops.linkshare_security_token: SECURITY_TOKEN
-popshops.cj_developer_key: DEVELOPER_KEY
-popshops.pepperjam_publisher_api_key: KEY
-popshops.shareasale_affiliate_id: ID
-popshops.shareasale_token: TOKEN
-popshops.shareasale_api_secret: SECRET
+popshops.linkshare_security_token: 8a2fe0db57eb01d3da33c506c103ec99148c604e480ee8a90a756ed5049ce806
+popshops.cj_developer_key: 00b9fcc0e776e331ea6fa3c394e0debafea79d05c9085a654c2e8da8ca35fdc429a37c7c30d0d70c8db81335b04e4b13b0bd3783162706bb337870048d0ef2f845/6c1874dd9281959f55e76e62f7173cc38913802b4949909a686c38efddd571ce694058b7ecddef8b48fd4287a48f1a3a9e45051c09d6415dc7d213140cb40ef9
+popshops.pepperjam_publisher_api_key: 38e200f9c64df81f9eaf6fc38d1df40e311748469a357ed4e00e196011f2c0bb
+popshops.shareasale_affiliate_id: 865250
+popshops.shareasale_token: WNT6v2KpPO76cwtJ
+popshops.shareasale_api_secret: DIl1id9n0MKtgz8xZXj2jq1z8DZrfm0q
 
 # dbal
 db.options:
@@ -60,6 +60,10 @@ orm.proxies_dir: %root_dir%/data/cache/doctrine
 orm.default_cache: apc
 orm.auto_generate_proxies: false
 orm.em.options:
+  result_cache:
+    driver: memcache
+    host: localhost
+    port: 11211
   mappings:
     - type: annotation
       namespace: App\Entity
@@ -69,5 +73,5 @@ orm.em.options:
 user.provider:
   admin:
     - ROLE_ADMIN
-    - PASSWORD_HASH
+    - 5FZ2Z8QIkA7UTZ4BYkoC+GsReLf569mSKDsfods6LYQ8t+a8EW9oaircfMpmaLbPBh4FOBiiFyLfuZmTSUwzZg==
 

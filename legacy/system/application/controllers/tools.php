@@ -1,20 +1,21 @@
 <?php
 /**
  */
-class Tools extends Controller {
-
-	function Tools()	{
-		parent::Controller();
+class Tools extends Controller
+{
+    public function Tools()
+    {
+        parent::Controller();
         $this->load->library('beesavy');
-        $this->load->helper('url');
         $this->load->model('user');
         $this->load->model('facebook');
         $this->load->model('twitter');
         $this->user_id = $this->user->get_field('id');
-	}
+    }
 
-    function __get_header(&$data){
-        if(!$this->user->login_status()){
+    public function __get_header(&$data)
+    {
+        if (!$this->user->login_status()) {
             redirect('main/signin?user=&code=20');
         }
         $home = $this->user->get_home(0);
@@ -22,33 +23,36 @@ class Tools extends Controller {
         $data = array_merge($data,$this->blocks->getBlocks());
     }
 
-    function index(){
-        if(!$this->user->login_status()){
+    public function index()
+    {
+        if (!$this->user->login_status()) {
             redirect('main/signin?user=&code=20');
         }
-		$data = $this->cache->library('beesavy', 'getUserStats', array($this->user_id), 3600);
-		$data2 = $this->cache->library('beesavy', 'getUser', array($this->user_id,'', TRUE), 3600);
-        $data2 =array_merge($data2, $this->user->info());
-        $data = array_merge($data, $data2);
+        $data = array_merge(
+            $this->popshopscache->library('beesavy', 'getUserStats', array($this->user_id), 3600),
+            $this->popshopscache->library('beesavy', 'getUser', array($this->user_id,'', TRUE), 3600)
+        );
         $this->__get_header($data);
         $this->parser->parse('tools/overview', $data);
     }
 
-	function referrals(){
-        if(!$this->user->login_status()){
+    public function referrals()
+    {
+        if (!$this->user->login_status()) {
             redirect('main/signin?user=&code=20');
         }
-		$data = $this->cache->library('beesavy', 'getUserStats', array($this->user_id), 3600);
-		$data2 = $this->cache->library('beesavy', 'getUser', array($this->user_id,'', TRUE), 3600);
+        $data = $this->popshopscache->library('beesavy', 'getUserStats', array($this->user_id), 3600);
+        $data2 = $this->popshopscache->library('beesavy', 'getUser', array($this->user_id,'', TRUE), 3600);
         $data2 = array_merge($data2, $this->user->info());
         $data = array_merge($data, $data2);
-		$data3 = $this->beesavy->getUserReferrals($this->user_id);
-		$data = array_merge($data, $data3);
+        $data3 = $this->beesavy->getUserReferrals($this->user_id);
+        $data = array_merge($data, $data3);
         $this->__get_header($data);
         $this->parser->parse('tools/referrals', $data);
     }
 
-    function test(){
+    public function test()
+    {
         $data =$this->user->info();
         $this->__get_header($data);
         $banners = array(
@@ -77,22 +81,23 @@ class Tools extends Controller {
             'half_banner_1_flash'=>$this->_makeflash('234px', '60px','Version1/halfbanner.swf', $data['alias']),
             'half_banner_2_flash'=>$this->_makeflash('234px', '60px','Version2/halfbanner.swf', $data['alias']),
         );
-        foreach($banners as $b){
+        foreach ($banners as $b) {
             echo $b;
         }
     }
-    function banner(){
-        if(!$this->user->login_status()){
+    public function banner()
+    {
+        if (!$this->user->login_status()) {
             redirect('main/signin?user=&code=20');
         }
         $data =$this->user->info();
-        if($data['alias']==''){
+        if ($data['alias']=='') {
             $data['alias']=$data['id'];
         }
         $data2 = $this->beesavy->getUser($this->user_id, '', TRUE);
         $data2 =array_merge($data2, $this->user->info());
         $data = array_merge($data, $data2);
-        if($data['alias']==''){
+        if ($data['alias']=='') {
             $data['alias']=$data['id'];
         }
         $this->__get_header($data);
@@ -156,14 +161,16 @@ class Tools extends Controller {
         #FLASH
         $this->parser->parse('tools/banner', $data);
     }
-    function _makestatic($image, $alias){
+    public function _makestatic($image, $alias)
+    {
         return "<a href='".base_url()."$alias'><img src='".base_url()."/Banner/Static/$image' /></a>";
     }
-    function showflash($width, $height, $version, $flash){
+    public function showflash($width, $height, $version, $flash)
+    {
         $height2 = str_replace("px", "", $height);
-        $height2 = (float)$height2 + 10;
+        $height2 = (float) $height2 + 10;
         $width2 = str_replace("px", "", $width);
-        $width2 = (float)$width2 + 10;
+        $width2 = (float) $width2 + 10;
         $height2 = $height2."px";
         $width2 = $width2."px";
         $data = array(
@@ -175,11 +182,12 @@ class Tools extends Controller {
             'flash'=>"/Banner/Animation/Version$version/$flash.swf");
         $this->parser->parse('tools/flash', $data);
     }
-    function _makeflash($width, $height, $flash, $alias){
+    public function _makeflash($width, $height, $flash, $alias)
+    {
         $height2 = str_replace("px", "", $height);
-        $height2 = (float)$height2 + 10;
+        $height2 = (float) $height2 + 10;
         $width2 = str_replace("px", "", $width);
-        $width2 = (float)$width2 + 10;
+        $width2 = (float) $width2 + 10;
         $height2 = $height2."px";
         $width2 = $width2."px";
         $data = array(
@@ -189,9 +197,11 @@ class Tools extends Controller {
             'height'=>$height,
             'link'=>base_url()."$alias",
             'flash'=>base_url()."/Banner/Animation/$flash");
+
         return $this->parser->parse('tools/flash', $data, True);
     }
-    function email_personal($alias){
+    public function email_personal($alias)
+    {
         $data = $this->beesavy->getUser($this->user_id, '', TRUE);
         $data =array_merge($data, $this->user->info());
         $this->__get_header($data);
@@ -200,7 +210,8 @@ class Tools extends Controller {
         $url = "mailto:?subject=".($title)."&body=".($body);
         echo $url;
     }
-    function email_business($alias){
+    public function email_business($alias)
+    {
         $data = $this->beesavy->getUser($this->user_id, '', TRUE);
         $data =array_merge($data, $this->user->info());
         $this->__get_header($data);
@@ -209,18 +220,19 @@ class Tools extends Controller {
         $url = "mailto:?subject=".($title)."&body=".($body);
         echo $url;
     }
-    function set_setting(){
+    public function set_setting()
+    {
         $setting =$this->input->post('setting');
         $value =$this->input->post('value');
-        if($setting == "facebook_auto" && $value){
+        if ($setting == "facebook_auto" && $value) {
             $url = $this->facebook->request_permissions(base_url()."/tools/add_facebook", $this->user_id);
-            if($url){
+            if ($url) {
                 redirect($url);
             }
         }
-        if($setting == "twitter_auto" && $value){
+        if ($setting == "twitter_auto" && $value) {
             $url = $this->twitter->request_permissions(base_url()."/tools/add_twitter", $this->user_id);
-            if($url){
+            if ($url) {
                 redirect($url);
             }
         }
@@ -229,9 +241,10 @@ class Tools extends Controller {
             $this->index();
 
     }
-    function add_facebook(){
+    public function add_facebook()
+    {
         $success = $this->facebook->get_access_token($this->user_id);
-        if(!$success){
+        if (!$success) {
             $error = '5';
             echo $error;
         }
@@ -240,9 +253,10 @@ class Tools extends Controller {
         $this->user->set_setting($setting, $value);
         $this->index();
     }
-    function add_twitter(){
+    public function add_twitter()
+    {
         $success = $this->twitter->get_access_token($this->user_id);
-        if(!$success){
+        if (!$success) {
             $error = '5';
             echo $error;
         }
@@ -252,4 +266,3 @@ class Tools extends Controller {
         $this->index();
     }
 }
-?>

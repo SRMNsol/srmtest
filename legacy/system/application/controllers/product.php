@@ -12,7 +12,6 @@ class Product extends Controller
         parse_str($_SERVER['QUERY_STRING'],$_GET);
 
         $this->load->helper('bridge');
-        $this->load->helper('escape');
         $this->container = silex();
     }
 

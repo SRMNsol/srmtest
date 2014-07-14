@@ -4,14 +4,14 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="description" content="Save money on millions of products from thousands of top online stores at BeeSavy.com with comparison shopping, cash back, and coupons." />
 <title>BeeSavy – Taking the sting out of online shopping</title>
-<link rel="shortcut icon" href="/images/favicon.ico" />
-<link href="/styles/main.css" media="screen" rel="stylesheet" type="text/css" />
-<link href="/styles/home.css" media="screen" rel="stylesheet" type="text/css" />
-<link href="/styles/results.css" media="screen" rel="stylesheet" type="text/css" />
-<link href="/styles/button.css" media="screen" rel="stylesheet" type="text/css" />
-<link href="/styles/view.css" media="screen" rel="stylesheet" type="text/css" />
-<link media="screen" rel="stylesheet" href="/styles/colorbox.css" />
-<link media="screen" rel="stylesheet" href="/css/matrix_table.css" />
+<link rel="shortcut icon" href="<?php echo s3path("/images/favicon.ico") ?>" />
+<link href="<?php echo s3path("/styles/main.css") ?>" media="screen" rel="stylesheet" type="text/css" />
+<link href="<?php echo s3path("/styles/home.css") ?>" media="screen" rel="stylesheet" type="text/css" />
+<link href="<?php echo s3path("/styles/results.css") ?>" media="screen" rel="stylesheet" type="text/css" />
+<link href="<?php echo s3path("/styles/button.css") ?>" media="screen" rel="stylesheet" type="text/css" />
+<link href="<?php echo s3path("/styles/view.css") ?>" media="screen" rel="stylesheet" type="text/css" />
+<link media="screen" rel="stylesheet" href="<?php echo s3path("/styles/colorbox.css") ?>" />
+<link media="screen" rel="stylesheet" href="<?php echo s3path("/css/matrix_table.css") ?>" />
 		<style type="text/css" title="currentStyle">
 			@import "/css/matrix_table.css";
 		</style>
@@ -31,17 +31,17 @@
   })();
 
 </script>
-<script src="/colorbox/jquery.colorbox.js" type="text/javascript"></script>
-<script type='text/javascript' src='/script_files/nav_bar.js'></script>
-<script type="text/javascript" src="/zeroclipboard/ZeroClipboard.js"></script>
-		<script type="text/javascript" language="javascript" src="/script_files/jquery.dataTables.js"></script>
-<script type='text/javascript' src='/script_files/money.js'></script>
+<script src="<?php echo s3path("/colorbox/jquery.colorbox.js") ?>" type="text/javascript"></script>
+<script type='text/javascript' src="<?php echo s3path("/script_files/nav_bar.js") ?>"></script>
+<script type="text/javascript" src="<?php echo s3path("/zeroclipboard/ZeroClipboard.js") ?>"></script>
+		<script type="text/javascript" language="javascript" src="<?php echo s3path("/script_files/jquery.dataTables.js") ?>"></script>
+<script type='text/javascript' src="<?php echo s3path("/script_files/money.js") ?>"></script>
 <script type='text/javascript'>
 $(document).ready(function(){
     $(".make-home").colorbox();
         ZeroClipboard.setMoviePath('<?php echo base_url() ?>zeroclipboard/ZeroClipboard.swf');
 		var clips = [];
-		
+
 		function startZC() {
             var elements = $(".couponList");
             var container = $(".couponList .click-contain");
@@ -50,7 +50,7 @@ $(document).ready(function(){
             for(var i=0; i<elements.length; i++){
                 var clip = new ZeroClipboard.Client();
                 clip.setHandCursor( true );
-                
+
                 clip.addEventListener('load', function (client) {
                     debugstr("Flash movie loaded and ready.");
                 });
@@ -70,7 +70,7 @@ $(document).ready(function(){
                         window.open(someurl);
                     };
                 };
-                
+
                 clip.addEventListener('mouseOver', cb(clip, newval));
                 clip.addEventListener('onComplete', my_complete(newlink) );
                 clip.glue( buttons[i], container[i]);
@@ -96,7 +96,7 @@ $(document).ready(function(){
                     ],
                     "aaSorting":[[5,"asc"]],
 					"bAutoWidth": false } );
-        
+
 });
 </script>
 </head>
