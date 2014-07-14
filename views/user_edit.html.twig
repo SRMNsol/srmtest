@@ -1,0 +1,26 @@
+{% extends 'common/layout.html.twig' %}
+
+{% form_theme form 'common/form_horizontal.html.twig' %}
+
+{% block content %}
+<div class="page-header">
+  <h1>Edit User</h1>
+</div>
+
+<div class="row">
+  <div class="col-md-9">
+    {{ form_start(form, { attr: { class: 'user-account' } }) }}
+      {{ form_errors(form) }}
+      {{ form_rest(form) }}
+      <div class="form-group">
+        <div class="col-md-6 col-md-offset-2">
+          <button type="submit" class="btn btn-primary">Update</button>
+        </div>
+      </div>
+    {{ form_end(form) }}
+  </div>
+  <div class="col-md-3">
+    <a href="{{ path('user_info', {'userSearch[email]': user.email }) }}" class="btn btn-default pull-right">See user info</a>
+  </div>
+</div>
+{% endblock content %}

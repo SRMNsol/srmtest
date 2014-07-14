@@ -43,8 +43,11 @@ class ControllerProvider implements ControllerProviderInterface
         $controllers->match('/merchant/edit/{merchantId}', 'merchant.controller:editMerchant')
             ->bind('merchant_edit');
 
-        $controllers->get('/user-info', 'user_info.controller:display')
+        $controllers->get('/user/info', 'user_info.controller:display')
             ->bind('user_info');
+
+        $controllers->match('/user/edit/{userId}', 'user_info.controller:edit')
+            ->bind('user_edit');
 
         $controllers->match('/referral-cashback', 'referral_cashback.controller:display')
             ->bind('referral_cashback');

@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Form\FormFactory;
 use Doctrine\ORM\EntityManager;
 use App\Form\UserSearchType;
+use App\Form\UserAccountType;
 
 class UserInfoController
 {
@@ -55,7 +56,7 @@ class UserInfoController
         } else {
         }
 
-        return new Response($app['twig']->render('user_info.html.twig', [
+        return $app['twig']->render('user_info.html.twig', [
             'searchForm' => $searchForm->createView(),
             'user' => $user,
             'cashbackList' => $cashbackList,
@@ -64,6 +65,35 @@ class UserInfoController
             'totalReferral' => $totalReferral,
             'totalPayment' => $totalPayment,
             'totalEarning' => $totalCashback + $totalReferral,
-        ]));
+        ]);
+    }
+
+    public function edit($userId, Request $request, Application $app)
+    {
+        $user = $app['orm.em']->find('App\Entity\User', $userId);
+
+        if ($user === null) {
+            return $app->abort(404, 'Invalid user id');
+        }
+
+        $form = $app['form.factory']->create(new UserAccountType(), $user);
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            try {
+                $user = $form->getData();
+                $app['orm.em']->flush();
+
+                $app['session']->getFlashBag()->add('success', 'User data updated');
+            } catch (\Exception $e) {
+                $app['session']->getFlashBag()->add('danger', sprintf('User update failed. %s', $e->getMessage()));
+            }
+
+            return $app->redirect($app['url_generator']->generate('user_edit', ['userId' => $userId]));
+        }
+
+        return $app['twig']->render('user_edit.html.twig', [
+            'form' => $form->createView(),
+            'user' => $user,
+        ]);
     }
 }
