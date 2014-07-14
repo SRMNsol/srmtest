@@ -13,13 +13,11 @@ class UserType extends AbstractType
     {
         $builder->add('email', 'email');
         $builder->add('alias');
-        $builder->add('firstName', 'text', [
-            'required' => false,
-        ]);
-        $builder->add('address');
-        $builder->add('city');
-        $builder->add('state');
-        $builder->add('zip');
+        $builder->add('firstName', 'text', ['required' => false]);
+        $builder->add('address', 'text', ['required' => false]);
+        $builder->add('city', 'text', ['required' => false]);
+        $builder->add('state', 'text', ['required' => false]);
+        $builder->add('zip', 'text', ['required' => false]);
         $builder->add('status', 'choice', [
             'choices' => [User::STATUS_ACTIVE, User::STATUS_INACTIVE]
         ]);

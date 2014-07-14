@@ -9,18 +9,21 @@ use App\Entity\User;
 
 class UserAccount implements GroupSequenceProviderInterface
 {
-    /**
-     * @Assert\Type(type="App\Entity\User")
-     * @Assert\Valid()
-     */
     protected $user;
-
     protected $editPassword = false;
-
-    /**
-     * @Assert\NotBlank(groups={"EditPassword"})
-     */
     protected $newPassword;
+
+    public static function loadValidatorMetadata(ClassMetadata $metadata)
+    {
+        $metadata->addPropertyConstraint('user', new Assert\Type([
+            'type' => 'App\Entity\User'
+        ]));
+        $metadata->addPropertyConstraint('user', new Assert\Valid());
+        $metadata->addPropertyConstraint('newPassword', new Assert\NotBlank([
+            'groups' => ['EditPassword']
+        ]));
+        $metadata->setGroupSequenceProvider(true);
+    }
 
     public function getGroupSequence()
     {
