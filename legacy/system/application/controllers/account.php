@@ -1,4 +1,7 @@
 <?php
+
+use App\Entity\User;
+
 /**
  */
 class Account extends Controller
@@ -94,8 +97,8 @@ class Account extends Controller
         $email = $this->input->post("email");
         $referral = $this->input->post("referral");
         $porig = $this->input->post("password");
-        $pass  = sha1($this->input->post("password"));
-        $passC = sha1($this->input->post("password_confirm"));
+        $pass  = User::passwordHash($this->input->post("password"));
+        $passC = User::passwordHash($this->input->post("password_confirm"));
 
         #Error check
         $errors = array();
@@ -152,9 +155,9 @@ class Account extends Controller
                 $id = $res['id'];
                 $einfo = $this->beesavy->getUser($res['id'], '', True);
                 $oldpass = $einfo['password'];
-                $q = "update user set password = '".sha1($new)."' where id='$id';";
+                $q = "update user set password = '".User::passwordHash($new)."' where id='$id';";
                 $this->db->query($q);
-                $this->beesavy->updateUser($res['id'], $email, $oldpass, 'password', sha1($new));
+                $this->beesavy->updateUser($res['id'], $email, $oldpass, 'password', User::passwordHash($new));
                 $data = array('email'=>$email, 'password'=>$new);
                 $msg = $this->parser->parse('email/newpassword', $data, True);
                 $txtmsg = $this->parser->parse('email/newpasswordt', $data, True);
@@ -174,7 +177,7 @@ class Account extends Controller
     public function login()
     {
         $email = $this->input->post('email');
-        $password = sha1($this->input->post('password'));
+        $password = User::passwordHash($this->input->post('password'));
         $error = $this->user->login($email,$password);
         if ($error) {
             $user = urlencode($error['user']);
@@ -274,9 +277,9 @@ class Account extends Controller
     }
     public function set_password()
     {
-        $current =sha1($this->input->post('password_current'));
-        $new =sha1($this->input->post('password_new'));
-        $conf=sha1($this->input->post('password_confirm'));
+        $current = User::passwordHash($this->input->post('password_current'));
+        $new = User::passwordHash($this->input->post('password_new'));
+        $conf= User::passwordHash($this->input->post('password_confirm'));
         $info = $this->user->info();
         if (strlen($this->input->post("password_new"))<6) {
             $errors[] = $this->code->get_code('invalid_password');

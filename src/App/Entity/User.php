@@ -1094,4 +1094,12 @@ class User
     {
         return (string) $this->email;
     }
+
+    /**
+     * Implement the original hashing from legacy site
+     */
+    public static function passwordHash($plainPassword)
+    {
+        return sha1($plainPassword);
+    }
 }

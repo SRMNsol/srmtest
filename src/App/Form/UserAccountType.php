@@ -12,10 +12,8 @@ class UserAccountType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('user', new UserType());
-        $builder->add('referrerEmail', 'email');
-        $builder->add('editPassword', 'checkbox', [
-            'required' => false,
-        ]);
+        $builder->add('referrerEmail', 'email', ['required' => false]);
+        $builder->add('editPassword', 'checkbox', ['required' => false]);
         $builder->add('newPassword', 'repeated', [
             'type' => 'password',
             'invalid_message' => 'The password fields must match.',

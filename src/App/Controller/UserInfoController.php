@@ -10,6 +10,7 @@ use Doctrine\ORM\EntityManager;
 use App\Form\UserSearchType;
 use App\Form\UserAccountType;
 use App\Form\Model\UserAccount;
+use App\Entity\User;
 
 class UserInfoController
 {
@@ -88,6 +89,9 @@ class UserInfoController
                 $user = $account->getUser();
 
                 // processing password
+                if ($account->getEditPassword() === true) {
+                    $user->setPassword(User::passwordHash($account->getNewPassword()));
+                }
 
                 $app['orm.em']->flush();
 
