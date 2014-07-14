@@ -12,13 +12,14 @@
     {{ form_start(form, { attr: { class: 'user-account' } }) }}
       {{ form_errors(form) }}
       {{ form_row(form.user.email) }}
-      {{ form_row(form.user.alias) }}
+      {{ form_row(form.user.alias, { attr: { placeholder: 'custom alias or use default: U'~user.id } }) }}
       {{ form_row(form.user.firstName) }}
       {{ form_row(form.user.address) }}
       {{ form_row(form.user.city) }}
-      {{ form_row(form.user.state) }}
+      {{ form_row(form.user.state, { attr: { placeholder: 'state code' } }) }}
       {{ form_row(form.user.zip) }}
       {{ form_row(form.user.status) }}
+      {{ form_row(form.referrerEmail, { label: 'Referred by', attr: { placeholder: 'enter email address' } }) }}
       {{ form_row(form.editPassword) }}
       {{ form_row(form.newPassword) }}
       <div class="form-group">

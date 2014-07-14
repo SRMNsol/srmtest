@@ -12,6 +12,7 @@ class UserAccount implements GroupSequenceProviderInterface
     protected $user;
     protected $editPassword = false;
     protected $newPassword;
+    protected $referrerEmail;
 
     public static function loadValidatorMetadata(ClassMetadata $metadata)
     {
@@ -22,6 +23,7 @@ class UserAccount implements GroupSequenceProviderInterface
         $metadata->addPropertyConstraint('newPassword', new Assert\NotBlank([
             'groups' => ['EditPassword']
         ]));
+        $metadata->addPropertyConstraint('referrerEmail', new Assert\Email());
         $metadata->setGroupSequenceProvider(true);
     }
 
@@ -66,6 +68,18 @@ class UserAccount implements GroupSequenceProviderInterface
     public function setNewPassword($password)
     {
         $this->newPassword = $password;
+
+        return $this;
+    }
+
+    public function getReferrerEmail()
+    {
+        return $this->referrerEmail;
+    }
+
+    public function setReferrerEmail($email)
+    {
+        $this->referrerEmail = $email;
 
         return $this;
     }
