@@ -85,7 +85,7 @@
   <tbody>
     {% for cashback in cashbackList %}
     <tr>
-      <td>{{ cashback.registeredAt|date('m/d/Y') }}</td>
+      <td>{{ cashback.transactionDate|date('m/d/Y') }}</td>
       <td>{{ cashback.concept }}</td>
       <td>{{ cashback.transactionNumbers|join(', ') }}</td>
       <td>$ {{ cashback.calculateTransactionTotal|number_format(2) }}</td>

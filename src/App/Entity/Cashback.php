@@ -122,4 +122,17 @@ class Cashback extends Payable
 
         return array_keys($nums);
     }
+
+    public function getTransactionDate()
+    {
+        $date = null;
+
+        foreach ($this->transactions as $transaction) {
+            if ($date === null || $date > $transaction->getRegisteredAt()) {
+                $date = clone $transaction->getRegisteredAt();
+            }
+        }
+
+        return $date;
+    }
 }
