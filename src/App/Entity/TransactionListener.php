@@ -19,7 +19,7 @@ class TransactionListener
      * did not make it to the flush for the Transaction
      *
      * @PostUpdate
-     **/
+     */
     public function flushCashback($transaction, $event)
     {
         $em = $event->getEntityManager();
@@ -50,6 +50,8 @@ class TransactionListener
             $cashback->addTransaction($transaction);
         }
 
+        $cashback->calculateAmountFromTransactions();
+
         $subid = Subid::createFromString($transaction->getTag());
         if (null !== $subid->getUserId()) {
             $user = $userRepository->findOneById($subid->getUserId());
@@ -57,8 +59,6 @@ class TransactionListener
                 $cashback->setUser($user);
             }
         }
-
-        $cashback->calculateAmount();
 
         if (null === $cashback->getConcept()) {
             $merchant = $transaction->getMerchant();
