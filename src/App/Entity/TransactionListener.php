@@ -52,11 +52,13 @@ class TransactionListener
 
         $cashback->calculateAmountFromTransactions();
 
-        $subid = Subid::createFromString($transaction->getTag());
-        if (null !== $subid->getUserId()) {
-            $user = $userRepository->findOneById($subid->getUserId());
-            if (null !== $user) {
-                $cashback->setUser($user);
+        if (null === $cashback->getUser()) {
+            $subid = Subid::createFromString($transaction->getTag());
+            if (null !== $subid->getUserId()) {
+                $user = $userRepository->findOneById($subid->getUserId());
+                if (null !== $user) {
+                    $cashback->setUser($user);
+                }
             }
         }
 
