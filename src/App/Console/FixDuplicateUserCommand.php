@@ -39,9 +39,16 @@ class FixDuplicateUserCommand extends Command
             $output->writeln(sprintf('Email: %s (%d)', $originalUser->getEmail(), $result[1]));
 
             foreach ($users as $user) {
+
+                // move all referred users to original user
+                foreach ($user->getReferredUsers() as $referredUser) {
+                    $referredUser->setReferredBy($originalUser);
+                }
+
+                // process payables
                 foreach ($user->getPayables() as $payable) {
                     if ($payable instanceof Referral) {
-                        // sum it
+                        // Monthly referrals are summed to original user's
                         $matchingReferral = $originalUser->getPayables()->filter(function ($p) use ($payable) {
                             return ($p instanceof Referral) && ($p->getMonth() === $payable->getMonth());
                         })->current();
@@ -56,19 +63,14 @@ class FixDuplicateUserCommand extends Command
                             $output->writeln(sprintf('+ Referral %s $%.2f', $payable->getMonth(), $payable->getAmount()));
                             $em->remove($payable);
                         } else {
-                            $user->removePayable($payable);
-                            $originalUser->addPayable($payable);
-
+                            $payable->setUser($originalUser);
                             $output->writeln(sprintf('+ %s $%.2f', $payable->getConcept(), $payable->getAmount()));
-                            $em->remove($payable);
                         }
 
                     } else {
-                        $user->removePayable($payable);
-                        $originalUser->addPayable($payable);
-
+                        // Cashback and others are assigned to original user
+                        $payable->setUser($originalUser);
                         $output->writeln(sprintf('+ %s $%.2f', $payable->getConcept(), $payable->getAmount()));
-                        $em->remove($payable);
                     }
 
                     $em->remove($user);
