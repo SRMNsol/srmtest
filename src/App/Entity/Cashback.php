@@ -69,9 +69,9 @@ class Cashback extends Payable
         return compact('total', 'commission', 'registeredAt');
     }
 
-    public function calculateAmount()
+    public function calculateAmountFromTransactions()
     {
-        // if cashback is locked don't update
+        // when cashback is processing or paid, do not update
         if ($this->isLocked()) {
             return $this;
         }
@@ -79,26 +79,29 @@ class Cashback extends Payable
         // extract $total, $commission, $registeredAt
         extract($this->calculateTransactionValues());
 
+        $this->amount = $commission;
         $this->registeredAt = $registeredAt;
         $this->updateAvailableDate();
 
-        $this->amount = $commission;
-
-        // past 90 days
-        if ($this->availableAt <= new \DateTime()) {
-            $this->available = $commission;
-            $this->pending = 0.00;
-            $this->status = self::STATUS_AVAILABLE;
-        } else {
-            $this->available = 0.00;
-            $this->pending = $commission;
-            $this->status = self::STATUS_PENDING;
-        }
-
+        // commission > 0 but total transaction amount = 0
         if ($this->amount >= 0.01 && $total <= 0.01) {
             $this->status = self::STATUS_INVALID;
+
+            return $this;
         }
 
+        // the only possible statuses are pending or available
+        if ($this->availableAt <= new \DateTime()) {
+            // past 90 days
+            $this->available = $commission;
+            $this->pending = 0.00;
+        } else {
+            // too recent
+            $this->available = 0.00;
+            $this->pending = $commission;
+        }
+
+        // status update will be handled by parent payable
         return $this;
     }
 

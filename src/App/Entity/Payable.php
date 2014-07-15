@@ -159,22 +159,6 @@ class Payable
         return $this;
     }
 
-    /**
-     * @PrePersist
-     */
-    public function onCreate()
-    {
-        $this->createdAt = new \DateTime();
-    }
-
-    /**
-     * @PreUpdate
-     */
-    public function onUpdate()
-    {
-        $this->updatedAt = new \DateTime();
-    }
-
     public function getAvailableAt()
     {
         return $this->availableAt;
@@ -301,9 +285,6 @@ class Payable
         return $this->paid;
     }
 
-    /**
-     * @PrePersist @PreUpdate
-     */
     public function validateAmounts()
     {
         $sum = $this->pending + $this->available + $this->processing + $this->paid;
@@ -312,13 +293,10 @@ class Payable
         }
     }
 
-    /**
-     * @PrePersist @PreUpdate
-     */
     public function updateStatusBasedOnAmounts()
     {
         if ($this->status === self::STATUS_INVALID) {
-            return;
+            return $this;
         }
 
         $status = null;
@@ -333,16 +311,18 @@ class Payable
             }
         }
 
+        // when all amounts are 0, $status is null
         if ($status === null) {
-            $this->status = self::STATUS_CANCELED;
+            if ($this->availableAt <= new \DateTime()) {
+                $this->status = self::STATUS_CANCELED;
+            } else {
+                $this->status = self::STATUS_PENDING;
+            }
         } else {
             $this->status = $status;
         }
     }
 
-    /**
-     * @PrePersist @PreUpdate
-     */
     public function updateAvailableDate()
     {
         if (isset($this->registeredAt)) {
@@ -355,5 +335,31 @@ class Payable
     {
         return $this->status === self::STATUS_PROCESSING
             || $this->status === self::STATUS_PAID;
+    }
+
+    /**
+     * @PrePersist
+     */
+    public function onCreate()
+    {
+        $this->createdAt = new \DateTime();
+    }
+
+    /**
+     * @PreUpdate
+     */
+    public function onUpdate()
+    {
+        $this->updatedAt = new \DateTime();
+    }
+
+    /**
+     * @PrePersist @PreUpdate
+     */
+    public function onSave()
+    {
+        $this->validateAmounts();
+        $this->updateAvailableDate();
+        $this->updateStatusBasedOnAmounts();
     }
 }
