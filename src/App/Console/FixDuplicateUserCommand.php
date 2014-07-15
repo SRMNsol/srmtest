@@ -22,6 +22,7 @@ class FixDuplicateUserCommand extends Command
         $app = $this->getSilexApplication();
         $em = $app['orm.em'];
 
+        // fix duplicate emails
         $qb = $em->createQueryBuilder();
         $qb->select(['u.email', 'COUNT(u)']);
         $qb->from('App\Entity\User', 'u');
@@ -31,10 +32,11 @@ class FixDuplicateUserCommand extends Command
         $results = $qb->getQuery()->execute();
 
         foreach ($results as $result) {
-            $output->writeln(sprintf('%s (%d)', $result['email'], $result[1]));
 
             $users = $em->getRepository('App\Entity\User')->findBy(['email' => $result['email']], ['id' => 'ASC']);
             $originalUser = array_shift($users);
+
+            $output->writeln(sprintf('Email: %s (%d)', $originalUser->getEmail(), $result[1]));
 
             foreach ($users as $user) {
                 foreach ($user->getPayables() as $payable) {
@@ -71,6 +73,30 @@ class FixDuplicateUserCommand extends Command
 
                     $em->remove($user);
                 }
+            }
+        }
+
+        $em->flush();
+
+        // fix duplicate alias
+        $qb = $em->createQueryBuilder();
+        $qb->select(['u.alias', 'COUNT(u)']);
+        $qb->from('App\Entity\User', 'u');
+        $qb->groupBy('u.alias');
+        $qb->having($qb->expr()->gt('COUNT(u)', 1));
+
+        $results = $qb->getQuery()->execute();
+
+        foreach ($results as $result) {
+
+            $users = $em->getRepository('App\Entity\User')->findBy(['alias' => $result['alias']], ['id' => 'ASC']);
+            $originalUser = array_shift($users);
+
+            $output->writeln(sprintf('Alias: %s %s (%d)', $originalUser->getEmail(), $result['alias'], $result[1]));
+
+            foreach ($users as $user) {
+                $user->setAlias(sprintf('U%d', $user->getId()));
+                $output->writeln(sprintf('+ %s %s', $user->getEmail(), $user->getAlias()));
             }
         }
 
