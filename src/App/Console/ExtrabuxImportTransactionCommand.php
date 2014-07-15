@@ -7,6 +7,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Helper\Table;
 use App\Entity\Transaction;
 use App\Entity\Cashback;
 
@@ -40,7 +41,7 @@ class ExtrabuxImportTransactionCommand extends Command
 
         $results = $queryBuilder->getQuery()->iterate();
 
-        $table = $this->getHelperSet()->get('table');
+        $table = new Table($output);
         $table->setHeaders(['Date', 'Order #', 'Amount', 'Cashback', 'Tag']);
 
         foreach ($results as $row) {
@@ -121,7 +122,7 @@ class ExtrabuxImportTransactionCommand extends Command
 
             $em->flush();
             $em->clear();
-            $table->render($output);
+            $table->render();
         }
 
     }

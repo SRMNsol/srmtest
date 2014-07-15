@@ -7,6 +7,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Helper\Table;
 use App\Entity\Referral;
 
 class ExtrabuxImportReferralCommand extends Command
@@ -39,7 +40,7 @@ class ExtrabuxImportReferralCommand extends Command
 
         $results = $queryBuilder->getQuery()->iterate();
 
-        $table = $this->getHelperSet()->get('table');
+        $table = new Table($output);
         $table->setHeaders(['Month', 'Direct', 'Indirect']);
 
         foreach ($results as $row) {
@@ -85,7 +86,7 @@ class ExtrabuxImportReferralCommand extends Command
 
             $em->flush();
             $em->clear();
-            $table->render($output);
+            $table->render();
         }
 
     }

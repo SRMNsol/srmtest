@@ -7,6 +7,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Helper\Table;
 use App\Entity\Referral;
 use App\Entity\Payable;
 
@@ -65,7 +66,7 @@ class ReferralCalculationCommand extends Command
 
         $results = $queryBuilder->getQuery()->iterate();
 
-        $table = $this->getHelperSet()->get('table');
+        $table = new Table($output);
         $table->setHeaders(['User', 'Month', 'Amount', 'Available', 'Pending', 'Direct', 'Indirect', 'Status']);
 
         foreach ($results as $row) {
@@ -87,7 +88,7 @@ class ReferralCalculationCommand extends Command
                 $referral->getStatus(),
             ]]);
 
-            $table->render($output);
+            $table->render();
 
             $em->clear();
         }
