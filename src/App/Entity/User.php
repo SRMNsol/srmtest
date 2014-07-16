@@ -22,7 +22,7 @@ class User
     protected $extrabuxId;
 
     /**
-     * @Column(length=250)
+     * @Column(length=250, unique=true)
      */
     protected $email;
 
@@ -47,7 +47,7 @@ class User
     protected $paypalEmail;
 
     /**
-     * @Column(length=50)
+     * @Column(length=50, unique=true)
      */
     protected $alias;
 
