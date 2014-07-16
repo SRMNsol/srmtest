@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity
@@ -199,6 +200,8 @@ class User
 
     public static function loadValidatorMetadata(ClassMetadata $metadata)
     {
+        $metadata->addConstraint(new UniqueEntity(['fields' => 'email']));
+        $metadata->addConstraint(new UniqueEntity(['fields' => 'alias']));
         $metadata->addPropertyConstraint('email', new Assert\NotBlank());
         $metadata->addPropertyConstraint('email', new Assert\Email());
     }

@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "9c9a0d31031000794be4a653fc6453c8",
+    "hash": "7996d029f18f5b62f07d15e9fce26e78",
     "packages": [
         {
             "name": "dflydev/doctrine-orm-service-provider",
@@ -1292,16 +1292,16 @@
         },
         {
             "name": "saxulum/saxulum-doctrine-orm-manager-registry-provider",
-            "version": "2.2.0",
+            "version": "2.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/saxulum/saxulum-doctrine-orm-manager-registry-provider.git",
-                "reference": "b79f0276f43d9525c3785115abc5e06712a06b81"
+                "reference": "feafa9f710ee99a8247302da503a1d6ee3cab437"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/saxulum/saxulum-doctrine-orm-manager-registry-provider/zipball/b79f0276f43d9525c3785115abc5e06712a06b81",
-                "reference": "b79f0276f43d9525c3785115abc5e06712a06b81",
+                "url": "https://api.github.com/repos/saxulum/saxulum-doctrine-orm-manager-registry-provider/zipball/feafa9f710ee99a8247302da503a1d6ee3cab437",
+                "reference": "feafa9f710ee99a8247302da503a1d6ee3cab437",
                 "shasum": ""
             },
             "require": {
@@ -1311,16 +1311,16 @@
             },
             "require-dev": {
                 "phpunit/phpunit": "3.7.*",
-                "saxulum/saxulum-console": "~2.0",
-                "saxulum/saxulum-doctrine-orm-commands": "~1.2",
+                "saxulum/saxulum-console": "~1.2",
+                "saxulum/saxulum-doctrine-orm-commands": "~1.0.0",
                 "silex/silex": "~1.2",
                 "symfony/doctrine-bridge": "~2.2",
                 "symfony/form": "~2.2",
                 "symfony/validator": "~2.2"
             },
             "suggest": {
-                "saxulum/saxulum-console": "~2.0",
-                "saxulum/saxulum-doctrine-orm-commands": "~1.2",
+                "saxulum/saxulum-console": "~1.2",
+                "saxulum/saxulum-doctrine-orm-commands": "~1.0.0",
                 "silex/silex": "~1.2",
                 "symfony/doctrine-bridge": "~2.2",
                 "symfony/form": "~2.2",
@@ -1351,7 +1351,7 @@
                 "registrymanager",
                 "silex"
             ],
-            "time": "2014-05-01 10:35:43"
+            "time": "2014-03-31 21:06:04"
         },
         {
             "name": "silex/silex",
