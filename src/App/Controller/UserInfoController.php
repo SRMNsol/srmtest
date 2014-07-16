@@ -84,7 +84,7 @@ class UserInfoController
             $account->setReferrerEmail($user->getReferredBy()->getEmail());
         }
 
-        $form = $app['form.factory']->create(new UserAccountType(), $account);
+        $form = $app['form.factory']->create(new UserAccountType(), $account, ['em' => $app['orm.em']]);
         $form->handleRequest($request);
         if ($form->isValid()) {
             try {

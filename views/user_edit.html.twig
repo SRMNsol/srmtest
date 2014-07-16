@@ -19,11 +19,12 @@
       {{ form_row(form.user.state, { attr: { placeholder: 'state code' } }) }}
       {{ form_row(form.user.zip) }}
       {{ form_row(form.user.status) }}
-      {{ form_row(form.referrerEmail, { label: 'Referred by', attr: { placeholder: 'enter email address' } }) }}
+      {{ form_row(form.user.referredBy) }}
       {{ form_row(form.editPassword) }}
       {{ form_row(form.newPassword) }}
       <div class="form-group">
         <div class="col-md-6 col-md-offset-2">
+          <a href="{{ path('user_info', {'userSearch[email]': user.email }) }}" class="btn btn-default">Cancel</a>
           <button type="submit" class="btn btn-primary">Update</button>
         </div>
       </div>
