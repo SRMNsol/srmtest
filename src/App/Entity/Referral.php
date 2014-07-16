@@ -2,24 +2,26 @@
 
 namespace App\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+
 /**
- * @Entity(repositoryClass="ReferralRepository")
- * @HasLifecycleCallbacks
+ * @ORM\Entity(repositoryClass="ReferralRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class Referral extends Payable
 {
     /**
-     * @Column(type="decimal", scale=2)
+     * @ORM\Column(type="decimal", scale=2)
      */
     protected $direct = 0.00;
 
     /**
-     * @Column(type="decimal", scale=2)
+     * @ORM\Column(type="decimal", scale=2)
      */
     protected $indirect = 0.00;
 
     /**
-     * @Column(length=6, nullable=true)
+     * @ORM\Column(length=6, nullable=true)
      */
     protected $month;
 
@@ -93,7 +95,7 @@ class Referral extends Payable
     }
 
     /**
-     * @PrePersist @PreUpdate
+     * @ORM\PrePersist @ORM\PreUpdate
      */
     public function validateReferralAmounts()
     {

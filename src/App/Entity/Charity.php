@@ -2,25 +2,27 @@
 
 namespace App\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+
 /**
- * @Entity
+ * @ORM\Entity
  */
 class Charity
 {
     /**
-     * @Id @Column(type="integer") @GeneratedValue
+     * @ORM\Id @ORM\Column(type="integer") @ORM\GeneratedValue
      */
     protected $id;
 
     /**
-     * @Column
+     * @ORM\Column
      */
     protected $name;
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -43,7 +45,7 @@ class Charity
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {

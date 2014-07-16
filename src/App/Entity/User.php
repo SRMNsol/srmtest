@@ -2,182 +2,184 @@
 
 namespace App\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @Entity
- * @Table(name="user")
+ * @ORM\Entity
+ * @ORM\Table(name="user")
  */
 class User
 {
     /**
-     * @Id @Column(name="uid", type="integer") @GeneratedValue
+     * @ORM\Id @ORM\Column(name="uid", type="integer") @ORM\GeneratedValue
      */
     protected $id;
 
     /**
-     * @Column(name="id", type="integer", length=11, nullable=true)
+     * @ORM\Column(name="id", type="integer", length=11, nullable=true)
      */
     protected $extrabuxId;
 
     /**
-     * @Column(length=250, unique=true)
+     * @ORM\Column(length=250, unique=true)
      */
     protected $email;
 
     /**
-     * @Column(name="facebook_auto", type="boolean")
+     * @ORM\Column(name="facebook_auto", type="boolean")
      */
     protected $facebookAuto = false;
 
     /**
-     * @Column(name="twitter_auto", type="boolean")
+     * @ORM\Column(name="twitter_auto", type="boolean")
      */
     protected $twitterAuto = false;
 
     /**
-     * @Column(name="payment_method")
+     * @ORM\Column(name="payment_method")
      */
     protected $paymentMethod;
 
     /**
-     * @Column(name="paypal_email", length=250)
+     * @ORM\Column(name="paypal_email", length=250)
      */
     protected $paypalEmail;
 
     /**
-     * @Column(length=50, unique=true)
+     * @ORM\Column(length=50, unique=true)
      */
     protected $alias;
 
     /**
-     * @Column(name="charity_id", type="integer")
+     * @ORM\Column(name="charity_id", type="integer")
      */
     protected $extrabuxCharityId;
 
     /**
-     * @Column(type="boolean")
+     * @ORM\Column(type="boolean")
      */
     protected $admin = false;
 
     /**
-     * @Column(name="send_reminders", type="boolean")
+     * @ORM\Column(name="send_reminders", type="boolean")
      */
     protected $sendReminders = false;
 
     /**
-     * @Column(name="send_updates", type="boolean")
+     * @ORM\Column(name="send_updates", type="boolean")
      */
     protected $sendUpdates = false;
 
     /**
-     * @Column(name="last_login", type="datetime")
+     * @ORM\Column(name="last_login", type="datetime")
      */
     protected $lastLoginAt;
 
     /**
-     * @Column(name="last_refer", type="datetime")
+     * @ORM\Column(name="last_refer", type="datetime")
      */
     protected $lastReferAt;
 
     /**
-     * @Column(name="created", type="datetime")
+     * @ORM\Column(name="created", type="datetime")
      */
     protected $createdAt;
 
     /**
-     * @Column(name="fb_access_token")
+     * @ORM\Column(name="fb_access_token")
      */
     protected $facebookAccessToken;
 
     /**
-     * @Column(name="twitter_token_secret")
+     * @ORM\Column(name="twitter_token_secret")
      */
     protected $twitterTokenSecret;
 
     /**
-     * @Column(name="twitter_access_token")
+     * @ORM\Column(name="twitter_access_token")
      */
     protected $twitterAccessToken;
 
     /**
-     * @Column
+     * @ORM\Column
      */
     protected $password;
 
     /**
-     * @Column(name="purchase_exempt", type="boolean")
+     * @ORM\Column(name="purchase_exempt", type="boolean")
      */
     protected $purchaseExempt = false;
 
     /**
-     * @Column(name="email_refer_info", type="boolean")
+     * @ORM\Column(name="email_refer_info", type="boolean")
      */
     protected $emailReferInfo = false;
 
     /**
-     * @Column(name="email_83", type="boolean")
+     * @ORM\Column(name="email_83", type="boolean")
      */
     protected $email83 = false;
 
     /**
-     * @Column(name="email_60", type="boolean")
+     * @ORM\Column(name="email_60", type="boolean")
      */
     protected $email60 = false;
 
     /**
-     * @Column(name="last_cashback", type="datetime")
+     * @ORM\Column(name="last_cashback", type="datetime")
      */
     protected $lastCashbackAt;
 
     /**
-     * @Column(name="raw_data", type="text", nullable=true)
+     * @ORM\Column(name="raw_data", type="text", nullable=true)
      */
     protected $extrabuxRawData;
 
     /**
-     * @Column(name="last_sync", type="datetime", nullable=true)
+     * @ORM\Column(name="last_sync", type="datetime", nullable=true)
      */
     protected $extrabuxLastSyncAt;
 
     /**
-     * @Column(name="first_name", length=20, nullable=true)
+     * @ORM\Column(name="first_name", length=20, nullable=true)
      */
     protected $firstName;
 
     /**
-     * @Column(name="raw_user_data", type="text", nullable=true)
+     * @ORM\Column(name="raw_user_data", type="text", nullable=true)
      */
     protected $extrabuxRawUserData;
 
     /**
-     * @OneToMany(targetEntity="Payable", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="Payable", mappedBy="user")
      */
     protected $payables;
 
     /**
-     * @Column(nullable=true)
+     * @ORM\Column(nullable=true)
      */
     protected $address;
 
     /**
-     * @Column(length=50, nullable=true)
+     * @ORM\Column(length=50, nullable=true)
      */
     protected $city;
 
     /**
-     * @Column(length=5, nullable=true)
+     * @ORM\Column(length=5, nullable=true)
      */
     protected $state;
 
     /**
-     * @Column(length=10, nullable=true)
+     * @ORM\Column(length=10, nullable=true)
      */
     protected $zip;
 
     /**
-     * @Column(length=10)
+     * @ORM\Column(length=10)
      */
     protected $status = self::STATUS_ACTIVE;
 
@@ -185,13 +187,13 @@ class User
     const STATUS_INACTIVE = 'inactive';
 
     /**
-     * @ManyToOne(targetEntity="User", inversedBy="referredUsers")
-     * @JoinColumn(referencedColumnName="uid", name="ref_uid")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="referredUsers")
+     * @ORM\JoinColumn(referencedColumnName="uid", name="ref_uid")
      */
     protected $referredBy;
 
     /**
-     * @OneToMany(targetEntity="User", mappedBy="referredBy")
+     * @ORM\OneToMany(targetEntity="User", mappedBy="referredBy")
      */
     protected $referredUsers;
 
@@ -837,7 +839,8 @@ class User
      */
     public function __construct()
     {
-        $this->payables = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->payables = new ArrayCollection();
+        $this->referredUsers = new ArrayCollection();
     }
 
     /**

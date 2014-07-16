@@ -68,6 +68,7 @@ orm.em.options:
     - type: annotation
       namespace: App\Entity
       path: %root_dir%/src/App/Entity
+      use_simple_annotation_reader: false
 
 # user provider
 user.provider:

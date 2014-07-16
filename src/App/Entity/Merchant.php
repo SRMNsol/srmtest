@@ -8,11 +8,12 @@ use Popshops\SubidTrait;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Form\FormInterface;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @Entity
- * @AttributeOverrides({
- *   @AttributeOverride(name="commissionType", column=@Column(length=20))
+ * @ORM\Entity
+ * @ORM\AttributeOverrides({
+ *   @ORM\AttributeOverride(name="commissionType", column=@ORM\Column(length=20))
  * })
  */
 class Merchant extends BaseMerchant
@@ -21,7 +22,7 @@ class Merchant extends BaseMerchant
     use SubidTrait;
 
     /**
-     * @Column(type="decimal", scale=2)
+     * @ORM\Column(type="decimal", scale=2)
      */
     protected $commissionMax = 0.00;
 

@@ -2,15 +2,16 @@
 
 namespace App\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @Entity(repositoryClass="CashbackRepository")
+ * @ORM\Entity(repositoryClass="CashbackRepository")
  */
 class Cashback extends Payable
 {
     /**
-     * @OneToMany(targetEntity="Transaction", mappedBy="cashback")
+     * @ORM\OneToMany(targetEntity="Transaction", mappedBy="cashback")
      */
     protected $transactions;
 

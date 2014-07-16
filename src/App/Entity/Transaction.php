@@ -3,22 +3,23 @@
 namespace App\Entity;
 
 use Popshops\Transaction as BaseTransaction;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @Entity
- * @Table(name="AdvertiserTransaction")
- * @HasLifecycleCallbacks
- * @EntityListeners({"TransactionListener"})
+ * @ORM\Entity
+ * @ORM\Table(name="AdvertiserTransaction")
+ * @ORM\HasLifecycleCallbacks
+ * @ORM\EntityListeners({"TransactionListener"})
  */
 class Transaction extends BaseTransaction
 {
     /**
-     * @ManyToOne(targetEntity="Cashback", inversedBy="transactions", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="Cashback", inversedBy="transactions", cascade={"persist"})
      */
     protected $cashback;
 
     /**
-     * @ManyToOne(targetEntity="Rate")
+     * @ORM\ManyToOne(targetEntity="Rate")
      */
     protected $rate;
 
@@ -47,7 +48,7 @@ class Transaction extends BaseTransaction
     }
 
     /**
-     * @PrePersist
+     * @ORM\PrePersist
      */
     public function onCreate()
     {
@@ -55,7 +56,7 @@ class Transaction extends BaseTransaction
     }
 
     /**
-     * @PreUpdate
+     * @ORM\PreUpdate
      */
     public function onUpdate()
     {

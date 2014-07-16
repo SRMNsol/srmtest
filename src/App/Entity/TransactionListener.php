@@ -3,10 +3,11 @@
 namespace App\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Mapping as ORM;
 
 class TransactionListener
 {
-    /** @PrePersist @PreUpdate */
+    /** @ORM\PrePersist @ORM\PreUpdate */
     public function createRelatedEntity(Transaction $transaction, $event)
     {
         $em = $event->getEntityManager();
@@ -18,7 +19,7 @@ class TransactionListener
      * We need an additional flush to push Cashback changes that
      * did not make it to the flush for the Transaction
      *
-     * @PostUpdate
+     * @ORM\PostUpdate
      */
     public function flushCashback($transaction, $event)
     {

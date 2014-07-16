@@ -2,78 +2,80 @@
 
 namespace App\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+
 /**
- * @Entity(repositoryClass="PayableRepository")
- * @HasLifecycleCallbacks
- * @InheritanceType("SINGLE_TABLE")
- * @DiscriminatorColumn(name="payableType")
- * @DiscriminatorMap({"payable"="Payable", "cashback"="Cashback", "referral" = "Referral"})
+ * @ORM\Entity(repositoryClass="PayableRepository")
+ * @ORM\HasLifecycleCallbacks
+ * @ORM\InheritanceType("SINGLE_TABLE")
+ * @ORM\DiscriminatorColumn(name="payableType")
+ * @ORM\DiscriminatorMap({"payable"="Payable", "cashback"="Cashback", "referral" = "Referral"})
  */
 class Payable
 {
     /**
-     * @Id @Column(type="integer") @GeneratedValue
+     * @ORM\Id @ORM\Column(type="integer") @ORM\GeneratedValue
      */
     protected $id;
 
     /**
-     * @ManyToOne(targetEntity="User", inversedBy="payables")
-     * @JoinColumn(referencedColumnName="uid")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="payables")
+     * @ORM\JoinColumn(referencedColumnName="uid")
      */
     protected $user;
 
     /**
-     * @Column(type="decimal", scale=2)
+     * @ORM\Column(type="decimal", scale=2)
      */
     protected $amount = 0.00;
 
     /**
-     * @Column(type="decimal", scale=2)
+     * @ORM\Column(type="decimal", scale=2)
      */
     protected $pending = 0.00;
 
     /**
-     * @Column(type="decimal", scale=2)
+     * @ORM\Column(type="decimal", scale=2)
      */
     protected $available = 0.00;
 
     /**
-     * @Column(type="decimal", scale=2)
+     * @ORM\Column(type="decimal", scale=2)
      */
     protected $processing = 0.00;
 
     /**
-     * @Column(type="decimal", scale=2)
+     * @ORM\Column(type="decimal", scale=2)
      */
     protected $paid = 0.00;
 
     /**
-     * @Column(nullable=true)
+     * @ORM\Column(nullable=true)
      */
     protected $concept;
 
     /**
-     * @Column(type="datetime")
+     * @ORM\Column(type="datetime")
      */
     protected $createdAt;
 
     /**
-     * @Column(type="datetime", nullable=true)
+     * @ORM\Column(type="datetime", nullable=true)
      */
     protected $updatedAt;
 
     /**
-     * @Column(type="datetime", nullable=true)
+     * @ORM\Column(type="datetime", nullable=true)
      */
     protected $registeredAt;
 
     /**
-     * @Column(type="date", nullable=true)
+     * @ORM\Column(type="date", nullable=true)
      */
     protected $availableAt;
 
     /**
-     * @Column(length=20)
+     * @ORM\Column(length=20)
      */
     protected $status = self::STATUS_PENDING;
 
@@ -338,7 +340,7 @@ class Payable
     }
 
     /**
-     * @PrePersist
+     * @ORM\PrePersist
      */
     public function onCreate()
     {
@@ -346,7 +348,7 @@ class Payable
     }
 
     /**
-     * @PreUpdate
+     * @ORM\PreUpdate
      */
     public function onUpdate()
     {
@@ -354,7 +356,7 @@ class Payable
     }
 
     /**
-     * @PrePersist @PreUpdate
+     * @ORM\PrePersist @ORM\PreUpdate
      */
     public function onSave()
     {

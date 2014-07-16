@@ -2,59 +2,61 @@
 
 namespace App\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+
 /**
- * @Entity(repositoryClass="RateRepository")
- * @HasLifecycleCallbacks
+ * @ORM\Entity(repositoryClass="RateRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class Rate
 {
     /**
-     * @Id @Column(type="integer") @GeneratedValue
+     * @ORM\Id @ORM\Column(type="integer") @ORM\GeneratedValue
      */
     protected $id;
 
     /**
-     * @Column(type="decimal", scale=2, nullable=false)
+     * @ORM\Column(type="decimal", scale=2, nullable=false)
      */
     protected $level0;
 
     /**
-     * @Column(type="decimal", scale=2, nullable=false)
+     * @ORM\Column(type="decimal", scale=2, nullable=false)
      */
     protected $level1;
 
     /**
-     * @Column(type="decimal", scale=2, nullable=false)
+     * @ORM\Column(type="decimal", scale=2, nullable=false)
      */
     protected $level2;
 
     /**
-     * @Column(type="decimal", scale=2, nullable=false)
+     * @ORM\Column(type="decimal", scale=2, nullable=false)
      */
     protected $level3;
 
     /**
-     * @Column(type="decimal", scale=2, nullable=false)
+     * @ORM\Column(type="decimal", scale=2, nullable=false)
      */
     protected $level4;
 
     /**
-     * @Column(type="decimal", scale=2, nullable=false)
+     * @ORM\Column(type="decimal", scale=2, nullable=false)
      */
     protected $level5;
 
     /**
-     * @Column(type="decimal", scale=2, nullable=false)
+     * @ORM\Column(type="decimal", scale=2, nullable=false)
      */
     protected $level6;
 
     /**
-     * @Column(type="decimal", scale=2, nullable=false)
+     * @ORM\Column(type="decimal", scale=2, nullable=false)
      */
     protected $level7;
 
     /**
-     * @Column(type="datetime")
+     * @ORM\Column(type="datetime")
      */
     protected $createdAt;
 
@@ -276,7 +278,7 @@ class Rate
     }
 
     /**
-     * @PrePersist
+     * @ORM\PrePersist
      */
     public function onCreate()
     {
