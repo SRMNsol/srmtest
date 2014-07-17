@@ -1,0 +1,28 @@
+{% extends 'common/layout.html.twig' %}
+
+{% form_theme dateForm 'common/form_inline.html.twig' %}
+
+{% block content %}
+<div class="page-header">
+  <h1>Site Statistics <small></small></h1>
+</div>
+
+<div class="row">
+  <div class="col-md-9">
+    {{ form_start(dateForm) }}
+      {{ form_errors(dateForm) }}
+      {{ form_row(dateForm.startDate) }}
+      {{ form_row(dateForm.endDate) }}
+
+      <div class="form-group">
+        <div class="col-md-6 col-md-offset-2">
+          <button type="submit" class="btn btn-primary">Display</button>
+        </div>
+      </div>
+    {{ form_end(dateForm) }}
+  </div>
+</div>
+
+{% if display %}
+{% endif %}
+{% endblock content %}

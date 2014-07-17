@@ -36,6 +36,10 @@ class ControllerProvider implements ControllerProviderInterface
             return new Controller\CharityController($app['orm.em']);
         });
 
+        $app['statistics.controller'] = $app->share(function () use ($app) {
+            return new Controller\StatisticsController($app['orm.em']);
+        });
+
         $controllers->get('/', 'main.controller:dashboard')
             ->bind('homepage');
 
@@ -82,6 +86,9 @@ class ControllerProvider implements ControllerProviderInterface
             ->bind('charity_delete')
             ->assert('charity', '\d+')
             ->convert('charity', $charityConverter);
+
+        $controllers->get('/statistics', 'statistics.controller:display')
+            ->bind('statistics');
 
         return $controllers;
     }

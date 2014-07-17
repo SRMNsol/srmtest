@@ -5,7 +5,6 @@ namespace App\Controller;
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Form\FormFactory;
 use Doctrine\ORM\EntityManager;
 use App\Form\UserSearchType;
 use App\Form\UserAccountType;
