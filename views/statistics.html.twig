@@ -23,6 +23,36 @@
   </div>
 </div>
 
+<br>
+
 {% if display %}
+<table class="table table-bordered">
+  <tr>
+    <th class="col-md-2">Cashback earned</th>
+    <td class="col-md-1">$ 0.00</td>
+    <th class="col-md-2">Active users</th>
+    <td class="col-md-1">0</td>
+    <th class="col-md-2">New users</th>
+    <td class="col-md-1">0</td>
+    <th class="col-md-2">Referral users</th>
+    <td class="col-md-1">0</td>
+  </tr>
+</table>
+
+<h4>Top Users</h4>
+<table class="table table-bordered">
+  <thead>
+    <th class="col-md-1">User Id</th>
+    <th class="col-md-3">Email</th>
+    <th class="col-md-1">Total Cash Back</th>
+    <th class="col-md-1">Referral Cash Back</th>
+    <th class="col-md-1">Personal Cash Back</th>
+    <th class="col-md-1">Spend</th>
+    <th class="col-md-1">Total Referrals</th>
+    <th class="col-md-1">Level 1 Referrals</th>
+    <th class="col-md-1">Paid</th>
+    <th class="col-md-1">Referrals Paid</th>
+  </thead>
+</table>
 {% endif %}
 {% endblock content %}
