@@ -29,8 +29,10 @@ class StatisticsController
             $display = true;
             $range = $dateForm->getData();
 
-            $params['total_cashback'] = $app['orm.em']->getRepository('App\Entity\Cashback')->getTotalCashback($range['startDate'], $range['endDate']);
-            $params['count_earners'] = $app['orm.em']->getRepository('App\Entity\User')->getTotalShoppers($range['startDate'], $range['endDate']);
+            $params['totalCashback'] = $app['orm.em']->getRepository('App\Entity\Cashback')->getTotalCashback($range['startDate'], $range['endDate']);
+            $params['totalShoppers'] = $app['orm.em']->getRepository('App\Entity\User')->getTotalShoppers($range['startDate'], $range['endDate']);
+            $params['totalNewUsers'] = $app['orm.em']->getRepository('App\Entity\User')->getTotalNewUsers($range['startDate'], $range['endDate']);
+            $params['totalReferrers'] = $app['orm.em']->getRepository('App\Entity\User')->getTotalReferrers($range['startDate'], $range['endDate']);
         }
 
         return $app['twig']->render('statistics.html.twig', [

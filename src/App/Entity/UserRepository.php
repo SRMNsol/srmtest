@@ -26,4 +26,31 @@ class UserRepository extends EntityRepository
 
         return $qb->getQuery()->getSingleScalarResult();
     }
+
+    public function getTotalNewUsers(\DateTime $from, \DateTime $to)
+    {
+        $upTo = clone $to;
+        $upTo->add(\DateInterval::createFromDateString('+1 day'));
+
+        $qb = $this->createQueryBuilder('u');
+        $qb->select('COUNT(u)');
+        $qb->andWhere('u.createdAt >= ?1')->setParameter(1, $from);
+        $qb->andWhere('u.createdAt < ?2')->setParameter(2, $upTo);
+
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
+    public function getTotalReferrers(\DateTime $from, \DateTime $to)
+    {
+        $upTo = clone $to;
+        $upTo->add(\DateInterval::createFromDateString('+1 day'));
+
+        $qb = $this->createQueryBuilder('u');
+        $qb->select('COUNT(DISTINCT u)');
+        $qb->join('u.referredUsers', 'r');
+        $qb->where('r.createdAt >= ?1')->setParameter(1, $from);
+        $qb->andWhere('r.createdAt < ?2')->setParameter(2, $upTo);
+
+        return $qb->getQuery()->getSingleScalarResult();
+    }
 }
