@@ -31,6 +31,10 @@ class ControllerProvider implements ControllerProviderInterface
             return new Controller\ReferralCashbackController($app['orm.em']);
         });
 
+        $app['charity.controller'] = $app->share(function () use ($app) {
+            return new Controller\CharityController($app['orm.em']);
+        });
+
         $controllers->get('/', 'main.controller:dashboard')
             ->bind('homepage');
 
@@ -51,6 +55,12 @@ class ControllerProvider implements ControllerProviderInterface
 
         $controllers->match('/referral-cashback', 'referral_cashback.controller:display')
             ->bind('referral_cashback');
+
+        $controllers->get('/charity/list', 'charity.controller:listCharities')
+            ->bind('charity_list');
+
+        $controllers->match('/charity/edit/{charityId}', 'charity.controller:editCharity')
+            ->bind('charity_edit');
 
         return $controllers;
     }
