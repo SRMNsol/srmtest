@@ -55,9 +55,9 @@ class User
     protected $alias;
 
     /**
-     * @ORM\Column(name="charity_id", type="integer")
+     * @ORM\ManyToOne(targetEntity="Charity")
      */
-    protected $extrabuxCharityId;
+    protected $charity;
 
     /**
      * @ORM\Column(type="boolean")
@@ -380,29 +380,6 @@ class User
     public function getAlias()
     {
         return $this->alias;
-    }
-
-    /**
-     * Set extrabuxCharityId
-     *
-     * @param integer $extrabuxCharityId
-     * @return User
-     */
-    public function setExtrabuxCharityId($extrabuxCharityId)
-    {
-        $this->extrabuxCharityId = $extrabuxCharityId;
-
-        return $this;
-    }
-
-    /**
-     * Get extrabuxCharityId
-     *
-     * @return integer
-     */
-    public function getExtrabuxCharityId()
-    {
-        return $this->extrabuxCharityId;
     }
 
     /**
@@ -1135,5 +1112,28 @@ class User
     public function getLastName()
     {
         return $this->lastName;
+    }
+
+    /**
+     * Set charity
+     *
+     * @param \App\Entity\Charity $charity
+     * @return User
+     */
+    public function setCharity(\App\Entity\Charity $charity = null)
+    {
+        $this->charity = $charity;
+
+        return $this;
+    }
+
+    /**
+     * Get charity
+     *
+     * @return \App\Entity\Charity 
+     */
+    public function getCharity()
+    {
+        return $this->charity;
     }
 }
