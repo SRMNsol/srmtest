@@ -53,4 +53,21 @@ class UserRepository extends EntityRepository
 
         return $qb->getQuery()->getSingleScalarResult();
     }
+
+    public function getTopCommission(\DateTime $from, \DateTime $to)
+    {
+        $upTo = clone $to;
+        $upTo->add(\DateInterval::createFromDateString('+1 day'));
+
+        $qb = $this->createQueryBuilder('u');
+        $qb->select(['u', 'SUM(p.amount) AS totalCommission']);
+        $qb->join('u.payables', 'p');
+        $qb->where('p INSTANCE OF App\Entity\Cashback OR p INSTANCE OF App\Entity\Referral');
+        $qb->andWhere('p.registeredAt >= ?1')->setParameter(1, $from);
+        $qb->andWhere('p.registeredAt < ?2')->setParameter(2, $upTo);
+        $qb->groupBy('u.id');
+        $qb->orderBy('totalCommission', 'DESC');
+
+        return $qb->getQuery()->getResult();
+    }
 }

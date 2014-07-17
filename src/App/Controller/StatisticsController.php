@@ -33,6 +33,7 @@ class StatisticsController
             $params['totalShoppers'] = $app['orm.em']->getRepository('App\Entity\User')->getTotalShoppers($range['startDate'], $range['endDate']);
             $params['totalNewUsers'] = $app['orm.em']->getRepository('App\Entity\User')->getTotalNewUsers($range['startDate'], $range['endDate']);
             $params['totalReferrers'] = $app['orm.em']->getRepository('App\Entity\User')->getTotalReferrers($range['startDate'], $range['endDate']);
+            $params['topUsers'] = $app['orm.em']->getRepository('App\Entity\User')->getTopCommission($range['startDate'], $range['endDate']);
         }
 
         return $app['twig']->render('statistics.html.twig', [

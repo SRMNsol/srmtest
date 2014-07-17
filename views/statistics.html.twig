@@ -53,6 +53,22 @@
     <th class="col-md-1">Paid</th>
     <th class="col-md-1">Referrals Paid</th>
   </thead>
+  <tbody>
+    {% for data in topUsers %}
+      <tr>
+        <td>{{ data[0].id }}</td>
+        <td>{{ data[0].email }}</td>
+        <td>$ {{ data.totalCommission|number_format(2) }}</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+    {% endfor %}
+  </tbody>
 </table>
 {% endif %}
 {% endblock content %}
