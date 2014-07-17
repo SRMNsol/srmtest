@@ -16,7 +16,12 @@
         {% for charity in charities %}
           <tr>
             <td>
-              <a href="{{ path('charity_edit', { charity : charity.id }) }}" class="btn btn-default btn-xs pull-right">Edit</a>
+              <div class="pull-right">
+                <a href="{{ path('charity_edit', { charity : charity.id }) }}" class="btn btn-default btn-xs">Edit</a>
+                <button class="btn btn-default btn-xs confirm"
+                  data-action="{{ path('charity_delete', { charity : charity.id }) }}"
+                  data-message="{{ 'Delete charity '~charity.name~'?' }}">Delete</button>
+              </div>
               {{ charity.name }}
             </td>
           </tr>
@@ -25,5 +30,21 @@
     </table>
   </div>
 </div>
-
+{{ form(deleteForm, { attr: { class: 'deleteForm' }}) }}
 {% endblock content %}
+
+{% block scripts %}
+{{ parent() }}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.2.0/bootbox.min.js"></script>
+<script>
+  $(function() {
+    $('.confirm').click(function(event) {
+      var $button = $(this);
+      var deleteForm = $('form.deleteForm');
+      bootbox.confirm($button.attr('data-message'), function(confirmed) {
+        confirmed && deleteForm.attr('action', $button.attr('data-action')).submit();
+      });
+    });
+  })
+</script>
+{% endblock scripts %}

@@ -60,21 +60,28 @@ class ControllerProvider implements ControllerProviderInterface
         $controllers->get('/charity/list', 'charity.controller:listCharities')
             ->bind('charity_list');
 
+        $charityConverter = function ($charityId) use ($app) {
+            $charity = isset($charityId)
+                ? $app['orm.em']->find('App\Entity\Charity', $charityId)
+                : new Entity\Charity();
+
+            if (null === $charity) {
+                throw new NotFoundHttpException('Charity not found');
+            }
+
+            return $charity;
+        };
+
         $controllers->match('/charity/edit/{charity}', 'charity.controller:editCharity')
             ->bind('charity_edit')
             ->value('charity', null)
             ->assert('charity', '\d*')
-            ->convert('charity', function ($charityId) use ($app) {
-                $charity = isset($charityId)
-                    ? $app['orm.em']->find('App\Entity\Charity', $charityId)
-                    : new Entity\Charity;
+            ->convert('charity', $charityConverter);
 
-                if (null === $charity) {
-                    throw new NotFoundHttpException('Charity not found');
-                }
-
-                return $charity;
-            });
+        $controllers->post('/charity/delete/{charity}', 'charity.controller:deleteCharity')
+            ->bind('charity_delete')
+            ->assert('charity', '\d+')
+            ->convert('charity', $charityConverter);
 
         return $controllers;
     }

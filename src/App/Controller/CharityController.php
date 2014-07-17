@@ -23,8 +23,11 @@ class CharityController
         $em = $app['orm.em'];
         $charities = $em->getRepository('App\Entity\Charity')->findBy([], ['name' => 'ASC']);
 
+        $deleteForm = $app['form.factory']->create();
+
         return $app['twig']->render('charity_list.html.twig', [
             'charities' => $charities,
+            'deleteForm' => $deleteForm->createView(),
         ]);
     }
 
@@ -51,5 +54,23 @@ class CharityController
         }
 
         return $app['twig']->render('charity_edit.html.twig', ['form' => $form->createView()]);
+    }
+
+    public function deleteCharity(Charity $charity, Request $request, Application $app)
+    {
+        $form = $app['form.factory']->createBuilder('form', $charity)->getForm();
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            try {
+                $app['orm.em']->remove($charity);
+                $app['orm.em']->flush();
+                $app['session']->getFlashBag()->add('success', sprintf('Charity %s deleted', $charity->getName()));
+            } catch (\Exception $e) {
+                $app['session']->getFlashBag()->add('danger', 'Delete failed');
+            }
+        }
+
+        return $app->redirect($app['url_generator']->generate('charity_list'));
     }
 }
