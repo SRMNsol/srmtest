@@ -145,9 +145,14 @@ class User
     protected $extrabuxLastSyncAt;
 
     /**
-     * @ORM\Column(name="first_name", length=20, nullable=true)
+     * @ORM\Column(name="first_name", length=50, nullable=true)
      */
     protected $firstName;
+
+    /**
+     * @ORM\Column(name="last_name", length=50, nullable=true)
+     */
+    protected $lastName;
 
     /**
      * @ORM\Column(name="raw_user_data", type="text", nullable=true)
@@ -1107,5 +1112,28 @@ class User
     public static function passwordHash($plainPassword)
     {
         return sha1($plainPassword);
+    }
+
+    /**
+     * Set lastName
+     *
+     * @param string $lastName
+     * @return User
+     */
+    public function setLastName($lastName)
+    {
+        $this->lastName = $lastName;
+
+        return $this;
+    }
+
+    /**
+     * Get lastName
+     *
+     * @return string
+     */
+    public function getLastName()
+    {
+        return $this->lastName;
     }
 }

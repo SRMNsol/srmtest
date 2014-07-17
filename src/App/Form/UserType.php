@@ -14,6 +14,7 @@ class UserType extends AbstractType
         $builder->add('email');
         $builder->add('alias');
         $builder->add('firstName');
+        $builder->add('lastName');
         $builder->add('address');
         $builder->add('city');
         $builder->add('state');
