@@ -129,4 +129,17 @@ class CashbackRepository extends EntityRepository
 
         return $qb->getQuery()->execute();
     }
+
+    public function getTotalCashback(\DateTime $from, \DateTime $to)
+    {
+        $upTo = clone $to;
+        $upTo->add(\DateInterval::createFromDateString('+1 day'));
+
+        $qb = $this->createQueryBuilder('c');
+        $qb->select('SUM(c.amount)');
+        $qb->where('c.registeredAt >= ?1')->setParameter(1, $from);
+        $qb->andWhere('c.registeredAt < ?2')->setParameter(2, $upTo);
+
+        return $qb->getQuery()->getSingleScalarResult();
+    }
 }

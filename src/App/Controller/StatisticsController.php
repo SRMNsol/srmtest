@@ -27,6 +27,9 @@ class StatisticsController
         $dateForm->handleRequest($request);
         if ($dateForm->isValid()) {
             $display = true;
+            $range = $dateForm->getData();
+
+            $params['total_cashback'] = $app['orm.em']->getRepository('App\Entity\Cashback')->getTotalCashback($range['startDate'], $range['endDate']);
         }
 
         return $app['twig']->render('statistics.html.twig', [
