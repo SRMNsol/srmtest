@@ -6,7 +6,7 @@
 </div>
 
 <p>
-  <a href="#" class="btn btn-primary">Add charity</a>
+  <a href="{{ path('charity_edit') }}" class="btn btn-primary">Add charity</a>
 </p>
 
 <div class="row">
@@ -16,7 +16,7 @@
         {% for charity in charities %}
           <tr>
             <td>
-              <a href="#" class="btn btn-default btn-xs pull-right">Edit</a>
+              <a href="{{ path('charity_edit', { charity : charity.id }) }}" class="btn btn-default btn-xs pull-right">Edit</a>
               {{ charity.name }}
             </td>
           </tr>

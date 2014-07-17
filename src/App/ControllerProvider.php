@@ -4,6 +4,7 @@ namespace App;
 
 use Silex\Application as SilexApp;
 use Silex\ControllerProviderInterface;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ControllerProvider implements ControllerProviderInterface
 {
@@ -59,8 +60,21 @@ class ControllerProvider implements ControllerProviderInterface
         $controllers->get('/charity/list', 'charity.controller:listCharities')
             ->bind('charity_list');
 
-        $controllers->match('/charity/edit/{charityId}', 'charity.controller:editCharity')
-            ->bind('charity_edit');
+        $controllers->match('/charity/edit/{charity}', 'charity.controller:editCharity')
+            ->bind('charity_edit')
+            ->value('charity', null)
+            ->assert('charity', '\d*')
+            ->convert('charity', function ($charityId) use ($app) {
+                $charity = isset($charityId)
+                    ? $app['orm.em']->find('App\Entity\Charity', $charityId)
+                    : new Entity\Charity;
+
+                if (null === $charity) {
+                    throw new NotFoundHttpException('Charity not found');
+                }
+
+                return $charity;
+            });
 
         return $controllers;
     }
