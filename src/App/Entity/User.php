@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="UserRepository")
  * @ORM\Table(name="user")
  */
 class User
@@ -1130,7 +1130,7 @@ class User
     /**
      * Get charity
      *
-     * @return \App\Entity\Charity 
+     * @return \App\Entity\Charity
      */
     public function getCharity()
     {
