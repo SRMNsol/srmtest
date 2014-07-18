@@ -19,9 +19,8 @@ class UserRepository extends EntityRepository
 
         $qb = $this->createQueryBuilder('u');
         $qb->select('COUNT(DISTINCT u)');
-        $qb->join('u.payables', 'p');
-        $qb->where('p INSTANCE OF App\Entity\Cashback');
-        $qb->andWhere('p.registeredAt >= ?1')->setParameter(1, $from);
+        $qb->join('u.payables', 'p', 'WITH', 'p INSTANCE OF App\Entity\Cashback');
+        $qb->where('p.registeredAt >= ?1')->setParameter(1, $from);
         $qb->andWhere('p.registeredAt < ?2')->setParameter(2, $upTo);
 
         return $qb->getQuery()->getSingleScalarResult();
@@ -34,7 +33,7 @@ class UserRepository extends EntityRepository
 
         $qb = $this->createQueryBuilder('u');
         $qb->select('COUNT(u)');
-        $qb->andWhere('u.createdAt >= ?1')->setParameter(1, $from);
+        $qb->where('u.createdAt >= ?1')->setParameter(1, $from);
         $qb->andWhere('u.createdAt < ?2')->setParameter(2, $upTo);
 
         return $qb->getQuery()->getSingleScalarResult();
@@ -64,20 +63,19 @@ class UserRepository extends EntityRepository
         }
 
         $qb = $this->createQueryBuilder('u');
-        $qb->select(['u', 'SUM(p.amount) AS total']);
-        $qb->join('u.payables', 'p');
         switch ($type) {
             case 'commission' :
-                $qb->where('p INSTANCE OF App\Entity\Cashback OR p INSTANCE OF App\Entity\Referral');
+                $qb->join('u.payables', 'p', 'WITH', 'p INSTANCE OF App\Entity\Cashback OR p INSTANCE OF App\Entity\Referral');
                 break;
             case 'cashback' :
-                $qb->where('p INSTANCE OF App\Entity\Cashback');
+                $qb->join('u.payables', 'p', 'WITH', 'p INSTANCE OF App\Entity\Cashback');
                 break;
             case 'referral' :
-                $qb->where('p INSTANCE OF App\Entity\Referral');
+                $qb->join('u.payables', 'p', 'WITH', 'p INSTANCE OF App\Entity\Referral');
                 break;
         }
-        $qb->andWhere('p.registeredAt >= ?1')->setParameter(1, $from);
+        $qb->addSelect('SUM(p.amount) AS total');
+        $qb->where('p.registeredAt >= ?1')->setParameter(1, $from);
         $qb->andWhere('p.registeredAt < ?2')->setParameter(2, $upTo);
         $qb->groupBy('u.id');
         if (count($users) > 0) {
