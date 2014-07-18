@@ -12,10 +12,10 @@ use Doctrine\ORM\EntityRepository;
  */
 class UserRepository extends EntityRepository
 {
-    public function getTotalShoppers(\DateTime $from, \DateTime $to)
+    public function getTotalShoppers(\DateTime $start, \DateTime $end)
     {
-        $until = clone $to;
-        $until->add(\DateInterval::createFromDateString('+1 day'));
+        $before = clone $end;
+        $before->add(\DateInterval::createFromDateString('+1 day'));
 
         $qb = $this->createQueryBuilder('u');
         $qb->select('COUNT(DISTINCT u)');
@@ -25,45 +25,45 @@ class UserRepository extends EntityRepository
                 'p.status <> :invalid'
             )
         )->setParameter('invalid', Payable::STATUS_INVALID);
-        $qb->where('p.registeredAt >= :from')->setParameter('from', $from);
-        $qb->andWhere('p.registeredAt < :until')->setParameter('until', $until);
+        $qb->where('p.registeredAt >= :after')->setParameter('after', $start);
+        $qb->andWhere('p.registeredAt < :before')->setParameter('before', $before);
 
         return $qb->getQuery()->getSingleScalarResult();
     }
 
-    public function getTotalNewUsers(\DateTime $from, \DateTime $to)
+    public function getTotalNewUsers(\DateTime $start, \DateTime $end)
     {
-        $until = clone $to;
-        $until->add(\DateInterval::createFromDateString('+1 day'));
+        $before = clone $end;
+        $before->add(\DateInterval::createFromDateString('+1 day'));
 
         $qb = $this->createQueryBuilder('u');
         $qb->select('COUNT(u)');
         $qb->where('u.status <> :inactive')->setParameter('inactive', User::STATUS_INACTIVE);
-        $qb->andWhere('u.createdAt >= :from')->setParameter('from', $from);
-        $qb->andWhere('u.createdAt < :until')->setParameter('until', $until);
+        $qb->andWhere('u.createdAt >= :after')->setParameter('after', $start);
+        $qb->andWhere('u.createdAt < :before')->setParameter('before', $before);
 
         return $qb->getQuery()->getSingleScalarResult();
     }
 
-    public function getTotalReferrers(\DateTime $from, \DateTime $to)
+    public function getTotalReferrers(\DateTime $start, \DateTime $end)
     {
-        $until = clone $to;
-        $until->add(\DateInterval::createFromDateString('+1 day'));
+        $before = clone $end;
+        $before->add(\DateInterval::createFromDateString('+1 day'));
 
         $qb = $this->createQueryBuilder('u');
         $qb->select('COUNT(DISTINCT u)');
         $qb->join('u.referredUsers', 'r', 'WITH', 'r.status <> :inactive');
         $qb->setParameter('inactive', User::STATUS_INACTIVE);
-        $qb->where('r.createdAt >= :from')->setParameter('from', $from);
-        $qb->andWhere('r.createdAt < :until')->setParameter('until', $until);
+        $qb->where('r.createdAt >= :after')->setParameter('after', $start);
+        $qb->andWhere('r.createdAt < :before')->setParameter('before', $before);
 
         return $qb->getQuery()->getSingleScalarResult();
     }
 
-    protected function getCommissionStats(\DateTime $from, \DateTime $to, $type = 'commission', array $users = null)
+    protected function getCommissionStats(\DateTime $start, \DateTime $end, $type = 'commission', array $users = null)
     {
-        $until = clone $to;
-        $until->add(\DateInterval::createFromDateString('+1 day'));
+        $before = clone $end;
+        $before->add(\DateInterval::createFromDateString('+1 day'));
 
         if (!in_array($type, ['commission', 'cashback', 'referral'])) {
             throw new \Exception('Invalid type');
@@ -100,8 +100,8 @@ class UserRepository extends EntityRepository
                 break;
         }
         $qb->addSelect('SUM(p.amount) AS total');
-        $qb->where('p.registeredAt >= :from')->setParameter('from', $from);
-        $qb->andWhere('p.registeredAt < :until')->setParameter('until', $until);
+        $qb->where('p.registeredAt >= :after')->setParameter('after', $start);
+        $qb->andWhere('p.registeredAt < :before')->setParameter('before', $before);
         $qb->groupBy('u.id');
         if (count($users) > 0) {
             // return users in parameter
@@ -112,16 +112,17 @@ class UserRepository extends EntityRepository
         return $qb->getQuery()->getResult();
     }
 
-    public function getTopUsers(\DateTime $from, \DateTime $to)
+    public function getTopUsers(\DateTime $start, \DateTime $end)
     {
-        $topCommission = $this->getCommissionStats($from, $to);
+        $topCommission = $this->getCommissionStats($start, $end);
 
         $users = array_map(function ($result) {
             return $result[0];
         }, $topCommission);
 
-        $topCashback = $this->getCommissionStats($from, $to, 'cashback', $users);
-        $topReferral = $this->getCommissionStats($from, $to, 'referral', $users);
+        $topCashback = $this->getCommissionStats($start, $end, 'cashback', $users);
+        $topReferral = $this->getCommissionStats($start, $end, 'referral', $users);
+        $topTransaction = $this->getEntityManager()->getRepository('App\Entity\Cashback')->getTransactionStats($start, $end, $users);
 
         // array must be ordered by user id
         $finder = function (&$arr, $user, $default) {
@@ -144,6 +145,7 @@ class UserRepository extends EntityRepository
                 'commission' => $data['total'],
                 'cashback' => $finder($topCashback, $user, 0),
                 'referral' => $finder($topReferral, $user, 0),
+                'transaction' => $finder($topTransaction, $user, 0),
             ];
         }
 

@@ -63,7 +63,7 @@
     <th class="col-md-1">{{ stats.sorter('Total cash back', 'commission', _context) }}</th>
     <th class="col-md-1">{{ stats.sorter('Referral cash back', 'referral', _context) }}</th>
     <th class="col-md-1">{{ stats.sorter('Personal cash back', 'cashback', _context) }}</th>
-    <th class="col-md-1">{{ stats.sorter('Spend', 'spend', _context) }}</th>
+    <th class="col-md-1">{{ stats.sorter('Spend', 'transaction', _context) }}</th>
     <th class="col-md-1">{{ stats.sorter('Total referrals', 'network', _context) }}</th>
     <th class="col-md-1">{{ stats.sorter('Level 1 referrals', 'direct', _context) }}</th>
     <th class="col-md-1">{{ stats.sorter('Paid', 'payment', _context) }}</th>
@@ -77,7 +77,7 @@
         <td>$ {{ data.commission|number_format(2) }}</td>
         <td>$ {{ data.referral|number_format(2) }}</td>
         <td>$ {{ data.cashback|number_format(2) }}</td>
-        <td></td>
+        <td>$ {{ data.transaction|number_format(2) }}</td>
         <td></td>
         <td></td>
         <td></td>

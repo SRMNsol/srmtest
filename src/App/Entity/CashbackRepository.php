@@ -130,16 +130,65 @@ class CashbackRepository extends EntityRepository
         return $qb->getQuery()->execute();
     }
 
-    public function getTotalCashback(\DateTime $from, \DateTime $to)
+    public function getTotalCashback(\DateTime $start, \DateTime $end)
     {
-        $upTo = clone $to;
-        $upTo->add(\DateInterval::createFromDateString('+1 day'));
+        $until = clone $end;
+        $until->add(\DateInterval::createFromDateString('+1 day'));
 
         $qb = $this->createQueryBuilder('c');
         $qb->select('SUM(c.amount)');
-        $qb->where('c.registeredAt >= ?1')->setParameter(1, $from);
-        $qb->andWhere('c.registeredAt < ?2')->setParameter(2, $upTo);
+        $qb->where('c.status <> :invalid')->setParameter('invalid', Cashback::STATUS_INVALID);
+        $qb->andWhere('c.registeredAt >= :after')->setParameter('after', $start);
+        $qb->andWhere('c.registeredAt < :before')->setParameter('before', $until);
 
         return $qb->getQuery()->getSingleScalarResult();
     }
+
+    public function getTransactionStats(\DateTime $start, \DateTime $end, array $users = null)
+    {
+        $before = clone $end;
+        $before->add(\DateInterval::createFromDateString('+1 day'));
+
+        $qb = $this->createQueryBuilder('c');
+        $qb->join('c.user', 'u', 'WITH', 'c.status <> :invalid');
+        $qb->setParameter('invalid', Cashback::STATUS_INVALID);
+        $qb->join('c.transactions', 't', 'WITH', 't.status <> :canceled');
+        $qb->setParameter('canceled', Transaction::STATUS_CANCELED);
+
+        $qb->addSelect('u');
+        $qb->addSelect('SUM(t.total) AS total');
+        $qb->where('c.registeredAt >= :after')->setParameter('after', $start);
+        $qb->andWhere('c.registeredAt < :before')->setParameter('before', $before);
+        $qb->groupBy('c.id');
+        $qb->groupBy('t.id');
+        $qb->having('total > 0');
+        if (count($users) > 0) {
+            // return users in parameter
+            $qb->andWhere('u IN (?3)')->setParameter(3, $users);
+        }
+        $qb->orderBy('u.id'); // order by id to merge results easily
+
+        $rows = $qb->getQuery()->getResult();
+
+        $result = [];
+
+        // rows is ordered by user id
+        $i = 0;
+        foreach ($rows as $row) {
+            $user = $row[0]->getUser();
+            // first pass, or current result not for the same user, increment i
+            if ($i === 0 || $result[$i][0] !== $user) {
+                $i++;
+            }
+            // initialize new result
+            if (!isset($result[$i])) {
+                $result[$i] = [0 => $user, 'total' => 0.00];
+            }
+            // sum total
+            $result[$i]['total'] += $row['total'];
+        }
+
+        return $result;
+    }
+
 }
