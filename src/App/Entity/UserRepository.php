@@ -14,49 +14,56 @@ class UserRepository extends EntityRepository
 {
     public function getTotalShoppers(\DateTime $from, \DateTime $to)
     {
-        $upTo = clone $to;
-        $upTo->add(\DateInterval::createFromDateString('+1 day'));
+        $until = clone $to;
+        $until->add(\DateInterval::createFromDateString('+1 day'));
 
         $qb = $this->createQueryBuilder('u');
         $qb->select('COUNT(DISTINCT u)');
-        $qb->join('u.payables', 'p', 'WITH', 'p INSTANCE OF App\Entity\Cashback');
-        $qb->where('p.registeredAt >= ?1')->setParameter(1, $from);
-        $qb->andWhere('p.registeredAt < ?2')->setParameter(2, $upTo);
+        $qb->join('u.payables', 'p', 'WITH',
+            $qb->expr()->andx(
+                'p INSTANCE OF App\Entity\Cashback',
+                'p.status <> :invalid'
+            )
+        )->setParameter('invalid', Payable::STATUS_INVALID);
+        $qb->where('p.registeredAt >= :from')->setParameter('from', $from);
+        $qb->andWhere('p.registeredAt < :until')->setParameter('until', $until);
 
         return $qb->getQuery()->getSingleScalarResult();
     }
 
     public function getTotalNewUsers(\DateTime $from, \DateTime $to)
     {
-        $upTo = clone $to;
-        $upTo->add(\DateInterval::createFromDateString('+1 day'));
+        $until = clone $to;
+        $until->add(\DateInterval::createFromDateString('+1 day'));
 
         $qb = $this->createQueryBuilder('u');
         $qb->select('COUNT(u)');
-        $qb->where('u.createdAt >= ?1')->setParameter(1, $from);
-        $qb->andWhere('u.createdAt < ?2')->setParameter(2, $upTo);
+        $qb->where('u.status <> :inactive')->setParameter('inactive', User::STATUS_INACTIVE);
+        $qb->andWhere('u.createdAt >= :from')->setParameter('from', $from);
+        $qb->andWhere('u.createdAt < :until')->setParameter('until', $until);
 
         return $qb->getQuery()->getSingleScalarResult();
     }
 
     public function getTotalReferrers(\DateTime $from, \DateTime $to)
     {
-        $upTo = clone $to;
-        $upTo->add(\DateInterval::createFromDateString('+1 day'));
+        $until = clone $to;
+        $until->add(\DateInterval::createFromDateString('+1 day'));
 
         $qb = $this->createQueryBuilder('u');
         $qb->select('COUNT(DISTINCT u)');
-        $qb->join('u.referredUsers', 'r');
-        $qb->where('r.createdAt >= ?1')->setParameter(1, $from);
-        $qb->andWhere('r.createdAt < ?2')->setParameter(2, $upTo);
+        $qb->join('u.referredUsers', 'r', 'WITH', 'r.status <> :inactive');
+        $qb->setParameter('inactive', User::STATUS_INACTIVE);
+        $qb->where('r.createdAt >= :from')->setParameter('from', $from);
+        $qb->andWhere('r.createdAt < :until')->setParameter('until', $until);
 
         return $qb->getQuery()->getSingleScalarResult();
     }
 
     protected function getCommissionStats(\DateTime $from, \DateTime $to, $type = 'commission', array $users = null)
     {
-        $upTo = clone $to;
-        $upTo->add(\DateInterval::createFromDateString('+1 day'));
+        $until = clone $to;
+        $until->add(\DateInterval::createFromDateString('+1 day'));
 
         if (!in_array($type, ['commission', 'cashback', 'referral'])) {
             throw new \Exception('Invalid type');
@@ -65,18 +72,36 @@ class UserRepository extends EntityRepository
         $qb = $this->createQueryBuilder('u');
         switch ($type) {
             case 'commission' :
-                $qb->join('u.payables', 'p', 'WITH', 'p INSTANCE OF App\Entity\Cashback OR p INSTANCE OF App\Entity\Referral');
+                $qb->join('u.payables', 'p', 'WITH',
+                    $qb->expr()->andx(
+                        $qb->expr()->orx(
+                            'p INSTANCE OF App\Entity\Cashback',
+                            'p INSTANCE OF App\Entity\Referral'
+                        ),
+                        'p.status <> :invalid'
+                    )
+                )->setParameter(':invalid', Payable::STATUS_INVALID);
                 break;
             case 'cashback' :
-                $qb->join('u.payables', 'p', 'WITH', 'p INSTANCE OF App\Entity\Cashback');
+                $qb->join('u.payables', 'p', 'WITH',
+                    $qb->expr()->andx(
+                        'p INSTANCE OF App\Entity\Cashback',
+                        'p.status <> :invalid'
+                    )
+                )->setParameter(':invalid', Payable::STATUS_INVALID);
                 break;
             case 'referral' :
-                $qb->join('u.payables', 'p', 'WITH', 'p INSTANCE OF App\Entity\Referral');
+                $qb->join('u.payables', 'p', 'WITH',
+                    $qb->expr()->andx(
+                        'p INSTANCE OF App\Entity\Referral',
+                        'p.status <> :invalid'
+                    )
+                )->setParameter(':invalid', Payable::STATUS_INVALID);
                 break;
         }
         $qb->addSelect('SUM(p.amount) AS total');
-        $qb->where('p.registeredAt >= ?1')->setParameter(1, $from);
-        $qb->andWhere('p.registeredAt < ?2')->setParameter(2, $upTo);
+        $qb->where('p.registeredAt >= :from')->setParameter('from', $from);
+        $qb->andWhere('p.registeredAt < :until')->setParameter('until', $until);
         $qb->groupBy('u.id');
         if (count($users) > 0) {
             // return users in parameter
