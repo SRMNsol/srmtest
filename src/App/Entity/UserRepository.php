@@ -54,20 +54,88 @@ class UserRepository extends EntityRepository
         return $qb->getQuery()->getSingleScalarResult();
     }
 
-    public function getTopCommission(\DateTime $from, \DateTime $to)
+    protected function getCommissionStats(\DateTime $from, \DateTime $to, $type = 'commission', array $users = null)
     {
         $upTo = clone $to;
         $upTo->add(\DateInterval::createFromDateString('+1 day'));
 
+        if (!in_array($type, ['commission', 'cashback', 'referral'])) {
+            throw new \Exception('Invalid type');
+        }
+
         $qb = $this->createQueryBuilder('u');
-        $qb->select(['u', 'SUM(p.amount) AS totalCommission']);
+        $qb->select(['u', 'SUM(p.amount) AS total']);
         $qb->join('u.payables', 'p');
-        $qb->where('p INSTANCE OF App\Entity\Cashback OR p INSTANCE OF App\Entity\Referral');
+        switch ($type) {
+            case 'commission' :
+                $qb->where('p INSTANCE OF App\Entity\Cashback OR p INSTANCE OF App\Entity\Referral');
+                break;
+            case 'cashback' :
+                $qb->where('p INSTANCE OF App\Entity\Cashback');
+                break;
+            case 'referral' :
+                $qb->where('p INSTANCE OF App\Entity\Referral');
+                break;
+        }
         $qb->andWhere('p.registeredAt >= ?1')->setParameter(1, $from);
         $qb->andWhere('p.registeredAt < ?2')->setParameter(2, $upTo);
         $qb->groupBy('u.id');
-        $qb->orderBy('totalCommission', 'DESC');
+        if (count($users) > 0) {
+            // return users in parameter
+            $qb->andWhere('u IN (?3)')->setParameter(3, $users);
+        }
+        $qb->orderBy('u.id'); // order by id to merge results easily
 
         return $qb->getQuery()->getResult();
+    }
+
+    public function getTopUsers(\DateTime $from, \DateTime $to)
+    {
+        $topCommission = $this->getCommissionStats($from, $to);
+
+        $users = array_map(function ($result) {
+            return $result[0];
+        }, $topCommission);
+
+        $topCashback = $this->getCommissionStats($from, $to, 'cashback', $users);
+        $topReferral = $this->getCommissionStats($from, $to, 'referral', $users);
+
+        // array must be ordered by user id
+        $finder = function (&$arr, $user, $default) {
+            $row = current($arr);
+            while (false !== $row && $row[0]->getId() < $user->getId()) {
+                $row = next($arr);
+            }
+            if ($row[0] === $user) {
+                return $row['total'];
+            }
+            return $default;
+        };
+
+        $topUsers = [];
+        foreach ($topCommission as $data) {
+            $user = $data[0];
+
+            $topUsers[] = [
+                0 => $user,
+                'commission' => $data['total'],
+                'cashback' => $finder($topCashback, $user, 0),
+                'referral' => $finder($topReferral, $user, 0),
+            ];
+        }
+
+        usort($topUsers, function ($row1, $row2) {
+            $value1 = floor($row1['commission'] * 100);
+            $value2 = floor($row2['commission'] * 100);
+            $id1 = $row1[0]->getId();
+            $id2 = $row2[0]->getId();
+
+            if ($value1 === $value2) {
+                return ($id1 < $id2) ? 1 : -1; // descending order
+            }
+            return ($value1 < $value2) ? 1 : -1; // descending order
+        });
+
+        return $topUsers;
     }
 }
