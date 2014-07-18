@@ -58,14 +58,10 @@ class UserRepository extends EntityRepository
         return $qb->getQuery()->getSingleScalarResult();
     }
 
-    protected function getCommissionStats(\DateTime $start, \DateTime $end, $type = 'commission', array $users = null)
+    public function getCommissionStats(\DateTime $start, \DateTime $end, array $users = null, $type = 'commission')
     {
         $before = clone $end;
         $before->add(\DateInterval::createFromDateString('+1 day'));
-
-        if (!in_array($type, ['commission', 'cashback', 'referral'])) {
-            throw new \Exception('Invalid type');
-        }
 
         $qb = $this->createQueryBuilder('u');
         switch ($type) {
@@ -96,6 +92,8 @@ class UserRepository extends EntityRepository
                     )
                 )->setParameter(':invalid', Payable::STATUS_INVALID);
                 break;
+            default :
+                throw new \Exception('Invalid type');
         }
         $qb->addSelect('SUM(p.amount) AS total');
         $qb->where('p.registeredAt >= :after')->setParameter('after', $start);
@@ -108,6 +106,16 @@ class UserRepository extends EntityRepository
         $qb->orderBy('u.id'); // order by id to merge results easily
 
         return $qb->getQuery()->getResult();
+    }
+
+    public function getPersonalCashbackStats(\DateTime $start, \DateTime $end, array $users = null)
+    {
+        return $this->getCommissionStats($start, $end, $users, 'cashback');
+    }
+
+    public function getReferralCashbackStats(\DateTime $start, \DateTime $end, array $users = null)
+    {
+        return $this->getCommissionStats($start, $end, $users, 'referral');
     }
 
     public function getTransactionStats(\DateTime $start, \DateTime $end, array $users = null)
@@ -215,8 +223,8 @@ class UserRepository extends EntityRepository
             return $result[0];
         }, $topCommission);
 
-        $topCashback = $this->getCommissionStats($start, $end, 'cashback', $users);
-        $topReferral = $this->getCommissionStats($start, $end, 'referral', $users);
+        $topCashback = $this->getPersonalCashbackStats($start, $end, $users);
+        $topReferral = $this->getReferralCashbackStats($start, $end, $users);
         $topTransaction = $this->getTransactionStats($start, $end, $users);
         $topNetwork = $this->getNetworkStats($start, $end, $users);
         $topDirectNetwork = $this->getDirectNetworkStats($start, $end, $users);
