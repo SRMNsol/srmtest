@@ -27,17 +27,29 @@ class StatisticsController
         $dateForm->handleRequest($request);
         if ($dateForm->isValid()) {
             $display = true;
-            $range = $dateForm->getData();
+            $query = $dateForm->getData() + [
+                'sort' => $request->get('sort', 'commission'),
+                'dir' => $request->get('dir', 'down'),
+            ];
 
-            $params['totalCashback'] = $app['orm.em']->getRepository('App\Entity\Cashback')->getTotalCashback($range['startDate'], $range['endDate']);
-            $params['totalShoppers'] = $app['orm.em']->getRepository('App\Entity\User')->getTotalShoppers($range['startDate'], $range['endDate']);
-            $params['totalNewUsers'] = $app['orm.em']->getRepository('App\Entity\User')->getTotalNewUsers($range['startDate'], $range['endDate']);
-            $params['totalReferrers'] = $app['orm.em']->getRepository('App\Entity\User')->getTotalReferrers($range['startDate'], $range['endDate']);
-            $params['topUsers'] = $app['orm.em']->getRepository('App\Entity\User')->getTopUsers($range['startDate'], $range['endDate']);
+            $userRepo = $app['orm.em']->getRepository('App\Entity\User');
+            $cashbackRepo = $app['orm.em']->getRepository('App\Entity\Cashback');
+
+            $params['total_cashback'] = $cashbackRepo->getTotalCashback($query['start_date'], $query['end_date']);
+            $params['total_shoppers'] = $userRepo->getTotalShoppers($query['start_date'], $query['end_date']);
+            $params['total_new_users'] = $userRepo->getTotalNewUsers($query['start_date'], $query['end_date']);
+            $params['total_referrers'] = $userRepo->getTotalReferrers($query['start_date'], $query['end_date']);
+            $params['top_users'] = $userRepo->getTopUsers($query['start_date'], $query['end_date']);
+
+
+            $params['start_date'] = $query['start_date'];
+            $params['end_date'] = $query['end_date'];
+            $params['sort'] = $query['sort'];
+            $params['dir'] = $query['dir'];
         }
 
         return $app['twig']->render('statistics.html.twig', [
-            'dateForm' => $dateForm->createView(),
+            'date_form' => $dateForm->createView(),
             'display' => $display,
         ] + $params);
     }
