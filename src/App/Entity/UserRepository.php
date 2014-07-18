@@ -110,6 +110,56 @@ class UserRepository extends EntityRepository
         return $qb->getQuery()->getResult();
     }
 
+    public function getTransactionStats(\DateTime $start, \DateTime $end, array $users = null)
+    {
+        $before = clone $end;
+        $before->add(\DateInterval::createFromDateString('+1 day'));
+
+        // this query uses Cashback as root entity
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('c')->from('App\Entity\Cashback', 'c');
+        $qb->join('c.user', 'u', 'WITH', 'c.status <> :invalid');
+        $qb->setParameter('invalid', Cashback::STATUS_INVALID);
+        $qb->join('c.transactions', 't', 'WITH', 't.status <> :canceled');
+        $qb->setParameter('canceled', Transaction::STATUS_CANCELED);
+
+        $qb->addSelect('u');
+        $qb->addSelect('SUM(t.total) AS total');
+        $qb->where('c.registeredAt >= :after')->setParameter('after', $start);
+        $qb->andWhere('c.registeredAt < :before')->setParameter('before', $before);
+        $qb->groupBy('c');
+        $qb->groupBy('t');
+        $qb->having('total > 0');
+        if (count($users) > 0) {
+            // return users in parameter
+            $qb->andWhere('u IN (?3)')->setParameter(3, $users);
+        }
+        $qb->orderBy('u.id'); // order by id to merge results easily
+
+        $rows = $qb->getQuery()->getResult();
+
+        // build result as if user were the root entity
+        $result = [];
+
+        // rows is ordered by user id
+        $i = 0;
+        foreach ($rows as $row) {
+            $user = $row[0]->getUser();
+            // first pass, or current result not for the same user, increment i
+            if ($i === 0 || $result[$i][0] !== $user) {
+                $i++;
+            }
+            // initialize new result
+            if (!isset($result[$i])) {
+                $result[$i] = [0 => $user, 'total' => 0.00];
+            }
+            // sum total
+            $result[$i]['total'] += $row['total'];
+        }
+
+        return $result;
+    }
+
     public function getNetworkStats(\DateTime $start, \DateTime $end, array $users = null)
     {
         $before = clone $end;
@@ -167,7 +217,7 @@ class UserRepository extends EntityRepository
 
         $topCashback = $this->getCommissionStats($start, $end, 'cashback', $users);
         $topReferral = $this->getCommissionStats($start, $end, 'referral', $users);
-        $topTransaction = $this->getEntityManager()->getRepository('App\Entity\Cashback')->getTransactionStats($start, $end, $users);
+        $topTransaction = $this->getTransactionStats($start, $end, $users);
         $topNetwork = $this->getNetworkStats($start, $end, $users);
         $topDirectNetwork = $this->getDirectNetworkStats($start, $end, $users);
 
