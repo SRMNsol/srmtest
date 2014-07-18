@@ -159,8 +159,8 @@ class CashbackRepository extends EntityRepository
         $qb->addSelect('SUM(t.total) AS total');
         $qb->where('c.registeredAt >= :after')->setParameter('after', $start);
         $qb->andWhere('c.registeredAt < :before')->setParameter('before', $before);
-        $qb->groupBy('c.id');
-        $qb->groupBy('t.id');
+        $qb->groupBy('c');
+        $qb->groupBy('t');
         $qb->having('total > 0');
         if (count($users) > 0) {
             // return users in parameter

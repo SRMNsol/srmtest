@@ -67,7 +67,7 @@
     <th class="col-md-1">{{ stats.sorter('Total referrals', 'network', _context) }}</th>
     <th class="col-md-1">{{ stats.sorter('Level 1 referrals', 'direct', _context) }}</th>
     <th class="col-md-1">{{ stats.sorter('Paid', 'payment', _context) }}</th>
-    <th class="col-md-1">{{ stats.sorter('Referrals paid', 'refpay', _context) }}</th>
+    <th class="col-md-1">{{ stats.sorter('Referrals paid', 'taxable', _context) }}</th>
   </thead>
   <tbody>
     {% for data in top_users %}
@@ -78,10 +78,10 @@
         <td>$ {{ data.referral|number_format(2) }}</td>
         <td>$ {{ data.cashback|number_format(2) }}</td>
         <td>$ {{ data.transaction|number_format(2) }}</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>{{ data.network }}</td>
+        <td>{{ data.direct }}</td>
+        <td>$ {{ data.payment|number_format(2) }}</td>
+        <td>$ {{ data.taxable|number_format(2) }}</td>
       </tr>
     {% endfor %}
   </tbody>

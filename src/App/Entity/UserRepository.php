@@ -51,11 +51,13 @@ class UserRepository extends EntityRepository
         $before->add(\DateInterval::createFromDateString('+1 day'));
 
         $qb = $this->createQueryBuilder('u');
-        $qb->select('COUNT(DISTINCT u)');
+        $qb->select('COUNT(u)');
         $qb->join('u.referredUsers', 'r', 'WITH', 'r.status <> :inactive');
         $qb->setParameter('inactive', User::STATUS_INACTIVE);
         $qb->where('r.createdAt >= :after')->setParameter('after', $start);
         $qb->andWhere('r.createdAt < :before')->setParameter('before', $before);
+        $qb->groupBy('u');
+        $qb->having('COUNT(r) > 0');
 
         return $qb->getQuery()->getSingleScalarResult();
     }
@@ -102,7 +104,7 @@ class UserRepository extends EntityRepository
         $qb->addSelect('SUM(p.amount) AS total');
         $qb->where('p.registeredAt >= :after')->setParameter('after', $start);
         $qb->andWhere('p.registeredAt < :before')->setParameter('before', $before);
-        $qb->groupBy('u.id');
+        $qb->groupBy('u');
         if (count($users) > 0) {
             // return users in parameter
             $qb->andWhere('u IN (?3)')->setParameter(3, $users);
@@ -146,6 +148,10 @@ class UserRepository extends EntityRepository
                 'cashback' => $finder($topCashback, $user, 0),
                 'referral' => $finder($topReferral, $user, 0),
                 'transaction' => $finder($topTransaction, $user, 0),
+                'network' => 0,
+                'direct' => 0,
+                'payment' => 0.00,
+                'taxable' => 0.00,
             ];
         }
 
