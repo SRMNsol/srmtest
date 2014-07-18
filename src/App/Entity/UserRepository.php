@@ -38,8 +38,7 @@ class UserRepository extends EntityRepository
 
         $qb = $this->createQueryBuilder('u');
         $qb->select('COUNT(u)');
-        $qb->where('u.status <> :inactive')->setParameter('inactive', User::STATUS_INACTIVE);
-        $qb->andWhere('u.createdAt >= :after')->setParameter('after', $start);
+        $qb->where('u.createdAt >= :after')->setParameter('after', $start);
         $qb->andWhere('u.createdAt < :before')->setParameter('before', $before);
 
         return $qb->getQuery()->getSingleScalarResult();
@@ -51,13 +50,10 @@ class UserRepository extends EntityRepository
         $before->add(\DateInterval::createFromDateString('+1 day'));
 
         $qb = $this->createQueryBuilder('u');
-        $qb->select('COUNT(u)');
-        $qb->join('u.referredUsers', 'r', 'WITH', 'r.status <> :inactive');
-        $qb->setParameter('inactive', User::STATUS_INACTIVE);
-        $qb->where('r.createdAt >= :after')->setParameter('after', $start);
-        $qb->andWhere('r.createdAt < :before')->setParameter('before', $before);
-        $qb->groupBy('u');
-        $qb->having('COUNT(r) > 0');
+        $qb->select('COUNT(DISTINCT u)');
+        $qb->join('u.referredUsers', 'r', 'WITH', $qb->expr()->andx('r.createdAt >= :after', 'r.createdAt < :before'));
+        $qb->setParameter('after', $start);
+        $qb->setParameter('before', $before);
 
         return $qb->getQuery()->getSingleScalarResult();
     }
@@ -107,9 +103,56 @@ class UserRepository extends EntityRepository
         $qb->groupBy('u');
         if (count($users) > 0) {
             // return users in parameter
-            $qb->andWhere('u IN (?3)')->setParameter(3, $users);
+            $qb->andWhere('u IN (:users)')->setParameter('users', $users);
         }
         $qb->orderBy('u.id'); // order by id to merge results easily
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function getNetworkStats(\DateTime $start, \DateTime $end, array $users = null)
+    {
+        $before = clone $end;
+        $before->add(\DateInterval::createFromDateString('+1 day'));
+
+        $qb = $this->createQueryBuilder('level0');
+        $qb->leftJoin('level0.referredUsers', 'level1', 'WITH', $qb->expr()->andx('level1.createdAt >= :after', 'level1.createdAt < :before'));
+        $qb->leftJoin('level1.referredUsers', 'level2', 'WITH', $qb->expr()->andx('level2.createdAt >= :after', 'level2.createdAt < :before'));
+        $qb->leftJoin('level2.referredUsers', 'level3', 'WITH', $qb->expr()->andx('level3.createdAt >= :after', 'level3.createdAt < :before'));
+        $qb->leftJoin('level3.referredUsers', 'level4', 'WITH', $qb->expr()->andx('level4.createdAt >= :after', 'level4.createdAt < :before'));
+        $qb->leftJoin('level4.referredUsers', 'level5', 'WITH', $qb->expr()->andx('level5.createdAt >= :after', 'level5.createdAt < :before'));
+        $qb->leftJoin('level5.referredUsers', 'level6', 'WITH', $qb->expr()->andx('level6.createdAt >= :after', 'level6.createdAt < :before'));
+        $qb->leftJoin('level6.referredUsers', 'level7', 'WITH', $qb->expr()->andx('level7.createdAt >= :after', 'level7.createdAt < :before'));
+        $qb->addSelect('COUNT(level1) + COUNT(level2) + COUNT(level3) + COUNT(level4) + COUNT(level5) + COUNT(level6) + COUNT(level7) AS total');
+        $qb->setParameter('after', $start);
+        $qb->setParameter('before', $before);
+        $qb->groupBy('level0');
+        $qb->having('total > 0');
+        if (count($users) > 0) {
+            // return users in parameter
+            $qb->andWhere('level0 IN (:users)')->setParameter('users', $users);
+        }
+        $qb->orderBy('level0.id'); // order by id to merge results easily
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function getDirectNetworkStats(\DateTime $start, \DateTime $end, array $users = null)
+    {
+        $before = clone $end;
+        $before->add(\DateInterval::createFromDateString('+1 day'));
+
+        $qb = $this->createQueryBuilder('level0');
+        $qb->join('level0.referredUsers', 'level1', 'WITH', $qb->expr()->andx('level1.createdAt >= :after', 'level1.createdAt < :before'));
+        $qb->addSelect('COUNT(level1) AS total');
+        $qb->setParameter('after', $start);
+        $qb->setParameter('before', $before);
+        $qb->groupBy('level0');
+        if (count($users) > 0) {
+            // return users in parameter
+            $qb->andWhere('level0 IN (:users)')->setParameter('users', $users);
+        }
+        $qb->orderBy('level0.id'); // order by id to merge results easily
 
         return $qb->getQuery()->getResult();
     }
@@ -125,6 +168,8 @@ class UserRepository extends EntityRepository
         $topCashback = $this->getCommissionStats($start, $end, 'cashback', $users);
         $topReferral = $this->getCommissionStats($start, $end, 'referral', $users);
         $topTransaction = $this->getEntityManager()->getRepository('App\Entity\Cashback')->getTransactionStats($start, $end, $users);
+        $topNetwork = $this->getNetworkStats($start, $end, $users);
+        $topDirectNetwork = $this->getDirectNetworkStats($start, $end, $users);
 
         // array must be ordered by user id
         $finder = function (&$arr, $user, $default) {
@@ -148,8 +193,8 @@ class UserRepository extends EntityRepository
                 'cashback' => $finder($topCashback, $user, 0),
                 'referral' => $finder($topReferral, $user, 0),
                 'transaction' => $finder($topTransaction, $user, 0),
-                'network' => 0,
-                'direct' => 0,
+                'network' => $finder($topNetwork, $user, 0),
+                'direct' => $finder($topDirectNetwork, $user, 0),
                 'payment' => 0.00,
                 'taxable' => 0.00,
             ];
