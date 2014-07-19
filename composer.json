@@ -41,12 +41,16 @@
       "php bin/console.php asset:dump",
       "php bin/console.php beesavy:fix:duplicate-user",
       "vendor/bin/doctrine migrations:migrate --no-interaction",
-      "vendor/bin/doctrine orm:generate-proxies"
+      "vendor/bin/doctrine orm:generate-proxies",
+      "vendor/bin/doctrine orm:clear-cache:metadata",
+      "vendor/bin/doctrine orm:clear-cache:query"
     ],
     "post-update-cmd": [
       "App\\Setup\\WritePermissions::checkPaths",
       "php bin/console.php asset:dump",
-      "vendor/bin/doctrine orm:generate-proxies"
+      "vendor/bin/doctrine orm:generate-proxies",
+      "vendor/bin/doctrine orm:clear-cache:metadata",
+      "vendor/bin/doctrine orm:clear-cache:query"
     ]
   },
   "autoload": {
