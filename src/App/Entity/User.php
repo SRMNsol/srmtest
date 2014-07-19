@@ -10,7 +10,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass="UserRepository")
- * @ORM\Table(name="user")
+ * @ORM\Table(name="user", indexes={@ORM\Index(columns={"created"})})
  */
 class User
 {
