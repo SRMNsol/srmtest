@@ -58,7 +58,7 @@ class UserRepository extends EntityRepository
         return $qb->getQuery()->getSingleScalarResult();
     }
 
-    public function getCommissionStats(\DateTime $start, \DateTime $end, array $users = null, $type = 'commission')
+    public function getCommissionStats(\DateTime $start, \DateTime $end, array $users = null, $type = 'commission', $sum = 'amount')
     {
         $before = clone $end;
         $before->add(\DateInterval::createFromDateString('+1 day'));
@@ -95,7 +95,12 @@ class UserRepository extends EntityRepository
             default :
                 throw new \Exception('Invalid type');
         }
-        $qb->addSelect('SUM(p.amount) AS total');
+
+        if (!in_array($sum, ['amount', 'paid'])) {
+            throw new \Exception(sprintf('Invalid field %', $sum));
+        }
+
+        $qb->addSelect("SUM(p.{$sum}) AS total");
         $qb->where('p.registeredAt >= :after')->setParameter('after', $start);
         $qb->andWhere('p.registeredAt < :before')->setParameter('before', $before);
         $qb->groupBy('u');
@@ -116,6 +121,16 @@ class UserRepository extends EntityRepository
     public function getReferralCashbackStats(\DateTime $start, \DateTime $end, array $users = null)
     {
         return $this->getCommissionStats($start, $end, $users, 'referral');
+    }
+
+    public function getCommissionPaidStats(\DateTime $start, \DateTime $end, array $users = null)
+    {
+        return $this->getCommissionStats($start, $end, $users, 'commission', 'paid');
+    }
+
+    public function getReferralPaidStats(\DateTime $start, \DateTime $end, array $users = null)
+    {
+        return $this->getCommissionStats($start, $end, $users, 'referral', 'paid');
     }
 
     public function getTransactionStats(\DateTime $start, \DateTime $end, array $users = null)
@@ -228,6 +243,8 @@ class UserRepository extends EntityRepository
         $topTransaction = $this->getTransactionStats($start, $end, $users);
         $topNetwork = $this->getNetworkStats($start, $end, $users);
         $topDirectNetwork = $this->getDirectNetworkStats($start, $end, $users);
+        $topCommissionPaid = $this->getCommissionPaidStats($start, $end, $users);
+        $topReferralPaid = $this->getReferralPaidStats($start, $end, $users);
 
         // array must be ordered by user id
         $finder = function (&$arr, $user, $default) {
@@ -253,8 +270,8 @@ class UserRepository extends EntityRepository
                 'transaction' => $finder($topTransaction, $user, 0),
                 'network' => $finder($topNetwork, $user, 0),
                 'direct' => $finder($topDirectNetwork, $user, 0),
-                'payment' => 0.00,
-                'taxable' => 0.00,
+                'payment' => $finder($topCommissionPaid, $user, 0),
+                'taxable' => $finder($topReferralPaid, $user, 0),
             ];
         }
 
