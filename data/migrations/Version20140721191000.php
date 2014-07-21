@@ -20,10 +20,10 @@ class Version20140721191000 extends AbstractMigration
         $this->addSql("UPDATE user SET twitter_auto = 0 WHERE twitter_auto = ''");
         $this->addSql("UPDATE user SET payment_method = NULL WHERE payment_method = ''");
         $this->addSql("UPDATE user SET paypal_email = NULL WHERE paypal_email = ''");
-        $this->addSql("UPDATE user SET last_login = NULL WHERE last_login = ''");
-        $this->addSql("UPDATE user SET last_refer = NULL WHERE last_refer = ''");
-        $this->addSql("UPDATE user SET last_cashback = NULL WHERE last_cashback = ''");
-        $this->addSql("UPDATE user SET created = NULL WHERE created = ''");
+        $this->addSql("UPDATE user SET last_login = NULL WHERE last_login = '' OR last_login = '0000-00-00 00:00:00'");
+        $this->addSql("UPDATE user SET last_refer = NULL WHERE last_refer = '' OR last_refer = '0000-00-00 00:00:00'");
+        $this->addSql("UPDATE user SET last_cashback = NULL WHERE last_cashback = '' OR last_cashback = '0000-00-00 00:00:00'");
+        $this->addSql("UPDATE user SET created = NULL WHERE created = '' OR created = '0000-00-00 00:00:00'");
         $this->addSql("UPDATE user SET alias = CONCAT('U', uid) WHERE alias = ''");
         $this->addSql("UPDATE user SET admin = 0 WHERE admin = ''");
         $this->addSql("UPDATE user SET send_reminders = 0 WHERE send_reminders = ''");
@@ -35,6 +35,9 @@ class Version20140721191000 extends AbstractMigration
         $this->addSql("UPDATE user SET email_refer_info = 0 WHERE email_refer_info = ''");
         $this->addSql("UPDATE user SET email_83 = 0 WHERE email_83 = ''");
         $this->addSql("UPDATE user SET email_60 = 0 WHERE email_60 = ''");
+        $this->addSql("UPDATE user SET raw_data = NULL WHERE raw_data = ''");
+        $this->addSql("UPDATE user SET raw_user_data = NULL WHERE raw_user_data = ''");
+        $this->addSql("UPDATE user SET last_sync = NULL WHERE last_sync = '' OR last_sync = '0000-00-00 00:00:00'");
     }
 
     public function down(Schema $schema)
