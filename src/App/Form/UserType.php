@@ -24,8 +24,8 @@ class UserType extends AbstractType
         ]);
         $builder->add('status', 'choice', [
             'choices' => [
-                User::STATUS_ACTIVE,
-                User::STATUS_INACTIVE,
+                User::STATUS_ACTIVE => 'Active',
+                User::STATUS_INACTIVE => 'Inactive',
             ]
         ]);
     }
