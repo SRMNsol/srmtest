@@ -263,7 +263,7 @@ class UserRepository extends EntityRepository
             if ($key === $main) {
                 continue;
             }
-            $stats[$key] = call_user_func_array([$this, $method], [$start, $end]);
+            $stats[$key] = call_user_func_array([$this, $method], [$start, $end, $users]);
         }
 
         // array must be ordered by user id
