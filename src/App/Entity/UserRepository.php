@@ -230,21 +230,39 @@ class UserRepository extends EntityRepository
         return $qb->getQuery()->getResult();
     }
 
-    public function getTopUsers(\DateTime $start, \DateTime $end)
+    public function getTopUsers(\DateTime $start, \DateTime $end, $main = 'commission', $dir = 'desc')
     {
-        $topCommission = $this->getCommissionStats($start, $end);
+        $methods = [
+            'commission'  => 'getCommissionStats',
+            'cashback'    => 'getPersonalCashbackStats',
+            'referral'    => 'getReferralCashbackStats',
+            'transaction' => 'getTransactionStats',
+            'network'     => 'getNetworkStats',
+            'direct'      => 'getDirectNetworkStats',
+            'payment'     => 'getCommissionPaidStats',
+            'taxable'     => 'getReferralPaidStats',
+        ];
+
+        if (!array_key_exists($main, $methods)) {
+            throw new \Exception(sprintf('Invalid stats type %s', $main));
+        }
+
+        if (!in_array($dir, ['asc', 'desc'])) {
+            throw new \Exception(sprintf('Invalid sort %s', $dir));
+        }
+
+        $stats[$main] = call_user_func_array([$this, $methods[$main]], [$start, $end]);
 
         $users = array_map(function ($result) {
             return $result[0];
-        }, $topCommission);
+        }, $stats[$main]);
 
-        $topCashback = $this->getPersonalCashbackStats($start, $end, $users);
-        $topReferral = $this->getReferralCashbackStats($start, $end, $users);
-        $topTransaction = $this->getTransactionStats($start, $end, $users);
-        $topNetwork = $this->getNetworkStats($start, $end, $users);
-        $topDirectNetwork = $this->getDirectNetworkStats($start, $end, $users);
-        $topCommissionPaid = $this->getCommissionPaidStats($start, $end, $users);
-        $topReferralPaid = $this->getReferralPaidStats($start, $end, $users);
+        foreach ($methods as $key => $method) {
+            if ($key === $main) {
+                continue;
+            }
+            $stats[$key] = call_user_func_array([$this, $method], [$start, $end]);
+        }
 
         // array must be ordered by user id
         $finder = function (&$arr, $user, $default) {
@@ -259,32 +277,40 @@ class UserRepository extends EntityRepository
         };
 
         $topUsers = [];
-        foreach ($topCommission as $data) {
+        foreach ($stats[$main] as $data) {
             $user = $data[0];
 
-            $topUsers[] = [
+            $row = [
                 0 => $user,
-                'commission' => $data['total'],
-                'cashback' => $finder($topCashback, $user, 0),
-                'referral' => $finder($topReferral, $user, 0),
-                'transaction' => $finder($topTransaction, $user, 0),
-                'network' => $finder($topNetwork, $user, 0),
-                'direct' => $finder($topDirectNetwork, $user, 0),
-                'payment' => $finder($topCommissionPaid, $user, 0),
-                'taxable' => $finder($topReferralPaid, $user, 0),
+                "$main" => $data['total'],
             ];
+
+            foreach($stats as $key => $result) {
+                if ($key === $main) {
+                    continue;
+                }
+                $row[$key] = $finder($result, $user, 0);
+            }
+
+            $topUsers[] = $row;
         }
 
-        usort($topUsers, function ($row1, $row2) {
-            $value1 = floor($row1['commission'] * 100);
-            $value2 = floor($row2['commission'] * 100);
-            $id1 = $row1[0]->getId();
-            $id2 = $row2[0]->getId();
+        usort($topUsers, function ($row1, $row2) use ($main, $dir) {
+            $value1 = floor($row1[$main] * 100);
+            $value2 = floor($row2[$main] * 100);
 
+            // same value, compare by id
             if ($value1 === $value2) {
-                return ($id1 < $id2) ? 1 : -1; // descending order
+                $value1 = $row1[0]->getId();
+                $value2 = $row2[0]->getId();
             }
-            return ($value1 < $value2) ? 1 : -1; // descending order
+
+            $res = ($value1 < $value2) ? -1 : 1;
+            if ($dir === 'desc') {
+                $res *= -1; // reverse order
+            }
+
+            return $res;
         });
 
         return $topUsers;

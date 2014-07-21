@@ -4,13 +4,13 @@
 
 {% macro sorter(text, type, context) %}
   {% if type == context.sort %}
-  <b class="glyphicon glyphicon-chevron-{{ context.dir }}"></b>
+  <b class="glyphicon glyphicon-chevron-{{ (context.dir == 'asc') ? 'up' : 'down' }}"></b>
   {% endif %}
   <a href="{{
     path('statistics', {
       'date_range[start_date]': context.start_date|date('Y-m-d'),
       'date_range[end_date]': context.end_date|date('Y-m-d'),
-      'dir': (context.sort == type) ? ((context.dir == 'up') ? 'down' : 'up') : 'down',
+      'dir': (context.sort == type) ? ((context.dir == 'asc') ? 'desc' : 'asc') : 'desc',
       'sort': type
     })
   }}">{{ text }}</a>
