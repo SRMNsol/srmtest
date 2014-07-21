@@ -83,6 +83,10 @@
         <td>$ {{ data.payment|number_format(2) }}</td>
         <td>$ {{ data.taxable|number_format(2) }}</td>
       </tr>
+    {% else %}
+      <tr>
+        <td colspan="10" class="text-danger">No users found</td>
+      </tr>
     {% endfor %}
   </tbody>
 </table>

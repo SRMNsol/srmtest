@@ -104,6 +104,7 @@ class UserRepository extends EntityRepository
         $qb->where('p.registeredAt >= :after')->setParameter('after', $start);
         $qb->andWhere('p.registeredAt < :before')->setParameter('before', $before);
         $qb->groupBy('u');
+        $qb->having('total > 0');
         if (count($users) > 0) {
             // return users in parameter
             $qb->andWhere('u IN (:users)')->setParameter('users', $users);
@@ -221,6 +222,7 @@ class UserRepository extends EntityRepository
         $qb->setParameter('after', $start);
         $qb->setParameter('before', $before);
         $qb->groupBy('level0');
+        $qb->having('total > 0');
         if (count($users) > 0) {
             // return users in parameter
             $qb->andWhere('level0 IN (:users)')->setParameter('users', $users);
