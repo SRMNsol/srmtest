@@ -40,12 +40,12 @@ class User
     protected $twitterAuto = false;
 
     /**
-     * @ORM\Column(name="payment_method")
+     * @ORM\Column(name="payment_method", nullable=true)
      */
     protected $paymentMethod;
 
     /**
-     * @ORM\Column(name="paypal_email", length=250)
+     * @ORM\Column(name="paypal_email", length=250, nullable=true)
      */
     protected $paypalEmail;
 
@@ -75,32 +75,32 @@ class User
     protected $sendUpdates = false;
 
     /**
-     * @ORM\Column(name="last_login", type="datetime")
+     * @ORM\Column(name="last_login", type="datetime", nullable=true)
      */
     protected $lastLoginAt;
 
     /**
-     * @ORM\Column(name="last_refer", type="datetime")
+     * @ORM\Column(name="last_refer", type="datetime", nullable=true)
      */
     protected $lastReferAt;
 
     /**
-     * @ORM\Column(name="created", type="datetime")
+     * @ORM\Column(name="created", type="datetime", nullable=true)
      */
     protected $createdAt;
 
     /**
-     * @ORM\Column(name="fb_access_token")
+     * @ORM\Column(name="fb_access_token", nullable=true)
      */
     protected $facebookAccessToken;
 
     /**
-     * @ORM\Column(name="twitter_token_secret")
+     * @ORM\Column(name="twitter_token_secret", nullable=true)
      */
     protected $twitterTokenSecret;
 
     /**
-     * @ORM\Column(name="twitter_access_token")
+     * @ORM\Column(name="twitter_access_token", nullable=true)
      */
     protected $twitterAccessToken;
 
@@ -130,7 +130,7 @@ class User
     protected $email60 = false;
 
     /**
-     * @ORM\Column(name="last_cashback", type="datetime")
+     * @ORM\Column(name="last_cashback", type="datetime", nullable=true)
      */
     protected $lastCashbackAt;
 
