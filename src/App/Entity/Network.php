@@ -10,5 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Network extends BaseNetwork
 {
-
+    public function __toString()
+    {
+        return $this->name;
+    }
 }

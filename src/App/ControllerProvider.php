@@ -40,6 +40,10 @@ class ControllerProvider implements ControllerProviderInterface
             return new Controller\StatisticsController($app['orm.em']);
         });
 
+        $app['transaction.controller'] = $app->share(function () use ($app) {
+            return new Controller\TransactionController($app['orm.em']);
+        });
+
         $controllers->get('/', 'main.controller:dashboard')
             ->bind('homepage');
 
@@ -89,6 +93,33 @@ class ControllerProvider implements ControllerProviderInterface
 
         $controllers->get('/statistics', 'statistics.controller:display')
             ->bind('statistics');
+
+        $controllers->match('/transaction/edit/{user}/{transaction}', 'transaction.controller:editTransaction')
+            ->bind('transaction_edit')
+            ->value('transaction', null)
+            ->assert('transaction', '\d*')
+            ->convert('transaction', function ($transactionId) use ($app) {
+                $transaction = isset($transactionId)
+                    ? $app['orm.em']->find('App\Entity\Transaction', $transactionId)
+                    : new Entity\Transaction();
+
+                if (null === $transaction) {
+                    throw new NotFoundHttpException('Transaction not found');
+                }
+
+                return $transaction;
+            })
+            ->convert('user', function ($userId) use ($app) {
+                $user = isset($userId)
+                    ? $app['orm.em']->find('App\Entity\User', $userId)
+                    : new Entity\User();
+
+                if (null === $user) {
+                    throw new NotFoundHttpException('User not found');
+                }
+
+                return $user;
+            });
 
         return $controllers;
     }

@@ -144,4 +144,14 @@ class Merchant extends BaseMerchant
         }
         return $groups;
     }
+
+    public function __toString()
+    {
+        return $this->name;
+    }
+
+    public function getNetworkMerchantName()
+    {
+        return sprintf('[%s] %s', (string) $this->network ?: '?', $this->name);
+    }
 }
