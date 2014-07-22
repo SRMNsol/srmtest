@@ -4,6 +4,9 @@ namespace App\Entity;
 
 use Popshops\Transaction as BaseTransaction;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Mapping\ClassMetadata;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity
@@ -22,6 +25,20 @@ class Transaction extends BaseTransaction
      * @ORM\ManyToOne(targetEntity="Rate")
      */
     protected $rate;
+
+    /**
+     * Validation
+     */
+    public static function loadValidatorMetadata(ClassMetadata $metadata)
+    {
+        $metadata->addConstraint(new UniqueEntity([
+            'fields' => ['orderNumber', 'merchant'],
+            'message' => 'Order number exists for this merchant',
+        ]));
+        $metadata->addPropertyConstraint('merchant', new Assert\NotBlank());
+        $metadata->addPropertyConstraint('orderNumber', new Assert\NotBlank());
+        $metadata->addPropertyConstraint('registeredAt', new Assert\NotBlank());
+    }
 
     public function getCashback()
     {

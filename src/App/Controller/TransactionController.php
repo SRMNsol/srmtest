@@ -26,15 +26,27 @@ class TransactionController
 
         $form->handleRequest($request);
         if ($form->isValid()) {
-            $transaction = $form->getData();
+            try {
+                $transaction = $form->getData();
 
-            if (null === $transaction->getTag()) {
-                $subid = new Subid();
-                $subid->setUserId($user->getId());
-                $transaction->setTag((string) $subid);
+                if (null === $transaction->getTag()) {
+                    $subid = new Subid();
+                    $subid->setUserId($user->getId());
+                    $transaction->setTag((string) $subid);
+                }
+
+                $transaction->setNetwork($transaction->getMerchant()->getNetwork());
+                $this->em->persist($transaction);
+                $this->em->flush();
+
+                $app['session']->getFlashBag()->add('success', 'Transaction saved');
+
+                return $app->redirect($app['url_generator']->generate('user_info', [
+                    'user_search' => ['email' => $user->getEmail()]
+                ]));
+            } catch (\Exception $e) {
+                $app['session']->getFlashBag()->add('danger', 'Update failed');
             }
-
-            $transaction->setNetwork($transaction->getMerchant()->getNetwork());
         }
 
         return $app['twig']->render('transaction_edit.html.twig', [

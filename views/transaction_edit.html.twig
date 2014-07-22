@@ -15,6 +15,7 @@
       {{ form_row(form.orderNumber) }}
       {{ form_row(form.registeredAt, { label: 'Date' }) }}
       {{ form_row(form.total) }}
+      {{ form_row(form.commission) }}
       <div class="form-group">
         <div class="col-md-6 col-md-offset-2">
           <a href="{{ path('user_info', {'user_search[email]': user.email }) }}" class="btn btn-default">Cancel</a>
