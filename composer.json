@@ -41,7 +41,6 @@
       "php bin/console.php asset:dump",
       "vendor/bin/doctrine migrations:migrate --no-interaction",
       "vendor/bin/doctrine orm:generate-proxies",
-      "vendor/bin/doctrine orm:clear-cache:metadata",
       "vendor/bin/doctrine orm:clear-cache:query",
       "vendor/bin/doctrine orm:clear-cache:result"
     ],
@@ -49,7 +48,6 @@
       "App\\Setup\\WritePermissions::checkPaths",
       "php bin/console.php asset:dump",
       "vendor/bin/doctrine orm:generate-proxies",
-      "vendor/bin/doctrine orm:clear-cache:metadata",
       "vendor/bin/doctrine orm:clear-cache:query",
       "vendor/bin/doctrine orm:clear-cache:result"
     ]
