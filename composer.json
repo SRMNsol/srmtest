@@ -36,9 +36,9 @@
     "post-install-cmd": [
       "App\\Setup\\WritePermissions::checkPaths",
       "php bin/console.php asset:dump",
+      "vendor/bin/doctrine orm:generate-proxies"
       "php bin/console.php beesavy:fix:duplicate-user",
       "vendor/bin/doctrine migrations:migrate --no-interaction 20140620144945",
-      "vendor/bin/doctrine orm:generate-proxies"
     ],
     "post-update-cmd": [
       "App\\Setup\\WritePermissions::checkPaths",
