@@ -203,12 +203,27 @@ class User
      */
     protected $referredUsers;
 
+    /**
+     * Validation
+     */
     public static function loadValidatorMetadata(ClassMetadata $metadata)
     {
         $metadata->addConstraint(new UniqueEntity(['fields' => 'email']));
         $metadata->addConstraint(new UniqueEntity(['fields' => 'alias']));
         $metadata->addPropertyConstraint('email', new Assert\NotBlank());
         $metadata->addPropertyConstraint('email', new Assert\Email());
+        $metadata->addPropertyConstraint('status', new Assert\Choice([
+            'callback' => 'getStatuses',
+            'message' => 'Invalid status',
+        ]));
+    }
+
+    /**
+     * Return a list of status
+     */
+    public static function getStatuses()
+    {
+        return [self::STATUS_ACTIVE, self::STATUS_INACTIVE];
     }
 
     /**

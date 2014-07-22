@@ -25,14 +25,14 @@
       {{ form_row(form.newPassword) }}
       <div class="form-group">
         <div class="col-md-6 col-md-offset-2">
-          <a href="{{ path('user_info', {'userSearch[email]': user.email }) }}" class="btn btn-default">Cancel</a>
+          <a href="{{ path('user_info', {'user_search[email]': user.email }) }}" class="btn btn-default">Cancel</a>
           <button type="submit" class="btn btn-primary">Update</button>
         </div>
       </div>
     {{ form_end(form) }}
   </div>
   <div class="col-md-3">
-    <a href="{{ path('user_info', {'userSearch[email]': user.email }) }}" class="btn btn-default pull-right">See user info</a>
+    <a href="{{ path('user_info', {'user_search[email]': user.email }) }}" class="btn btn-default pull-right">See user info</a>
   </div>
 </div>
 {% endblock content %}
