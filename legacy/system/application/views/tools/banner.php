@@ -38,7 +38,7 @@
 </script>
 <script type='text/javascript'>
 $(document).ready(function(){
-        ZeroClipboard.setMoviePath('<?php echo base_url() ?>zeroclipboard/ZeroClipboard.swf');
+        ZeroClipboard.setMoviePath('<?php echo s3path("/zeroclipboard/ZeroClipboard.swf") ?>');
 		var clips = [];
 
 		function startZC() {
