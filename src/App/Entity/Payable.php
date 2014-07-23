@@ -14,6 +14,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Payable
 {
+    use MoneyTrait;
+
     /**
      * @ORM\Id @ORM\Column(type="integer") @ORM\GeneratedValue
      */
@@ -293,14 +295,20 @@ class Payable
         return $this->paid;
     }
 
+    /**
+     * Validate if sum is correct
+     */
     public function validateAmounts()
     {
         $sum = $this->pending + $this->available + $this->processing + $this->paid;
-        if (round($this->amount, 2) !== round($sum, 2)) {
+        if (!self::eq($this->amount, $sum)) {
             throw new \Exception(sprintf('Invalid sum amounts %.2f (expected %.2f)', $sum, $this->amount));
         }
     }
 
+    /**
+     * Set status based on amount types
+     */
     public function updateStatusBasedOnAmounts()
     {
         if ($this->status === self::STATUS_INVALID) {
@@ -309,7 +317,7 @@ class Payable
 
         $status = null;
         foreach (['pending', 'available', 'processing', 'paid'] as $prop) {
-            if ($this->$prop >= 0.01) {
+            if (self::gt($this->$prop, 0)) {
                 if ($status !== null) {
                     $status = self::STATUS_MIXED;
                     break;

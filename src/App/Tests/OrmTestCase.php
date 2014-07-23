@@ -2,13 +2,14 @@
 
 namespace App\Tests;
 
-use Popshops\Test\OrmTestCase as BaseOrmTestCase;
-use App\Application;
-use App\OrmProvider;
 use Doctrine\ORM\Tools\SchemaTool;
 use Doctrine\Common\DataFixtures\Loader;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
+use Popshops\Test\OrmTestCase as BaseOrmTestCase;
+use App\Application;
+use App\OrmProvider;
+use App\Entity\User;
 
 class OrmTestCase extends BaseOrmTestCase
 {
@@ -36,5 +37,24 @@ class OrmTestCase extends BaseOrmTestCase
     {
         $this->setUpOrm();
         $this->createFullSchema();
+    }
+
+    protected function createUserEntity($i)
+    {
+        $user = new User();
+        $user->setEmail("$i@example.com");
+        $user->setPaymentMethod('x');
+        $user->setPaypalEmail("$i@example.com");
+        $user->setAlias("user$i");
+        $user->setLastLoginAt(new \DateTime());
+        $user->setLastReferAt(new \DateTime());
+        $user->setCreatedAt(new \DateTime());
+        $user->setFacebookAccessToken("test");
+        $user->setTwitterTokenSecret("test");
+        $user->setTwitterAccessToken("test");
+        $user->setPassword("Pa55w0rd");
+        $user->setLastCashbackAt(new \DateTime());
+
+        return $user;
     }
 }
