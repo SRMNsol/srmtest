@@ -7,9 +7,12 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks
  */
 class Payment
 {
+    use MoneyTrait;
+
     /**
      * @ORM\Id @ORM\Column(type="integer") @ORM\GeneratedValue
      */
@@ -18,7 +21,7 @@ class Payment
     /**
      * @ORM\Column(type="decimal", scale=2)
      */
-    protected $amount;
+    protected $amount = 0.00;
 
     /**
      * @ORM\Column(type="datetime")
@@ -32,6 +35,7 @@ class Payment
 
     /**
      * @ORM\OneToMany(targetEntity="Payable", mappedBy="payment")
+     * @ORM\OrderBy({"registeredAt" = "ASC"})
      */
     protected $payables;
 
@@ -44,7 +48,7 @@ class Payment
     /**
      * @ORM\Column(length=20)
      */
-    protected $status;
+    protected $status = self::STATUS_PENDING;
 
     const STATUS_PENDING = 'pending';
     const STATUS_PAID = 'paid';
@@ -58,7 +62,7 @@ class Payment
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -81,7 +85,7 @@ class Payment
     /**
      * Get amount
      *
-     * @return string 
+     * @return string
      */
     public function getAmount()
     {
@@ -104,7 +108,7 @@ class Payment
     /**
      * Get requestedAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getRequestedAt()
     {
@@ -127,7 +131,7 @@ class Payment
     /**
      * Get paidAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getPaidAt()
     {
@@ -150,7 +154,7 @@ class Payment
     /**
      * Get status
      *
-     * @return string 
+     * @return string
      */
     public function getStatus()
     {
@@ -163,9 +167,10 @@ class Payment
      * @param \App\Entity\Payable $payables
      * @return Payment
      */
-    public function addPayable(\App\Entity\Payable $payables)
+    public function addPayable(\App\Entity\Payable $payable)
     {
-        $this->payables[] = $payables;
+        $this->payables[] = $payable;
+        $payable->setPayment($this);
 
         return $this;
     }
@@ -173,17 +178,18 @@ class Payment
     /**
      * Remove payables
      *
-     * @param \App\Entity\Payable $payables
+     * @param \App\Entity\Payable $payable
      */
-    public function removePayable(\App\Entity\Payable $payables)
+    public function removePayable(\App\Entity\Payable $payable)
     {
-        $this->payables->removeElement($payables);
+        $this->payables->removeElement($payable);
+        $payable->setPayment(); //null
     }
 
     /**
      * Get payables
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getPayables()
     {
@@ -206,10 +212,69 @@ class Payment
     /**
      * Get user
      *
-     * @return \App\Entity\User 
+     * @return \App\Entity\User
      */
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function onCreate()
+    {
+        if (null === $this->requestedAt) {
+            $this->requestedAt = new \DateTime();
+        }
+    }
+
+    /**
+     * @ORM\PrePersist @ORM\PreUpdate
+     */
+    public function onSave()
+    {
+        $this->amount = $this->calculateProcessingAmount();
+    }
+
+    /**
+     * Calculate total amount in process
+     */
+    public function calculateProcessingAmount()
+    {
+        $processing = 0;
+        foreach ($this->payables as $payable) {
+            $processing += $payable->getProcessing();
+        }
+
+        return $processing;
+    }
+
+    /**
+     * Validate amount is correct
+     */
+    public function validateAmount()
+    {
+        return self::eq($this->amount, $this->calculateProcessingAmount());
+    }
+
+    /**
+     * Processing payment as paid
+     */
+    public function markAsPaid()
+    {
+        if (false === $this->validateAmount()) {
+            throw new \Exception(sprintf('Invalid amount %.2f', $this->amount));
+        }
+
+        $this->paidAt = new \DateTime();
+        $this->status = self::STATUS_PAID;
+
+        foreach ($this->payables as $payable) {
+            $processing = $payable->getProcessing();
+            $paid = $payable->getPaid();
+            $payable->setProcessing(0);
+            $payable->setPaid($paid + $processing);
+        }
     }
 }

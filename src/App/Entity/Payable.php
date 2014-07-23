@@ -387,7 +387,7 @@ class Payable
     /**
      * Get payment
      *
-     * @return \App\Entity\Payment 
+     * @return \App\Entity\Payment
      */
     public function getPayment()
     {
