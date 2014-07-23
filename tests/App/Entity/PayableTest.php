@@ -20,7 +20,7 @@ class PayableTest extends OrmTestCase
         $this->em->flush();
     }
 
-    public function testUp()
+    public function testUpdateStatusCallback()
     {
         $payable = new Payable();
         $payable->setAmount(100);
@@ -40,5 +40,19 @@ class PayableTest extends OrmTestCase
         $payable->setProcessing(0)->setPaid(100);
         $this->em->flush();
         $this->assertEquals(Payable::STATUS_PAID, $payable->getStatus());
+
+        $payable->setStatus(Payable::STATUS_INVALID);
+        $payable->setPaid(0)->setAvailable(100);
+        $this->em->flush();
+        $this->assertEquals(Payable::STATUS_INVALID, $payable->getStatus());
+    }
+
+    public function testAvailableDateCallback()
+    {
+        $payable = new Payable();
+        $payable->setRegisteredAt(new \DateTime());
+        $this->em->persist($payable);
+        $this->em->flush();
+        $this->assertEquals($payable->getRegisteredAt()->format('Y-m-d'), $payable->getAvailableAt()->format('Y-m-d'));
     }
 }
