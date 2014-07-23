@@ -204,6 +204,11 @@ class User
     protected $referredUsers;
 
     /**
+     * @ORM\OneToMany(targetEntity="Payment", mappedBy="user")
+     */
+    protected $payments;
+
+    /**
      * Validation
      */
     public static function loadValidatorMetadata(ClassMetadata $metadata)
@@ -1150,5 +1155,38 @@ class User
     public function getCharity()
     {
         return $this->charity;
+    }
+
+    /**
+     * Add payments
+     *
+     * @param \App\Entity\Payment $payments
+     * @return User
+     */
+    public function addPayment(\App\Entity\Payment $payments)
+    {
+        $this->payments[] = $payments;
+
+        return $this;
+    }
+
+    /**
+     * Remove payments
+     *
+     * @param \App\Entity\Payment $payments
+     */
+    public function removePayment(\App\Entity\Payment $payments)
+    {
+        $this->payments->removeElement($payments);
+    }
+
+    /**
+     * Get payments
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPayments()
+    {
+        return $this->payments;
     }
 }

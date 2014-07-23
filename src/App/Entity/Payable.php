@@ -80,6 +80,11 @@ class Payable
      */
     protected $status = self::STATUS_PENDING;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Payment", inversedBy="payables")
+     */
+    protected $payment;
+
     const STATUS_PENDING = 'pending';
     const STATUS_AVAILABLE = 'available';
     const STATUS_PROCESSING = 'processing';
@@ -364,5 +369,28 @@ class Payable
         $this->validateAmounts();
         $this->updateAvailableDate();
         $this->updateStatusBasedOnAmounts();
+    }
+
+    /**
+     * Set payment
+     *
+     * @param \App\Entity\Payment $payment
+     * @return Payable
+     */
+    public function setPayment(\App\Entity\Payment $payment = null)
+    {
+        $this->payment = $payment;
+
+        return $this;
+    }
+
+    /**
+     * Get payment
+     *
+     * @return \App\Entity\Payment 
+     */
+    public function getPayment()
+    {
+        return $this->payment;
     }
 }
