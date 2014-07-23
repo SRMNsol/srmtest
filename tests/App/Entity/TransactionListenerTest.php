@@ -21,7 +21,7 @@ class TransactionListenerTest extends OrmTestCase
     public function testCashbackCreation()
     {
         $transaction = new Transaction();
-        $transaction->setRegisteredAt(new DateTime('2014-02-12'));
+        $transaction->setRegisteredAt(new DateTime());
         $transaction->setOrderNumber('T123');
         $transaction->setTotal(50.00);
         $transaction->setCommission(5.00);
@@ -50,13 +50,22 @@ class TransactionListenerTest extends OrmTestCase
 
         $this->assertEquals($cashback, $transaction->getCashback());
         $this->assertEquals('Test', $cashback->getConcept());
-        $this->assertEquals('2014-02-12', $cashback->getRegisteredAt()->format('Y-m-d'));
+        $this->assertEquals($transaction->getRegisteredAt()->format('Y-m-d'), $cashback->getRegisteredAt()->format('Y-m-d'));
         $this->assertEquals(3.00, $cashback->getAmount());
 
-        // zero value
+        // zero value is pending until 90 days
         $transaction->setCommission(0.00);
         $this->em->flush();
         $this->assertEquals(0, $cashback->getAmount());
-        $this->assertEquals('cancelled', $cashback->getStatus());
+        $this->assertEquals('pending', $cashback->getStatus());
+
+        // after 90 days, cashback status is updated
+        $transaction->setRegisteredAt(new \DateTime('90 days ago'));
+        $this->em->flush();
+        $this->assertEquals('canceled', $cashback->getStatus());
+        $transaction->setCommission(123.00);
+        $this->em->flush();
+        $this->assertEquals('available', $cashback->getStatus());
+
     }
 }

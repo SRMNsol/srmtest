@@ -14,7 +14,6 @@ class CashbackRepositoryTest extends OrmTestCase
         $user->setPaymentMethod('x');
         $user->setPaypalEmail("$i@example.com");
         $user->setAlias("user");
-        $user->setExtrabuxCharityId(99);
         $user->setLastLoginAt(new \DateTime());
         $user->setLastReferAt(new \DateTime());
         $user->setCreatedAt(new \DateTime());

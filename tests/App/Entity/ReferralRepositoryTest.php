@@ -14,7 +14,7 @@ class ReferralRepositoryTest extends OrmTestCase
         // fixtures
         $user1 = $this->createUser(1);
         $this->em->persist($user1);
-        $user2 = $this->createUser(1);
+        $user2 = $this->createUser(2);
         $user2->setReferredBy($user1);
         $this->em->persist($user2);
         $user3 = $this->createUser(3);
@@ -31,8 +31,7 @@ class ReferralRepositoryTest extends OrmTestCase
         $user->setEmail("$i@example.com");
         $user->setPaymentMethod('x');
         $user->setPaypalEmail("$i@example.com");
-        $user->setAlias("user");
-        $user->setExtrabuxCharityId(99);
+        $user->setAlias("user$i");
         $user->setLastLoginAt(new \DateTime());
         $user->setLastReferAt(new \DateTime());
         $user->setCreatedAt(new \DateTime());
@@ -49,7 +48,7 @@ class ReferralRepositoryTest extends OrmTestCase
     {
         $user = $this->em->find('App\Entity\User', 1);
         $referralRepository = $this->em->getRepository('App\Entity\Referral');
-        $referral = $referralRepository->calculateUserReferral($user, '01', '2014');
+        $referral = $referralRepository->createUserReferral($user, '01', '2014');
         $this->assertEquals(0, $referral->getAmount());
     }
 
@@ -68,7 +67,7 @@ class ReferralRepositoryTest extends OrmTestCase
 
         $user = $this->em->find('App\Entity\User', 1);
         $referralRepository = $this->em->getRepository('App\Entity\Referral');
-        $referral = $referralRepository->calculateUserReferral($user, '02', '2014');
+        $referral = $referralRepository->createUserReferral($user, '02', '2014');
         $this->assertEquals($rate->getLevel1() * $transact1->getCommission(), $referral->getAmount());
 
         $transact2 = new Transaction();
@@ -80,7 +79,7 @@ class ReferralRepositoryTest extends OrmTestCase
         $this->em->persist($transact2);
         $this->em->flush();
 
-        $referral = $referralRepository->calculateUserReferral($user, '02', '2014');
+        $referral = $referralRepository->createUserReferral($user, '02', '2014');
         $this->assertEquals($rate->getLevel1() * ($transact1->getCommission() + $transact2->getCommission()), $referral->getAmount());
         $this->assertEquals($regdate2, $referral->getRegisteredAt());
     }
@@ -100,7 +99,7 @@ class ReferralRepositoryTest extends OrmTestCase
 
         $user = $this->em->find('App\Entity\User', 1);
         $referralRepository = $this->em->getRepository('App\Entity\Referral');
-        $referral = $referralRepository->calculateUserReferral($user, '02', '2014');
+        $referral = $referralRepository->createUserReferral($user, '02', '2014');
         $this->assertEquals($rate->getLevel2() * $transact1->getCommission(), $referral->getAmount());
     }
 }
