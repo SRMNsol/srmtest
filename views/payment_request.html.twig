@@ -33,6 +33,10 @@
           {% endif %}
           {{ user.address }}<br>
           {{ user.city }}, {{ user.state }} {{ user.zip }}
+        {% elseif user.paymentMethod == 'PAYPAL' %}
+          {{ user.paypalEmail }}
+        {% elseif user.paymentMethod == 'CHARITY' %}
+          {{ user.charity.name }}
         {% endif %}
       </td>
       <td>$ {{ payment.amount|number_format(2) }}</td>
