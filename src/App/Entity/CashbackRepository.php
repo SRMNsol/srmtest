@@ -91,25 +91,6 @@ class CashbackRepository extends EntityRepository
         return $qb->getQuery()->getResult();
     }
 
-    public function makeCashbackAvailable($date = null)
-    {
-        if (null === $date) {
-            $date = new \DateTime();
-        }
-
-        $qb = $this->getEntityManager()->createQueryBuilder()
-            ->update('App\Entity\Cashback', 'c')
-            ->set('c.status', ':avail')
-            ->where('c.availableAt <= :date')
-            ->andWhere('c.status = :status')
-            ->setParameter('date', $date)
-            ->setParameter('status', Cashback::STATUS_PENDING)
-            ->setParameter('avail', Cashback::STATUS_AVAILABLE)
-        ;
-
-        return $qb->getQuery()->execute();
-    }
-
     public function getTotalCashback(\DateTime $start, \DateTime $end)
     {
         $until = clone $end;

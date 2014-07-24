@@ -38,7 +38,7 @@ class ReferralCalculationCommand extends Command
         }
 
         // make cashback available
-        $em->getRepository('App\Entity\Cashback')->makeCashbackAvailable(new \DateTime());
+        $em->getRepository('App\Entity\Payable')->makeAvailable(new \DateTime());
 
         // pull users
         $queryBuilder = $em->createQueryBuilder()

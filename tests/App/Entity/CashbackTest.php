@@ -144,14 +144,14 @@ class CashbackTest extends OrmTestCase
         $this->em->persist($rate);
         $this->em->flush();
 
-        $this->assertEquals(1, (int) $cashback->getAmount());
-        $this->assertEquals(1, (int) $cashback->getAvailable());
+        $this->assertEquals(1.00, $cashback->getAmount(), 0.01);
+        $this->assertEquals(1.00, $cashback->getAvailable(), 0.01);
         $this->assertEquals(Cashback::STATUS_AVAILABLE, $cashback->getStatus());
 
         // update transaction
         $transaction->setCommission(20.00);
         $this->em->flush();
-        $this->assertEquals(2, (int) $cashback->getAmount());
+        $this->assertEquals(2.00, $cashback->getAmount(), 0.01);
 
         // mark as processing
         $cashback->setProcessing($cashback->getAvailable());
@@ -159,7 +159,7 @@ class CashbackTest extends OrmTestCase
         $cashback->setStatus(Cashback::STATUS_PROCESSING);
         $transaction->setCommission(30.00);
         $this->em->flush();
-        $this->assertEquals(2, (int) $cashback->getAmount());
+        $this->assertEquals(2.00, $cashback->getAmount(), 0.01);
         $this->assertEquals(Cashback::STATUS_PROCESSING, $cashback->getStatus());
 
         // mark as paid
@@ -168,7 +168,7 @@ class CashbackTest extends OrmTestCase
         $cashback->setStatus(Cashback::STATUS_PAID);
         $transaction->setCommission(40.00);
         $this->em->flush();
-        $this->assertEquals(2, (int) $cashback->getAmount());
+        $this->assertEquals(2.00, $cashback->getAmount(), 0.01);
         $this->assertEquals(Cashback::STATUS_PAID, $cashback->getStatus());
     }
 }
