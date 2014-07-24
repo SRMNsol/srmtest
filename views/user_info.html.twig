@@ -96,8 +96,8 @@
     <tr>
       <td>{{ cashback.transactionDate|date('m/d/Y') }}</td>
       <td>{{ cashback.concept }}</td>
-      <td>{{ cashback.transactionNumbers|join(', ') }}</td>
-      <td>$ {{ cashback.calculateTransactionTotal|number_format(2) }}</td>
+      <td>{{ cashback.transactionNumber }}</td>
+      <td>$ {{ cashback.transactionTotal|number_format(2) }}</td>
       <td>$ {{ cashback.amount|number_format(2) }}</td>
       <td>{{ cashback.status }}</td>
     </tr>

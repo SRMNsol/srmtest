@@ -41,12 +41,12 @@ class Cashback extends Controller
         );
 
         $data['transactions'] = array_map(function (App\Entity\Cashback $cashback) {
-            $data['month'] = $cashback->getTransactions()->current()->getRegisteredAt()->format('m/d/Y');
+            $data['month'] = $cashback->getRegisteredAt() ? $cashback->getRegisteredAt()->format('m/d/Y') : null;
             $data['transtype'] = 'Personal';
             $data['status'] = ucfirst($cashback->getStatus());
             $data['cashback'] = sprintf('%.2f', $cashback->getAmount());
             $data['date'] = $cashback->getStatus() === App\Entity\Cashback::STATUS_PAID
-                ? $cashback->getTransactions()->current()->getRegisteredAt()->format('m/Y')
+                ? ($cashback->getRegisteredAt() ? $cashback->getRegisteredAt()->format('m/Y') : null)
                 : 'N/A';
 
             return $data;
@@ -90,14 +90,11 @@ class Cashback extends Controller
         );
 
         $data['transactions'] = array_map(function (App\Entity\Cashback $cashback) {
-            $transaction = $cashback->getTransactions()->current();
-            $reportDate = $cashback->getRegisteredAt() ?: $transaction->getRegisteredAt();
-
-            $data['report_date'] = $reportDate ? $reportDate->format('m/d/Y') : null;
+            $data['report_date'] = $cashback->getRegisteredAt() ? $cashback->getRegisteredAt()->format('m/d/Y') : null;
             $data['merchant'] = $cashback->getConcept();
-            $data['order_id'] = $transaction->getOrderNumber();
+            $data['order_id'] = $cashback->getOrderNumber();
             $data['status'] = ucfirst($cashback->getStatus());
-            $data['amount'] = sprintf('%.2f', $cashback->calculateTransactionTotal());
+            $data['amount'] = sprintf('%.2f', $cashback->getTotalPurchase());
             $data['cashback'] = sprintf('%.2f', $cashback->getAmount());
 
             return $data;

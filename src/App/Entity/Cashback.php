@@ -70,15 +70,15 @@ class Cashback extends Payable
     /**
      * Get total purchase
      */
-    public function getTransactionTotal()
+    public function getTotalPurchase()
     {
         return $this->transaction ? $this->transaction->getTotal() : 0.00;
     }
 
     /**
-     * Get transaction (order) number
+     * Get transaction order number
      */
-    public function getTransactionNumber()
+    public function getOrderNumber()
     {
         return $this->transaction ? $this->transaction->getOrderNumber() : null;
     }

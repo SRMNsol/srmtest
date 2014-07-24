@@ -10,7 +10,7 @@ class CashbackRepository extends EntityRepository
     public function getMostRecentUserCashback(User $user)
     {
         $queryBuilder = $this->createQueryBuilder('c')
-            ->innerJoin('c.transactions', 't')
+            ->innerJoin('c.transaction', 't')
             ->where('c.user = :user')
             ->andWhere('c.status <> :invalid')
             ->orderBy('t.registeredAt', 'DESC')

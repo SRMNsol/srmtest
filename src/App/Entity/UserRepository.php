@@ -144,7 +144,7 @@ class UserRepository extends EntityRepository
         $qb->select('c')->from('App\Entity\Cashback', 'c');
         $qb->join('c.user', 'u', 'WITH', 'c.status <> :invalid');
         $qb->setParameter('invalid', Cashback::STATUS_INVALID);
-        $qb->join('c.transactions', 't', 'WITH', 't.status <> :canceled');
+        $qb->join('c.transaction', 't', 'WITH', 't.status <> :canceled');
         $qb->setParameter('canceled', Transaction::STATUS_CANCELED);
 
         $qb->addSelect('u');
