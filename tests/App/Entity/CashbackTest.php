@@ -126,4 +126,49 @@ class CashbackTest extends OrmTestCase
         $this->assertEquals(0, $cashback->getAvailable());
         $this->assertEquals(Cashback::STATUS_INVALID, $cashback->getStatus());
     }
+
+    public function testNoUpdateWhenProcessingOrPaid()
+    {
+        $cashback = new Cashback();
+        $transaction = new Transaction();
+        $transaction->setOrderNumber('ABC123');
+        $transaction->setRegisteredAt(new \DateTime('90 days ago'));
+        $transaction->setTotal(100.00);
+        $transaction->setCommission(10.00);
+        $rate = $this->em->getRepository('App\Entity\Rate')->createDefaultRate();
+        $rate->setLevel0(0.10);
+        $transaction->setRate($rate);
+        $cashback->setTransaction($transaction);
+        $this->em->persist($transaction);
+        $this->em->persist($cashback);
+        $this->em->persist($rate);
+        $this->em->flush();
+
+        $this->assertEquals(1, (int) $cashback->getAmount());
+        $this->assertEquals(1, (int) $cashback->getAvailable());
+        $this->assertEquals(Cashback::STATUS_AVAILABLE, $cashback->getStatus());
+
+        // update transaction
+        $transaction->setCommission(20.00);
+        $this->em->flush();
+        $this->assertEquals(2, (int) $cashback->getAmount());
+
+        // mark as processing
+        $cashback->setProcessing($cashback->getAvailable());
+        $cashback->setAvailable(0.00);
+        $cashback->setStatus(Cashback::STATUS_PROCESSING);
+        $transaction->setCommission(30.00);
+        $this->em->flush();
+        $this->assertEquals(2, (int) $cashback->getAmount());
+        $this->assertEquals(Cashback::STATUS_PROCESSING, $cashback->getStatus());
+
+        // mark as paid
+        $cashback->setPaid($cashback->getProcessing());
+        $cashback->setProcessing(0.00);
+        $cashback->setStatus(Cashback::STATUS_PAID);
+        $transaction->setCommission(40.00);
+        $this->em->flush();
+        $this->assertEquals(2, (int) $cashback->getAmount());
+        $this->assertEquals(Cashback::STATUS_PAID, $cashback->getStatus());
+    }
 }
