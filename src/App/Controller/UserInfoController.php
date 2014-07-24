@@ -44,7 +44,7 @@ class UserInfoController
                 $cashbackList = $em->getRepository('App\Entity\Cashback')->findCashbackForUserByDateRange($user, $data['startDate'], $data['endDate'], 'latest');
                 foreach ($cashbackList as $cashback) {
                     $totalCashback += $cashback->getAmount();
-                    $totalSpending += $cashback->calculateTransactionTotal();
+                    $totalSpending += $cashback->getTransactionTotal();
                     $totalPayment += $cashback->getPaid();
                 }
 

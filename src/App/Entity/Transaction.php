@@ -16,8 +16,10 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  */
 class Transaction extends BaseTransaction
 {
+    use MoneyTrait;
+
     /**
-     * @ORM\ManyToOne(targetEntity="Cashback", inversedBy="transactions", cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="Cashback", inversedBy="transaction", cascade={"persist"})
      */
     protected $cashback;
 
@@ -78,5 +80,22 @@ class Transaction extends BaseTransaction
     public function onUpdate()
     {
         return parent::onUpdate();
+    }
+
+    /**
+     * Calculate commission by level
+     */
+    public function getCommissionByLevel($rateLevel)
+    {
+        $commission = 0.00;
+
+        $rate = $this->getRate();
+        $share = $rate ? $rate->getLevel($rateLevel) : 0;
+
+        if (self::gt($this->getRealCommission(), 0) && self::gt($share, 0)) {
+            $commission = $share * $this->getRealCommission();
+        }
+
+        return $commission;
     }
 }

@@ -57,22 +57,23 @@ class ReferralRepository extends EntityRepository
                 $cashbacks = $cashbackRepository->findCashbackForUserByDateRange($child, $from, $to);
 
                 foreach ($cashbacks as $cashback) {
-                    $values = $cashback->calculateTransactionValues($level);
+                    $transaction = $cashback->getTransaction();
 
-                    $commission += $values['commission'];
-                    if ($cashback->getStatus() === Cashback::STATUS_AVAILABLE) {
-                        $available += $commission;
+                    // skip if there is no transaction (?)
+                    if (null === $transaction) {
+                        continue;
                     }
 
-                    if (null === $registeredAt || $values['registeredAt'] > $registeredAt) {
-                        $registeredAt = clone $values['registeredAt'];
-                    }
+                    $share = $transaction->getCommissionByLevel($level);
 
-                    if ($level === 1) {
-                        $direct += $values['commission'];
-                    } else {
-                        $indirect += $values['commission'];
-                    }
+                    $commission += $share;
+                    $available += ($cashback->getStatus() === Cashback::STATUS_AVAILABLE) ? $share : 0;
+                    $direct += ($level === 1) ? $share : 0;
+                    $indirect += ($level > 1) ? $share : 0;
+
+                    $registeredAt = (null === $registeredAt || $transaction->getRegisteredAt() > $registeredAt)
+                        ? clone $transaction->getRegisteredAt()
+                        : $registeredAt;
                 }
             }
         }

@@ -40,18 +40,11 @@ class TransactionListener
         $cashback = $transaction->getCashback();
 
         if (null === $cashback) {
-            $cashback = $cashbackRepository->findCashbackForTransaction($transaction);
-        }
-
-        if (null === $cashback) {
             $cashback = new Cashback();
+            $cashback->setTransaction($transaction);
         }
 
-        if (false === $cashback->getTransactions()->contains($transaction)) {
-            $cashback->addTransaction($transaction);
-        }
-
-        $cashback->calculateAmountFromTransactions();
+        $cashback->calculateAmounts();
 
         if (null === $cashback->getUser()) {
             $subid = Subid::createFromString($transaction->getTag());
@@ -68,10 +61,6 @@ class TransactionListener
             if (isset($merchant)) {
                 $cashback->setConcept($merchant->getName());
             }
-        }
-
-        if (null === $cashback->getRegisteredAt()) {
-            $cashback->setRegisteredAt($transaction->getRegisteredAt());
         }
     }
 }

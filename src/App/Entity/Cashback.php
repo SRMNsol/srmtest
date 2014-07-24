@@ -13,70 +13,41 @@ class Cashback extends Payable
     use MoneyTrait;
 
     /**
-     * @ORM\OneToMany(targetEntity="Transaction", mappedBy="cashback")
-     * @ORM\OrderBy({"registeredAt" = "ASC"})
+     * @ORM\OneToOne(targetEntity="Transaction", mappedBy="cashback")
      */
-    protected $transactions;
+    protected $transaction;
 
     const AVAILABLE_DAYS = 90;
 
-    public function __construct()
+    public function getTransaction()
     {
-        $this->transactions = new ArrayCollection();
+        return $this->transaction;
     }
 
-    public function getTransactions()
+    public function setTransaction(Transaction $transaction = null)
     {
-        return $this->transactions;
-    }
-
-    public function addTransaction(Transaction $transaction)
-    {
-        $this->transactions[] = $transaction;
+        $this->transaction = $transaction;
         $transaction->setCashback($this);
 
         return $this;
     }
 
-    public function removeTransaction(Transaction $transaction)
-    {
-        $this->transactions->removeElement($transaction);
-        $transaction->setCashback(/* null */);
-
-        return $this;
-    }
-
-    /**
-     * Calculate total, commission using assigned rate,
-     * and first registered date from transactions.
-     *
-     * Transactions are order by registered date ASC
-     */
-    public function calculateTransactionValues($rateLevel = 0)
-    {
-        return [
-            'total' => $this->calculateTransactionTotal(),
-            'commission' => $this->getCommissionTotalByLevel($rateLevel),
-            'registeredAt' => $this->getTransactionDate(),
-        ];
-    }
-
     /**
      * Calculate cashback amount from transactions
      */
-    public function calculateAmountFromTransactions()
+    public function calculateAmounts()
     {
         // when cashback is processing or paid, do not update
         if ($this->isLocked()) {
             return $this;
         }
 
-        $this->amount = $this->getCommissionTotalByLevel(0);
+        $this->amount = $this->getCommissionShare(0);
         $this->registeredAt = $this->getTransactionDate();
         $this->updateAvailableDate();
 
         // commission > 0 but total transaction amount = 0
-        if (self::gt($this->amount, 0) && self::eq($this->calculateTransactionTotal(), 0)) {
+        if (self::gt($this->amount, 0) && self::eq($this->getTransactionTotal(), 0)) {
             $this->status = self::STATUS_INVALID;
             return $this;
         }
@@ -96,64 +67,35 @@ class Cashback extends Payable
         return $this;
     }
 
-    public function calculateTransactionTotal()
-    {
-        $total = 0.00;
-        foreach ($this->transactions as $transaction) {
-            $total += $transaction->getTotal();
-        }
-
-        return $total;
-    }
-
     /**
-     * Get a list of unique transaction (order) numbers
+     * Get total purchase
      */
-    public function getTransactionNumbers()
+    public function getTransactionTotal()
     {
-        $nums = [];
-
-        foreach ($this->transactions as $transaction) {
-            $nums[$transaction->getOrderNumber()] = 1;
-        }
-
-        return array_keys($nums);
+        return $this->transaction ? $this->transaction->getTotal() : 0.00;
     }
 
     /**
-     * Get the earliest transaction date
-     * Transactions are order by registered date ASC
+     * Get transaction (order) number
+     */
+    public function getTransactionNumber()
+    {
+        return $this->transaction ? $this->transaction->getOrderNumber() : null;
+    }
+
+    /**
+     * Get transaction date
      */
     public function getTransactionDate()
     {
-        if ($this->transactions->count() > 0) {
-            return $this->transactions->first()->getRegisteredAt();
-        }
-
-        return null;
+        return $this->transaction ? $this->transaction->getRegisteredAt() : null;
     }
 
     /**
-     * Calculate commissions by rate
+     * Get commission for level 0
      */
-    public function getCommissionTotalByLevel($rateLevel)
+    public function getCommissionShare()
     {
-        $commission = 0;
-
-        $method = "getLevel$rateLevel"; // getLevel0 -> getLevel7
-        if (!method_exists('App\Entity\Rate', $method)) {
-            throw new \RuntimeException("Invalid rate level $rateLevel");
-        }
-
-        foreach ($this->transactions as $transaction) {
-            $rate = $transaction->getRate();
-            $share = $rate ? $rate->$method() : 0;
-
-            if (self::gt($transaction->getRealCommission(), 0) && self::gt($share, 0)) {
-                $commission += $share * $transaction->getRealCommission();
-            }
-        }
-
-        return $commission;
+        return $this->transaction ? $this->transaction->getCommissionByLevel(0) : 0.00;
     }
 }

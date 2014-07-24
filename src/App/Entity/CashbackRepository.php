@@ -46,26 +46,6 @@ class CashbackRepository extends EntityRepository
         }
     }
 
-    public function findCashbackForTransaction(Transaction $transaction)
-    {
-        $qb = $this->createQueryBuilder('c')
-            ->innerJoin('c.transactions', 't')
-            ->where('t.merchant = :merchant')
-            ->andWhere('t.network = :network')
-            ->andWhere('t.orderNumber = :orderNumber')
-            ->groupBy('c')
-            ->setParameter('merchant', $transaction->getMerchant())
-            ->setParameter('network', $transaction->getNetwork())
-            ->setParameter('orderNumber', $transaction->getOrderNumber())
-        ;
-
-        try {
-            return $qb->getQuery()->getSingleResult();
-        } catch (NoResultException $e) {
-            return null;
-        }
-    }
-
     public function findCashbackForUser(User $user, $month = null, $year = null)
     {
         $start = null;

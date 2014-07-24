@@ -255,6 +255,20 @@ class Rate
     }
 
     /**
+     * Get level by parameter
+     */
+    public function getLevel($level)
+    {
+        if ($level < 0 || $level > 7) {
+            throw new \Exception(sprintf('Invalid level %d', $level));
+        }
+
+        $property = 'level' . $level;
+
+        return $this->$property;
+    }
+
+    /**
      * Set createdAt
      *
      * @param \DateTime $createdAt

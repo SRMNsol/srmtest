@@ -23,8 +23,7 @@ class CashbackRepositoryTest extends OrmTestCase
         $this->em->flush();
 
         $user = $this->em->find('App\Entity\User', 1);
-        $cashbackRepository = $this->em->getRepository('App\Entity\Cashback');
-        $cashbacks = $cashbackRepository->findCashbackForUser($user, '02', '2014');
+        $cashbacks = $this->em->getRepository('App\Entity\Cashback')->findCashbackForUser($user, '02', '2014');
         $this->assertTrue($cashbacks[0] === $transaction->getCashback());
     }
 }
