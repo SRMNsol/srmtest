@@ -13,6 +13,10 @@ class Beesavy
     protected $db;
     protected $container;
 
+    const PAYMENT_REQUEST_SUCCESS = 1;
+    const PAYMENT_INSUFFICIENT_CASHBACK = 2;
+    const PAYMENT_REQUEST_FAILURE = 3;
+
     public function __construct()
     {
         $ci = get_instance();
@@ -108,5 +112,26 @@ class Beesavy
         $data['reftransactions'] = [];
 
         return $data;
+    }
+
+    public function processPayment($userId)
+    {
+        try {
+            $em = $this->container['orm.em'];
+            $user = $em->find('App\Entity\User', $userId);
+            if ($user === null) {
+                throw new Exception('User not found');
+            }
+
+            $summary = $em->getRepository('App\Entity\Payable')->calculateUserSummary($user);
+            if ($summary['available'] < 10) {
+                return self::PAYMENT_INSUFFICIENT_CASHBACK;
+            }
+
+            $payment = $em->getRepository('App\Entity\Payment')->createPaymentForUser($user);
+            return self::PAYMENT_REQUEST_SUCCESS;
+        } catch (Exception $e) {
+            return self::PAYMENT_REQUEST_FAILURE;
+        }
     }
 }

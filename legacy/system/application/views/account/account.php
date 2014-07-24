@@ -374,7 +374,7 @@ echo 90-$val;
 	{/total}
 <?php if((float)$total[0]['available'] > 10) { ?>
         <div class="Request">
-<div class="BtnRequestBg BtnRequest"><a class="BtnRequestTxt" href="/account/payment" target="_blank" rel="nofollow">REQUEST A PAYMENT</a></div></div>
+<div class="BtnRequestBg BtnRequest"><a class="BtnRequestTxt" href="/account/payment" rel="nofollow">REQUEST A PAYMENT</a></div></div>
         <div class="RequestNote">You can now request a payment!</div>
 <?php } else {
     $dif = number_format(10 - (float)$total[0]['available'],2);
