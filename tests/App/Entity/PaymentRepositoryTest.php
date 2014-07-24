@@ -8,7 +8,7 @@ use App\Tests\OrmTestCase;
 
 class PaymentRepositoryTest extends OrmTestCase
 {
-    public function testCreatePaymentForUser()
+    public function testPaymentCreationAndProcessing()
     {
         $user1 = $this->createUserEntity(1);
         $this->em->persist($user1);
@@ -82,7 +82,16 @@ class PaymentRepositoryTest extends OrmTestCase
 
         $this->em->refresh($payable1);
         $this->assertEquals($payable1->getPayment(), $payment);
-        $this->assertEquals($payable1->getAmount(), $payable1->getProcessing());
+        $this->assertEquals($payable1->getAmount(), $payable1->getProcessing(), 0.01);
         $this->assertEquals(Payable::STATUS_PROCESSING, $payable1->getStatus());
+
+        // mark as paid
+        $payment->markAsPaid();
+        $this->em->flush();
+
+        $this->assertEquals(Payment::STATUS_PAID, $payment->getStatus());
+        $this->em->refresh($payable1);
+        $this->assertEquals($payable1->getAmount(), $payable1->getPaid(), 0.01);
+        $this->assertEquals(Payable::STATUS_PAID, $payable1->getStatus());
     }
 }
