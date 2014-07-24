@@ -857,6 +857,7 @@ class User
     public function addPayable(\App\Entity\Payable $payable)
     {
         $this->payables[] = $payable;
+        $payable->setUser($this);
 
         return $this;
     }
@@ -869,6 +870,9 @@ class User
     public function removePayable(\App\Entity\Payable $payable)
     {
         $this->payables->removeElement($payable);
+        $payable->setUser(); //null
+
+        return $this;
     }
 
     /**
@@ -1028,6 +1032,7 @@ class User
     public function addReferredUser(\App\Entity\User $referredUser)
     {
         $this->referredUsers[] = $referredUser;
+        $referredUser->setReferredBy($this);
 
         return $this;
     }
@@ -1040,6 +1045,9 @@ class User
     public function removeReferredUser(\App\Entity\User $referredUser)
     {
         $this->referredUsers->removeElement($referredUser);
+        $referredUser->setReferredBy(); // null
+
+        return $this;
     }
 
     /**
@@ -1163,9 +1171,10 @@ class User
      * @param \App\Entity\Payment $payments
      * @return User
      */
-    public function addPayment(\App\Entity\Payment $payments)
+    public function addPayment(\App\Entity\Payment $payment)
     {
-        $this->payments[] = $payments;
+        $this->payments[] = $payment;
+        $payment->setUser($this);
 
         return $this;
     }
@@ -1175,15 +1184,18 @@ class User
      *
      * @param \App\Entity\Payment $payments
      */
-    public function removePayment(\App\Entity\Payment $payments)
+    public function removePayment(\App\Entity\Payment $payment)
     {
-        $this->payments->removeElement($payments);
+        $this->payments->removeElement($payment);
+        $payment->setUser(); // null
+
+        return $this;
     }
 
     /**
      * Get payments
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getPayments()
     {

@@ -21,7 +21,7 @@ class PaymentRepository extends EntityRepository
         $payables = $user->getPayables()->matching($criteria);
 
         $payment = new Payment();
-        $payment->setUser();
+        $payment->setUser($user);
         foreach ($payables as $payable) {
             $payment->addPayable($payable);
             $payable->setProcessing($payable->getAvailable());
