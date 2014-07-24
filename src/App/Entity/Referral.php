@@ -25,6 +25,8 @@ class Referral extends Payable
      */
     protected $month;
 
+    const AVAILABLE_DAYS = 90;
+
     /**
      * Set direct
      *

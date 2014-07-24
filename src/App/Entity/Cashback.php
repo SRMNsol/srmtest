@@ -46,6 +46,9 @@ class Cashback extends Payable
 
         // commission > 0 but total transaction amount = 0
         if (self::gt($this->amount, 0) && self::eq($this->getTotalPurchase(), 0)) {
+            $this->amount = 0.00;
+            $this->pending = 0.00;
+            $this->available = 0.00;
             $this->status = self::STATUS_INVALID;
             return $this;
         }
