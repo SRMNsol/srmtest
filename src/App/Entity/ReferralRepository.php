@@ -29,8 +29,10 @@ class ReferralRepository extends EntityRepository
                 'SUM(r.paid) AS paid'
             ])
             ->where('r.user = :user')
+            ->andWhere('r.status <> :invalid')
             ->groupBy('r.user')
             ->setParameter('user', $user)
+            ->setParameter('invalid', Referral::STATUS_INVALID)
         ;
 
         try {

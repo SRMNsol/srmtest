@@ -18,8 +18,10 @@ class PayableRepository extends EntityRepository
                 'SUM(p.paid) AS paid'
             ])
             ->where('p.user = :user')
+            ->andWhere('p.status <> :invalid')
             ->groupBy('p.user')
             ->setParameter('user', $user)
+            ->setParameter('invalid', Payable::STATUS_INVALID)
         ;
 
         try {
