@@ -10,8 +10,6 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class Cashback extends Payable
 {
-    use MoneyTrait;
-
     /**
      * @ORM\OneToOne(targetEntity="Transaction", mappedBy="cashback")
      */
@@ -47,7 +45,7 @@ class Cashback extends Payable
         $this->updateAvailableDate();
 
         // commission > 0 but total transaction amount = 0
-        if (self::gt($this->amount, 0) && self::eq($this->getTransactionTotal(), 0)) {
+        if (self::gt($this->amount, 0) && self::eq($this->getTotalPurchase(), 0)) {
             $this->status = self::STATUS_INVALID;
             return $this;
         }
