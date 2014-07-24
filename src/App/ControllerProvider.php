@@ -44,6 +44,10 @@ class ControllerProvider implements ControllerProviderInterface
             return new Controller\TransactionController($app['orm.em']);
         });
 
+        $app['payment_request.controller'] = $app->share(function () use ($app) {
+            return new Controller\PaymentRequestController($app['orm.em']);
+        });
+
         $controllers->get('/', 'main.controller:dashboard')
             ->bind('homepage');
 
@@ -120,6 +124,9 @@ class ControllerProvider implements ControllerProviderInterface
 
                 return $user;
             });
+
+        $controllers->match('/payment-request', 'payment_request.controller:display')
+            ->bind('payment_request');
 
         return $controllers;
     }

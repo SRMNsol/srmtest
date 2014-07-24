@@ -1,0 +1,45 @@
+{% extends 'common/layout.html.twig' %}
+
+{% block content %}
+<div class="page-header">
+  <h1>Payment Request</h1>
+</div>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th class="col-md-1"></th>
+      <th class="col-md-1">Date</th>
+      <th class="col-md-1">User Id</th>
+      <th class="col-md-2">Email</th>
+      <th class="col-md-1">Payment</th>
+      <th class="col-md-4">Payment Info</th>
+      <th class="col-md-2">Amount</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for payment in payments %}
+    {% set user = payment.user %}
+    <tr>
+      <td><input type="checkbox"></td>
+      <td>{{ payment.requestedAt|date('m/d/Y') }}</td>
+      <td>{{ user.id }}</td>
+      <td>{{ user.email }}</td>
+      <td>{{ user.paymentMethod }}</td>
+      <td>
+        {% if user.paymentMethod == 'CHECK' %}
+          {% if user.firstName or user.lastName %}
+          <strong>{{ user.firstName~' '~user.lastName }}</strong><br>
+          {% endif %}
+          {{ user.address }}<br>
+          {{ user.city }}, {{ user.state }} {{ user.zip }}
+        {% endif %}
+      </td>
+      <td>$ {{ payment.amount|number_format(2) }}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+<button class="btn btn-primary">Mark as paid</button>
+
+{% endblock content %}
