@@ -19,7 +19,7 @@ class Transaction extends BaseTransaction
     use MoneyTrait;
 
     /**
-     * @ORM\OneToOne(targetEntity="Cashback", inversedBy="transaction", cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="Cashback", inversedBy="transaction", cascade={"persist"}, orphanRemoval=true)
      */
     protected $cashback;
 
