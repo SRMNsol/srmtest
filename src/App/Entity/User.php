@@ -217,6 +217,11 @@ class User
         $metadata->addConstraint(new UniqueEntity(['fields' => 'alias']));
         $metadata->addPropertyConstraint('email', new Assert\NotBlank());
         $metadata->addPropertyConstraint('email', new Assert\Email());
+        $metadata->addPropertyConstraint('paypalEmail', new Assert\Email());
+        $metadata->addPropertyConstraint('paymentMethod', new Assert\Choice([
+            'callback' => 'getPaymentMethods',
+            'message' => 'Invalid payment method',
+        ]));
         $metadata->addPropertyConstraint('status', new Assert\Choice([
             'callback' => 'getStatuses',
             'message' => 'Invalid status',
@@ -229,6 +234,14 @@ class User
     public static function getStatuses()
     {
         return [self::STATUS_ACTIVE, self::STATUS_INACTIVE];
+    }
+
+    /**
+     * Return a list of payment methods
+     */
+    public static function getPaymentMethods()
+    {
+        return ['CHECK', 'PAYPAL', 'CHARITY'];
     }
 
     /**

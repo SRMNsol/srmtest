@@ -13,12 +13,15 @@
       {{ form_errors(form) }}
       {{ form_row(form.user.email) }}
       {{ form_row(form.user.alias, { attr: { placeholder: 'custom alias or use default: U'~user.id } }) }}
+      {{ form_row(form.user.paymentMethod) }}
       {{ form_row(form.user.firstName) }}
       {{ form_row(form.user.lastName) }}
       {{ form_row(form.user.address) }}
       {{ form_row(form.user.city) }}
       {{ form_row(form.user.state, { attr: { placeholder: 'state code' } }) }}
       {{ form_row(form.user.zip) }}
+      {{ form_row(form.user.paypalEmail) }}
+      {{ form_row(form.user.charity) }}
       {{ form_row(form.user.status) }}
       {{ form_row(form.user.referredBy) }}
       {{ form_row(form.editPassword) }}

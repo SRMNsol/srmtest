@@ -41,7 +41,7 @@
         {% elseif user.paymentMethod == 'PAYPAL' %}
           {{ user.paypalEmail }}
         {% elseif user.paymentMethod == 'CHARITY' %}
-          {{ user.charity.name }}
+          {{ user.charity.name|default }}
         {% endif %}
       </td>
       <td>$ {{ payment.amount|number_format(2) }}</td>

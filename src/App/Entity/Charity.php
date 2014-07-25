@@ -51,4 +51,12 @@ class Charity
     {
         return $this->name;
     }
+
+    /**
+     * String representation of the object
+     */
+    public function __toString()
+    {
+        return $this->name;
+    }
 }
