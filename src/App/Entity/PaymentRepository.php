@@ -34,4 +34,15 @@ class PaymentRepository extends EntityRepository
 
         return $payment;
     }
+
+    public function getPendingPayments()
+    {
+        return $this->getEntityManager()->createQueryBuilder()
+            ->select('p')
+            ->from('App\Entity\Payment', 'p', 'p.id')
+            ->where('p.status = :pending')
+            ->setParameter('pending', Payment::STATUS_PENDING)
+            ->getQuery()
+            ->getResult();
+    }
 }

@@ -277,4 +277,9 @@ class Payment
             $payable->setPaid($paid + $processing);
         }
     }
+
+    public function __toString()
+    {
+        return '';
+    }
 }
