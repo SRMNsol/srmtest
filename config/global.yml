@@ -77,9 +77,10 @@ user.provider:
     - 5FZ2Z8QIkA7UTZ4BYkoC+GsReLf569mSKDsfods6LYQ8t+a8EW9oaircfMpmaLbPBh4FOBiiFyLfuZmTSUwzZg==
 
 # swiftmailer
+# http://stackoverflow.com/questions/15093702/swiftmailer-completely-broken-for-smtp
 swiftmailer.options:
   host: smtp.mailgun.org
-  port: 465
+  port: 587
   username: postmaster@beesavy.com
   password: SMTP_PASSWORD
   encryption: tls

@@ -26,7 +26,8 @@ class MailerTestCommand extends Command
             ->setSubject('[Beesavy] Mailer Test')
             ->setFrom('no-reply@beesavy.com')
             ->setTo($input->getArgument('to') ?: 'postmaster@beesavy.com')
-            ->setBody('Test Message');
+            ->setBody('Test Message')
+            ->addPart('<html><body><h1>Test Message</h1></body></html>', 'text/html');
 
         $output->writeln(sprintf('Sending message to %s', implode(', ', array_keys($message->getTo()))));
 
