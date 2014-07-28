@@ -153,7 +153,7 @@ class User extends Model
         $result = $query->result_array();
         if (!empty($result)) {
             $newPassword = "bee".(string) mt_rand(1000000,9999999);
-            $this->db->where('uid', $result['uid']);
+            $this->db->where('email', $email);
             $this->db->update('user', array('password' => UserEntity::passwordHash($newPassword)));
             return $newPassword;
         }
