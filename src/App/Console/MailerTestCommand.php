@@ -7,7 +7,6 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Swift_Message as Message;
 
 class MailerTestCommand extends Command
 {
@@ -22,7 +21,7 @@ class MailerTestCommand extends Command
     {
         $app = $this->getSilexApplication();
 
-        $message = Message::newInstance()
+        $message = \Swift_Message::newInstance()
             ->setSubject('[Beesavy] Mailer Test')
             ->setFrom('no-reply@beesavy.com')
             ->setTo($input->getArgument('to') ?: 'postmaster@beesavy.com')
@@ -30,6 +29,10 @@ class MailerTestCommand extends Command
             ->addPart('<html><body><h1>Test Message</h1></body></html>', 'text/html');
 
         $output->writeln(sprintf('Sending message to %s', implode(', ', array_keys($message->getTo()))));
+
+        /* Logger */
+        $logger = new \Swift_Plugins_Loggers_ArrayLogger();
+        $app['mailer']->registerPlugin(new \Swift_Plugins_LoggerPlugin($logger));
 
         $app['mailer']->send($message);
 
@@ -40,5 +43,10 @@ class MailerTestCommand extends Command
          */
         $spool = $app['swiftmailer.spooltransport']->getSpool();
         $spool->flushQueue($app['swiftmailer.transport']);
+
+        $output->writeln('=== Log ================================');
+        $output->writeln($logger->dump());
+        $output->writeln('=== Message ============================');
+        $output->writeln($message->toString());
     }
 }
