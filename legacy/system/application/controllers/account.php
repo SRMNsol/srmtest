@@ -131,6 +131,7 @@ class Account extends Controller
             redirect("/main/joinnow?email=$email&referral=$referral&errors=$error_str");
         }
     }
+
     public function logout()
     {
         $this->user->logout();

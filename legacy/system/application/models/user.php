@@ -1,12 +1,12 @@
 <?php
 if (!defined('BASEPATH')) exit('No direct script access allowed');
+
 /**
  * User Model
  * A proxy for a user model until users are implemented
  * This model is responsible for tying user-authentication view
  * to the status of the authentication cookie
  */
-
 class User extends Model
 {
     public $table = "user";
@@ -303,23 +303,26 @@ class User extends Model
             return False;
         }
     }
+
     public function login_status()
     {
         $login_status = $this->db_session->userdata('login');
 
         return $login_status;
     }
+
     public function check_referral($id)
     {
-        if(!$id)
-
+        if (!$id) {
             return True;
+        }
+
         $q = "select * from user where uid='$id' OR alias='$id';";
         $res = $this->db->query($q);
         $res = $res->result_array();
+
         if (!empty($res)) {
             $res = $res[0];
-
             return $res['uid'];
         }
 
