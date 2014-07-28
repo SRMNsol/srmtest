@@ -142,24 +142,13 @@ class Account extends Controller
     {
         $email = $this->input->post('email');
         if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $new = "bee".(string) mt_rand(1000000,9999999);
-            $q = "select * from user where email = '$email';";
-            $res = $this->db->query($q);
-            $res = $res->result_array();
-            if (!empty($res)) {
-                $res = $res[0];
-                $id = $res['id'];
-                $einfo = $this->beesavy->getUser($res['id'], '', True);
-                $oldpass = $einfo['password'];
-                $q = "update user set password = '".User::passwordHash($new)."' where id='$id';";
-                $this->db->query($q);
-                $this->beesavy->updateUser($res['id'], $email, $oldpass, 'password', User::passwordHash($new));
-                $data = array('email'=>$email, 'password'=>$new);
+
+            $newPassword = $this->user->reset_password($email);
+            if (false !== $newPassword) {
+                $data = array('email' => $email, 'password' => $newPassword);
                 $msg = $this->parser->parse('email/newpassword', $data, True);
                 $txtmsg = $this->parser->parse('email/newpasswordt', $data, True);
-                $q = "select * from user where id='$id';";
-                $res = $this->db->query($q);
-               $this->emailer->sendMessage($msg, $txtmsg, $data['email'], "BeeSavy - New password request");
+                $this->emailer->sendMessage($msg, $txtmsg, $data['email'], "BeeSavy - New password request");
                 redirect("/main/forgot/1/$email");
 
                 return;
