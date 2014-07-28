@@ -3,15 +3,16 @@
 namespace App\Entity;
 
 use Popshops\TransactionHistory as BaseTransactionHistory;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @Entity
- * @HasLifecycleCallbacks
+ * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks
  */
 class TransactionHistory extends BaseTransactionHistory
 {
     /**
-     * @PrePersist
+     * @ORM\PrePersist
      */
     public function onCreate()
     {
@@ -19,7 +20,7 @@ class TransactionHistory extends BaseTransactionHistory
     }
 
     /**
-     * @PreUpdate
+     * @ORM\PreUpdate
      */
     public function onUpdate()
     {

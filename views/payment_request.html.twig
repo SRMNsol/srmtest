@@ -1,0 +1,58 @@
+{% extends 'common/layout.html.twig' %}
+
+{% form_theme selector 'common/form_selector.html.twig' %}
+
+{% block content %}
+<div class="page-header">
+  <h1>Payment Request</h1>
+</div>
+
+{{ form_start(selector) }}
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th class="col-md-1"></th>
+      <th class="col-md-1">Date</th>
+      <th class="col-md-1">User Id</th>
+      <th class="col-md-2">Email</th>
+      <th class="col-md-1">Payment</th>
+      <th class="col-md-4">Payment Info</th>
+      <th class="col-md-2">Amount</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for item in selector.payments %}
+    {% set id = item.vars['value'] %}
+    {% set payment = payments[id] %}
+    {% set user = payment.user %}
+    <tr>
+      <td>{{ form_row(item) }}</td>
+      <td>{{ payment.requestedAt|date('m/d/Y') }}</td>
+      <td>{{ user.id }}</td>
+      <td>{{ user.email }}</td>
+      <td>{{ user.paymentMethod }}</td>
+      <td>
+        {% if user.paymentMethod == 'CHECK' %}
+          {% if user.firstName or user.lastName %}
+          <strong>{{ user.firstName~' '~user.lastName }}</strong><br>
+          {% endif %}
+          {{ user.address }}<br>
+          {{ user.city }}, {{ user.state }} {{ user.zip }}
+        {% elseif user.paymentMethod == 'PAYPAL' %}
+          {{ user.paypalEmail }}
+        {% elseif user.paymentMethod == 'CHARITY' %}
+          {{ user.charity.name|default }}
+        {% endif %}
+      </td>
+      <td>$ {{ payment.amount|number_format(2) }}</td>
+    </tr>
+  {% else %}
+    <tr>
+      <td colspan="7" class="text-danger">No pending payment requests</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+<button type="submit" class="btn btn-primary">Mark as paid</button>
+{{ form_end(selector) }}
+{% endblock content %}

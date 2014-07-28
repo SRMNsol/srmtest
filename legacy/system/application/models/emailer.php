@@ -1,14 +1,23 @@
 <?php
 if (!defined('BASEPATH')) exit('No direct script access allowed');
+
 /**
+ * Emailer
  */
-class Emailer extends Model {
+class Emailer extends Model
+{
+    protected $container;
 
-	function Emailer() {
-		parent::Model();
-	}
+    public function Emailer()
+    {
+        parent::Model();
+        $ci = get_instance();
+        $ci->load->helper('bridge');
+        $this->container = silex();
+    }
 
-    function sendMessage($message, $txt_message, $email, $title="BeeSavy"){
+    public function sendMessage($message, $txt_message, $email, $title="BeeSavy")
+    {
         $data = array('title'=>$title,
             'message'=>$message,
             'txt_message'=>$txt_message,
@@ -16,6 +25,17 @@ class Emailer extends Model {
             'from_addr'=>'no-reply@beesavy.com',
         );
         $this->db->insert('email', $data);
+
+        $message = Swift_Message::newInstance();
+        $message->setSubject($data['title']);
+        $message->setFrom($data['from_addr']);
+        $message->setTo($data['to_addr']);
+        $message->setBody($data['txt_message']);
+        $message->addPart($data['message'], 'text/html');
+
+        $this->container['mailer']->send($message);
+
+        $spool = $this->container['swiftmailer.spooltransport']->getSpool();
+        $spool->flushQueue($this->container['swiftmailer.transport']);
     }
 }
-?>

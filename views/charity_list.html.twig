@@ -1,0 +1,50 @@
+{% extends 'common/layout.html.twig' %}
+
+{% block content %}
+<div class="page-header">
+  <h1>Charity <small></small></h1>
+</div>
+
+<p>
+  <a href="{{ path('charity_edit') }}" class="btn btn-primary">Add charity</a>
+</p>
+
+<div class="row">
+  <div class="col-md-8">
+    <table class="table table-bordered">
+      <tbody>
+        {% for charity in charities %}
+          <tr>
+            <td>
+              <div class="pull-right">
+                <a href="{{ path('charity_edit', { charity : charity.id }) }}" class="btn btn-default btn-xs">Edit</a>
+                <button class="btn btn-default btn-xs confirm"
+                  data-action="{{ path('charity_delete', { charity : charity.id }) }}"
+                  data-message="{{ 'Delete charity '~charity.name~'?' }}">Delete</button>
+              </div>
+              {{ charity.name }}
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{{ form(deleteForm, { attr: { class: 'deleteForm' }}) }}
+{% endblock content %}
+
+{% block scripts %}
+{{ parent() }}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.2.0/bootbox.min.js"></script>
+<script>
+  $(function() {
+    $('.confirm').click(function(event) {
+      var $button = $(this);
+      var deleteForm = $('form.deleteForm');
+      bootbox.confirm($button.attr('data-message'), function(confirmed) {
+        confirmed && deleteForm.attr('action', $button.attr('data-action')).submit();
+      });
+    });
+  })
+</script>
+{% endblock scripts %}

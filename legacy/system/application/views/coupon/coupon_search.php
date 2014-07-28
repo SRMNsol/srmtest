@@ -83,7 +83,7 @@ foreach($coupons as $coupon){
 ?>
 <div class='couponList inactive'>
 	        <div class='logo'>
-	            <a class='transfer-link' href='/transfer/coupon/<?php echo $coupon['id'] ?>' target='_blank' rel='nofollow'>
+	            <a class='transfer-link' href='<?php echo $coupon['link'] ?>' target='_blank' rel='nofollow'>
                     <img class='cdn-image' src='<?php echo $coupon['logo_thumb'] ?>'
 onload="
         var width=100;
@@ -112,7 +112,7 @@ alt='$store' onerror="this.src="<?php echo s3path("/../images/no-image-100px.gif
             <div class="CashBack"><div class='CashBack-Bt BtnCBOrangeBg' <?php if (empty($coupon['cashback_text'])) : ?>style="visibility: hidden"<?php endif ?>>
 
 
-	            <a  href='/transfer/coupon/<?php echo $coupon['id'] ?>' target='_blank' rel='nofollow'>
+	            <a  href='<?php echo $coupon['link'] ?>' target='_blank' rel='nofollow'>
 	                <span class="CashBack-value value"><?php echo $coupon['cashback_text'] ?></span>
 	            </a>
 	        </div></div>
@@ -124,13 +124,13 @@ alt='$store' onerror="this.src="<?php echo s3path("/../images/no-image-100px.gif
                <tr><td>
 
 	           <div class="ClickToCopyCode"><div style="position:relative;overflow:auto;0" class="click-contain ClickToCopyCode-Bt BtnCTCCOrangeBg-coupon">
-	          <a class="BtnBlackTxt click-button" class='transfer-link' href='/transfer/coupon/<?php echo $coupon['id'] ?>' target='_blank' rel='nofollow'>
+	          <a class="BtnBlackTxt click-button" class='transfer-link' href='<?php echo $coupon['link'] ?>' target='_blank' rel='nofollow'>
 	          <?php echo $coupon['action_text'] ?>
 	          </a>
  	          </div></div>
 	                	</td></tr>                <tr><td>
 	                			        <div class='instructions'><?php echo $coupon['code_prefix'] ?>
-    <a class='click-text couponCode transfer-link' href='/transfer/coupon/<?php echo $coupon['id'] ?>' target='_blank' rel='nofollow'><?php echo $coupon['code'] ?></a>
+    <a class='click-text couponCode transfer-link' href='<?php echo $coupon['link'] ?>' target='_blank' rel='nofollow'><?php echo $coupon['code'] ?></a>
 			        </div></td></tr></table>
 
 	            </div>

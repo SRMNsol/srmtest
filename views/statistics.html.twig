@@ -1,0 +1,94 @@
+{% extends 'common/layout.html.twig' %}
+
+{% form_theme date_form 'common/form_inline.html.twig' %}
+
+{% macro sorter(text, type, context) %}
+  {% if type == context.sort %}
+  <b class="glyphicon glyphicon-chevron-{{ (context.dir == 'asc') ? 'up' : 'down' }}"></b>
+  {% endif %}
+  <a href="{{
+    path('statistics', {
+      'date_range[start_date]': context.start_date|date('Y-m-d'),
+      'date_range[end_date]': context.end_date|date('Y-m-d'),
+      'dir': (context.sort == type) ? ((context.dir == 'asc') ? 'desc' : 'asc') : 'desc',
+      'sort': type
+    })
+  }}">{{ text }}</a>
+{% endmacro sorter %}
+
+{% import _self as stats %}
+
+{% block content %}
+<div class="page-header">
+  <h1>Site Statistics <small></small></h1>
+</div>
+
+<div class="row">
+  <div class="col-md-9">
+    {{ form_start(date_form) }}
+      {{ form_errors(date_form) }}
+      {{ form_row(date_form.start_date) }}
+      {{ form_row(date_form.end_date) }}
+
+      <div class="form-group">
+        <div class="col-md-6 col-md-offset-2">
+          <button type="submit" class="btn btn-primary">Display</button>
+        </div>
+      </div>
+    {{ form_end(date_form) }}
+  </div>
+</div>
+
+<br>
+
+{% if display %}
+<table class="table table-bordered">
+  <tr>
+    <th class="col-md-2">Cashback earned</th>
+    <td class="col-md-1">$ {{ total_cashback|number_format(2) }}</td>
+    <th class="col-md-2">Active users</th>
+    <td class="col-md-1">{{ total_shoppers|number_format }}</td>
+    <th class="col-md-2">New users</th>
+    <td class="col-md-1">{{ total_new_users|number_format }}</td>
+    <th class="col-md-2">Referral users</th>
+    <td class="col-md-1">{{ total_referrers|number_format }}</td>
+  </tr>
+</table>
+
+<h4>Top Users</h4>
+<table class="table table-bordered">
+  <thead>
+    <th class="col-md-1">Id</th>
+    <th class="col-md-3">Email</th>
+    <th class="col-md-1">{{ stats.sorter('Total cash back', 'commission', _context) }}</th>
+    <th class="col-md-1">{{ stats.sorter('Referral cash back', 'referral', _context) }}</th>
+    <th class="col-md-1">{{ stats.sorter('Personal cash back', 'cashback', _context) }}</th>
+    <th class="col-md-1">{{ stats.sorter('Spend', 'transaction', _context) }}</th>
+    <th class="col-md-1">{{ stats.sorter('Total referrals', 'network', _context) }}</th>
+    <th class="col-md-1">{{ stats.sorter('Level 1 referrals', 'direct', _context) }}</th>
+    <th class="col-md-1">{{ stats.sorter('Paid', 'payment', _context) }}</th>
+    <th class="col-md-1">{{ stats.sorter('Referrals paid', 'taxable', _context) }}</th>
+  </thead>
+  <tbody>
+    {% for data in top_users %}
+      <tr>
+        <td>{{ data[0].id }}</td>
+        <td>{{ data[0].email }}</td>
+        <td>$ {{ data.commission|number_format(2) }}</td>
+        <td>$ {{ data.referral|number_format(2) }}</td>
+        <td>$ {{ data.cashback|number_format(2) }}</td>
+        <td>$ {{ data.transaction|number_format(2) }}</td>
+        <td>{{ data.network }}</td>
+        <td>{{ data.direct }}</td>
+        <td>$ {{ data.payment|number_format(2) }}</td>
+        <td>$ {{ data.taxable|number_format(2) }}</td>
+      </tr>
+    {% else %}
+      <tr>
+        <td colspan="10" class="text-danger">No users found</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endif %}
+{% endblock content %}

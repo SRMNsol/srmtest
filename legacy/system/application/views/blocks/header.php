@@ -178,7 +178,7 @@ imageObj1 = new Image();
         // this initialises the demo scollpanes on the page.
          $('#pane1').jScrollPane({ showArrows: true, scrollbarWidth: 15, arrowSize: 16 });
         $('#pane2').jScrollPane({ showArrows: true, scrollbarWidth: 15, arrowSize: 16 });
-        ZeroClipboard.setMoviePath('<?php echo base_url() ?>zeroclipboard/ZeroClipboard.swf');
+        ZeroClipboard.setMoviePath('<?php echo s3path("/zeroclipboard/ZeroClipboard.swf") ?>');
 		var clips = [];
 
 		function startZC() {

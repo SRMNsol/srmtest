@@ -2,179 +2,190 @@
 
 namespace App\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Mapping\ClassMetadata;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
 /**
- * @Entity
- * @Table(name="user")
+ * @ORM\Entity(repositoryClass="UserRepository")
+ * @ORM\Table(name="user", indexes={@ORM\Index(columns={"created"})})
  */
 class User
 {
     /**
-     * @Id @Column(name="uid", type="integer") @GeneratedValue
+     * @ORM\Id @ORM\Column(name="uid", type="integer") @ORM\GeneratedValue
      */
     protected $id;
 
     /**
-     * @Column(name="id", type="integer", length=11, nullable=true)
+     * @ORM\Column(name="id", type="integer", length=11, nullable=true)
      */
     protected $extrabuxId;
 
     /**
-     * @Column(length=250)
+     * @ORM\Column(length=250, unique=true)
      */
     protected $email;
 
     /**
-     * @Column(name="facebook_auto", type="boolean")
+     * @ORM\Column(name="facebook_auto", type="boolean")
      */
     protected $facebookAuto = false;
 
     /**
-     * @Column(name="twitter_auto", type="boolean")
+     * @ORM\Column(name="twitter_auto", type="boolean")
      */
     protected $twitterAuto = false;
 
     /**
-     * @Column(name="payment_method")
+     * @ORM\Column(name="payment_method", nullable=true)
      */
     protected $paymentMethod;
 
     /**
-     * @Column(name="paypal_email", length=250)
+     * @ORM\Column(name="paypal_email", length=250, nullable=true)
      */
     protected $paypalEmail;
 
     /**
-     * @Column(length=50)
+     * @ORM\Column(length=50, unique=true)
      */
     protected $alias;
 
     /**
-     * @Column(name="charity_id", type="integer")
+     * @ORM\ManyToOne(targetEntity="Charity")
      */
-    protected $extrabuxCharityId;
+    protected $charity;
 
     /**
-     * @Column(type="boolean")
+     * @ORM\Column(type="boolean")
      */
     protected $admin = false;
 
     /**
-     * @Column(name="send_reminders", type="boolean")
+     * @ORM\Column(name="send_reminders", type="boolean")
      */
     protected $sendReminders = false;
 
     /**
-     * @Column(name="send_updates", type="boolean")
+     * @ORM\Column(name="send_updates", type="boolean")
      */
     protected $sendUpdates = false;
 
     /**
-     * @Column(name="last_login", type="datetime")
+     * @ORM\Column(name="last_login", type="datetime", nullable=true)
      */
     protected $lastLoginAt;
 
     /**
-     * @Column(name="last_refer", type="datetime")
+     * @ORM\Column(name="last_refer", type="datetime", nullable=true)
      */
     protected $lastReferAt;
 
     /**
-     * @Column(name="created", type="datetime")
+     * @ORM\Column(name="created", type="datetime", nullable=true)
      */
     protected $createdAt;
 
     /**
-     * @Column(name="fb_access_token")
+     * @ORM\Column(name="fb_access_token", nullable=true)
      */
     protected $facebookAccessToken;
 
     /**
-     * @Column(name="twitter_token_secret")
+     * @ORM\Column(name="twitter_token_secret", nullable=true)
      */
     protected $twitterTokenSecret;
 
     /**
-     * @Column(name="twitter_access_token")
+     * @ORM\Column(name="twitter_access_token", nullable=true)
      */
     protected $twitterAccessToken;
 
     /**
-     * @Column
+     * @ORM\Column
      */
     protected $password;
 
     /**
-     * @Column(name="purchase_exempt", type="boolean")
+     * @ORM\Column(name="purchase_exempt", type="boolean")
      */
     protected $purchaseExempt = false;
 
     /**
-     * @Column(name="email_refer_info", type="boolean")
+     * @ORM\Column(name="email_refer_info", type="boolean")
      */
     protected $emailReferInfo = false;
 
     /**
-     * @Column(name="email_83", type="boolean")
+     * @ORM\Column(name="email_83", type="boolean")
      */
     protected $email83 = false;
 
     /**
-     * @Column(name="email_60", type="boolean")
+     * @ORM\Column(name="email_60", type="boolean")
      */
     protected $email60 = false;
 
     /**
-     * @Column(name="last_cashback", type="datetime")
+     * @ORM\Column(name="last_cashback", type="datetime", nullable=true)
      */
     protected $lastCashbackAt;
 
     /**
-     * @Column(name="raw_data", type="text", nullable=true)
+     * @ORM\Column(name="raw_data", type="text", nullable=true)
      */
     protected $extrabuxRawData;
 
     /**
-     * @Column(name="last_sync", type="datetime", nullable=true)
+     * @ORM\Column(name="last_sync", type="datetime", nullable=true)
      */
     protected $extrabuxLastSyncAt;
 
     /**
-     * @Column(name="first_name", length=20, nullable=true)
+     * @ORM\Column(name="first_name", length=50, nullable=true)
      */
     protected $firstName;
 
     /**
-     * @Column(name="raw_user_data", type="text", nullable=true)
+     * @ORM\Column(name="last_name", length=50, nullable=true)
+     */
+    protected $lastName;
+
+    /**
+     * @ORM\Column(name="raw_user_data", type="text", nullable=true)
      */
     protected $extrabuxRawUserData;
 
     /**
-     * @OneToMany(targetEntity="Payable", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="Payable", mappedBy="user")
      */
     protected $payables;
 
     /**
-     * @Column(nullable=true)
+     * @ORM\Column(nullable=true)
      */
     protected $address;
 
     /**
-     * @Column(length=50, nullable=true)
+     * @ORM\Column(length=50, nullable=true)
      */
     protected $city;
 
     /**
-     * @Column(length=5, nullable=true)
+     * @ORM\Column(length=5, nullable=true)
      */
     protected $state;
 
     /**
-     * @Column(length=10, nullable=true)
+     * @ORM\Column(length=10, nullable=true)
      */
     protected $zip;
 
     /**
-     * @Column(length=10)
+     * @ORM\Column(length=10)
      */
     protected $status = self::STATUS_ACTIVE;
 
@@ -182,16 +193,56 @@ class User
     const STATUS_INACTIVE = 'inactive';
 
     /**
-     * @ManyToOne(targetEntity="User", inversedBy="referredUsers")
-     * @JoinColumn(referencedColumnName="uid", name="ref_uid")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="referredUsers")
+     * @ORM\JoinColumn(referencedColumnName="uid", name="ref_uid")
      */
     protected $referredBy;
 
     /**
-     * @OneToMany(targetEntity="User", mappedBy="referredBy")
+     * @ORM\OneToMany(targetEntity="User", mappedBy="referredBy")
      */
     protected $referredUsers;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Payment", mappedBy="user")
+     */
+    protected $payments;
+
+    /**
+     * Validation
+     */
+    public static function loadValidatorMetadata(ClassMetadata $metadata)
+    {
+        $metadata->addConstraint(new UniqueEntity(['fields' => 'email']));
+        $metadata->addConstraint(new UniqueEntity(['fields' => 'alias']));
+        $metadata->addPropertyConstraint('email', new Assert\NotBlank());
+        $metadata->addPropertyConstraint('email', new Assert\Email());
+        $metadata->addPropertyConstraint('paypalEmail', new Assert\Email());
+        $metadata->addPropertyConstraint('paymentMethod', new Assert\Choice([
+            'callback' => 'getPaymentMethods',
+            'message' => 'Invalid payment method',
+        ]));
+        $metadata->addPropertyConstraint('status', new Assert\Choice([
+            'callback' => 'getStatuses',
+            'message' => 'Invalid status',
+        ]));
+    }
+
+    /**
+     * Return a list of status
+     */
+    public static function getStatuses()
+    {
+        return [self::STATUS_ACTIVE, self::STATUS_INACTIVE];
+    }
+
+    /**
+     * Return a list of payment methods
+     */
+    public static function getPaymentMethods()
+    {
+        return ['CHECK', 'PAYPAL', 'CHARITY'];
+    }
 
     /**
      * Get id
@@ -362,29 +413,6 @@ class User
     public function getAlias()
     {
         return $this->alias;
-    }
-
-    /**
-     * Set extrabuxCharityId
-     *
-     * @param integer $extrabuxCharityId
-     * @return User
-     */
-    public function setExtrabuxCharityId($extrabuxCharityId)
-    {
-        $this->extrabuxCharityId = $extrabuxCharityId;
-
-        return $this;
-    }
-
-    /**
-     * Get extrabuxCharityId
-     *
-     * @return integer
-     */
-    public function getExtrabuxCharityId()
-    {
-        return $this->extrabuxCharityId;
     }
 
     /**
@@ -829,7 +857,8 @@ class User
      */
     public function __construct()
     {
-        $this->payables = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->payables = new ArrayCollection();
+        $this->referredUsers = new ArrayCollection();
     }
 
     /**
@@ -841,6 +870,7 @@ class User
     public function addPayable(\App\Entity\Payable $payable)
     {
         $this->payables[] = $payable;
+        $payable->setUser($this);
 
         return $this;
     }
@@ -853,6 +883,9 @@ class User
     public function removePayable(\App\Entity\Payable $payable)
     {
         $this->payables->removeElement($payable);
+        $payable->setUser(); //null
+
+        return $this;
     }
 
     /**
@@ -1012,6 +1045,7 @@ class User
     public function addReferredUser(\App\Entity\User $referredUser)
     {
         $this->referredUsers[] = $referredUser;
+        $referredUser->setReferredBy($this);
 
         return $this;
     }
@@ -1024,6 +1058,9 @@ class User
     public function removeReferredUser(\App\Entity\User $referredUser)
     {
         $this->referredUsers->removeElement($referredUser);
+        $referredUser->setReferredBy(); // null
+
+        return $this;
     }
 
     /**
@@ -1085,5 +1122,96 @@ class User
     public function __toString()
     {
         return (string) $this->email;
+    }
+
+    /**
+     * Implement the original hashing from legacy site
+     */
+    public static function passwordHash($plainPassword)
+    {
+        return sha1($plainPassword);
+    }
+
+    /**
+     * Set lastName
+     *
+     * @param string $lastName
+     * @return User
+     */
+    public function setLastName($lastName)
+    {
+        $this->lastName = $lastName;
+
+        return $this;
+    }
+
+    /**
+     * Get lastName
+     *
+     * @return string
+     */
+    public function getLastName()
+    {
+        return $this->lastName;
+    }
+
+    /**
+     * Set charity
+     *
+     * @param \App\Entity\Charity $charity
+     * @return User
+     */
+    public function setCharity(\App\Entity\Charity $charity = null)
+    {
+        $this->charity = $charity;
+
+        return $this;
+    }
+
+    /**
+     * Get charity
+     *
+     * @return \App\Entity\Charity
+     */
+    public function getCharity()
+    {
+        return $this->charity;
+    }
+
+    /**
+     * Add payments
+     *
+     * @param \App\Entity\Payment $payments
+     * @return User
+     */
+    public function addPayment(\App\Entity\Payment $payment)
+    {
+        $this->payments[] = $payment;
+        $payment->setUser($this);
+
+        return $this;
+    }
+
+    /**
+     * Remove payments
+     *
+     * @param \App\Entity\Payment $payments
+     */
+    public function removePayment(\App\Entity\Payment $payment)
+    {
+        $this->payments->removeElement($payment);
+        $payment->setUser(); // null
+
+        return $this;
+    }
+
+    /**
+     * Get payments
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPayments()
+    {
+        return $this->payments;
     }
 }

@@ -10,7 +10,7 @@ class CashbackRepository extends EntityRepository
     public function getMostRecentUserCashback(User $user)
     {
         $queryBuilder = $this->createQueryBuilder('c')
-            ->innerJoin('c.transactions', 't')
+            ->innerJoin('c.transaction', 't')
             ->where('c.user = :user')
             ->andWhere('c.status <> :invalid')
             ->orderBy('t.registeredAt', 'DESC')
@@ -46,65 +46,62 @@ class CashbackRepository extends EntityRepository
         }
     }
 
-    public function findCashbackForTransaction(Transaction $transaction)
-    {
-        $qb = $this->createQueryBuilder('c')
-            ->innerJoin('c.transactions', 't')
-            ->where('t.merchant = :merchant')
-            ->andWhere('t.network = :network')
-            ->andWhere('t.orderNumber = :orderNumber')
-            ->groupBy('c')
-            ->setParameter('merchant', $transaction->getMerchant())
-            ->setParameter('network', $transaction->getNetwork())
-            ->setParameter('orderNumber', $transaction->getOrderNumber())
-        ;
-
-        try {
-            return $qb->getQuery()->getSingleResult();
-        } catch (NoResultException $e) {
-            return null;
-        }
-    }
-
     public function findCashbackForUser(User $user, $month = null, $year = null)
     {
-        $qb = $this->createQueryBuilder('c')
-            ->where('c.user = :user')
-            ->setParameter('user', $user);
+        $start = null;
+        $end = null;
 
         if ($month !== null && $year !== null) {
             $start = new \DateTime("$year-$month-01");
             $end = clone $start;
             $end->add(\DateInterval::createFromDateString('+1 month'));
+        }
 
-            $qb->andWhere('c.registeredAt >= :start')
-                ->andWhere('c.registeredAt < :end')
-                ->andWhere('c.status <> :invalid')
-                ->setParameter('start', $start)
-                ->setParameter('end', $end)
-                ->setParameter('invalid', Cashback::STATUS_INVALID)
-            ;
+        return $this->findCashbackForUserByDateRange($user, $start, $end);
+    }
+
+    public function findCashbackForUserByDateRange(User $user, \DateTime $start = null, \DateTime $end = null, $order = null)
+    {
+        $qb = $this->createQueryBuilder('c');
+        $qb->where('c.user = :user');
+        $qb->setParameter('user', $user);
+        $qb->andWhere('c.status <> :invalid');
+        $qb->setParameter('invalid', Cashback::STATUS_INVALID);
+
+        if (isset($start)) {
+            $start->setTime(0, 0);
+            $qb->andWhere('c.registeredAt >= :start');
+            $qb->setParameter('start', $start);
+        }
+
+        if (isset($end)) {
+            $end->add(\DateInterval::createFromDateString('+1 day'))->setTime(0, 0);
+            $qb->andWhere('c.registeredAt < :end');
+            $qb->setParameter('end', $end);
+        }
+
+        switch ($order) {
+            case 'latest' :
+                $qb->orderBy('c.registeredAt', 'DESC');
+                break;
+            default :
+                break;
         }
 
         return $qb->getQuery()->getResult();
     }
 
-    public function makeCashbackAvailable($date = null)
+    public function getTotalCashback(\DateTime $start, \DateTime $end)
     {
-        if (null === $date) {
-            $date = new \DateTime();
-        }
+        $until = clone $end;
+        $until->add(\DateInterval::createFromDateString('+1 day'));
 
-        $qb = $this->getEntityManager()->createQueryBuilder()
-            ->update('App\Entity\Cashback', 'c')
-            ->set('c.status', ':avail')
-            ->where('c.availableAt <= :date')
-            ->andWhere('c.status = :status')
-            ->setParameter('date', $date)
-            ->setParameter('status', Cashback::STATUS_PENDING)
-            ->setParameter('avail', Cashback::STATUS_AVAILABLE)
-        ;
+        $qb = $this->createQueryBuilder('c');
+        $qb->select('SUM(c.amount)');
+        $qb->where('c.status <> :invalid')->setParameter('invalid', Cashback::STATUS_INVALID);
+        $qb->andWhere('c.registeredAt >= :after')->setParameter('after', $start);
+        $qb->andWhere('c.registeredAt < :before')->setParameter('before', $until);
 
-        return $qb->getQuery()->execute();
+        return $qb->getQuery()->getSingleScalarResult();
     }
 }

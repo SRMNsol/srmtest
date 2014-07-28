@@ -10,21 +10,25 @@
     "guzzle/guzzle": "~3.7",
     "zendframework/zend-cache": "~2.2",
     "leafo/lessphp": "0.4.0",
-    "symfony/twig-bridge": "~2.3",
-    "symfony/form": "~2.3",
-    "symfony/yaml": "~2.3",
-    "symfony/validator": "~2.3",
-    "symfony/security": "~2.3",
-    "symfony/translation": "~2.3",
-    "symfony/config": "~2.3",
+    "symfony/twig-bridge": "~2.5",
+    "symfony/form": "~2.5",
+    "symfony/yaml": "~2.5",
+    "symfony/validator": "~2.5",
+    "symfony/security": "~2.5",
+    "symfony/translation": "~2.5",
+    "symfony/config": "~2.5",
     "doblebjp/popshops-api": "dev-master",
     "knplabs/console-service-provider": "dev-master",
-    "doctrine/migrations": "v1.0-alpha1"
+    "doctrine/orm": "~2.4",
+    "doctrine/migrations": "v1.0-alpha1",
+    "saxulum/saxulum-doctrine-orm-manager-registry-provider": "2.1.0",
+    "symfony/doctrine-bridge": "~2.5",
+    "swiftmailer/swiftmailer": "~4.1.2"
   },
   "require-dev": {
     "doctrine/data-fixtures": "~1.0",
-    "symfony/browser-kit": "~2.3",
-    "symfony/css-selector": "~2.3"
+    "symfony/browser-kit": "~2.5",
+    "symfony/css-selector": "~2.5"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
@@ -35,13 +39,16 @@
   "scripts": {
     "post-install-cmd": [
       "App\\Setup\\WritePermissions::checkPaths",
+      "php bin/console.php asset:dump",
+      "vendor/bin/doctrine migrations:migrate --no-interaction",
       "vendor/bin/doctrine orm:generate-proxies",
-      "php bin/console.php asset:dump"
+      "vendor/bin/doctrine orm:clear-cache:result"
     ],
     "post-update-cmd": [
       "App\\Setup\\WritePermissions::checkPaths",
+      "php bin/console.php asset:dump",
       "vendor/bin/doctrine orm:generate-proxies",
-      "php bin/console.php asset:dump"
+      "vendor/bin/doctrine orm:clear-cache:result"
     ]
   },
   "autoload": {

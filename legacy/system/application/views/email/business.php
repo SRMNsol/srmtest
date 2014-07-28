@@ -6,14 +6,13 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
 <meta name="description" content="Save money on millions of products from thousands of top online stores at beesavy.com with comparison shopping, cash back, and coupons." />
-<link rel="shortcut icon" href="<?php echo base_url(); ?>images/favicon.ico" />
+<link rel="shortcut icon" href="<?php echo s3path('/images/favicon.ico') ?>" />
 <title>BeeSavy - Taking the sting out of online shopping</title>
-<link href="<?php echo base_url(); ?>styles/main.css" media="screen" rel="stylesheet" type="text/css" />
-<link href="<?php echo base_url(); ?>styles/transfer.css" media="screen" rel="stylesheet" type="text/css" />
-<link href="<?php echo base_url(); ?>styles/newsletter.css" media="screen" rel="stylesheet" type="text/css" />
-<link href="<?php echo base_url(); ?>styles/account.css" media="screen" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="<?php echo base_url(); ?>script_files/extrabux.js"></script>
-<link href="<?php echo base_url(); ?>styles/button.css" media="screen" rel="stylesheet" type="text/css" />
+<link href="<?php echo s3path('/styles/main.css') ?>" media="screen" rel="stylesheet" type="text/css" />
+<link href="<?php echo s3path('/styles/transfer.css') ?>" media="screen" rel="stylesheet" type="text/css" />
+<link href="<?php echo s3path('/styles/newsletter.css') ?>" media="screen" rel="stylesheet" type="text/css" />
+<link href="<?php echo s3path('/styles/account.css') ?>" media="screen" rel="stylesheet" type="text/css" />
+<link href="<?php echo s3path('/styles/button.css') ?>" media="screen" rel="stylesheet" type="text/css" />
 </head>
 <body>
 
@@ -47,7 +46,7 @@ $(document).ready(function() {
     	var element = $(this);
 		element.find('.BtnLogInRBg').addClass('BtnLogInBg').removeClass('BtnLogInRBg');
     });
-	
+
 	    $("div.StartSaving").mouseover(function () {
         var element = $(this);
  		element.find('.BtnStartSaving').addClass('BtnStartSavingRBg').removeClass('BtnStartSavingBg');
@@ -55,7 +54,7 @@ $(document).ready(function() {
     	var element = $(this);
 		element.find('.BtnStartSavingRBg').addClass('BtnStartSavingBg').removeClass('BtnStartSavingRBg');
     });
-	
+
    	});
 </script>
 </body>

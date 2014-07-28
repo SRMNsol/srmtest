@@ -29,8 +29,10 @@ class ReferralRepository extends EntityRepository
                 'SUM(r.paid) AS paid'
             ])
             ->where('r.user = :user')
+            ->andWhere('r.status <> :invalid')
             ->groupBy('r.user')
             ->setParameter('user', $user)
+            ->setParameter('invalid', Referral::STATUS_INVALID)
         ;
 
         try {
@@ -40,7 +42,7 @@ class ReferralRepository extends EntityRepository
         }
     }
 
-    public function calculateUserReferral(User $user, $month, $year, $level = 7)
+    public function calculateUserReferral(User $user, \DateTime $from = null, \DateTime $to = null, $level = 7)
     {
         $em = $this->getEntityManager();
         $cashbackRepository = $em->getRepository('App\Entity\Cashback');
@@ -54,28 +56,47 @@ class ReferralRepository extends EntityRepository
         $tree = $user->getReferralTree($level);
         foreach ($tree as $level => $children) {
             foreach ($children as $child) {
-                $cashbacks = $cashbackRepository->findCashbackForUser($child, $month, $year);
+                $cashbacks = $cashbackRepository->findCashbackForUserByDateRange($child, $from, $to);
 
                 foreach ($cashbacks as $cashback) {
-                    $values = $cashback->calculateTransactionValues($level);
+                    $transaction = $cashback->getTransaction();
 
-                    $commission += $values['commission'];
-                    if ($cashback->getStatus() === Cashback::STATUS_AVAILABLE) {
-                        $available += $commission;
+                    // skip if there is no transaction (?)
+                    if (null === $transaction) {
+                        continue;
                     }
 
-                    if (null === $registeredAt || $values['registeredAt'] > $registeredAt) {
-                        $registeredAt = clone $values['registeredAt'];
-                    }
+                    $share = $transaction->getCommissionByLevel($level);
 
-                    if ($level === 1) {
-                        $direct += $values['commission'];
-                    } else {
-                        $indirect += $values['commission'];
-                    }
+                    $commission += $share;
+                    $available += ($cashback->getStatus() === Cashback::STATUS_AVAILABLE) ? $share : 0;
+                    $direct += ($level === 1) ? $share : 0;
+                    $indirect += ($level > 1) ? $share : 0;
+
+                    $registeredAt = (null === $registeredAt || $transaction->getRegisteredAt() > $registeredAt)
+                        ? clone $transaction->getRegisteredAt()
+                        : $registeredAt;
                 }
             }
         }
+
+        return [
+            'commission' => $commission,
+            'available' => $available,
+            'indirect' => $indirect,
+            'direct' => $direct,
+            'registeredAt' => $registeredAt,
+        ];
+    }
+
+    public function createUserReferral(User $user, $month, $year, $level = 7)
+    {
+        $from = new \DateTime("$year-$month-01");
+        $to = new \DateTime($from->format('Y-m-t'));
+
+        $values = $this->calculateUserReferral($user, $from, $to, $level);
+
+        $em = $this->getEntityManager();
 
         $referral = $this->findOneBy(['user' => $user, 'month' => "$year$month"]) ?: new Referral();
 
@@ -84,12 +105,12 @@ class ReferralRepository extends EntityRepository
         $referral->setConcept('Referral Total')
             ->setUser($user)
             ->setMonth("$year$month")
-            ->setAmount($commission)
-            ->setAvailable($available - $payment)
-            ->setPending($commission - $available - $payment)
-            ->setIndirect($indirect)
-            ->setDirect($direct)
-            ->setRegisteredAt($registeredAt)
+            ->setAmount($values['commission'])
+            ->setAvailable($values['available'] - $payment)
+            ->setPending($values['commission'] - $values['available'] - $payment)
+            ->setIndirect($values['indirect'])
+            ->setDirect($values['direct'])
+            ->setRegisteredAt($values['registeredAt'])
         ;
 
         $em->persist($referral);

@@ -3,10 +3,11 @@
 namespace App\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Mapping as ORM;
 
 class TransactionListener
 {
-    /** @PrePersist @PreUpdate */
+    /** @ORM\PrePersist @ORM\PreUpdate */
     public function createRelatedEntity(Transaction $transaction, $event)
     {
         $em = $event->getEntityManager();
@@ -18,8 +19,8 @@ class TransactionListener
      * We need an additional flush to push Cashback changes that
      * did not make it to the flush for the Transaction
      *
-     * @PostUpdate
-     **/
+     * @ORM\PostUpdate
+     */
     public function flushCashback($transaction, $event)
     {
         $em = $event->getEntityManager();
@@ -39,36 +40,27 @@ class TransactionListener
         $cashback = $transaction->getCashback();
 
         if (null === $cashback) {
-            $cashback = $cashbackRepository->findCashbackForTransaction($transaction);
-        }
-
-        if (null === $cashback) {
             $cashback = new Cashback();
+            $cashback->setTransaction($transaction);
         }
 
-        if (false === $cashback->getTransactions()->contains($transaction)) {
-            $cashback->addTransaction($transaction);
-        }
+        $cashback->calculateAmounts();
 
-        $subid = Subid::createFromString($transaction->getTag());
-        if (null !== $subid->getUserId()) {
-            $user = $userRepository->findOneById($subid->getUserId());
-            if (null !== $user) {
-                $cashback->setUser($user);
+        if (null === $cashback->getUser()) {
+            $subid = Subid::createFromString($transaction->getTag());
+            if (null !== $subid->getUserId()) {
+                $user = $userRepository->findOneById($subid->getUserId());
+                if (null !== $user) {
+                    $cashback->setUser($user);
+                }
             }
         }
-
-        $cashback->calculateAmount();
 
         if (null === $cashback->getConcept()) {
             $merchant = $transaction->getMerchant();
             if (isset($merchant)) {
                 $cashback->setConcept($merchant->getName());
             }
-        }
-
-        if (null === $cashback->getRegisteredAt()) {
-            $cashback->setRegisteredAt($transaction->getRegisteredAt());
         }
     }
 }

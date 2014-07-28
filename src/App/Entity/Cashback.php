@@ -2,113 +2,101 @@
 
 namespace App\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @Entity(repositoryClass="CashbackRepository")
+ * @ORM\Entity(repositoryClass="CashbackRepository")
  */
 class Cashback extends Payable
 {
     /**
-     * @OneToMany(targetEntity="Transaction", mappedBy="cashback")
+     * @ORM\OneToOne(targetEntity="Transaction", mappedBy="cashback")
      */
-    protected $transactions;
+    protected $transaction;
 
     const AVAILABLE_DAYS = 90;
 
-    public function __construct()
+    public function getTransaction()
     {
-        $this->transactions = new ArrayCollection();
+        return $this->transaction;
     }
 
-    public function getTransactions()
+    public function setTransaction(Transaction $transaction = null)
     {
-        return $this->transactions;
-    }
-
-    public function addTransaction(Transaction $transaction)
-    {
-        $this->transactions[] = $transaction;
+        $this->transaction = $transaction;
         $transaction->setCashback($this);
 
         return $this;
     }
 
-    public function removeTransaction(Transaction $transaction)
+    /**
+     * Calculate cashback amount from transactions
+     */
+    public function calculateAmounts()
     {
-        $this->transactions->removeElement($transaction);
-        $transaction->setCashback(/* null */);
-
-        return $this;
-    }
-
-    public function calculateTransactionValues($rateLevel = 0)
-    {
-        $total = 0.00;
-        $commission = 0.00;
-        $registeredAt = null;
-
-        $method = "getLevel$rateLevel"; // getLevel0 -> getLevel7
-        if (!method_exists('App\Entity\Rate', $method)) {
-            throw new \RuntimeException("Invalid rate level $rateLevel");
-        }
-
-        foreach ($this->transactions as $transaction) {
-            $rate = $transaction->getRate();
-            $share = $rate ? $rate->$method() : 0;
-            $total += $transaction->getTotal();
-
-            if ($transaction->getRealCommission() >= 0.01 && $share >= 0.01) {
-                $commission += $share * $transaction->getRealCommission();
-                if (null === $registeredAt || $transaction->getRegisteredAt() > $registeredAt) {
-                    $registeredAt = clone $transaction->getRegisteredAt();
-                }
-            }
-        }
-
-        return compact('total', 'commission', 'registeredAt');
-    }
-
-    public function calculateAmount()
-    {
-        // if cashback is locked don't update
+        // when cashback is processing or paid, do not update
         if ($this->isLocked()) {
             return $this;
         }
 
-        // extract $total, $commission, $registeredAt
-        extract($this->calculateTransactionValues());
-
-        $this->registeredAt = $registeredAt;
+        $this->amount = $this->getCommissionShare(0);
+        $this->registeredAt = $this->getTransactionDate();
         $this->updateAvailableDate();
 
-        $this->amount = $commission;
-
-        // past 90 days
-        if ($this->availableAt <= new \DateTime()) {
-            $this->available = $commission;
+        // commission > 0 but total transaction amount = 0
+        if (self::gt($this->amount, 0) && self::eq($this->getTotalPurchase(), 0)) {
+            $this->amount = 0.00;
             $this->pending = 0.00;
-            $this->status = self::STATUS_AVAILABLE;
-        } else {
             $this->available = 0.00;
-            $this->pending = $commission;
-            $this->status = self::STATUS_PENDING;
-        }
-
-        if ($this->amount >= 0.01 && $total <= 0.01) {
             $this->status = self::STATUS_INVALID;
+            return $this;
         }
 
+        // the only possible statuses are pending or available
+        if ($this->availableAt <= new \DateTime()) {
+            // past 90 days
+            $this->available = $this->amount;
+            $this->pending = 0.00;
+        } else {
+            // too recent
+            $this->available = 0.00;
+            $this->pending = $this->amount;
+        }
+
+        // status update will be handled by parent payable
         return $this;
     }
 
-    public function calculateTransactionTotal()
+    /**
+     * Get total purchase
+     */
+    public function getTotalPurchase()
     {
-        $total = 0.00;
-        foreach ($this->transactions as $transaction) {
-            $total += $transaction->getTotal();
-        }
+        return $this->transaction ? $this->transaction->getTotal() : 0.00;
+    }
 
-        return $total;
+    /**
+     * Get transaction order number
+     */
+    public function getOrderNumber()
+    {
+        return $this->transaction ? $this->transaction->getOrderNumber() : null;
+    }
+
+    /**
+     * Get transaction date
+     */
+    public function getTransactionDate()
+    {
+        return $this->transaction ? $this->transaction->getRegisteredAt() : null;
+    }
+
+    /**
+     * Get commission for level 0
+     */
+    public function getCommissionShare()
+    {
+        return $this->transaction ? $this->transaction->getCommissionByLevel(0) : 0.00;
     }
 }

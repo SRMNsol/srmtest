@@ -3,11 +3,15 @@
 namespace App\Entity;
 
 use Popshops\Network as BaseNetwork;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @Entity
+ * @ORM\Entity
  */
 class Network extends BaseNetwork
 {
-
+    public function __toString()
+    {
+        return $this->name;
+    }
 }

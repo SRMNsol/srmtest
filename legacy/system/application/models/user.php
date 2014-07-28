@@ -1,12 +1,14 @@
 <?php
 if (!defined('BASEPATH')) exit('No direct script access allowed');
+
+use App\Entity\User as UserEntity;
+
 /**
  * User Model
  * A proxy for a user model until users are implemented
  * This model is responsible for tying user-authentication view
  * to the status of the authentication cookie
  */
-
 class User extends Model
 {
     public $table = "user";
@@ -142,6 +144,20 @@ class User extends Model
         $this->db->update('user', array(
             'alias' => sprintf('U%d', $userId)
         ));
+    }
+
+    public function reset_password($email)
+    {
+        $sql = 'SELECT * FROM user WHERE email = ?';
+        $query = $this->db->query($sql, array($email));
+        $result = $query->result_array();
+        if (!empty($result)) {
+            $newPassword = "bee".(string) mt_rand(1000000,9999999);
+            $this->db->update('user', array('password' => UserEntity::passwordHash($newPassword)));
+            return $newPassword;
+        }
+
+        return false;
     }
 
     public function set_referral($alias)
@@ -303,23 +319,26 @@ class User extends Model
             return False;
         }
     }
+
     public function login_status()
     {
         $login_status = $this->db_session->userdata('login');
 
         return $login_status;
     }
+
     public function check_referral($id)
     {
-        if(!$id)
-
+        if (!$id) {
             return True;
+        }
+
         $q = "select * from user where uid='$id' OR alias='$id';";
         $res = $this->db->query($q);
         $res = $res->result_array();
+
         if (!empty($res)) {
             $res = $res[0];
-
             return $res['uid'];
         }
 

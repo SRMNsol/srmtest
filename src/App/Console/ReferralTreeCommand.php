@@ -7,6 +7,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Helper\Table;
 use App\Entity\Referral;
 use App\Entity\Payable;
 
@@ -30,7 +31,7 @@ class ReferralTreeCommand extends Command
         $userRepository = $em->getRepository('App\Entity\User');
         $user = $userRepository->findOneByEmail($email);
 
-        $table = $this->getHelperSet()->get('table');
+        $table = new Table($output);
         $table->setHeaders(['#', 'Level', 'Email', 'Referred By']);
 
         $level = 7;
@@ -47,7 +48,7 @@ class ReferralTreeCommand extends Command
                 ]);
             }
         }
-        $table->render($output);
+        $table->render();
 
         $output->writeln(sprintf('Direct referrals: %d', $user->countDirectReferrals()));
         $output->writeln(sprintf('Indirect referrals 2-%d: %d', $level, $user->countIndirectReferrals($level)));

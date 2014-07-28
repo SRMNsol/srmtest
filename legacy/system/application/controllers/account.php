@@ -1,4 +1,7 @@
 <?php
+
+use App\Entity\User;
+
 /**
  */
 class Account extends Controller
@@ -41,7 +44,6 @@ class Account extends Controller
     public function index($success = False, $notice=False, $error = "")
     {
         $data = $this->__get_header();
-        //$data['errors'] = $this->code->get_errors($this->error);
         $data['errors'] = array();
         if ($success && empty($this->error)) {
             $data['success'] = "Account settings updated";
@@ -64,11 +66,9 @@ class Account extends Controller
         }
         if ($notice==5) {
             $data['errors'][] = array('message'=>"There was a problem processing your payment, please check that you have selected and filled out a payment method");
-            //$data['errors'][] = array('message'=>urldecode($error));
         }
         if ($notice==6) {
             $data['errors'][] = array('message'=>"You must have $10 in available cash back and a confirmed purchase to request a payment.");
-            //$data['errors'][] = array('message'=>urldecode($error));
         }
         $this->parser->parse('account/account', $data);
     }
@@ -76,14 +76,12 @@ class Account extends Controller
     public function payment()
     {
         $data = $this->__get_header();
-        $fail = $this->beesavy->processPayment($this->user_id);
+        $status = $this->beesavy->processPayment($this->user_id);
 
-        if ($fail) {
-            if ($fail == "You must have $10 in available cash back and a confirmed purchase to request a payment.") {
-                redirect("/account/index/0/6/".urlencode($fail));
-            } else {
-                redirect("/account/index/0/5/".urlencode($fail));
-            }
+        if ($status === Beesavy::PAYMENT_INSUFFICIENT_CASHBACK) {
+            redirect("/account/index/0/6/");
+        } elseif($status === Beesavy::PAYMENT_REQUEST_FAILURE) {
+            redirect("/account/index/0/5/");
         } else {
             redirect('/account/index/0/4');
         }
@@ -94,8 +92,8 @@ class Account extends Controller
         $email = $this->input->post("email");
         $referral = $this->input->post("referral");
         $porig = $this->input->post("password");
-        $pass  = sha1($this->input->post("password"));
-        $passC = sha1($this->input->post("password_confirm"));
+        $pass  = User::passwordHash($this->input->post("password"));
+        $passC = User::passwordHash($this->input->post("password_confirm"));
 
         #Error check
         $errors = array();
@@ -133,6 +131,7 @@ class Account extends Controller
             redirect("/main/joinnow?email=$email&referral=$referral&errors=$error_str");
         }
     }
+
     public function logout()
     {
         $this->user->logout();
@@ -143,24 +142,13 @@ class Account extends Controller
     {
         $email = $this->input->post('email');
         if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $new = "bee".(string) mt_rand(1000000,9999999);
-            $q = "select * from user where email = '$email';";
-            $res = $this->db->query($q);
-            $res = $res->result_array();
-            if (!empty($res)) {
-                $res = $res[0];
-                $id = $res['id'];
-                $einfo = $this->beesavy->getUser($res['id'], '', True);
-                $oldpass = $einfo['password'];
-                $q = "update user set password = '".sha1($new)."' where id='$id';";
-                $this->db->query($q);
-                $this->beesavy->updateUser($res['id'], $email, $oldpass, 'password', sha1($new));
-                $data = array('email'=>$email, 'password'=>$new);
+
+            $newPassword = $this->user->reset_password($email);
+            if (false !== $newPassword) {
+                $data = array('email' => $email, 'password' => $newPassword);
                 $msg = $this->parser->parse('email/newpassword', $data, True);
                 $txtmsg = $this->parser->parse('email/newpasswordt', $data, True);
-                $q = "select * from user where id='$id';";
-                $res = $this->db->query($q);
-               $this->emailer->sendMessage($msg, $txtmsg, $data['email'], "BeeSavy - New password request");
+                $this->emailer->sendMessage($msg, $txtmsg, $data['email'], "BeeSavy - New password request");
                 redirect("/main/forgot/1/$email");
 
                 return;
@@ -174,7 +162,7 @@ class Account extends Controller
     public function login()
     {
         $email = $this->input->post('email');
-        $password = sha1($this->input->post('password'));
+        $password = User::passwordHash($this->input->post('password'));
         $error = $this->user->login($email,$password);
         if ($error) {
             $user = urlencode($error['user']);
@@ -274,9 +262,9 @@ class Account extends Controller
     }
     public function set_password()
     {
-        $current =sha1($this->input->post('password_current'));
-        $new =sha1($this->input->post('password_new'));
-        $conf=sha1($this->input->post('password_confirm'));
+        $current = User::passwordHash($this->input->post('password_current'));
+        $new = User::passwordHash($this->input->post('password_new'));
+        $conf= User::passwordHash($this->input->post('password_confirm'));
         $info = $this->user->info();
         if (strlen($this->input->post("password_new"))<6) {
             $errors[] = $this->code->get_code('invalid_password');

@@ -2,59 +2,61 @@
 
 namespace App\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+
 /**
- * @Entity(repositoryClass="RateRepository")
- * @HasLifecycleCallbacks
+ * @ORM\Entity(repositoryClass="RateRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class Rate
 {
     /**
-     * @Id @Column(type="integer") @GeneratedValue
+     * @ORM\Id @ORM\Column(type="integer") @ORM\GeneratedValue
      */
     protected $id;
 
     /**
-     * @Column(type="decimal", scale=2, nullable=false)
+     * @ORM\Column(type="decimal", scale=2, nullable=false)
      */
     protected $level0;
 
     /**
-     * @Column(type="decimal", scale=2, nullable=false)
+     * @ORM\Column(type="decimal", scale=2, nullable=false)
      */
     protected $level1;
 
     /**
-     * @Column(type="decimal", scale=2, nullable=false)
+     * @ORM\Column(type="decimal", scale=2, nullable=false)
      */
     protected $level2;
 
     /**
-     * @Column(type="decimal", scale=2, nullable=false)
+     * @ORM\Column(type="decimal", scale=2, nullable=false)
      */
     protected $level3;
 
     /**
-     * @Column(type="decimal", scale=2, nullable=false)
+     * @ORM\Column(type="decimal", scale=2, nullable=false)
      */
     protected $level4;
 
     /**
-     * @Column(type="decimal", scale=2, nullable=false)
+     * @ORM\Column(type="decimal", scale=2, nullable=false)
      */
     protected $level5;
 
     /**
-     * @Column(type="decimal", scale=2, nullable=false)
+     * @ORM\Column(type="decimal", scale=2, nullable=false)
      */
     protected $level6;
 
     /**
-     * @Column(type="decimal", scale=2, nullable=false)
+     * @ORM\Column(type="decimal", scale=2, nullable=false)
      */
     protected $level7;
 
     /**
-     * @Column(type="datetime")
+     * @ORM\Column(type="datetime")
      */
     protected $createdAt;
 
@@ -253,6 +255,20 @@ class Rate
     }
 
     /**
+     * Get level by parameter
+     */
+    public function getLevel($level)
+    {
+        if ($level < 0 || $level > 7) {
+            throw new \Exception(sprintf('Invalid level %d', $level));
+        }
+
+        $property = 'level' . $level;
+
+        return $this->$property;
+    }
+
+    /**
      * Set createdAt
      *
      * @param \DateTime $createdAt
@@ -276,10 +292,38 @@ class Rate
     }
 
     /**
-     * @PrePersist
+     * @ORM\PrePersist
      */
     public function onCreate()
     {
         $this->createdAt = new \DateTime();
+    }
+
+    public function createCopy()
+    {
+        $rate = new Rate();
+        $rate->setLevel0($this->getLevel0());
+        $rate->setLevel1($this->getLevel1());
+        $rate->setLevel2($this->getLevel2());
+        $rate->setLevel3($this->getLevel3());
+        $rate->setLevel4($this->getLevel4());
+        $rate->setLevel5($this->getLevel5());
+        $rate->setLevel6($this->getLevel6());
+        $rate->setLevel7($this->getLevel7());
+
+        return $rate;
+    }
+
+    public function hasSameValues(Rate $rate)
+    {
+        return ($this->getLevel0() == $rate->getLevel0())
+            && ($this->getLevel1() == $rate->getLevel1())
+            && ($this->getLevel2() == $rate->getLevel2())
+            && ($this->getLevel3() == $rate->getLevel3())
+            && ($this->getLevel4() == $rate->getLevel4())
+            && ($this->getLevel5() == $rate->getLevel5())
+            && ($this->getLevel6() == $rate->getLevel6())
+            && ($this->getLevel7() == $rate->getLevel7())
+        ;
     }
 }

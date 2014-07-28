@@ -16,6 +16,7 @@ use Silex\Provider\ServiceControllerServiceProvider;
 use Igorw\Silex\ConfigServiceProvider;
 use Popshops\Silex\PopshopsServiceProvider;
 use Popshops\Silex\PopshopsExtraServiceProvider;
+use Saxulum\DoctrineOrmManagerRegistry\Silex\Provider\DoctrineOrmManagerRegistryProvider;
 
 class Application extends SilexApplication
 {
@@ -29,6 +30,7 @@ class Application extends SilexApplication
         $app->register(new OrmProvider());
         $app->register(new PopshopsServiceProvider());
         $app->register(new CacheProvider());
+        $app->register(new MailerProvider());
     }
 
     public static function registerWebServices(Application $app)
@@ -38,6 +40,7 @@ class Application extends SilexApplication
         $app->register(new MonologServiceProvider());
         $app->register(new FormServiceProvider());
         $app->register(new ValidatorServiceProvider());
+        $app->register(new DoctrineOrmManagerRegistryProvider());
         $app->register(new TranslationServiceProvider());
         $app->register(new ServiceControllerServiceProvider());
     }

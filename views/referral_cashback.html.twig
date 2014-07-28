@@ -1,0 +1,33 @@
+{% extends 'common/layout.html.twig' %}
+
+{% form_theme rateForm 'common/form_horizontal.html.twig' %}
+
+{% block content %}
+<div class="page-header">
+  <h1>Referral Cashback <small></small></h1>
+</div>
+
+<div class="row">
+  <div class="col-md-9">
+    {{ form_start(rateForm, { attr: { class: 'rate-create' } }) }}
+      {{ form_errors(rateForm) }}
+
+      {{ form_row(rateForm.level0, { label: 'Level 0', div_attr: { class: 'col-md-3' } }) }}
+      {{ form_row(rateForm.level1, { label: 'Level 1', div_attr: { class: 'col-md-3' } }) }}
+      {{ form_row(rateForm.level2, { label: 'Level 2', div_attr: { class: 'col-md-3' } }) }}
+      {{ form_row(rateForm.level3, { label: 'Level 3', div_attr: { class: 'col-md-3' } }) }}
+      {{ form_row(rateForm.level4, { label: 'Level 4', div_attr: { class: 'col-md-3' } }) }}
+      {{ form_row(rateForm.level5, { label: 'Level 5', div_attr: { class: 'col-md-3' } }) }}
+      {{ form_row(rateForm.level6, { label: 'Level 6', div_attr: { class: 'col-md-3' } }) }}
+      {{ form_row(rateForm.level7, { label: 'Level 7', div_attr: { class: 'col-md-3' } }) }}
+
+      <div class="form-group">
+        <div class="col-md-6 col-md-offset-2">
+          <button type="submit" class="btn btn-primary">Update</button>
+        </div>
+      </div>
+
+    {{ form_end(rateForm) }}
+  </div>
+</div>
+{% endblock content %}

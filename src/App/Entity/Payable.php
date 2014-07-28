@@ -2,80 +2,90 @@
 
 namespace App\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+
 /**
- * @Entity(repositoryClass="PayableRepository")
- * @HasLifecycleCallbacks
- * @InheritanceType("SINGLE_TABLE")
- * @DiscriminatorColumn(name="payableType")
- * @DiscriminatorMap({"payable"="Payable", "cashback"="Cashback", "referral" = "Referral"})
+ * @ORM\Entity(repositoryClass="PayableRepository")
+ * @ORM\Table(indexes={@ORM\Index(columns={"registeredAt"})})
+ * @ORM\HasLifecycleCallbacks
+ * @ORM\InheritanceType("SINGLE_TABLE")
+ * @ORM\DiscriminatorColumn(name="payableType")
+ * @ORM\DiscriminatorMap({"payable"="Payable", "cashback"="Cashback", "referral" = "Referral"})
  */
 class Payable
 {
+    use MoneyTrait;
+
     /**
-     * @Id @Column(type="integer") @GeneratedValue
+     * @ORM\Id @ORM\Column(type="integer") @ORM\GeneratedValue
      */
     protected $id;
 
     /**
-     * @ManyToOne(targetEntity="User", inversedBy="payables")
-     * @JoinColumn(referencedColumnName="uid")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="payables")
+     * @ORM\JoinColumn(referencedColumnName="uid")
      */
     protected $user;
 
     /**
-     * @Column(type="decimal", scale=2)
+     * @ORM\Column(type="decimal", scale=2)
      */
     protected $amount = 0.00;
 
     /**
-     * @Column(type="decimal", scale=2)
+     * @ORM\Column(type="decimal", scale=2)
      */
     protected $pending = 0.00;
 
     /**
-     * @Column(type="decimal", scale=2)
+     * @ORM\Column(type="decimal", scale=2)
      */
     protected $available = 0.00;
 
     /**
-     * @Column(type="decimal", scale=2)
+     * @ORM\Column(type="decimal", scale=2)
      */
     protected $processing = 0.00;
 
     /**
-     * @Column(type="decimal", scale=2)
+     * @ORM\Column(type="decimal", scale=2)
      */
     protected $paid = 0.00;
 
     /**
-     * @Column(nullable=true)
+     * @ORM\Column(nullable=true)
      */
     protected $concept;
 
     /**
-     * @Column(type="datetime")
+     * @ORM\Column(type="datetime")
      */
     protected $createdAt;
 
     /**
-     * @Column(type="datetime", nullable=true)
+     * @ORM\Column(type="datetime", nullable=true)
      */
     protected $updatedAt;
 
     /**
-     * @Column(type="datetime", nullable=true)
+     * @ORM\Column(type="datetime", nullable=true)
      */
     protected $registeredAt;
 
     /**
-     * @Column(type="date", nullable=true)
+     * @ORM\Column(type="date", nullable=true)
      */
     protected $availableAt;
 
     /**
-     * @Column(length=20)
+     * @ORM\Column(length=20)
      */
     protected $status = self::STATUS_PENDING;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Payment", inversedBy="payables")
+     */
+    protected $payment;
 
     const STATUS_PENDING = 'pending';
     const STATUS_AVAILABLE = 'available';
@@ -157,22 +167,6 @@ class Payable
         $this->registeredAt = $registeredAt;
 
         return $this;
-    }
-
-    /**
-     * @PrePersist
-     */
-    public function onCreate()
-    {
-        $this->createdAt = new \DateTime();
-    }
-
-    /**
-     * @PreUpdate
-     */
-    public function onUpdate()
-    {
-        $this->updatedAt = new \DateTime();
     }
 
     public function getAvailableAt()
@@ -302,28 +296,28 @@ class Payable
     }
 
     /**
-     * @PrePersist @PreUpdate
+     * Validate if sum is correct
      */
     public function validateAmounts()
     {
         $sum = $this->pending + $this->available + $this->processing + $this->paid;
-        if (round($this->amount, 2) !== round($sum, 2)) {
+        if (!self::eq($this->amount, $sum)) {
             throw new \Exception(sprintf('Invalid sum amounts %.2f (expected %.2f)', $sum, $this->amount));
         }
     }
 
     /**
-     * @PrePersist @PreUpdate
+     * Set status based on amount types
      */
     public function updateStatusBasedOnAmounts()
     {
         if ($this->status === self::STATUS_INVALID) {
-            return;
+            return $this;
         }
 
         $status = null;
         foreach (['pending', 'available', 'processing', 'paid'] as $prop) {
-            if ($this->$prop >= 0.01) {
+            if (self::gt($this->$prop, 0)) {
                 if ($status !== null) {
                     $status = self::STATUS_MIXED;
                     break;
@@ -333,16 +327,18 @@ class Payable
             }
         }
 
+        // when all amounts are 0, $status is null
         if ($status === null) {
-            $this->status = self::STATUS_CANCELED;
+            if ($this->availableAt <= new \DateTime()) {
+                $this->status = self::STATUS_CANCELED;
+            } else {
+                $this->status = self::STATUS_PENDING;
+            }
         } else {
             $this->status = $status;
         }
     }
 
-    /**
-     * @PrePersist @PreUpdate
-     */
     public function updateAvailableDate()
     {
         if (isset($this->registeredAt)) {
@@ -355,5 +351,54 @@ class Payable
     {
         return $this->status === self::STATUS_PROCESSING
             || $this->status === self::STATUS_PAID;
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function onCreate()
+    {
+        $this->createdAt = new \DateTime();
+    }
+
+    /**
+     * @ORM\PreUpdate
+     */
+    public function onUpdate()
+    {
+        $this->updatedAt = new \DateTime();
+    }
+
+    /**
+     * @ORM\PrePersist @ORM\PreUpdate
+     */
+    public function onSave()
+    {
+        $this->validateAmounts();
+        $this->updateAvailableDate();
+        $this->updateStatusBasedOnAmounts();
+    }
+
+    /**
+     * Set payment
+     *
+     * @param \App\Entity\Payment $payment
+     * @return Payable
+     */
+    public function setPayment(\App\Entity\Payment $payment = null)
+    {
+        $this->payment = $payment;
+
+        return $this;
+    }
+
+    /**
+     * Get payment
+     *
+     * @return \App\Entity\Payment
+     */
+    public function getPayment()
+    {
+        return $this->payment;
     }
 }

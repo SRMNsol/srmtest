@@ -6,8 +6,8 @@
 <body>
 
     <div style="background:#fff;border: 1px solid #999;	margin:0 auto;width:800px;float:left;">
-		<div style="border:0px solid #000;padding-top:15px;padding-left:15px;"><img src="<?php echo base_url() ?>images/header-beesavy-logo.gif"/></div>
-        <div style="border:0px solid #000;padding-top:15px;padding-left:15px;"><img src="<?php echo base_url() ?>images/newsletter-div.gif"/></div>
+		<div style="border:0px solid #000;padding-top:15px;padding-left:15px;"><img src="<?php echo s3path('/images/header-beesavy-logo.gif') ?>"/></div>
+        <div style="border:0px solid #000;padding-top:15px;padding-left:15px;"><img src="<?php echo s3path('/images/newsletter-div.gif') ?>"/></div>
 		<div style="border:0px solid #999;	margin:0 auto;float:left;padding:15px;">
 <p style="margin-top:10px;margin-left:10px;margin-bottom:10px;font-size:15px;font-family:arial;color:#000;">Hi {email},</p>
 <p style="margin-top:10px;margin-left:10px;margin-bottom:10px;font-size:15px;font-family:arial;color:#000;">Congratulations! &nbsp;You have earned $xx in referral cash back to date! &nbsp;For some reason, you haven't used BeeSavy for your online shopping in the past 60 days.  &nbsp;To continue receiving your referral cash back, you need to make a purchase through BeeSavy in the next 30 days.  &nbsp;Otherwise, you will not be eligible for referral cash back until you make a purchase again.  &nbsp;With over 1,500 of the most trusted stores on the internet, it's easy to find something you like!</p>

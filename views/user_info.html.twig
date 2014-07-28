@@ -1,0 +1,128 @@
+{% extends 'common/layout.html.twig' %}
+
+{% form_theme searchForm 'common/form_inline.html.twig' %}
+
+{% block content %}
+<div class="page-header">
+  <h1>User Info <small></small></h1>
+</div>
+
+<div class="row">
+  <div class="col-md-9">
+    {{ form_start(searchForm, { attr: { class: 'user-search' } }) }}
+      {{ form_errors(searchForm) }}
+      {{ form_row(searchForm.email, { attr: { placeholder: 'Enter user email' } }) }}
+      {{ form_row(searchForm.startDate) }}
+      {{ form_row(searchForm.endDate) }}
+
+      <div class="form-group">
+        <div class="col-md-6 col-md-offset-2">
+          <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+      </div>
+    {{ form_end(searchForm) }}
+  </div>
+  <div class="col-md-3">
+    {% if user is not null %}
+    <a href="{{ path('user_edit', { userId: user.id }) }}" class="btn btn-default pull-right">Edit user account</a>
+    {% endif %}
+  </div>
+</div>
+
+{% if user is not null %}
+<br>
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th class="col-md-1">User ID</th>
+      <th class="col-md-3">Email Address</th>
+      <th class="col-md-3">Referral Alias</th>
+      <th class="col-md-5">Referred By</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>{{ user.id }}</td>
+      <td>{{ user.email }}</td>
+      <td>{{ user.alias }}</td>
+      <td>{{ user.referredBy.email }}</td>
+    </tr>
+  </tbody>
+</table>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th class="col-md-1">Spend</th>
+      <th class="col-md-3">Personal Cashback Earned</th>
+      <th class="col-md-3">Referral Cashback Earned</th>
+      <th class="col-md-3">Total Cashback Earned</th>
+      <th class="col-md-2">Paid</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>$ {{ totalSpending|number_format(2) }}</td>
+      <td>$ {{ totalCashback|number_format(2) }}</td>
+      <td>$ {{ totalReferral|number_format(2) }}</td>
+      <td>$ {{ totalEarning|number_format(2) }}</td>
+      <td>$ {{ totalPayment|number_format(2) }}</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="row" style="margin-bottom: 12px;">
+  <div class="col-md-9">
+    <h4>Transactions</h4>
+  </div>
+  <div class="col-md-3">
+    <a href="{{ path('transaction_edit', { user: user.id }) }}" class="btn btn-default pull-right">Add transaction</a>
+  </div>
+</div>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th class="col-md-1">Date</th>
+      <th class="col-md-3">Store</th>
+      <th class="col-md-3">Order</th>
+      <th class="col-md-2">Amount</th>
+      <th class="col-md-2">Cashback</th>
+      <th class="col-md-1">Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for cashback in cashbackList %}
+    <tr>
+      <td>{{ cashback.transactionDate|date('m/d/Y') }}</td>
+      <td>{{ cashback.concept }}</td>
+      <td>{{ cashback.orderNumber }}</td>
+      <td>$ {{ cashback.totalPurchase|number_format(2) }}</td>
+      <td>$ {{ cashback.amount|number_format(2) }}</td>
+      <td>{{ cashback.status }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<h4>Level 1 referrals ({{ user.referredUsers.count }} users)</h4>
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <td class="col-md-1">Id</td>
+      <td class="col-md-11">Email</td>
+    </tr>
+  </thead>
+  <tbody>
+    {% for referredUser in user.referredUsers %}
+    <tr>
+      <td>{{ referredUser.id }}</td>
+      <td>{{ referredUser.email }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endif %}
+
+{% endblock content %}

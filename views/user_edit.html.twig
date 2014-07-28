@@ -1,0 +1,41 @@
+{% extends 'common/layout.html.twig' %}
+
+{% form_theme form 'common/form_horizontal.html.twig' %}
+
+{% block content %}
+<div class="page-header">
+  <h1>Edit User</h1>
+</div>
+
+<div class="row">
+  <div class="col-md-9">
+    {{ form_start(form, { attr: { class: 'user-account' } }) }}
+      {{ form_errors(form) }}
+      {{ form_row(form.user.email) }}
+      {{ form_row(form.user.alias, { attr: { placeholder: 'custom alias or use default: U'~user.id } }) }}
+      {{ form_row(form.user.paymentMethod) }}
+      {{ form_row(form.user.firstName) }}
+      {{ form_row(form.user.lastName) }}
+      {{ form_row(form.user.address) }}
+      {{ form_row(form.user.city) }}
+      {{ form_row(form.user.state, { attr: { placeholder: 'state code' } }) }}
+      {{ form_row(form.user.zip) }}
+      {{ form_row(form.user.paypalEmail) }}
+      {{ form_row(form.user.charity) }}
+      {{ form_row(form.user.status) }}
+      {{ form_row(form.user.referredBy) }}
+      {{ form_row(form.editPassword) }}
+      {{ form_row(form.newPassword) }}
+      <div class="form-group">
+        <div class="col-md-6 col-md-offset-2">
+          <a href="{{ path('user_info', {'user_search[email]': user.email }) }}" class="btn btn-default">Cancel</a>
+          <button type="submit" class="btn btn-primary">Update</button>
+        </div>
+      </div>
+    {{ form_end(form) }}
+  </div>
+  <div class="col-md-3">
+    <a href="{{ path('user_info', {'user_search[email]': user.email }) }}" class="btn btn-default pull-right">See user info</a>
+  </div>
+</div>
+{% endblock content %}
