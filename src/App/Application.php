@@ -30,6 +30,7 @@ class Application extends SilexApplication
         $app->register(new OrmProvider());
         $app->register(new PopshopsServiceProvider());
         $app->register(new CacheProvider());
+        $app->register(new MailerProvider());
     }
 
     public static function registerWebServices(Application $app)

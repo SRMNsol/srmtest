@@ -25,14 +25,22 @@ $console->setHelperSet(new HelperSet([
 ]));
 
 $console->addCommands([
-    new App\Console\AssetDumpCommand(),
+    /* Extrabux imports */
     new App\Console\ExtrabuxImportTransactionCommand(),
     new App\Console\ExtrabuxImportReferralCommand(),
     new App\Console\ExtrabuxImportAdjustmentCommand(),
     new App\Console\ExtrabuxImportUserCommand(),
+
+    /* Beesavy */
+    new App\Console\AssetDumpCommand(),
     new App\Console\ReferralTreeCommand(),
     new App\Console\ReferralCalculationCommand(),
+    new App\Console\MailerTestCommand(),
+
+    /* Fixer */
     new App\Console\FixDuplicateUserCommand(),
+
+    /* Transaction related */
     new Popshops\Console\MerchantCommand(),
     new Popshops\Console\ProductCommand(),
     new Popshops\Console\DealCommand(),

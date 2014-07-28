@@ -76,3 +76,11 @@ user.provider:
     - ROLE_ADMIN
     - 5FZ2Z8QIkA7UTZ4BYkoC+GsReLf569mSKDsfods6LYQ8t+a8EW9oaircfMpmaLbPBh4FOBiiFyLfuZmTSUwzZg==
 
+# swiftmailer
+swiftmailer.options:
+  host: smtp.mailgun.org
+  port: 465
+  username: postmaster@beesavy.com
+  password: SMTP_PASSWORD
+  encryption: tls
+  auth_mode: plain
