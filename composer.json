@@ -17,7 +17,7 @@
     "symfony/security": "~2.3",
     "symfony/translation": "~2.3",
     "symfony/config": "~2.3",
-    "doblebjp/popshops-api": "dev-master",
+    "doblebjp/popshops-api": "dev-master#74fee96be5164174f1e27d1a75ce616535e4d153",
     "knplabs/console-service-provider": "dev-master",
     "doctrine/migrations": "v1.0-alpha1"
   },
@@ -37,7 +37,8 @@
       "App\\Setup\\WritePermissions::checkPaths",
       "php bin/console.php asset:dump",
       "vendor/bin/doctrine orm:generate-proxies",
-      "php bin/console.php beesavy:fix:duplicate-user"
+      "php bin/console.php beesavy:fix:duplicate-user --no-ansi > data/log/fix_duplicate_user_`date +\"%Y%m%d%H%M%S\"`",
+      "php bin/console.php beesavy:fix:user-cashback --no-ansi > data/log/fix_user_cashback_`date +\"%Y%m%d%H%M%S\"`"
     ],
     "post-update-cmd": [
       "App\\Setup\\WritePermissions::checkPaths",

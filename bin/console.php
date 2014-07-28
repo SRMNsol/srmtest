@@ -33,6 +33,7 @@ $console->addCommands([
     new App\Console\ReferralTreeCommand(),
     new App\Console\ReferralCalculationCommand(),
     new App\Console\FixDuplicateUserCommand(),
+    new App\Console\FixUserCashbackCommand(),
     new Popshops\Console\MerchantCommand(),
     new Popshops\Console\ProductCommand(),
     new Popshops\Console\DealCommand(),
