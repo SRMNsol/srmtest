@@ -16,7 +16,7 @@ class PaymentRepository extends EntityRepository
     public function createPaymentForUser(User $user)
     {
         $criteria = Criteria::create();
-        $criteria->where(Criteria::expr()->eq('status', Payable::STATUS_AVAILABLE));
+        $criteria->where(Criteria::expr()->gt('available', 0));
 
         $payables = $user->getPayables()->matching($criteria);
 
