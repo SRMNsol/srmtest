@@ -1,8 +1,9 @@
 <?php
 if (!defined('BASEPATH')) exit('No direct script access allowed');
-class Code extends Model {
 
-    var $errors = array(
+class Code extends Model
+{
+    public $errors = array(
         0 =>'Error',
         18=>'User account already exists',
         19=>'System cannot execute this action currently',
@@ -21,7 +22,7 @@ class Code extends Model {
         36=>'Enter all charity information',
         37=>'Already in use',
     );
-    var $codes = array(
+    public $codes = array(
         'fail'=>18,
         'in_use'=>37,
         'general_login'=>20,
@@ -39,30 +40,35 @@ class Code extends Model {
         'charity_error'=>36
     );
 
-	function Code() {
-		parent::Model();
-	}
+    public function Code()
+    {
+        parent::Model();
+    }
 
-    function get_code($str){
-        if(array_key_exists($str, $this->codes)){
+    public function get_code($str)
+    {
+        if (array_key_exists($str, $this->codes)) {
             return $this->codes[$str];
-        }else{
+        } else {
             return '0';
         }
     }
-    function get_errors($codes){
+    public function get_errors($codes)
+    {
         if(empty($codes))
+
             return array();
         $arr = array();
-        foreach($codes as $code){
+        foreach ($codes as $code) {
             $arr[] = array('message'=>$this->get_error($code));
         }
+
         return $arr;
     }
-    function get_error($str){
+    public function get_error($str)
+    {
         if($str)
+
         return($this->errors[$str]);
     }
 }
-?>
-
