@@ -56,6 +56,8 @@ class TransactionListener
             }
         }
 
+        $cashback->updateUserLastCashbackDate();
+
         if (null === $cashback->getConcept()) {
             $merchant = $transaction->getMerchant();
             if (isset($merchant)) {

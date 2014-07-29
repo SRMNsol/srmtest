@@ -171,4 +171,19 @@ class CashbackTest extends OrmTestCase
         $this->assertEquals(2.00, $cashback->getAmount(), 0.01);
         $this->assertEquals(Cashback::STATUS_PAID, $cashback->getStatus());
     }
+
+    public function testUserLastCashbackDate()
+    {
+        $user = $this->createUserEntity(1);
+
+        $cashback = new Cashback();
+        $cashback->setRegisteredAt(new \DateTime());
+        $cashback->setUser($user);
+        $cashback->updateUserLastCashbackDate();
+
+        $this->assertEquals(
+            $cashback->getRegisteredAt()->format('Y-m-d'),
+            $user->getLastCashbackAt()->format('Y-m-d')
+        );
+    }
 }
