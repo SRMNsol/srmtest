@@ -83,6 +83,8 @@ class Account extends Controller
 
         if ($status === Beesavy::PAYMENT_INSUFFICIENT_CASHBACK) {
             redirect("/account/index/0/6/");
+        } elseif($status === Beesavy::PAYMENT_MISSING_DATA) {
+            redirect("/account/index/0/2/");
         } elseif($status === Beesavy::PAYMENT_REQUEST_FAILURE) {
             redirect("/account/index/0/5/");
         } else {

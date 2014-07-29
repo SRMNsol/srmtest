@@ -245,6 +245,28 @@ class User
     }
 
     /**
+     * Decide whether payment info is complete
+     * for the chosen payment method
+     */
+    public function hasRequiredPaymentInfo()
+    {
+        if ('CHECK' === $this->paymentMethod) {
+            return (null !== $this->firstName)
+                && (null !== $this->lastName)
+                && (null !== $this->address)
+                && (null !== $this->city)
+                && (null !== $this->state)
+                && (null !== $this->zip);
+        } elseif ('PAYPAL' === $this->paymentMethod) {
+            return (null !== $this->paypalEmail);
+        } elseif ('CHARITY' === $this->paymentMethod) {
+            return (null !== $this->charity);
+        }
+
+        return false;
+    }
+
+    /**
      * Get id
      *
      * @return integer

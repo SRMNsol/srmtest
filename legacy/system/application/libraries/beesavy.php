@@ -15,7 +15,8 @@ class Beesavy
 
     const PAYMENT_REQUEST_SUCCESS = 1;
     const PAYMENT_INSUFFICIENT_CASHBACK = 2;
-    const PAYMENT_REQUEST_FAILURE = 3;
+    const PAYMENT_MISSING_DATA = 3;
+    const PAYMENT_REQUEST_FAILURE = 4;
 
     public function __construct()
     {
@@ -126,6 +127,10 @@ class Beesavy
             $summary = $em->getRepository('App\Entity\Payable')->calculateUserSummary($user);
             if ($summary['available'] < 10) {
                 return self::PAYMENT_INSUFFICIENT_CASHBACK;
+            }
+
+            if ($user->hasRequiredPaymentInfo() === false) {
+                return self::PAYMENT_MISSING_DATA;
             }
 
             $payment = $em->getRepository('App\Entity\Payment')->createPaymentForUser($user);
