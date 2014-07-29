@@ -201,36 +201,18 @@ if($payment_method == "CHECK"){
 					<tbody><tr>
 						<td>Charity:</td>
 						<td>
-							<select id="charity_id" name="charity_id">
-<?php
-    #Set the default selected store
-    echo str_replace("value=\"$charity_id\"", "value='$charity_id' selected",'<OPTION selected
-							<option selected="selected" label="Please select a charity" value="2">Please select a charity</option>
-							<option label="American Heart Association" value="9">American Heart Association</option>
-																<option label="American Red Cross" value="1">American Red Cross</option>
-																<option label="Animal Welfare Institute" value="12">Animal Welfare Institute</option>
-																<option label="Big Brothers Big Sisters of America" value="15">Big Brothers Big Sisters of America</option>
-																<option label="Boys &amp; Girls Club of America" value="3">Boys &amp; Girls Club of America</option>
-																<option label="CARE" value="16">CARE</option>
-																<option label="Catholic Charities USA" value="17">Catholic Charities USA</option>
-																<option label="Cystic Fibrosis Foundation" value="13">Cystic Fibrosis Foundation</option>
-																<option label="Disabled American Veterans" value="18">Disabled American Veterans</option>
-																<option label="Feed The Children" value="19">Feed The Children</option>
-																<option label="Feeding America" value="14">Feeding America</option>
-																<option label="Friends of Long Beach Animals" value="29">Friends of Long Beach Animals</option>
-																<option label="Green Wish" value="28">Green Wish</option>
-																<option label="Habitat for Humanity International" value="5">Habitat for Humanity International</option>
-																<option label="Humane Society of the U.S." value="20">Humane Society of the U.S.</option>
-																<option label="Leukemia &amp; Lymphoma Society" value="21">Leukemia &amp; Lymphoma Society</option>
-																<option label="Nature Conservancy" value="6">Nature Conservancy</option>
-																<option label="Salvation Army" value="8">Salvation Army</option>
-																<option label="Save The Children" value="22">Save The Children</option>
-																<option label="Special Olympics" value="23">Special Olympics</option>
-																<option label="UNCF" value="25">UNCF</option>
-																<option label="UNICEF" value="7">UNICEF</option>
-																<option label="United Jewish Communities" value="26">United Jewish Communities</option>
-                                                                <option label="World Vision" value="27">World Vision</option>')?>
-															</select>
+                            <select id="charity_id" name="charity_id">
+                                <option value="">Please select a charity</option>
+                                <?php
+                                    foreach ($charities as $charity) {
+                                        printf('<option value="%s" %s>%s</option>',
+                                            escape($charity->getId()),
+                                            $charity_id == $charity->getId() ? 'selected="selected"': '',
+                                            escape($charity->getName())
+                                        );
+                                    }
+                                ?>
+                            </select>
 						</td>
 						<td class="submit"><div class=SaveChanges><div class="BtnSaveChangesBg BtnSaveChanges"><INPUT type="submit" name="" value=""/></div></div></td>
 					</tr>

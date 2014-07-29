@@ -69,6 +69,10 @@ class Account extends Controller
         if ($notice==6) {
             $data['errors'][] = array('message'=>"You must have $10 in available cash back and a confirmed purchase to request a payment.");
         }
+
+        $container = silex();
+        $data['charities'] = $container['orm.em']->getRepository('App\Entity\Charity')->findBy([], ['name' => 'ASC']);
+
         $this->parser->parse('account/account', $data);
     }
 
