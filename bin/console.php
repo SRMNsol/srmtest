@@ -36,6 +36,7 @@ $console->addCommands([
     new App\Console\ReferralTreeCommand(),
     new App\Console\ReferralCalculationCommand(),
     new App\Console\MailerTestCommand(),
+    new App\Console\RemovePaymentCommand(),
 
     /* Fixer */
     new App\Console\FixDuplicateUserCommand(),

@@ -14,7 +14,7 @@ class User extends Model
     public $table = "user";
 
     public $uinterface = array(
-        'uid', 'email', 'facebook_auto', 'twitter_auto',
+        'uid', 'email', 'first_name', 'last_name', 'facebook_auto', 'twitter_auto',
         'paypal_email', 'payment_method', 'alias', 'charity_id',
         'admin', 'send_reminders', 'send_updates','created','last_long',
         'last_refer','purchase_exempt','password',
@@ -204,35 +204,6 @@ class User extends Model
         $response = $this->beesavy->getUser($id, '', True);
 
         return $response;
-    }
-
-    //User update methods
-    public function set_check($fname, $lname, $addr, $city, $state, $zip)
-    {
-        $data = array(
-            'first_name'=> $fname,
-            'last_name'=> $lname,
-            'street'=> $addr,
-            'city'=> $city,
-            'state'=> $state,
-            'zip'=>$zip,
-            'user_payment_method_type'=>'check',
-            'user_payment_method_first_name'=> $fname,
-            'user_payment_method_last_name'=> $lname,
-            'user_payment_method_street'=> $addr,
-            'user_payment_method_city'=> $city,
-            'user_payment_method_state'=> $state,
-            'user_payment_method_zip'=>$zip);
-        $this->set_data_batch($data);
-    }
-
-    public function set_data_batch($data)
-    {
-        $login_status = $this->db_session->userdata('login');
-        $email = $login_status['email'];
-        $password = $login_status['password'];
-        $id = $login_status['id'];
-        $this->beesavy->updateUserBatch($id, $email, $password, $data);
     }
 
     public function set_password($new, $current)

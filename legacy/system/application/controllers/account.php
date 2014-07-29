@@ -44,7 +44,7 @@ class Account extends Controller
     public function index($success = False, $notice=False, $error = "")
     {
         $data = $this->__get_header();
-        $data['errors'] = array();
+        $data['errors'] = $this->code->get_errors($this->error);
         if ($success && empty($this->error)) {
             $data['success'] = "Account settings updated";
         }
@@ -53,8 +53,7 @@ class Account extends Controller
                 "shopping</a> now!";
         }
         if ($notice==2 && $data['payment_method']) {
-            $data['notice'] = "Verify your payment method below and then click the REQUEST A PAYMENT button on".
-                " the right.";
+            $data['notice'] = "Verify your payment method below and then click the REQUEST A PAYMENT button on the right.";
         } elseif ($notice==2) {
             $data['notice'] = "Select your payment method below and then click the REQUEST A PAYMENT button on the right.";
         }
@@ -70,6 +69,10 @@ class Account extends Controller
         if ($notice==6) {
             $data['errors'][] = array('message'=>"You must have $10 in available cash back and a confirmed purchase to request a payment.");
         }
+
+        $container = silex();
+        $data['charities'] = $container['orm.em']->getRepository('App\Entity\Charity')->findBy([], ['name' => 'ASC']);
+
         $this->parser->parse('account/account', $data);
     }
 
@@ -80,6 +83,8 @@ class Account extends Controller
 
         if ($status === Beesavy::PAYMENT_INSUFFICIENT_CASHBACK) {
             redirect("/account/index/0/6/");
+        } elseif($status === Beesavy::PAYMENT_MISSING_DATA) {
+            redirect("/account/index/0/2/");
         } elseif($status === Beesavy::PAYMENT_REQUEST_FAILURE) {
             redirect("/account/index/0/5/");
         } else {
@@ -177,11 +182,12 @@ class Account extends Controller
     {
         $method = $this->input->post('pmethod');
         if (!empty($method)) {
-        $method = "__$method";
-        $this->$method();
+            $method = "__$method";
+            $this->$method();
         }
         $this->index(1);
     }
+
     public function __check()
     {
         $fname = $this->input->post('firstName');
@@ -193,11 +199,16 @@ class Account extends Controller
         if (!($fname && $lname && $addr && $city && $state && $zip)) {
             $this->error[] = $this->code->get_code('check_error');
         } else {
-            $this->user->set_setting('user_payment_method_type', 'check');
             $this->user->set_setting('payment_method', 'CHECK');
-            $this->user->set_check($fname, $lname, $addr, $city, $state, $zip);
+            $this->user->set_setting('first_name', $fname);
+            $this->user->set_setting('last_name', $lname);
+            $this->user->set_setting('address', $addr);
+            $this->user->set_setting('city', $city);
+            $this->user->set_setting('state', $state);
+            $this->user->set_setting('zip', $zip);
         }
     }
+
     public function __paypal()
     {
         $email =$this->input->post('paypalEmail');
@@ -206,23 +217,20 @@ class Account extends Controller
         } else {
             $this->user->set_setting('paypal_email', $email);
             $this->user->set_setting('payment_method', 'PAYPAL');
-            $this->user->set_data_batch(array(
-                'user_payment_method_type'=>'paypal',
-                'user_payment_method_paypal_email'=>$email));
         }
     }
+
     public function __charity()
     {
         $charity =$this->input->post('charity_id');
         if ($charity) {
             $this->user->set_setting('payment_method', 'CHARITY');
-            $this->user->set_data_batch(array(
-                'user_payment_method_type'=>'charity',
-                'user_payment_method_charity_id'=>$charity));
+            $this->user->set_setting('charity_id', $charity);
         } else {
             $this->error[] = $this->code->get_code('charity_error');
         }
     }
+
     public function set_alias()
     {
         $new =$this->input->post('email');
@@ -242,6 +250,7 @@ class Account extends Controller
 
         $this->index(1);
     }
+
     public function set_email()
     {
         $new =$this->input->post('email');
@@ -260,33 +269,37 @@ class Account extends Controller
         }
         $this->index(1);
     }
+
     public function set_password()
     {
         $current = User::passwordHash($this->input->post('password_current'));
         $new = User::passwordHash($this->input->post('password_new'));
         $conf= User::passwordHash($this->input->post('password_confirm'));
         $info = $this->user->info();
-        if (strlen($this->input->post("password_new"))<6) {
-            $errors[] = $this->code->get_code('invalid_password');
+        if ($current !== $info['password']) {
+            $this->error[] = $this->code->get_code('invalid_password');
+        } elseif (strlen($this->input->post("password_new"))<6) {
+            $this->error[] = $this->code->get_code('invalid_password');
+        } elseif ($new !== $conf) {
+            $this->error[] = $this->code->get_code('password_mismatch');
         } else {
-            if ($new==$conf) {
-                $this->user->set_password($new, $current);
-            } else {
-                $this->error[] = $this->code->get_code('password_mismatch');
-            }
+            $this->user->set_password($new, $current);
         }
         $this->index(1);
     }
+
     public function set_setting()
     {
         $setting =$this->input->post('setting');
         $value =$this->input->post('value');
+
         if ($setting == "facebook_auto" && $value) {
             $url = $this->facebook->request_permissions(base_url()."account/add_facebook", $this->user_id);
             if ($url) {
                 redirect($url);
             }
         }
+
         if ($setting == "twitter_auto" && $value) {
             $url = $this->twitter->request_permissions(base_url()."account/add_twitter", $this->user_id);
             if ($url) {
@@ -294,10 +307,11 @@ class Account extends Controller
             }
         }
 
-            $this->user->set_setting($setting, $value);
+        $this->user->set_setting($setting, $value);
         $this->index();
 
     }
+
     public function add_facebook()
     {
         $success = $this->facebook->get_access_token($this->user_id);
@@ -305,12 +319,13 @@ class Account extends Controller
             $error = '5';
             redirect("/account");
         } else {
-        $setting = "facebook_auto";
-        $value = 1;
-        $this->user->set_setting($setting, $value);
-        redirect("/account");
+            $setting = "facebook_auto";
+            $value = 1;
+            $this->user->set_setting($setting, $value);
+            redirect("/account");
         }
     }
+
     public function add_twitter()
     {
         $success = $this->twitter->get_access_token($this->user_id);
@@ -318,12 +333,13 @@ class Account extends Controller
             $error = '5';
             redirect("/account");
         } else {
-        $setting = "twitter_auto";
-        $value = 1;
-        $this->user->set_setting($setting, $value);
-        redirect("/account");
+            $setting = "twitter_auto";
+            $value = 1;
+            $this->user->set_setting($setting, $value);
+            redirect("/account");
         }
     }
+
     public function set_email_setting()
     {
         $send_updates = $this->input->post('send_updates');
@@ -332,5 +348,4 @@ class Account extends Controller
         $this->user->set_setting("send_updates", $send_updates);
         $this->index(1);
     }
-
 }

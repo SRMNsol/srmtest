@@ -273,8 +273,22 @@ class Payment
         foreach ($this->payables as $payable) {
             $processing = $payable->getProcessing();
             $paid = $payable->getPaid();
-            $payable->setProcessing(0);
+            $payable->setProcessing(0.00);
             $payable->setPaid($paid + $processing);
+        }
+    }
+
+    /**
+     * @ORM\PreRemove
+     */
+    public function revertPayment()
+    {
+        foreach ($this->payables as $payable) {
+            $processing = $payable->getProcessing();
+            $available = $payable->getAvailable();
+            $payable->setProcessing(0.00);
+            $payable->setAvailable($available + $processing);
+            $payable->setPayment(); /* nullify */
         }
     }
 
