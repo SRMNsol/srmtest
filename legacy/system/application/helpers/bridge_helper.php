@@ -49,7 +49,7 @@ function result_merchants(Collection $merchants, Rate $rate, Subid $subid = null
     return array_values($merchants->map(function (Merchant $merchant) use ($rate, $subid) {
         return [
             'id' => $merchant->getId(),
-            'name' => $merchant->getName(),
+            'name' => $merchant->getDisplayName(),
             'logo' => $merchant->getLogoUrl(),
             'logo_thumb' => $merchant->getLogoUrl(),
             'description' => $merchant->getDescription(),
