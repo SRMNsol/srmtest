@@ -28,11 +28,8 @@
   })();
 
 </script>
-<script src="<?php echo s3path("/colorbox/jquery.colorbox.js") ?>"></script>
-<script type="text/javascript" src="<?php echo s3path("/script_files/Extrabux.js") ?>"></script>
-<script type="text/javascript" src="<?php echo s3path("/jquery/jquery_004.js") ?>"></script>
-<script type="text/javascript" src="<?php echo s3path("/script_files/extrabux.min.8503.js") ?>"></script>
-<script src="<?php echo s3path("/jquery/jquery-ui.js") ?>" type="text/javascript"></script>
+<script type="text/javascript" src="<?php echo s3path("/script_files/jquery_004.js") ?>"></script>
+<script type="text/javascript" src="<?php echo s3path("/script_files/jquery-ui.js") ?>"></script>
 <script type="text/javascript" src="<?php echo s3path("/scroll/scripts/jquery.mousewheel.js") ?>"></script>
 <script type="text/javascript" src="<?php echo s3path("/scroll/scripts/jScrollPane.js") ?>"></script>
 <script type='text/javascript' src="<?php echo s3path("/script_files/nav_bar.js") ?>"></script>
@@ -44,11 +41,6 @@
          $('#pane1').jScrollPane({ showArrows: true, scrollbarWidth: 15, arrowSize: 16 });
         $('#pane2').jScrollPane({ showArrows: true, scrollbarWidth: 15, arrowSize: 16 });
     });
-</script>
-<script type='text/javascript'>
-$(document).ready(function(){
-    $(".make-home").colorbox();
-});
 </script>
 <script>
 $(document).ready(function() {
