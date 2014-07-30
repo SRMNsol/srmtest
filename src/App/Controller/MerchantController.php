@@ -33,16 +33,15 @@ class MerchantController
         $merchant = $this->em->find('App\Entity\Merchant', $merchantId);
         $form = $app['form.factory']->create(new MerchantType(), $merchant);
 
-        try {
-            $form->handleRequest($request);
-            if ($form->isValid()) {
-                $merchant = $form->getData();
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            try {
                 $this->em->flush();
-
+                $app['session']->getFlashBag()->add('success', 'Merchant updated');
                 return $app->redirect($app['url_generator']->generate('merchant_list'));
+            } catch (\Exception $e) {
+                $app['session']->getFlashBag()->add('danger', 'Update failed');
             }
-        } catch (\Exception $e) {
-
         }
 
         return new Response($app['twig']->render('merchant_edit.html.twig', [

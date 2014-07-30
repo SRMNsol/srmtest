@@ -13,10 +13,9 @@ class Beesavy
     protected $db;
     protected $container;
 
-    const PAYMENT_REQUEST_SUCCESS = 1;
-    const PAYMENT_INSUFFICIENT_CASHBACK = 2;
-    const PAYMENT_MISSING_DATA = 3;
-    const PAYMENT_REQUEST_FAILURE = 4;
+    const PAYMENT_INSUFFICIENT_CASHBACK = 'insufficient';
+    const PAYMENT_MISSING_DATA = 'incomplete';
+    const PAYMENT_REQUEST_FAILURE = 'failure';
 
     public function __construct()
     {
@@ -134,7 +133,8 @@ class Beesavy
             }
 
             $payment = $em->getRepository('App\Entity\Payment')->createPaymentForUser($user);
-            return self::PAYMENT_REQUEST_SUCCESS;
+
+            return $payment;
         } catch (Exception $e) {
             return self::PAYMENT_REQUEST_FAILURE;
         }

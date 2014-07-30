@@ -31,7 +31,10 @@ class Emailer extends Model
         $message->setFrom($data['from_addr']);
         $message->setTo($data['to_addr']);
         $message->setBody($data['txt_message']);
-        $message->addPart($data['message'], 'text/html');
+
+        if ($data['message'] !== null) {
+            $message->addPart($data['message'], 'text/html');
+        }
 
         $this->container['mailer']->send($message);
 

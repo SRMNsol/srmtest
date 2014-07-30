@@ -99,4 +99,16 @@ class Cashback extends Payable
     {
         return $this->transaction ? $this->transaction->getCommissionByLevel(0) : 0.00;
     }
+
+    /**
+     * Update user last purchase date if earlier than registered date
+     */
+    public function updateUserLastCashbackDate()
+    {
+        if (null !== $this->user && $this->registeredAt > $this->user->getLastCashbackAt()) {
+            $this->user->setLastCashbackAt(clone $this->registeredAt);
+        }
+
+        return $this;
+    }
 }

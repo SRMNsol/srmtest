@@ -4,7 +4,7 @@
 
 {% block content %}
 <div class="page-header">
-  <h1>Edit Merchant <small>{{ merchant.name }}</small></h1>
+  <h1>Edit Merchant</h1>
 </div>
 
 <div class="row">
@@ -17,7 +17,8 @@
           <p class="form-control-static">{{ merchant.name }}</p>
         </div>
       </div>
-      {{ form_row(form.description, { attr: { rows: 6 }, label_attr: { class: 'col-md-2' }, div_attr: { class: 'col-md-5' } }) }}
+      {{ form_row(form.alternativeName) }}
+      {{ form_row(form.description, { attr: { rows: 15 }, label_attr: { class: 'col-md-2' }, div_attr: { class: 'col-md-8' } }) }}
 
       {{ form_row(form.commission, { div_attr: { class: 'col-md-3' } }) }}
       {{ form_row(form.commissionMax, { label: 'Up to',  div_attr: { class: 'col-md-3' } }) }}
@@ -26,6 +27,7 @@
       <div class="form-group">
         <div class="col-md-6 col-md-offset-2">
           <button type="submit" class="btn btn-primary">Update</button>
+          <a href="{{ path('merchant_list') }}" class="btn btn-default">Cancel</a>
         </div>
       </div>
     {{ form_end(form) }}

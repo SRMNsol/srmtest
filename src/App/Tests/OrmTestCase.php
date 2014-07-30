@@ -42,18 +42,9 @@ class OrmTestCase extends BaseOrmTestCase
     protected function createUserEntity($i)
     {
         $user = new User();
-        $user->setEmail("$i@example.com");
-        $user->setPaymentMethod('x');
-        $user->setPaypalEmail("$i@example.com");
+        $user->setEmail("user$i@example.com");
         $user->setAlias("user$i");
-        $user->setLastLoginAt(new \DateTime());
-        $user->setLastReferAt(new \DateTime());
-        $user->setCreatedAt(new \DateTime());
-        $user->setFacebookAccessToken("test");
-        $user->setTwitterTokenSecret("test");
-        $user->setTwitterAccessToken("test");
         $user->setPassword("Pa55w0rd");
-        $user->setLastCashbackAt(new \DateTime());
 
         return $user;
     }

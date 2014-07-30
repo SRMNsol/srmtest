@@ -26,6 +26,11 @@ class Merchant extends BaseMerchant
      */
     protected $commissionMax = 0.00;
 
+    /**
+     * @ORM\Column(nullable=true)
+     */
+    protected $alternativeName;
+
     const COMMISSION_TYPE_FIXED_VAR = 'fixed_var';
     const COMMISSION_TYPE_PERCENTAGE_VAR = 'percentage_var';
 
@@ -39,6 +44,23 @@ class Merchant extends BaseMerchant
         $this->commissionMax = (float) $value;
 
         return $this;
+    }
+
+    public function getAlternativeName()
+    {
+        return $this->alternativeName;
+    }
+
+    public function setAlternativeName($name)
+    {
+        $this->alternativeName = $name;
+
+        return $this;
+    }
+
+    public function getDisplayName()
+    {
+        return ($this->alternativeName !== null) ? $this->alternativeName : $this->name;
     }
 
     public function hasVariableCommission()
@@ -121,7 +143,9 @@ class Merchant extends BaseMerchant
         return null;
     }
 
-
+    /**
+     * Validators
+     */
     static public function loadValidatorMetadata(ClassMetadata $metadata)
     {
         $metadata->addPropertyConstraint('commission', new Assert\NotBlank());
@@ -131,12 +155,22 @@ class Merchant extends BaseMerchant
         $metadata->addPropertyConstraint('commissionMax', new Assert\NotBlank());
         $metadata->addPropertyConstraint('commissionMax', new Assert\GreaterThanOrEqual(['value' => 0]));
         $metadata->addPropertyConstraint('commissionMax', new Assert\LessThanOrEqual(['value' => 100, 'groups' => ['Percentage']]));
+
+        $metadata->addPropertyConstraint('commissionType', new Assert\Choice([
+            self::COMMISSION_TYPE_FIXED,
+            self::COMMISSION_TYPE_PERCENTAGE,
+            self::COMMISSION_TYPE_FIXED_VAR,
+            self::COMMISSION_TYPE_PERCENTAGE_VAR,
+        ]));
     }
 
+    /**
+     * Set validation groups based on commission type
+     */
     static public function determineValidationGroups(FormInterface $form)
     {
         $merchant = $form->getData();
-        $groups = ['Default'];
+        $groups = ['Merchant'];
         if ($merchant->getCommissionType() === self::COMMISSION_TYPE_PERCENTAGE
             || $merchant->getCommissionType() === self::COMMISSION_TYPE_PERCENTAGE_VAR
         ) {
@@ -145,13 +179,19 @@ class Merchant extends BaseMerchant
         return $groups;
     }
 
+    /**
+     * String representation
+     */
     public function __toString()
     {
-        return $this->name;
+        return $this->getDisplayName();
     }
 
+    /**
+     * Merchant name with network
+     */
     public function getNetworkMerchantName()
     {
-        return sprintf('[%s] %s', (string) $this->network ?: '?', $this->name);
+        return sprintf('[%s] %s', (string) $this->network ?: '?', $this->getDisplayName());
     }
 }
