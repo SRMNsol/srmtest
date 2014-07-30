@@ -79,15 +79,25 @@ class Account extends Controller
     public function payment()
     {
         $data = $this->__get_header();
-        $status = $this->beesavy->processPayment($this->user_id);
+        $payment = $this->beesavy->processPayment($this->user_id);
 
-        if ($status === Beesavy::PAYMENT_INSUFFICIENT_CASHBACK) {
+        if ($payment === Beesavy::PAYMENT_INSUFFICIENT_CASHBACK) {
             redirect("/account/index/0/6/");
-        } elseif($status === Beesavy::PAYMENT_MISSING_DATA) {
+        } elseif($payment === Beesavy::PAYMENT_MISSING_DATA) {
             redirect("/account/index/0/2/");
-        } elseif($status === Beesavy::PAYMENT_REQUEST_FAILURE) {
+        } elseif($payment === Beesavy::PAYMENT_REQUEST_FAILURE) {
             redirect("/account/index/0/5/");
-        } else {
+        } elseif ($payment instanceof App\Entity\Payment) {
+            $data = [
+                'user_id' => $payment->getUser()->getId(),
+                'email' => $payment->getUser()->getEmail(),
+                'date' => $payment->getRequestedAt()->format('m/d/Y'),
+                'amount' => number_format($payment->getAmount(), 2),
+            ];
+            $subject = sprintf('[Payment Requested] %s', $payment->getUser()->getEmail());
+            $message = $this->parser->parse('email/paymentreqt', $data, true);
+            $to = 'help@beesavy.com';
+            $this->emailer->sendMessage(null, $message, $to, $subject);
             redirect('/account/index/0/4');
         }
     }
