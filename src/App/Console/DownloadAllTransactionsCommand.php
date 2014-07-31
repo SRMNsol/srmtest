@@ -42,7 +42,7 @@ class DownloadAllTransactionsCommand extends Command
         if ($last >= $yesterday) {
             /* because last will be +1 day, maximum yesterday */
             $last = new \DateTime('2 days ago');
-        } else {
+        } elseif ($last instanceof \DateTime) {
             /* clone to avoid modifying network */
             $last = clone $last;
         }
