@@ -17,6 +17,7 @@ class User extends Model
         'uid', 'email', 'first_name', 'last_name', 'facebook_auto', 'twitter_auto',
         'paypal_email', 'payment_method', 'alias', 'charity_id',
         'admin', 'send_reminders', 'send_updates','created','last_long',
+        'address', 'city', 'state', 'zip',
         'last_refer','purchase_exempt','password',
     );
 

@@ -27,5 +27,28 @@
       </table>
     </div>
   </div>
+  <div class="col-md-6">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Transaction Download</h3>
+      </div>
+      <table class="table">
+        <thead>
+          <tr>
+            <th class="col-md-6">Network</th>
+            <th class="col-md-3">Last Transaction Download</th>
+            <th class="col-md-3">Last Transaction Update Download</th>
+          </tr>
+        </thead>
+        {% for network in networks %}
+        <tr>
+          <td>{{ network.name }}</td>
+          <td>{{ network.lastTransactionDownloadAt is empty ? '-' : network.lastTransactionDownloadAt|date('m/d/Y') }}</td>
+          <td>{{ network.lastTransactionHistoryDownloadAt is empty ? '-' : network.lastTransactionHistoryDownloadAt|date('m/d/Y') }}</td>
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
+  </div>
 </div>
 {% endblock %}
