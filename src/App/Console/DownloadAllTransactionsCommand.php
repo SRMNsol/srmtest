@@ -42,6 +42,9 @@ class DownloadAllTransactionsCommand extends Command
         if ($last >= $yesterday) {
             /* because last will be +1 day, maximum yesterday */
             $last = new \DateTime('2 days ago');
+        } else {
+            /* clone to avoid modifying network */
+            $last = clone $last;
         }
 
         if ($args['start-date'] === null && $args['end-date'] === null) {
@@ -56,6 +59,7 @@ class DownloadAllTransactionsCommand extends Command
     {
         $app = $this->getSilexApplication();
 
+        $last = null;
         switch ($type) {
             case 'transaction' :
                 $last = $network->getLastTransactionDownloadAt();

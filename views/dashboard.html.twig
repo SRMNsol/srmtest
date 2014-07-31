@@ -43,8 +43,8 @@
         {% for network in networks %}
         <tr>
           <td>{{ network.name }}</td>
-          <td>{{ network.lastTransactionDownloadAt is empty ? '-' : network.lastTransactionDownloadAt|date('Y-m-d') }}</td>
-          <td>{{ network.lastTransactionHistoryDownloadAt is empty ? '-' : network.lastTransactionHistoryDownloadAt|date('Y-m-d') }}</td>
+          <td>{{ network.lastTransactionDownloadAt is empty ? '-' : network.lastTransactionDownloadAt|date('m/d/Y') }}</td>
+          <td>{{ network.lastTransactionHistoryDownloadAt is empty ? '-' : network.lastTransactionHistoryDownloadAt|date('m/d/Y') }}</td>
         </tr>
         {% endfor %}
       </table>
