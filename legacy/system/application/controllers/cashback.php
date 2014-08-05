@@ -45,9 +45,7 @@ class Cashback extends Controller
             $data['transtype'] = 'Personal';
             $data['status'] = ucfirst($cashback->getStatus());
             $data['cashback'] = sprintf('%.2f', $cashback->getAmount());
-            $data['date'] = $cashback->getStatus() === App\Entity\Cashback::STATUS_PAID
-                ? ($cashback->getRegisteredAt() ? $cashback->getRegisteredAt()->format('m/Y') : null)
-                : 'N/A';
+            $data['date'] = $cashback->getPaymentDate() ? $cashback->getPaymentDate()->format('m/d/Y') : 'N/A';
 
             return $data;
         }, $result);
@@ -56,24 +54,16 @@ class Cashback extends Controller
             $em->getReference('App\Entity\User', $this->user_id)
         );
 
-        $referrals = [];
-        array_walk($result, function (App\Entity\Referral $referral) use (&$referrals) {
-            foreach (['pending', 'paid', 'available'] as $status) {
-                $method = 'get' . ucfirst($status);
-                $value = $referral->$method();
-                if ($value > 0) {
-                    $referrals[] = [
-                        'month' => $referral->getAvailableAt()->format('m/Y'),
-                        'transtype' => $referral->getConcept(),
-                        'status' => ucfirst($status),
-                        'cashback' => sprintf('%.2f', $value),
-                        'date' => 'N/A'
-                    ];
-                }
-            }
-        });
+        $data['reftransactions'] = array_map(function (App\Entity\Referral $referral) {
+            $data['month'] = $referral->getFormattedMonth();
+            $data['transtype'] = $referral->getConcept();
+            $data['status'] = ucfirst($referral->getStatus());
+            $data['cashback'] = sprintf('%.2f', $referral->getAmount());
+            $data['date'] = $referral->getPaymentDate() ? $referral->getPaymentDate()->format('m/d/Y') : 'N/A';
 
-        $data['reftransactions'] = $referrals;
+            return $data;
+        }, $result);
+
         $this->parser->parse('cashback/base', $data);
     }
 
@@ -90,7 +80,7 @@ class Cashback extends Controller
         );
 
         $data['transactions'] = array_map(function (App\Entity\Cashback $cashback) {
-            $data['report_date'] = $cashback->getRegisteredAt() ? $cashback->getRegisteredAt()->format('m/d/Y') : null;
+            $data['report_date'] = $cashback->getReportDate() ? $cashback->getReportDate()->format('m/d/Y') : null;
             $data['merchant'] = $cashback->getConcept();
             $data['order_id'] = $cashback->getOrderNumber();
             $data['status'] = ucfirst($cashback->getStatus());
@@ -120,14 +110,12 @@ class Cashback extends Controller
             foreach (['amount', 'direct', 'indirect'] as $field) {
                 $method = 'get' . ucfirst($field);
                 $value = $referral->$method();
-                if ($value > 0) {
-                    $referrals[] = [
-                        'date' => $referral->getAvailableAt()->format('m/Y'),
-                        'level' => $field === 'amount' ? $referral->getConcept() : ($field === 'direct' ? 'Level 1' : 'Level 2-7'),
-                        'status' => ucfirst($referral->getStatus()),
-                        'cashback' => sprintf('%.2f', $value),
-                    ];
-                }
+                $referrals[] = [
+                    'date' => $referral->getFormattedMonth(),
+                    'level' => $field === 'amount' ? $referral->getConcept() : ($field === 'direct' ? 'Level 1' : 'Level 2-7'),
+                    'status' => ucfirst($referral->getStatus()),
+                    'cashback' => sprintf('%.2f', $value),
+                ];
             }
         });
 

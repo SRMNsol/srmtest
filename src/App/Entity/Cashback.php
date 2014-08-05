@@ -111,4 +111,17 @@ class Cashback extends Payable
 
         return $this;
     }
+
+    /**
+     * Report date is register date for new cashback
+     * and available date for extrabux imports
+     */
+    public function getReportDate()
+    {
+        if ($this->isExtrabux) {
+            return $this->availableAt;
+        }
+
+        return $this->registeredAt;
+    }
 }
