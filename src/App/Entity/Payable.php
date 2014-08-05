@@ -423,10 +423,22 @@ class Payable
     /**
      * Get isExtrabux
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getIsExtrabux()
     {
         return $this->isExtrabux;
+    }
+
+    /**
+     * Return payment date if is paid
+     */
+    public function getPaymentDate()
+    {
+        if ($this->payment !== null && $this->payment->getPaidAt() !== null) {
+            return $this->payment->getPaidAt();
+        }
+
+        return null;
     }
 }
