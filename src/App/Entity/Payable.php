@@ -87,6 +87,11 @@ class Payable
      */
     protected $payment;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $isExtrabux = false;
+
     const STATUS_PENDING = 'pending';
     const STATUS_AVAILABLE = 'available';
     const STATUS_PROCESSING = 'processing';
@@ -400,5 +405,28 @@ class Payable
     public function getPayment()
     {
         return $this->payment;
+    }
+
+    /**
+     * Set isExtrabux
+     *
+     * @param boolean $isExtrabux
+     * @return Payable
+     */
+    public function setIsExtrabux($isExtrabux)
+    {
+        $this->isExtrabux = $isExtrabux;
+
+        return $this;
+    }
+
+    /**
+     * Get isExtrabux
+     *
+     * @return boolean 
+     */
+    public function getIsExtrabux()
+    {
+        return $this->isExtrabux;
     }
 }
