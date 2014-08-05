@@ -54,7 +54,6 @@ class Cashback extends Controller
             $em->getReference('App\Entity\User', $this->user_id)
         );
 
-        $referrals = [];
         $data['reftransactions'] = array_map(function (App\Entity\Referral $referral) {
             $data['month'] = $referral->getFormattedMonth();
             $data['transtype'] = $referral->getConcept();
