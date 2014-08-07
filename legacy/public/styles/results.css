@@ -27,14 +27,14 @@
 .faqNav { margin-left:15px; width:190px;border:0px solid #0FF;}
 
 
-#catagory{width:170px;border:0px solid #0F3;margin-left:5px;}
+#category{width:170px;border:0px solid #0F3;margin-left:5px;}
 
-#catagory-bt {width:184px;height:35px;border:0px solid #F33;float:left;}
+#category-bt {width:184px;height:35px;border:0px solid #F33;float:left;}
 #cat-left-curve {float:left; width:4px;height:35px;}
 #cat-right-curve {float:right; width:4px;height:35px;}
 .cat-bg { background: url('../images/cat_bg.jpg') repeat-x 0; height:35px;width:190px;}
 .topStore-bg { background: url('../images/cat_bg.jpg') repeat-x 0; height:35px;width:170px;}
-#catagory-bg{ background:#e9e8e8; width:183px;border:1px solid #d9d9d9;float:left;margin-top:-5px;-moz-border-radius: 0px 0px 10px 10px;
+#category-bg{ background:#e9e8e8; width:183px;border:1px solid #d9d9d9;float:left;margin-top:-5px;-moz-border-radius: 0px 0px 10px 10px;
             -webkit-border-radius: 0px 0px 10px 10px;border-top-right-radius:0px;
 }
 #tools-bg{ background:#e9e8e8; width:328px;border:1px solid #d9d9d9;float:left;margin-top:-5px;-moz-border-radius: 0px 0px 10px 10px;
@@ -42,12 +42,12 @@
 }
 #topStoreContent-bg{	background:#fff; width:148px;border:1px solid #d9d9d9;float:left;padding:10px;margin-top:-5px;-moz-border-radius: 0px 0px 10px 10px;
             -webkit-border-radius: 0px 0px 10px 10px;border-top-right-radius:0px;}
-#sub-catagory-bg{
+#sub-category-bg{
 	background:#f4f2f2; width:173px;border:1px solid #d9d9d9;float:left;margin-left:4px;margin-top:10px;-moz-border-radius: 10px 10px 10px 10px;
             -webkit-border-radius: 1px 10px 10px 10px;
 }
 
-#facetNav div.sub-catagory-txt{
+#facetNav div.sub-category-txt{
 	font-size:11pt;color:#e96d08;margin-left:4px;margin-top:10px;font-weight:bold;float:left;
 }
 

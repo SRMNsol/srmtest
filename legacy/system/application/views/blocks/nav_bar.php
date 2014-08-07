@@ -1,7 +1,7 @@
 <div id="nav">
               <div id="nav-left-curve"><img src="<?php echo s3path("/images/nav-left-curve.gif") ?>" width="8" height="42" alt="** PLEASE DESCRIBE THIS IMAGE **" /></div>
               <div class="nav-bg" style="border:0px solid #000;width:914px;height:42px;float:left;margin-top:0px;">
-              <div id="nav-ShopByCatagory-bt"><img src="<?php echo s3path("/images/nav_catagoryBt.jpg") ?>" width="140" height="42" alt="** PLEASE DESCRIBE THIS IMAGE **" onclick="$('#catDropdown1').slideToggle();"/></div>
+              <div id="nav-ShopByCategory-bt"><img src="<?php echo s3path("/images/nav_categoryBt.jpg") ?>" width="140" height="42" alt="** PLEASE DESCRIBE THIS IMAGE **" onclick="$('#catDropdown1').slideToggle();"/></div>
               <div id="nav-SearchLabel"><img src="<?php echo s3path("/images/nav_searchLabel.jpg") ?>" width="114" height="42" alt="** PLEASE DESCRIBE THIS IMAGE **"/></div>
               <form id="nav-search-form" action="/search" method="get" accept-charset="utf-8">
               <div id="nav-search">

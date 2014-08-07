@@ -24,11 +24,11 @@
    		<!-- /page Title -->
 
 
-   		<!-- Left catagory -->
+   		<!-- Left category -->
 
 {side_nav}
 
-       <!-- /Left catagory -->
+       <!-- /Left category -->
 
 
        <!-- Right side -->

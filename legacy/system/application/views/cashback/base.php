@@ -94,7 +94,7 @@ $(document).ready(function(){
     <div class="BGNoCol">
 
 
-		<!-- Left Catagory -->
+		<!-- Left Category -->
     <div class="AccountLeftside">
 <div class="merchantView_Width">
 	<div >
@@ -115,7 +115,7 @@ $(document).ready(function(){
 <?php $this->load->view("cashback/$type");?>
 <div style="clear: both;"></div>
 </div>
-	<!-- /Left Catagory -->
+	<!-- /Left Category -->
 
   <!-- Right Catagoty -->
 <div class="AccountRightside">
@@ -177,7 +177,7 @@ echo 90-$val;
 </div>
 <!-- Referral Overview -->
 </div>
-<!-- Right catagory -->
+<!-- Right category -->
 <!-- /content -->
 
 

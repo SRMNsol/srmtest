@@ -176,7 +176,7 @@ if((float)$total[0]['available'] > 10){ ?>
 </div>
 <!-- Referral Overview -->
 </div>
-<!-- Right catagory -->
+<!-- Right category -->
 
 
 	<div style="clear: both;"></div>
