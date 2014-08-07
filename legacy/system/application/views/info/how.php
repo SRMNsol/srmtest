@@ -54,7 +54,7 @@
 
             <tr><td><img src="<?php echo s3path("/images/register-refer.gif") ?>"></td>
             <td><h2> Earn Money!  &nbsp;Refer your friends</h2>
-			<p>BeeSavy  pays you 40% commission on all of your referrals' cash back forever. &nbsp;  We even pay you 10% commission for all of the people they refer, up to seven levels! &nbsp;There are no hoops to jump through or other gimmicks.  </p></td></tr></table>
+			<p>BeeSavy  pays you 10% commission on all of your referrals' cash back forever. &nbsp;  We even pay you 10% commission for all of the people they refer, up to seven levels! &nbsp;There are no hoops to jump through or other gimmicks.  </p></td></tr></table>
                         </table>
 	</div>
 <div style="clear: both;"></div>
