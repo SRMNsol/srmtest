@@ -3,7 +3,7 @@
 {header}
 <body>
 <div id="container">
-<!-- Header -->      
+<!-- Header -->
       {banner}
 <!-- /Header -->
 
@@ -22,20 +22,20 @@
 		<div id="pageTitleRight"></div>
 	</div>
    		<!-- /page Title -->
-    
-    	
-   		<!-- Left catagory -->
+
+
+   		<!-- Left category -->
 
 {side_nav}
-        
-       <!-- /Left catagory -->
-       
-       
+
+       <!-- /Left category -->
+
+
        <!-- Right side -->
        <div id="results" class="faq">
                      <div class="title">FAQ's</div>
             <div style="float:left;width:100%;"><hr color="#e96d08" style="margin-left:10px;"></div>
-			<h2 class="topic">1. &nbsp;Getting Started</h2>		
+			<h2 class="topic">1. &nbsp;Getting Started</h2>
 			<ul>
 			<li><a href="#1-1">Why BeeSavy?</a></li>
 			<li><a href="#1-2">What is Cash Back?</a></li>
@@ -62,7 +62,7 @@
 			<li><a href="#2-8">	Why do store prices sometimes differ from the list price I saw on BeeSavy?</a></li>
 			<li><a href="#2-9">	Why do tax and shipping costs sometimes differ from what I saw on BeeSavy?</a></li>
 			</ul>
-			
+
 			<h2 class="topic">3. &nbsp;Using BeeSavy Coupons</h2>
 			<ul>
 			<li><a href="#3-1">	How do I use coupons on BeeSavy?</a></li>
@@ -70,7 +70,7 @@
 			<li><a href="#3-3">	Can I use coupons not provided by BeeSavy and still earn cash back?</a></li>
 			<li><a href="#3-4">	Why doesn't BeeSavy offer coupons at certain stores?</a></li>
 			</ul>
-			
+
 			<h2 class="topic">4. &nbsp;BeeSavy Cash Back</h2>
 			<ul>
 			<li><a href="#4-1">	What is Cash Back?</a></li>
@@ -96,8 +96,8 @@
 			<li><a href="#4-21"> Am I taxed on the cash back I receive from BeeSavy?</a></li>
 
 
-			</ul>	
-			
+			</ul>
+
 			<h2 class="topic">5. &nbsp;Problems with Your Order</h2>
 			<ul>
             <li><a href="#5-1">	Why doesn't my cash back show up when I check out?</a></li>
@@ -106,9 +106,9 @@
 			<li><a href="#5-4">	How do I return a product I bought from a BeeSavy store?</a></li>
 
 		</ul>
-			
 
-			
+
+
 			<h2 class="topic">6. &nbsp;Understanding Your Account</h2>
 			<ul>
 <li><a href="#6-1">	How do I sign up and start saving money?</a></li>
@@ -117,15 +117,12 @@
 <li><a href="#6-4">	How do I go to my account?</a></li>
 <li><a href="#6-5">	How do I invite friends and family to BeeSavy?</a></li>
 <li><a href="#6-6">	Who is eligible to sign up for a BeeSavy account?</a></li>
-<li><a href="#6-7">	It has been longer than 4 days and a purchase isn't showing up in my account. What should I do?</a></li>
-<li><a href="#6-8">	What is the difference between Pending, Available, and Processing cash back, as shown in my account?</a></li>
-<li><a href="#6-9">	What's the difference between Pending and Available Cash Back?</a></li>
 <li><a href="#6-10">	How do I change my BeeSavy email address or password?</a></li>
 <li><a href="#6-11">	How do I edit my payment method?</a></li>
 <li><a href="#6-12">	I forgot my password. What should I do?</a></li>
 <li><a href="#6-13">	I would like to terminate my BeeSavy account. What should I do?</a></li>
 		</ul>
-			
+
 			<h2 class="topic">7. &nbsp;Privacy &amp; Security</h2>
 			<ul>
             <li><a href="#7-1">	Does BeeSavy's service cost me anything?</a></li>
@@ -136,25 +133,25 @@
 			<li><a href="#7-6">	What are BeeSavy's Terms and Conditions?</a></li>
 			<li><a href="#7-7">	What is BeeSavy's Privacy Policy?</a></li>
 			</ul>
-			
+
 			<a name="getting-started"></a>
-			<h2>1. &nbsp;Getting Started</h2>		
+			<h2>1. &nbsp;Getting Started</h2>
 
 				<a name="1-1"></a>
 				<h3>Why BeeSavy?</h3>
 				<p class="a"><ul><li>Pay less when you shop online through BeeSavy with comparison shopping, cash back discounts, and coupons. BeeSavy is the first website to combine these money-saving tools with referral cash back to make sure that you pay the lowest price and save the most money when you shop online.</li></ul></p>
 				<div class="returnToTop"><a href="#top">Return to Top</a></div>
-					
+
 				<a name="1-2"></a>
 				<h3>What is Cash Back?</h3>
 				<p class="a"><ul><li>When you shop through BeeSavy at one of our trusted stores, we earn a sales commission on anything you purchase from that store. We pass most of this commission back to you as "cash back".</li></ul></p>
 				<div class="returnToTop"><a href="#top">Return to Top</a></div>
-                
+
                 <a name="1-3"></a>
 				<h3>What is Referral Cash Back?</h3>
-				<p class="a"><ul><li>When you refer users to BeeSavy, we pay you 40% cash back commission every time they shop…forever.  We also pay you 10% cash back commission on every one they refer up to seven (7) levels deep. </li></ul> </p>
+				<p class="a"><ul><li>When you refer users to BeeSavy, we pay you 10% cash back commission every time they shop…forever.  We also pay you 10% cash back commission on every one they refer up to seven (7) levels deep. </li></ul> </p>
 				<div class="returnToTop"><a href="#top">Return to Top</a></div>
-                
+
 
 				<a name="1-4"></a>
 				<h3>Where do I begin?</h3>
@@ -192,8 +189,8 @@
 				<div class="returnToTop"><a href="#top">Return to Top</a></div>
 
 			<a name="shopping"></a>
-			<h2>2. &nbsp;Shopping &amp; Searching</h2>		
-			
+			<h2>2. &nbsp;Shopping &amp; Searching</h2>
+
 				<a name="2-1"></a>
 				<h3>Am I buying directly from BeeSavy?</h3>
 				<p class="a"><ul><li>No. BeeSavy is not a store and does not sell any products. BeeSavy is a shopping portal that helps you compare prices and save money when you shop online. If you have any questions about the product(s) you ordered, please contact the store from whom you bought that product.</li></ul></p>
@@ -244,10 +241,10 @@
 				<h3>Why do tax and shipping costs sometimes differ from what I saw on BeeSavy?</h3>
 				<p class="a"><ul><li>BeeSavy does its best to show accurate tax and shipping costs, but please keep in mind that for some stores, the tax and shipping costs shown are only estimates. Sales tax estimates are based on your zip code and the sales tax policies of the merchant. Shipping cost estimates are based on the product weight, shipping destination, distribution center location, and carrier used (UPS, USPS, FedEx, DHL, etc.). In some cases, however, BeeSavy is not provided with all information necessary to estimate the exact tax and shipping costs.</li></ul></p>
 				<div class="returnToTop"><a href="#top">Return to Top</a></div>
-						
+
 			<a name="coupons"></a>
-			<h2>3. &nbsp;Using BeeSavy Coupons</h2>		
-			
+			<h2>3. &nbsp;Using BeeSavy Coupons</h2>
+
 				<a name="3-1"></a>
 				<h3>How do I use coupons on BeeSavy?</h3>
 				<p class="a">
@@ -267,15 +264,15 @@
 				<a name="3-3"></a>
 				<h3>Can I use coupons not provided by BeeSavy and still earn cash back?</h3>
 				<p class="a"><ul><li>No. If you use a coupon not provided by BeeSavy, you are not eligible to earn cash back on the purchase.</li></ul></p>
-				
+
 				<a name="3-4"></a>
 				<h3>Why doesn't BeeSavy offer coupons at certain stores?</h3>
 				<p class="a"><ul><li>Unfortunately, some stores do not provide us with coupons. BeeSavy works as hard as possible to provide you with the largest selection of quality coupons.</li></ul></p>
 				<div class="returnToTop"><a href="#top">Return to Top</a></div>
-			
+
 			<a name="cash-back"></a>
-			<h2>4. &nbsp;BeeSavy Cash Back</h2>		
-			
+			<h2>4. &nbsp;BeeSavy Cash Back</h2>
+
 				<a name="4-1"></a>
 				<h3>What is Cash Back?</h3>
 				<p class="a"><ul><li>When you shop through BeeSavy at one of our trusted stores, we earn a sales commission on anything you purchase from that store. We pass most of this commission back to you as "cash back".</li></ul></p>
@@ -357,10 +354,10 @@
 				<h3>What is the difference between Pending, Available, and Processing cash back, as shown in my account?</h3>
 				<p class="a"><ul><li>Pending cash back is the amount that you have earned but that cannot yet be withdrawn because the return times (15-75 days) on those purchases have not yet passed. Once the return time on a purchase passes, the cash back for that purchase will become available, and will then be considered Available cash back. Processing cash back refers to the money that is available and currently in the process of being sent to you.</li></ul></p>
 				<div class="returnToTop"><a href="#top">Return to Top</a></div>
-                
+
                 <a name="4-16"></a>
 				<h3>What is the difference between Pending and Available Referral cash back?</h3>
-				<p class="a"><ul><li>Pending Referral cash back is commission from people you've referred that can't be withdrawn yet because either the return period has not yet passed OR you have not made a purchase through BeeSavy in the previous 90 days.  Once the return time on the purchase passes and you have made a purchase through BeeSavy in the previous 90 days, the referral commission for that purchase will become available, and will then be considered Available Referral cash back. </li></ul></p>
+				<p class="a"><ul><li>Pending Referral cash back is commission from people you've referred that can't be withdrawn yet because the return period has not yet passed. Once the return period on the purchase passes, the referral commission for that purchase will become available, and will then be considered Available Referral cash back.</li></ul></p>
 				<div class="returnToTop"><a href="#top">Return to Top</a></div>
 
 				<a name="4-17"></a>
@@ -387,10 +384,10 @@
 				<h3>Am I taxed on the cash back I receive from BeeSavy?</h3>
 				<p class="a"><ul><li>We're shoppers, not lawyers and this is not intended to be tax advice.  BeeSavy is not required to report the cash back that it pays you on your personal spending (personal cash back).  We are required to report referral cash back (commission from people you refer to BeeSavy) once that amount exceeds $600 in a calendar year.  As such, we will contact you to get additional information when you are approaching $600 in referral cash back.  We will also provide you with a 1099-MISC form for your tax preparation requirements.</li></ul></p>
 				<div class="returnToTop"><a href="#top">Return to Top</a></div>
-			
+
 			<a name="orders"></a>
-			<h2>5. &nbsp;Problems with Your Order</h2>		
-			
+			<h2>5. &nbsp;Problems with Your Order</h2>
+
 				<a name="5-1"></a>
 				<h3>Why doesn't my cash back show up when I check out?</h3>
 				<p class="a"><ul><li>Even though your cash back doesn't show up at checkout, don't worry, you are still earning cash back. Usually within 1-4 days you will be able to view your earnings by clicking on the <a href="/account">My Account</a> tab. Some sites, however, can take as long as 20 days (after the shipping date) to notify us of your purchase. BeeSavy will email you once we are notified of your purchase.</li></ul></p>
@@ -417,10 +414,10 @@
 				<h3>How do I return a product I bought from a BeeSavy store?</h3>
 				<p class="a"><ul><li>Please check with the store from whom you bought the product in order to determine their return policy. Please send your returns directly to that store and not to BeeSavy, as the product was not purchased directly from BeeSavy. If you return, cancel, or exchange part or all of a purchase, please keep in mind that your cash back will be reversed for the product(s) returned.</li></ul></p>
 				<div class="returnToTop"><a href="#top">Return to Top</a></div>
-	
+
 			<a name="account"></a>
 			<h2>6. &nbsp;Understanding Your Account</h2>
-			
+
 				<a name="6-1"></a>
 				<h3>How do I sign up and start saving money?</h3>
 				<p class="a"><ul><li>To sign up for a BeeSavy account, click the <a href="/main/joinnow">Sign Up</a> button at the top of the page.</li></ul></p>
@@ -456,29 +453,6 @@
 				<p class="a"><ul><li>Anyone who has an email address, is at least 18 years of age, and adheres to BeeSavy's Terms & Conditions is eligible to <a href="/main/joinnow">Sign Up</a> for a BeeSavy account.</li></ul></p>
 				<div class="returnToTop"><a href="#top">Return to Top</a></div>
 
-				<a name="6-7"></a>
-				<h3>It has been longer than 4 days and a purchase isn't showing up in my account. &nbsp;What should I do?</h3>
-				<p class="a"><ul><li>Purchases typically take 1-4 days to post to your account. &nbsp;If it has been longer than 4 days, please <a href="/contact">Contact Us</a> and choose "Where's My Cash Back?" as the Subject. &nbsp;Please make sure that you have received order confirmation from the store before filing a Missing Purchase Report. &nbsp;It is also possible that your cash back has not posted to your account for other reasons:</li></ul>
-                <ul class="faq-list">
-<li>	You used a coupon not provided by BeeSavy</li>
-<li>	You added items to your shopping cart before clicking through from BeeSavy</li>
-<li>	You have cookies disabled</li>
-<li>	You closed your web browser window before completing your purchase</li>
-</ul>
-				</p>
-				<div class="returnToTop"><a href="#top">Return to Top</a></div>
-
-				<a name="6-8"></a>
-				<h3>What is the difference between Pending, Available, and Processing cash back, as shown in my account?</h3>
-				<p class="a"><ul><li>Pending cash back is the amount that you have earned but that cannot yet be withdrawn because the return times on the purchases that earned you that money have not yet passed. &nbsp;Once the return time on a purchase passes, the cash back for that purchase will become available, and will then be considered Available cash back. &nbsp;Processing cash back refers to the money that is available and currently in the process of being sent to you.</li></ul></p>
-				<div class="returnToTop"><a href="#top">Return to Top</a></div>
-                
-                <a name="6-9"></a>
-                <h3>What is the difference between Pending and Available Referral cash back?</h3>
-<p class="a"><ul><li>Pending Referral cash back is commission from people you've referred that can't be withdrawn yet because either the return period has not yet passed OR you have not made a purchase through BeeSavy in the previous 90 days. &nbsp;Once the return time on the purchase passes and you have made a purchase through BeeSavy in the previous 90 days, the referral commission for that purchase will become available, and will then be considered Available Referral cash back. </li></ul></p>
-				<div class="returnToTop"><a href="#top">Return to Top</a></div>
-
-
 				<a name="6-10"></a>
 				<h3>How do I change my BeeSavy email address or password?</h3>
 				<p class="a"><ul><li>Login and click the My Account link at the top of the page. &nbsp;Once on the My Account page, click Edit email & password. &nbsp;Make your desired changes and click the "Save Changes" button.</li></ul></p>
@@ -498,7 +472,7 @@
 				<h3>I would like to terminate my BeeSavy account. &nbsp;What should I do?</h3>
 				<p class="a"><ul><li>Reconsider. &nbsp;BeeSavy saves you money on millions of products and hundreds of stores by offering comparison shopping, cash back discounts, and coupons. &nbsp;If you have any questions or concerns about BeeSavy, please <a href="/info/contact">Contact Us</a>. &nbsp;If you're sure you'd like to terminate your account, please send an email to <a href="mailto:help@beesavy.com">help@beesavy.com</a> with subject "Terminate my BeeSavy account" and we will remove your account from our database.</li></ul></p>
 				<div class="returnToTop"><a href="#top">Return to Top</a></div>
-			
+
 			<a name="privacy"></a>
 			<h2>7. &nbsp;Privacy &amp; Security</h2>
 
@@ -521,8 +495,8 @@
 				<h3>How secure is the personal information I provide BeeSavy?</h3>
 				<p class="a"><ul><li>We will never share your personal information with anyone. &nbsp;We will never ask for your credit card information. &nbsp;We only ask for your mailing address so we can send your check to you. &nbsp;If you feel uncomfortable providing your mailing address, you can opt to receive payments electronically through PayPal, in which case you only need to provide your email address.</li></ul></p>
 				<div class="returnToTop"><a href="#top">Return to Top</a></div>
-				
-				
+
+
 				<a name="7-6"></a>
 				<h3>What are BeeSavy's Terms and Conditions?</h3>
 				<p class="a"><ul><li>Click the <a href="/info/terms">Terms & Conditions</a> link located at the bottom of every web page.</li></ul></p>
@@ -532,7 +506,7 @@
 				<h3>What is BeeSavy's Privacy Policy?</h3>
 				<p class="a"><ul><li>Click the footer link located at the bottom of every web page.</li></ul></p>
 				<div class="returnToTop"><a href="#top">Return to Top</a></div>
-			
+
 	</div>
 		<div style="clear: both;"></div>
         </div>
@@ -549,8 +523,8 @@ $(document).ready(function() {
     	var element = $(this);
 		element.find('.BtnComparePrice').addClass('BtnOrangeBg').removeClass('BtnOrangeRBg');
     });
-	
-		
+
+
     $("div.ShopByStore").mouseover(function () {
         var element = $(this);
 		element.find('.nav-ShopByStore-Bt').addClass('BtnSBSOrangeRBg').removeClass('BtnSBSOrangeBg');
@@ -558,7 +532,7 @@ $(document).ready(function() {
     	var element = $(this);
 		element.find('.nav-ShopByStore-Bt').addClass('BtnSBSOrangeBg').removeClass('BtnSBSOrangeRBg');
     });
-	
+
 	    $("div.FindCoupons").mouseover(function () {
         var element = $(this);
 		element.find('.nav-FindCoupons-Bt').addClass('BtnFCOrangeRBg').removeClass('BtnFCOrangeBg');
@@ -566,18 +540,18 @@ $(document).ready(function() {
     	var element = $(this);
 		element.find('.nav-FindCoupons-Bt').addClass('BtnFCOrangeBg').removeClass('BtnFCOrangeRBg');
     });
-	
+
 	});
 </script>
 
 
 <!-- /content -->
 
-         
-<!-- footer -->  
+
+<!-- footer -->
     {footer}
-<!-- /footer --> 
-  
+<!-- /footer -->
+
 
 
 

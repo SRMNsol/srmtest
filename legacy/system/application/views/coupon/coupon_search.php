@@ -27,16 +27,16 @@
         <div class="BGLeftCol">
                 <div id="facetNav">
 
-<div id="catagory">
+<div id="category">
 
     <div class="facet" >
-    	<div id="catagory-bt" class="cat-bg">
+    	<div id="category-bt" class="cat-bg">
         <div id="cat-left-curve"><img src="<?php echo s3path("/images/cat-left-curve.jpg") ?>" width="4" height="35" alt="** PLEASE DESCRIBE THIS IMAGE **"/></div>
         <div id="cat-right-curve"><img src="<?php echo s3path("/images/cat-right-curve.jpg") ?>" width="4" height="35" alt="** PLEASE DESCRIBE THIS IMAGE **"/></div>
         <div class="parent">Jump to a Store</div>
    		 </div>
 
-    <div id="catagory-bg">
+    <div id="category-bg">
 
     	<div class="child scroll">
          <div style="clear:both;height:5px;">	</div>

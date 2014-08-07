@@ -57,7 +57,7 @@ class Cashback extends Controller
         $data['reftransactions'] = array_map(function (App\Entity\Referral $referral) {
             $data['month'] = $referral->getFormattedMonth();
             $data['transtype'] = $referral->getConcept();
-            $data['status'] = ucfirst($referral->getStatus());
+            $data['status'] = $referral->getAmount() >= 0.01 ? ucfirst($referral->getStatus()) : 'N/A';
             $data['cashback'] = sprintf('%.2f', $referral->getAmount());
             $data['date'] = $referral->getPaymentDate() ? $referral->getPaymentDate()->format('m/d/Y') : 'N/A';
 
@@ -113,7 +113,7 @@ class Cashback extends Controller
                 $referrals[] = [
                     'date' => $referral->getFormattedMonth(),
                     'level' => $field === 'amount' ? $referral->getConcept() : ($field === 'direct' ? 'Level 1' : 'Level 2-7'),
-                    'status' => ucfirst($referral->getStatus()),
+                    'status' => $value >= 0.01 ? ucfirst($referral->getStatus()) : 'N/A',
                     'cashback' => sprintf('%.2f', $value),
                 ];
             }

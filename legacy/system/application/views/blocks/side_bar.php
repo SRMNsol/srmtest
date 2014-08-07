@@ -27,7 +27,7 @@ foreach($states as $state=>$value){
 
 
 <div id="facetNav">
-<div id="catagory">
+<div id="category">
 	<div>     
 		<form id="facetForm" name="facetForm" action="/search" method="get">
  		<input type="hidden" name="q" value="" />

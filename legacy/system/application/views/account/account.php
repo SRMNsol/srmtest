@@ -370,7 +370,7 @@ echo 90-$val;
 </div>
 <!-- Referral Overview -->
 </div>
-<!-- Right catagory -->
+<!-- Right category -->
 
 <!-- /content -->
 

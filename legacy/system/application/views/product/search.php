@@ -21,13 +21,13 @@
    		<!-- /page Title -->
 
 
-   		<!-- Left catagory -->
+   		<!-- Left category -->
 
 <div id="facetNav">
-<div id="catagory">
+<div id="category">
 	<form id="facetForm" name="facetForm" action="//categories?category=62" method="get">
     <div class="facet">
-    	<div id="catagory-bt" class="cat-bg">
+    	<div id="category-bt" class="cat-bg">
         <div id="cat-left-curve"><img src="<?php echo s3path("/images/cat-left-curve.jpg") ?>" width="4" height="35" alt="** PLEASE DESCRIBE THIS IMAGE **"/></div>
         <div id="cat-right-curve"><img src="<?php echo s3path("/images/cat-right-curve.jpg") ?>" width="4" height="35" alt="** PLEASE DESCRIBE THIS IMAGE **"/></div>
         <div class="parent">Category</div>
@@ -35,10 +35,10 @@
 
 
 
-    <div id="catagory-bg">
+    <div id="category-bg">
 
-                        <div class="sub-catagory-txt">Brand</div>
-        <div id="sub-catagory-bg">
+                        <div class="sub-category-txt">Brand</div>
+        <div id="sub-category-bg">
 
     <div class="child">
             		<div class="holder osX">
@@ -58,8 +58,8 @@
                   <div style="clear:both;height:10px;">	</div>
 
 
-    	<div class="sub-catagory-txt">Category</div>
-        <div id="sub-catagory-bg">
+    	<div class="sub-category-txt">Category</div>
+        <div id="sub-category-bg">
     	<div class="child">
          <div style="clear:both;height:5px;">	</div>
                             		<div class="holder osX">
@@ -86,7 +86,7 @@
         </div>
             </div> </div>
 
-       <!-- /Left catagory -->
+       <!-- /Left category -->
 
 
 <!-- Right side -->
