@@ -141,19 +141,8 @@ $(document).ready(function(){
 	<div class="title2">Referral Cash Back</div>
 	<div class="innerbox">
     <table ><tbody><tr><td><strong>Pending :</strong></td><td>${referralpending}</td></tr><tr><td><strong>Available :</strong></td><td>${referralavailable}</td></tr><tr><td colspan="2"><p class="small">
-<?php
-$dt1= new DateTime($last_cashback);
-$dt2= new DateTime();
-$int = $dt1->diff($dt2);
-$val = (float)$int->format('%a');
-
-
-if(!$purchase_exempt && (float) $total[0]['referralpending'] != 0 && $val>90) { ?>
-<strong>Note:</strong>  You must make a purchase in the next <?php
-echo 90-$val;
-?> days in order to make $<?php echo $total[0]['referralpending'] ?> in pending referral cash back available. </span>
-<?php } else { ?>
-<strong>Note:</strong>  Congratulations! Your pending referral cash back will be available as soon as the return period has passed. </span>
+<?php if (!$purchase_exempt) { ?>
+<strong>Note:</strong> Your pending referral cash back will be available as soon as the return period has passed. </span>
 <?php } ?>
 </td></tr></tbody></table>
 	</div>
