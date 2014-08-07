@@ -127,7 +127,7 @@
                 <dl class="extrabux_form">
 				<table cellspacing=0 cellpadding=0 border=0 width=350>
                 <tr><td><dt id="email-labelHome"><label for="email" class="required">Email Address:  *</label></dt></td><td><dd id="email-elementHome"><input name="email" onfocus="" id="email" class="required email" type="text"></dd></td></tr>
-                <tr><td><dt><label for="referral">Referral Code: <dd><font style="font-size:8.5pt;color:#000;font-weight:bold;"></font></dd></dt></label></td><td><dd id="referral-code-elementHome"><input name="referral" id="email" class="required email" type="text" value="{referral}"></dt></td></tr>
+                <tr><td><dt><label for="referral">Referral Code: <br><span style="font-weight: normal;">(Who referred you?)</span></label></dt></td><td><dd id="referral-code-elementHome"><input name="referral" id="email" class="required email" type="text" value="{referral}"></dd></td></tr>
                 <tr><td></td><td height=25 valign=top><font style="font-size:9pt;"><i>Not Case Sensitive</i></font></td></tr>
                 <tr><td ><dt id="password-labelHome"><label for="password" class="required">Password: *</label></dt></td><td><dd id="password-elementHome"><input name="password" id="password" value="" class="required password" type="password"></dd></td></tr>
 <tr><td><dt id="password_confirm-labelHome"><label for="password_confirm" class="required">Confirm Password: *</label></dt></td><td><dd id="password_confirm-elementHome"><input name="password_confirm" id="password_confirm" value="" class="required password" type="password"></dd></td></tr>
