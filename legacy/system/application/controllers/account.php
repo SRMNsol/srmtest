@@ -157,18 +157,24 @@ class Account extends Controller
     {
         $email = $this->input->post('email');
         if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-
-            $newPassword = $this->user->reset_password($email);
-            if (false !== $newPassword) {
-                $data = array('email' => $email, 'password' => $newPassword);
-                $msg = $this->parser->parse('email/newpassword', $data, True);
-                $txtmsg = $this->parser->parse('email/newpasswordt', $data, True);
-                $this->emailer->sendMessage($msg, $txtmsg, $data['email'], "BeeSavy - New password request");
-                redirect("/main/forgot/1/$email");
-
-                return;
-            } else {
+            try {
+                if ($this->user->last_password_reset($email, '15 minutes ago')) {
+                    $newPassword = $this->user->reset_password($email);
+                    if (false !== $newPassword) {
+                        $data = array('email' => $email, 'password' => $newPassword);
+                        $msg = $this->parser->parse('email/newpassword', $data, True);
+                        $txtmsg = $this->parser->parse('email/newpasswordt', $data, True);
+                        $this->emailer->sendMessage($msg, $txtmsg, $data['email'], "BeeSavy - New password request");
+                        redirect("/main/forgot/1/$email");
+                        return;
+                    }
+                } else {
+                    redirect("/main/forgot?errors=26");
+                    return;
+                }
+            } catch (Exception $e) {
                 redirect("/main/forgot?errors=24");
+                return;
             }
         }
         redirect("/main/forgot?errors=24");
