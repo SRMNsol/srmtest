@@ -150,7 +150,7 @@ Email your favorite websites and watch your cash back grow!</td></tr></table>
 <div class="outerbox">
 	<div class="title2">Personal Cash Back</div>
 	<div class="innerbox">
-	<table><tbody><tr><td><strong>Level 1 Referrals:</storng></td><td>{referralcountdirect}</td></tr></tbody><tfoot><tr><td colspan=2>@40% Commission</td></tr></tfoot></table>
+	<table><tbody><tr><td><strong>Level 1 Referrals:</storng></td><td>{referralcountdirect}</td></tr></tbody><tfoot><tr><td colspan=2>@10% Commission</td></tr></tfoot></table>
 	<table><tbody><tr><td><strong>Level 2 to 7 Referrals:</storng></td><td>{referralcountindirect}</td></tr></tbody><tfoot><tr><td colspan=2>@10% Commission</td></tr></tfoot></table>
     <table><tbody><tr><td><strong>Total Referral Network:</storng></td><td><?php echo $total[0]['referralcountdirect'] + $total[0]['referralcountindirect']?></td></tr></tbody></table>
 	</div>

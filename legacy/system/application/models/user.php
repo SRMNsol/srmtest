@@ -18,7 +18,7 @@ class User extends Model
         'paypal_email', 'payment_method', 'alias', 'charity_id',
         'admin', 'send_reminders', 'send_updates','created','last_long',
         'address', 'city', 'state', 'zip',
-        'last_refer','purchase_exempt','password',
+        'last_refer','purchase_exempt','password', 'last_reset'
     );
 
     public function User()
@@ -147,6 +147,24 @@ class User extends Model
         ));
     }
 
+    public function last_password_reset($email, $timelength)
+    {
+        $sql = 'SELECT * FROM user WHERE email = ?';
+        $query = $this->db->query($sql, array($email));
+        $result = $query->result_array();
+
+        if (!empty($result)) {
+            $row = $result[0];
+            if ($row['last_reset'] === null) {
+                return true;
+            }
+            $lastReset = new \DateTime($row['last_reset']);
+            return $lastReset < new \DateTime($timelength);
+        }
+
+        throw new Exception('Invalid email'); // no records associated with $email
+    }
+
     public function reset_password($email)
     {
         $sql = 'SELECT * FROM user WHERE email = ?';
@@ -155,11 +173,14 @@ class User extends Model
         if (!empty($result)) {
             $newPassword = "bee".(string) mt_rand(1000000,9999999);
             $this->db->where('email', $email);
-            $this->db->update('user', array('password' => UserEntity::passwordHash($newPassword)));
+            $this->db->update('user', array(
+                'password' => UserEntity::passwordHash($newPassword),
+                'last_reset' => date('Y-m-d H:i:s'),
+            ));
             return $newPassword;
         }
 
-        return false;
+        throw new Exception('Invalid email'); // no records associated with $email
     }
 
     public function set_referral($alias)

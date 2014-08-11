@@ -209,6 +209,11 @@ class User
     protected $payments;
 
     /**
+     * @ORM\Column(type="datetime", name="last_reset", nullable=true)
+     */
+    protected $lastResetAt;
+
+    /**
      * Validation
      */
     public static function loadValidatorMetadata(ClassMetadata $metadata)
@@ -1235,5 +1240,28 @@ class User
     public function getPayments()
     {
         return $this->payments;
+    }
+
+    /**
+     * Set lastResetAt
+     *
+     * @param \DateTime $lastResetAt
+     * @return User
+     */
+    public function setLastResetAt($lastResetAt)
+    {
+        $this->lastResetAt = $lastResetAt;
+
+        return $this;
+    }
+
+    /**
+     * Get lastResetAt
+     *
+     * @return \DateTime
+     */
+    public function getLastResetAt()
+    {
+        return $this->lastResetAt;
     }
 }
