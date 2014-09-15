@@ -50,6 +50,7 @@ $console->addCommands([
     new Popshops\Console\CommissionJunctionTransactionReportCommand(),
     new Popshops\Console\PepperjamTransactionReportCommand(),
     new Popshops\Console\ShareasaleTransactionReportCommand(),
+    new Popshops\Console\ImpactRadiusTransactionReportCommand(),
     new App\Console\DownloadAllTransactionsCommand(),
 ]);
 

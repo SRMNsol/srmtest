@@ -172,5 +172,17 @@ class DownloadAllTransactionsCommand extends Command
             '--update' => true,
         ] + $args), $output);
         $this->updateDownloadDate($network, $args, 'history');
+
+        /**
+         * Impact Radius (ID 15)
+         */
+        $output->writeln('Impact Radius');
+
+        $network = $app['orm.em']->find('App\Entity\Network', 15);
+        $args = $this->getTransactionDownloadArguments($input, $network);
+        $ret = $this->getApplication()->find('impactradius:transactions')->run(new ArrayInput([
+            'command' => 'impactradius:transactions',
+        ] + $args), $output);
+        $this->updateDownloadDate($network, $args);
     }
 }

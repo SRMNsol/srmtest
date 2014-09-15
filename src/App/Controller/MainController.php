@@ -20,7 +20,7 @@ class MainController
         $merchants['total'] = $this->em->createQuery('SELECT COUNT(m) FROM App\Entity\Merchant m')->getSingleScalarResult();
         $merchants['totalNoCashback'] = $this->em->createQuery('SELECT COUNT(m) FROM App\Entity\Merchant m WHERE m.commission = 0')->getSingleScalarResult();
 
-        $networks = $this->em->createQuery('SELECT n FROM App\Entity\Network n JOIN n.merchants m GROUP BY n HAVING COUNT(m) > 0')->getResult();
+        $networks = $this->em->createQuery('SELECT n FROM App\Entity\Network n WHERE n.lastTransactionDownloadAt IS NOT NULL OR n.lastTransactionHistoryDownloadAt IS NOT NULL')->getResult();
 
         return new Response($app['twig']->render('dashboard.html.twig', [
             'merchants' => $merchants,
