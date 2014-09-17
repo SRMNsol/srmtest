@@ -46,29 +46,29 @@ function googletag_head() {
         return "googletag.defineSlot('/45213388/$name', [$width, $height], '$id').addService(googletag.pubads());";
     }, googletag_adunits(), array_keys(googletag_adunits())));
 
-    return <<<'TAG'
+    return <<<TAG
 <!-- googletag -->
 <script type='text/javascript'>
 var googletag = googletag || {};
 googletag.cmd = googletag.cmd || [];
 (function() {
-var gads = document.createElement('script');
-gads.async = true;
-gads.type = 'text/javascript';
-var useSSL = 'https:' == document.location.protocol;
-gads.src = (useSSL ? 'https:' : 'http:') +
-'//www.googletagservices.com/tag/js/gpt.js';
-var node = document.getElementsByTagName('script')[0];
-node.parentNode.insertBefore(gads, node);
+    var gads = document.createElement('script');
+    gads.async = true;
+    gads.type = 'text/javascript';
+    var useSSL = 'https:' == document.location.protocol;
+    gads.src = (useSSL ? 'https:' : 'http:') +
+    '//www.googletagservices.com/tag/js/gpt.js';
+    var node = document.getElementsByTagName('script')[0];
+    node.parentNode.insertBefore(gads, node);
 })();
 </script>
 
 <script type='text/javascript'>
-googletag.cmd.push(function() {
-$slots
-googletag.pubads().enableSingleRequest();
-googletag.enableServices();
-googletag.pubads().collapseEmptyDivs();
+    googletag.cmd.push(function() {
+    $slots
+    googletag.pubads().enableSingleRequest();
+    googletag.enableServices();
+    googletag.pubads().collapseEmptyDivs();
 });
 </script>
 <!-- /googletag -->
@@ -88,12 +88,14 @@ function googletag_ad($name) {
     $height = $adUnits[$name][0][1];
     $id = $adUnits[$name][1];
 
-    return <<<'TAG'
-<!-- $name -->
-<div id='$id' style='width:{$width}px; height:{$height}px;'>
-<script type='text/javascript'>
-googletag.cmd.push(function() { googletag.display('$id'); });
-</script>
+    return <<<TAG
+<div style="width:100%; height:{$height}px; float:left;">
+    <!-- $name -->
+    <div id='$id' style='width:{$width}px; height:{$height}px;'>
+    <script type='text/javascript'>
+        googletag.cmd.push(function() { googletag.display('$id'); });
+    </script>
+    </div>
 </div>
 TAG;
 }

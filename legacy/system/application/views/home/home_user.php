@@ -7,11 +7,13 @@
  {banner}
 <!-- /Header -->
 
+<?php echo googletag_ad("BS_home_728x90_1") ?>
+
 <!-- Navigation bar -->
 {nav_bar}
 <!-- /Navigation bar -->
 
-
+<?php echo googletag_ad("BS_home_728x90_2") ?>
 
 <!-- Content -->
     <!-- Daily Deals -->
@@ -95,22 +97,9 @@
 </div>
 </div>
 
+    <?php echo googletag_ad('BS_home_250x250') ?>
+</div>
 
-
-    <div id="Groupon">
-<script type="text/javascript">
-var _gwparam = _gwparam ||[];
-_gwparam["APIKEY"]="3c16c40cab007286dee9523a72bee69b0e7f25ea";
-_gwparam["size"]="250.250.lofimulti";
-_gwparam["location"]="";
-_gwparam["bgcolor"]="e96d08";
-_gwparam["title"]="undefined";
-_gwparam["PID"]="1915435";
-_gwparam["AID"]="10817648";
-_gwparam["SID"]="{user_id}";
-</script>
-<script id="grouponAd" type="text/javascript" src="http://www.groupon.com/javascripts/common/affiliate_widget/grouponwidget.js"></script></div>
-    </div>
     <!-- /Top stores -->
 
     <!-- Referral Overview -->
@@ -148,7 +137,7 @@ _gwparam["SID"]="{user_id}";
 </div>
 </div>
 
-
+<?php echo googletag_ad('BS_home_728x90_3') ?>
 
         <!-- Top Stores -->
          <div style="width:930px;margin-left:0px;border:0px solid #00F;float:left;">
@@ -259,6 +248,9 @@ $(document).ready(function() {
 		<p id="disclaimer">Tax and shipping costs are estimates; &nbsp;please see the store's website for exact pricing. &nbsp;BeeSavy does not guarantee the accuracy of information provided by online stores and other third parties, including product information, prices, coupons, and availability. &nbsp;BeeSavy shall not be liable for or responsible to honor any inaccurate information shown on our website. &nbsp;Please see our <a href="/info/terms">Terms of Service</a> for more details.</p>
 	</div>
    <!-- /footer -->
-  </div>
-  </body>
-  </html>
+</div>
+
+<?php echo googletag_ad('BS_home_728x90_4') ?>
+
+</body>
+</html>

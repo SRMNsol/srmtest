@@ -24,12 +24,6 @@
               </div>
              </FORM>
               </div>
-              <div id="banner-ad" style="border:0px solid #000;float:right;position:relative;margin-left:50px;"><!--<a href="" name="top">
-<script type='text/javascript'>
-    /* [id1] BeeSavy - Default */
-    OA_show(5);
-</script><noscript><a target='_blank' href='http://50.16.95.24/openx/www/delivery/ck.php?n=a88fd39'><img border='0' alt='' src='http://50.16.95.24/openx/www/delivery/avw.php?zoneid=5&amp;n=b51471d' /></a></noscript>
-</a> --></div>
 
 
               <div id="facebook"><a target='_blank' href='http://www.facebook.com/pages/BeeSavy/139324182791301'><img src="<?php echo s3path("/images/facebooktop.gif") ?>"></a></div>
