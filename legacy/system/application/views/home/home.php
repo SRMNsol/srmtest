@@ -3,8 +3,6 @@
 {header}
 
 <body>
-<script>
-</script>
 <div id="container">
 <!-- Header -->
 {banner}
@@ -293,64 +291,46 @@ onload="
 </div>
     <!-- /Hot Couppons -->
 <!-- /Content -->
-    <script type="text/javascript">
-$(document).ready(function() {
-	    $("div.couponList").mouseover(function () {
-        var element = $(this);
- 		element.find('.ClickToCopyCode-Bt').addClass('BtnCTCCOrangeRBg').removeClass('BtnCTCCOrangeBg');
-    }).mouseout(function () {
-    	var element = $(this);
-		element.find('.ClickToCopyCode-Bt').addClass('BtnCTCCOrangeBg').removeClass('BtnCTCCOrangeRBg');
-    });
-	    $("div.ShopCashBack").mouseover(function () {
-        var element = $(this);
- 		element.find('.ShopCashBack-Bt').addClass('BtnSCBOrangeRBg').removeClass('BtnSCBOrangeBg');
-    }).mouseout(function () {
-    	var element = $(this);
-		element.find('.ShopCashBack-Bt').addClass('BtnSCBOrangeBg').removeClass('BtnSCBOrangeRBg');
-    });
-
-    $("div.ShopByStore").mouseover(function () {
-        var element = $(this);
-		element.find('.nav-ShopByStore-Bt').addClass('BtnSBSOrangeRBg').removeClass('BtnSBSOrangeBg');
-    }).mouseout(function () {
-    	var element = $(this);
-		element.find('.nav-ShopByStore-Bt').addClass('BtnSBSOrangeBg').removeClass('BtnSBSOrangeRBg');
-    });
-
-	    $("div.FindCoupons").mouseover(function () {
-        var element = $(this);
-		element.find('.nav-FindCoupons-Bt').addClass('BtnFCOrangeRBg').removeClass('BtnFCOrangeBg');
-    }).mouseout(function () {
-    	var element = $(this);
-		element.find('.nav-FindCoupons-Bt').addClass('BtnFCOrangeBg').removeClass('BtnFCOrangeRBg');
-    });
-
-
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("div.couponList").mouseover(function () {
+            var element = $(this);
+            element.find('.ClickToCopyCode-Bt').addClass('BtnCTCCOrangeRBg').removeClass('BtnCTCCOrangeBg');
+        }).mouseout(function () {
+            var element = $(this);
+            element.find('.ClickToCopyCode-Bt').addClass('BtnCTCCOrangeBg').removeClass('BtnCTCCOrangeRBg');
+        });
+        $("div.ShopCashBack").mouseover(function () {
+            var element = $(this);
+            element.find('.ShopCashBack-Bt').addClass('BtnSCBOrangeRBg').removeClass('BtnSCBOrangeBg');
+        }).mouseout(function () {
+            var element = $(this);
+            element.find('.ShopCashBack-Bt').addClass('BtnSCBOrangeBg').removeClass('BtnSCBOrangeRBg');
+        });
 
         $("div.LogIn").mouseover(function () {
-        var element = $(this);
-        element.find('.BtnHeaderLogIn').addClass('BtnLogInRBg').removeClass('BtnLogInBg');
-    }).mouseout(function () {
-        var element = $(this);
-        element.find('.BtnLogInRBg').addClass('BtnLogInBg').removeClass('BtnLogInRBg');
-    });
+            var element = $(this);
+            element.find('.BtnHeaderLogIn').addClass('BtnLogInRBg').removeClass('BtnLogInBg');
+        }).mouseout(function () {
+            var element = $(this);
+            element.find('.BtnLogInRBg').addClass('BtnLogInBg').removeClass('BtnLogInRBg');
+        });
 
         $("div.SlideSignUp").mouseover(function () {
-        var element = $(this);
-        element.find('.BtnSlideSignUp').addClass('BtnSlideSignUpRBg').removeClass('BtnSlideSignUpBg');
-    }).mouseout(function () {
-        var element = $(this);
-        element.find('.BtnSlideSignUpRBg').addClass('BtnSlideSignUpBg').removeClass('BtnSlideSignUpRBg');
-    });
+            var element = $(this);
+            element.find('.BtnSlideSignUp').addClass('BtnSlideSignUpRBg').removeClass('BtnSlideSignUpBg');
+        }).mouseout(function () {
+            var element = $(this);
+            element.find('.BtnSlideSignUpRBg').addClass('BtnSlideSignUpBg').removeClass('BtnSlideSignUpRBg');
+        });
 
-            $("div.StartSaving").mouseover(function () {
-        var element = $(this);
-        element.find('.BtnStartSaving').addClass('BtnStartSavingRBg').removeClass('BtnStartSavingBg');
-    }).mouseout(function () {
-        var element = $(this);
-        element.find('.BtnStartSavingRBg').addClass('BtnStartSavingBg').removeClass('BtnStartSavingRBg');
-    });
+        $("div.StartSaving").mouseover(function () {
+            var element = $(this);
+            element.find('.BtnStartSaving').addClass('BtnStartSavingRBg').removeClass('BtnStartSavingBg');
+        }).mouseout(function () {
+            var element = $(this);
+            element.find('.BtnStartSavingRBg').addClass('BtnStartSavingBg').removeClass('BtnStartSavingRBg');
+        });
     });
 </script>
 <script type="text/javascript" src="<?php echo s3path("/script_files/jquery.easing.1.3.js") ?>"></script>
