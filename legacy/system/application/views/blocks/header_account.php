@@ -31,10 +31,10 @@
 <link rel="stylesheet" type="text/css" href="<?php echo s3path("/scroll/styles/scrollstyles.css") ?>" media="all"/>
 
 <script type="text/javascript" src="<?php echo s3path("/script_files/jquery_004.js") ?>"></script>
-<script type='text/javascript' src="<?php echo s3path("/colorbox/jquery.colorbox.js") ?>"></script>
-<script type='text/javascript' src="<?php echo s3path("/script_files/nav_bar.js") ?>"></script>
+<script type="text/javascript" src="<?php echo s3path("/colorbox/jquery.colorbox.js") ?>"></script>
+<script type="text/javascript" src="<?php echo s3path("/script_files/nav_bar.js") ?>"></script>
 
-<script type='text/javascript'>
+<script type="text/javascript">
     $(document).ready(function(){
         $(".make-home").colorbox();
     });

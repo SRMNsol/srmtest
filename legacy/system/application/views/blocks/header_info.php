@@ -33,7 +33,7 @@
 <script type="text/javascript" src="<?php echo s3path("/script_files/jquery-ui.js") ?>"></script>
 <script type="text/javascript" src="<?php echo s3path("/scroll/scripts/jquery.mousewheel.js") ?>"></script>
 <script type="text/javascript" src="<?php echo s3path("/scroll/scripts/jScrollPane.js") ?>"></script>
-<script type='text/javascript' src="<?php echo s3path("/script_files/nav_bar.js") ?>"></script>
+<script type="text/javascript" src="<?php echo s3path("/script_files/nav_bar.js") ?>"></script>
 
 <script>
     $(function() {

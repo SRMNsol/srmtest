@@ -28,8 +28,8 @@
 <link rel="stylesheet" type="text/css" href="<?php echo s3path("/styles/colorbox.css") ?>" media="screen"/>
 
 <script type="text/javascript" src="<?php echo s3path("/script_files/jquery_004.js") ?>"></script>
-<script type='text/javascript' src="<?php echo s3path("/colorbox/jquery.colorbox.js") ?>"></script>
-<script type='text/javascript' src="<?php echo s3path("/script_files/nav_bar.js") ?>"></script>
+<script type="text/javascript" src="<?php echo s3path("/colorbox/jquery.colorbox.js") ?>"></script>
+<script type="text/javascript" src="<?php echo s3path("/script_files/nav_bar.js") ?>"></script>
 <script type="text/javascript" src="<?php echo s3path("/script_files/ZeroClipboard.js") ?>"></script>
 
 <script type="text/javascript">
@@ -52,7 +52,7 @@
     }
 </script>
 
-<script type='text/javascript'>
+<script type="text/javascript">
     $(document).ready(function(){
         $(".make-home").colorbox();
         $("#personal").colorbox();
