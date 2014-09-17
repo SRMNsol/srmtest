@@ -33,7 +33,6 @@
 <script type="text/javascript" src="<?php echo s3path("/script_files/jquery_004.js") ?>"></script>
 <script type='text/javascript' src="<?php echo s3path("/colorbox/jquery.colorbox.js") ?>"></script>
 <script type='text/javascript' src="<?php echo s3path("/script_files/nav_bar.js") ?>"></script>
-<script type="text/javascript" src="<?php echo s3path("/script_files/ZeroClipboard.js") ?>"></script>
 
 <script type='text/javascript'>
     $(document).ready(function(){
