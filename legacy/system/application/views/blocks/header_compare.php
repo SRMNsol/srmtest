@@ -17,6 +17,7 @@
   })();
 
 </script>
+
 <link rel="shortcut icon" href="<?php echo s3path("/images/favicon.ico") ?>" />
 <link rel="stylesheet" type="text/css" href="<?php echo s3path("/styles/main.css") ?>" media="screen"/>
 <link rel="stylesheet" type="text/css" href="<?php echo s3path("/styles/home.css") ?>" media="screen"/>
@@ -53,7 +54,7 @@ $(document).ready(function(){
                 debugstr("Flash movie loaded and ready.");
             });
             var newval = text[i].text;
-            if(newval == undefined){
+            if (newval == undefined) {
                 newval = text[i].innerHTML;
             }
             var newlink = buttons[i].href;

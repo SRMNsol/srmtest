@@ -28,7 +28,6 @@
 <link rel="stylesheet" type="text/css" href="<?php echo s3path("/styles/colorbox.css") ?>" media="screen"/>
 <link rel="stylesheet" type="text/css" href="<?php echo s3path("/styles/help.css") ?>" media="screen"/>
 <link rel="stylesheet" type="text/css" href="<?php echo s3path("/styles/sitemap.css") ?>" media="screen"/>
-<link rel="stylesheet" type="text/css" href="<?php echo s3path("/styles/colorbox.css") ?>" media="screen"/>
 
 <link rel="stylesheet" type="text/css" href="<?php echo s3path("/scroll/styles/jScrollPane.css") ?>" media="all"/>
 <link rel="stylesheet" type="text/css" href="<?php echo s3path("/scroll/styles/scrollstyles.css") ?>" media="all"/>
