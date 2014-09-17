@@ -1,9 +1,7 @@
 <html xml:lang='en' xmlns='http://www.w3.org/1999/xhtml' lang='en'>
 <head>
 <meta name='generator' content='HTML Tidy for Linux (vers 6 November 2007), see www.w3.org' />
-<link rel="shortcut icon" href="<?php echo s3path("/images/favicon.ico") ?>" />
-<meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
-<meta http-equiv='content-type' content='text/html; charset=ISO-8859-1'>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <meta name='description' content='Save money on millions of products from thousands of top online stores at BeeSavy.com with comparison shopping, cash back, and coupons.' />
 <title>BeeSavy – Taking the sting out of online shopping</title>
 <script type="text/javascript">
@@ -21,23 +19,23 @@
 </script>
 
 <link rel="shortcut icon" href="<?php echo s3path("images/favicon.ico") ?>" />
-<link rel='stylesheet' type='text/css' href="<?php echo s3path("/styles/pagination.css") ?>" media='screen'/>
-<link rel='stylesheet' type='text/css' href="<?php echo s3path("/styles/main.css") ?>" media='screen'/>
-<link rel='stylesheet' type='text/css' href="<?php echo s3path("/styles/home.css") ?>" media='screen'/>
-<link rel='stylesheet' type='text/css' href="<?php echo s3path("/styles/results.css") ?>" media='screen'/>
-<link rel='stylesheet' type='text/css' href="<?php echo s3path("/styles/button.css") ?>" media='screen'/>
-<link rel='stylesheet' type='text/css' href="<?php echo s3path("/styles/account.css") ?>" media='screen'/>
-<link rel='stylesheet' type='text/css' href="<?php echo s3path("/styles/deals.css") ?>" media='screen'/>
-<link rel='stylesheet' type='text/css' href="<?php echo s3path("/styles/shopping.css") ?>" media='screen'/>
+<link rel="stylesheet" type='text/css' href="<?php echo s3path("/styles/main.css") ?>" media="screen"/>
+<link rel="stylesheet" type='text/css' href="<?php echo s3path("/styles/home.css") ?>" media="screen"/>
+<link rel="stylesheet" type='text/css' href="<?php echo s3path("/styles/results.css") ?>" media="screen"/>
+<link rel="stylesheet" type='text/css' href="<?php echo s3path("/styles/button.css") ?>" media="screen"/>
+<link rel="stylesheet" type='text/css' href="<?php echo s3path("/styles/account.css") ?>" media="screen"/>
+<link rel="stylesheet" type='text/css' href="<?php echo s3path("/styles/deals.css") ?>" media="screen"/>
+<link rel="stylesheet" type='text/css' href="<?php echo s3path("/styles/shopping.css") ?>" media="screen"/>
 <link rel="stylesheet" type='text/css' href="<?php echo s3path("/styles/colorbox.css") ?>" media="screen"/>
 
-<script type='text/javascript' src="<?php echo s3path("/script_files/jquery-1.3.2.min.js") ?>"></script>
+<script type='text/javascript' src="<?php echo s3path("/script_files/jquery_004.js") ?>"></script>
 <script type='text/javascript' src="<?php echo s3path("/colorbox/jquery.colorbox.js") ?>"></script>
 <script type='text/javascript' src="<?php echo s3path("/script_files/nav_bar.js") ?>"></script>
 
 <?php if (in_array($this->router->class, ["product", "stores", "coupon"])) { ?>
     <link rel="stylesheet" type="text/css" href="<?php echo s3path("/scroll/styles/jScrollPane.css") ?>" media="all"/>
     <link rel="stylesheet" type="text/css" href="<?php echo s3path("/scroll/styles/scrollstyles.css") ?>" media="all"/>
+    <link rel="stylesheet" type='text/css' href="<?php echo s3path("/styles/pagination.css") ?>" media="screen"/>
     <script type="text/javascript" src="<?php echo s3path("/scroll/scripts/jquery.mousewheel.js") ?>"></script>
     <script type="text/javascript" src="<?php echo s3path("/scroll/scripts/jScrollPane.js") ?>"></script>
     <script type="text/javascript" src="<?php echo s3path("/script_files/jquery.pagination.js") ?>"></script>
