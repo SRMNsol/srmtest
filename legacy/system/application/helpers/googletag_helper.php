@@ -90,11 +90,13 @@ function googletag_ad($name) {
 
     return <<<TAG
 <div style="width:100%; height:{$height}px; float:left;">
-    <!-- $name -->
-    <div id='$id' style='width:{$width}px; height:{$height}px;'>
-    <script type='text/javascript'>
-        googletag.cmd.push(function() { googletag.display('$id'); });
-    </script>
+    <div style='width:{$width}px; height:{$height}px; margin:auto;'>
+        <!-- $name -->
+        <div id='$id' style='width:{$width}px; height:{$height}px;'>
+            <script type='text/javascript'>
+                googletag.cmd.push(function() { googletag.display('$id'); });
+            </script>
+        </div>
     </div>
 </div>
 TAG;
