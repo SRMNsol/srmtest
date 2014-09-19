@@ -89,8 +89,8 @@ function googletag_ad($name) {
     $id = $adUnits[$name][1];
 
     return <<<TAG
-<div style="width:100%; height:{$height}px; float:left;">
-    <div style='width:{$width}px; height:{$height}px; margin:auto;'>
+<div style="width:100%; height:{$height}px; float:left; margin:10px 0;">
+    <div style='width:{$width}px; height:{$height}px; margin:auto; background-color:#fff;'>
         <!-- $name -->
         <div id='$id' style='width:{$width}px; height:{$height}px;'>
             <script type='text/javascript'>

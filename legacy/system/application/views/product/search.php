@@ -9,85 +9,76 @@
 {nav_bar}
 <!-- /Navigation bar -->
 
+<?php echo googletag_ad("BS_search_728x90") ?>
 
 <!-- content -->
-		<!-- page Title -->
-                <div class="BGLeftCol">
-		<div id="pageTitle">
-		<div id="pageTitleLeft"></div>
-		<h1>We Found {count} Products Matching "{search}"</h1>
-		<div id="pageTitleRight"></div>
-	</div>
-   		<!-- /page Title -->
 
+<div class="BGLeftCol">
 
-   		<!-- Left category -->
-
-<div id="facetNav">
-<div id="category">
-	<form id="facetForm" name="facetForm" action="//categories?category=62" method="get">
-    <div class="facet">
-    	<div id="category-bt" class="cat-bg">
-        <div id="cat-left-curve"><img src="<?php echo s3path("/images/cat-left-curve.jpg") ?>" width="4" height="35" alt="** PLEASE DESCRIBE THIS IMAGE **"/></div>
-        <div id="cat-right-curve"><img src="<?php echo s3path("/images/cat-right-curve.jpg") ?>" width="4" height="35" alt="** PLEASE DESCRIBE THIS IMAGE **"/></div>
-        <div class="parent">Category</div>
+    <!-- page Title -->
+    <div id="pageTitle">
+        <div id="pageTitleLeft"></div>
+        <h1>We Found {count} Products Matching "{search}"</h1>
+        <div id="pageTitleRight"></div>
     </div>
+    <!-- /page Title -->
 
+    <!-- Left category -->
+    <div id="facetNav">
+        <div id="category">
+            <form id="facetForm" name="facetForm" action="//categories?category=62" method="get">
+                <div class="facet">
+                    <div id="category-bt" class="cat-bg">
+                        <div id="cat-left-curve"><img src="<?php echo s3path("/images/cat-left-curve.jpg") ?>" width="4" height="35" alt="** PLEASE DESCRIBE THIS IMAGE **"/></div>
+                        <div id="cat-right-curve"><img src="<?php echo s3path("/images/cat-right-curve.jpg") ?>" width="4" height="35" alt="** PLEASE DESCRIBE THIS IMAGE **"/></div>
+                        <div class="parent">Category</div>
+                    </div>
 
-
-    <div id="category-bg">
-
+                    <div id="category-bg">
                         <div class="sub-category-txt">Brand</div>
-        <div id="sub-category-bg">
+                        <div id="sub-category-bg">
+                            <div class="child">
+                                <div class="holder osX">
+                                    <div id="pane1" class="scroll-pane">
+                                        <ul>
+                                            <li><a href="<?php echo escape('/product/search/?' . http_build_query(['q' => $search]), 'html_attr') ?>">All</a></li>
+                                            <?php foreach ($brands as $item) : ?>
+                                                <?php $brand_url = '/product/search/?' . http_build_query(['q' => $search, 'brand' => $item['id']]) ?>
+                                                <li><a href="<?php echo escape($brand_url, 'html_attr') ?>"><?php echo escape($item['name']) ?></a> <span class="count">(<?php echo escape($item['count'])?>)</span></li>
+                                            <?php endforeach ?>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <br style="clear: both;"/>
+                            </div>
+                        </div>
 
-    <div class="child">
-            		<div class="holder osX">
-						<div id="pane1" class="scroll-pane">
-        <ul>
-            <li><a href="<?php echo escape('/product/search/?' . http_build_query(['q' => $search]), 'html_attr') ?>">All</a></li>
-            <?php foreach ($brands as $item) : ?>
-            <?php $brand_url = '/product/search/?' . http_build_query(['q' => $search, 'brand' => $item['id']]) ?>
-            <li><a href="<?php echo escape($brand_url, 'html_attr') ?>"><?php echo escape($item['name']) ?></a> <span class="count">(<?php echo escape($item['count'])?>)</span></li>
-            <?php endforeach ?>
-        </ul>
-                                    </div></div>
-                <br style="clear: both;"/>
+                        <div style="clear:both;height:10px;"></div>
+                        <div class="sub-category-txt">Category</div>
+                        <div id="sub-category-bg">
+                            <div class="child">
+                                <div style="clear:both;height:5px;"></div>
+                                <div class="holder osX">
+                                    <div id="pane2" class="scroll-pane">
+                                        <ul class="bullets">
+                                        <?php foreach ($categories as $item) : ?>
+                                            <?php $category_url = '/product/search?' . http_build_query(['q' => $search, 'brand' => $brand, 'category' => $item['id']]) ?>
+                                            <li style="padding-left:5px;"><a href="<?php echo escape($category_url, 'html_attr') ?>"><?php echo escape($item['name']) ?></a> <span class="count">(<?php echo escape($item['count']) ?>)</span></li>
+                                        <?php endforeach ?>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <?php echo googletag_ad('BS_search_160x600_1') ?>
+            <?php echo googletag_ad('BS_search_160x600_2') ?>
+        </div>
     </div>
-</div>
-          </form>
-                  <div style="clear:both;height:10px;">	</div>
-
-
-    	<div class="sub-category-txt">Category</div>
-        <div id="sub-category-bg">
-    	<div class="child">
-         <div style="clear:both;height:5px;">	</div>
-                            		<div class="holder osX">
-						<div id="pane2" class="scroll-pane">
-
-<ul class="bullets">
-<?php foreach ($categories as $item) : ?>
-<?php $category_url = '/product/search?' . http_build_query(['q' => $search, 'brand' => $brand, 'category' => $item['id']]) ?>
-<li style="padding-left:5px;"><a href="<?php echo escape($category_url, 'html_attr') ?>"><?php echo escape($item['name']) ?></a> <span class="count">(<?php echo escape($item['count']) ?>)</span></li>
-<?php endforeach ?>
-</ul>
-
-                    </div>
-
-
-
-                    </div>
-
-                    </div>
-        </div>
-
-
-        </div>
-        </div>
-            </div> </div>
-
-       <!-- /Left category -->
-
+    <!-- /Left category -->
 
 <!-- Right side -->
 <div id="results">
@@ -150,9 +141,9 @@
 <div id="Pagination" class="pagination-controls"></div>
     <div class="pagination-info">Showing results <strong>{start}</strong> to <strong>{end}</strong> of <strong>{count}</strong></div>
 </div>
-			<div style="clear: both;"></div>
-					</div>
-		<div style="clear: both;"></div>
+            <div style="clear: both;"></div>
+                    </div>
+        <div style="clear: both;"></div>
 <script type="text/javascript">
     $(function() {
         $("#sortField").val('{sort}');
@@ -269,30 +260,12 @@ baseurl = baseurl + "&sort="+sort_type;
 $(document).ready(function() {
     $("div.productResult").mouseover(function () {
         var element = $(this);
- 		element.find('.BtnComparePrice').addClass('BtnOrangeRBg').removeClass('BtnOrangeBg');
+        element.find('.BtnComparePrice').addClass('BtnOrangeRBg').removeClass('BtnOrangeBg');
     }).mouseout(function () {
-    	var element = $(this);
-		element.find('.BtnComparePrice').addClass('BtnOrangeBg').removeClass('BtnOrangeRBg');
-    });
-
-
-    $("div.ShopByStore").mouseover(function () {
         var element = $(this);
-		element.find('.nav-ShopByStore-Bt').addClass('BtnSBSOrangeRBg').removeClass('BtnSBSOrangeBg');
-    }).mouseout(function () {
-    	var element = $(this);
-		element.find('.nav-ShopByStore-Bt').addClass('BtnSBSOrangeBg').removeClass('BtnSBSOrangeRBg');
+        element.find('.BtnComparePrice').addClass('BtnOrangeBg').removeClass('BtnOrangeRBg');
     });
-
-	    $("div.FindCoupons").mouseover(function () {
-        var element = $(this);
-		element.find('.nav-FindCoupons-Bt').addClass('BtnFCOrangeRBg').removeClass('BtnFCOrangeBg');
-    }).mouseout(function () {
-    	var element = $(this);
-		element.find('.nav-FindCoupons-Bt').addClass('BtnFCOrangeBg').removeClass('BtnFCOrangeRBg');
-    });
-
-	});
+});
 </script>
 
 
@@ -303,11 +276,11 @@ $(document).ready(function() {
 
 <!-- footer -->
 {footer}
-   <!-- /footer -->
+<!-- /footer -->
 
 
 
 
 
-  </body>
-  </html>
+</body>
+</html>
