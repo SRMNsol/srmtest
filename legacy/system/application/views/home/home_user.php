@@ -97,7 +97,7 @@
 </div>
 </div>
 
-    <?php echo googletag_ad('BS_home_250x250') ?>
+    <?php echo googletag_ad('BS_home_250x250', 0) ?>
 </div>
 
     <!-- /Top stores -->
