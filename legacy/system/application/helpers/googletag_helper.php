@@ -90,7 +90,7 @@ function googletag_ad($name, $margin = 10) {
 
     return <<<TAG
 <div style="width:100%; height:{$height}px; float:left; margin:{$margin}px 0;">
-    <div style='width:{$width}px; height:{$height}px; margin:auto; background-color:#f00;'>
+    <div style='width:{$width}px; height:{$height}px; margin:auto; background-color:#fff;'>
         <!-- $name -->
         <div id='$id' style='width:{$width}px; height:{$height}px;'>
             <script type='text/javascript'>
