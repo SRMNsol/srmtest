@@ -189,7 +189,7 @@ onload=\"
 $(document).ready(function() {
     $("div.ShopNow").mouseover(function () {
         var element = $(this);
-         element.find('.BtnShopNow').addClass('BtnSNOrangeRBg').removeClass('BtnSNOrangeBg');
+        element.find('.BtnShopNow').addClass('BtnSNOrangeRBg').removeClass('BtnSNOrangeBg');
     }).mouseout(function () {
         var element = $(this);
         element.find('.BtnShopNow').addClass('BtnSNOrangeBg').removeClass('BtnSNOrangeRBg');

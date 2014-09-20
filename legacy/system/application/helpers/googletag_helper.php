@@ -78,7 +78,7 @@ TAG;
 /**
  * Display ad body tag
  */
-function googletag_ad($name, $margin = 10) {
+function googletag_ad($name, $margin = 10, $float = 'left') {
     $adUnits = googletag_adunits();
     if (!isset($adUnits[$name])) {
         throw Exception(sprintf("Undefined ad unit %s", $name));
@@ -89,7 +89,7 @@ function googletag_ad($name, $margin = 10) {
     $id = $adUnits[$name][1];
 
     return <<<TAG
-<div style="width:100%; height:{$height}px; float:left; margin:{$margin}px 0;">
+<div style="width:100%; height:{$height}px; float:{$float}; margin:{$margin}px 0;">
     <div style='width:{$width}px; height:{$height}px; margin:auto; background-color:#fff;'>
         <!-- $name -->
         <div id='$id' style='width:{$width}px; height:{$height}px;'>
