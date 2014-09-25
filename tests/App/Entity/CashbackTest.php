@@ -76,8 +76,8 @@ class CashbackTest extends OrmTestCase
         $this->em->persist($cashback);
         $this->em->flush();
 
-        $this->assertEquals(0, $cashback->getAmount());
-        $this->assertEquals(0, $cashback->getPending());
+        $this->assertEquals(0, $cashback->getAmount(), 0.01);
+        $this->assertEquals(0, $cashback->getPending(), 0.01);
         $this->assertEquals(Cashback::STATUS_PENDING, $cashback->getStatus());
     }
 
@@ -121,9 +121,9 @@ class CashbackTest extends OrmTestCase
         $this->em->persist($rate);
         $this->em->flush();
 
-        $this->assertEquals(0, $cashback->getAmount());
-        $this->assertEquals(0, $cashback->getPending());
-        $this->assertEquals(0, $cashback->getAvailable());
+        $this->assertEquals(0, $cashback->getAmount(), 0.01);
+        $this->assertEquals(0, $cashback->getPending(), 0.01);
+        $this->assertEquals(0, $cashback->getAvailable(), 0.01);
         $this->assertEquals(Cashback::STATUS_INVALID, $cashback->getStatus());
     }
 

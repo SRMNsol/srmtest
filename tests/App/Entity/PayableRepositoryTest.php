@@ -47,11 +47,11 @@ class PayableRepositoryTest extends OrmTestCase
         $this->assertArrayHasKey('processing', $summary);
         $this->assertArrayHasKey('paid', $summary);
 
-        $this->assertEquals(40, $summary['amount']);
-        $this->assertEquals(10, $summary['pending']);
-        $this->assertEquals(10, $summary['available']);
-        $this->assertEquals(10, $summary['processing']);
-        $this->assertEquals(10, $summary['paid']);
+        $this->assertEquals(40, $summary['amount'], 0.01);
+        $this->assertEquals(10, $summary['pending'], 0.01);
+        $this->assertEquals(10, $summary['available'], 0.01);
+        $this->assertEquals(10, $summary['processing'], 0.01);
+        $this->assertEquals(10, $summary['paid'], 0.01);
     }
 
     public function testMakeAvailable()

@@ -30,7 +30,7 @@ class ReferralRepositoryTest extends OrmTestCase
         $user = $this->em->find('App\Entity\User', 1);
         $referralRepository = $this->em->getRepository('App\Entity\Referral');
         $referral = $referralRepository->createUserReferral($user, '01', '2014');
-        $this->assertEquals(0, $referral->getAmount());
+        $this->assertEquals(0, $referral->getAmount(), 0.01);
     }
 
     public function testDirectReferral()
@@ -49,7 +49,7 @@ class ReferralRepositoryTest extends OrmTestCase
         $user = $this->em->find('App\Entity\User', 1);
         $referralRepository = $this->em->getRepository('App\Entity\Referral');
         $referral = $referralRepository->createUserReferral($user, '02', '2014');
-        $this->assertEquals($rate->getLevel1() * $transact1->getCommission(), $referral->getAmount());
+        $this->assertEquals($rate->getLevel1() * $transact1->getCommission(), $referral->getAmount(), 0.01);
 
         $transact2 = new Transaction();
         $transact2->setRegisteredAt($regdate2 = new \DateTime('2014-02-02'));
@@ -61,7 +61,7 @@ class ReferralRepositoryTest extends OrmTestCase
         $this->em->flush();
 
         $referral = $referralRepository->createUserReferral($user, '02', '2014');
-        $this->assertEquals($rate->getLevel1() * ($transact1->getCommission() + $transact2->getCommission()), $referral->getAmount());
+        $this->assertEquals($rate->getLevel1() * ($transact1->getCommission() + $transact2->getCommission()), $referral->getAmount(), 0.01);
         $this->assertEquals($regdate2, $referral->getRegisteredAt());
     }
 
@@ -81,6 +81,6 @@ class ReferralRepositoryTest extends OrmTestCase
         $user = $this->em->find('App\Entity\User', 1);
         $referralRepository = $this->em->getRepository('App\Entity\Referral');
         $referral = $referralRepository->createUserReferral($user, '02', '2014');
-        $this->assertEquals($rate->getLevel2() * $transact1->getCommission(), $referral->getAmount());
+        $this->assertEquals($rate->getLevel2() * $transact1->getCommission(), $referral->getAmount(), 0.01);
     }
 }

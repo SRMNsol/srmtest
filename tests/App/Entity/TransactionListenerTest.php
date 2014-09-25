@@ -51,7 +51,7 @@ class TransactionListenerTest extends OrmTestCase
         $this->em->refresh($cashback);
         $this->assertNotNull($cashback);
         $this->assertEquals('pending', $cashback->getStatus());
-        $this->assertEquals(2.50, $cashback->getAmount());
+        $this->assertEquals(2.50, $cashback->getAmount(), 0.01);
 
         // check user last purchased date on persist
         $this->em->refresh($user);
@@ -78,13 +78,13 @@ class TransactionListenerTest extends OrmTestCase
         $this->assertEquals($cashback, $transaction->getCashback());
         $this->assertEquals('Test', $cashback->getConcept());
         $this->assertEquals($transaction->getRegisteredAt()->format('Y-m-d'), $cashback->getRegisteredAt()->format('Y-m-d'));
-        $this->assertEquals(3.00, $cashback->getAmount());
+        $this->assertEquals(3.00, $cashback->getAmount(), 0.01);
 
         // zero value is pending until 90 days
         $transaction->setCommission(0.00);
         $this->em->flush();
         $this->em->refresh($cashback);
-        $this->assertEquals(0, $cashback->getAmount());
+        $this->assertEquals(0, $cashback->getAmount(), 0.01);
         $this->assertEquals('pending', $cashback->getStatus());
 
         // after 90 days, cashback status is updated

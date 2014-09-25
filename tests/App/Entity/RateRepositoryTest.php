@@ -14,14 +14,14 @@ class RateRepositoryTest extends OrmTestCase
 
         $this->assertInstanceOf('App\Entity\Rate', $rate);
         $this->assertGreaterThan(0, $rate->getId());
-        $this->assertEquals(0.5, $rate->getLevel0());
-        $this->assertEquals(0.1, $rate->getLevel1());
-        $this->assertEquals(0.05, $rate->getLevel2());
-        $this->assertEquals(0.05, $rate->getLevel3());
-        $this->assertEquals(0.05, $rate->getLevel4());
-        $this->assertEquals(0.05, $rate->getLevel5());
-        $this->assertEquals(0.05, $rate->getLevel6());
-        $this->assertEquals(0.05, $rate->getLevel7());
+        $this->assertEquals(0.5, $rate->getLevel0(), 0.01);
+        $this->assertEquals(0.1, $rate->getLevel1(), 0.01);
+        $this->assertEquals(0.05, $rate->getLevel2(), 0.01);
+        $this->assertEquals(0.05, $rate->getLevel3(), 0.01);
+        $this->assertEquals(0.05, $rate->getLevel4(), 0.01);
+        $this->assertEquals(0.05, $rate->getLevel5(), 0.01);
+        $this->assertEquals(0.05, $rate->getLevel6(), 0.01);
+        $this->assertEquals(0.05, $rate->getLevel7(), 0.01);
     }
 
     public function testAutomaticallyCreateDefaultRate()
