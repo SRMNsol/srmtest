@@ -59,13 +59,12 @@ class ReferralRepository extends EntityRepository
                 $cashbacks = $cashbackRepository->findCashbackForUserByDateRange($child, $from, $to);
 
                 foreach ($cashbacks as $cashback) {
-                    $transaction = $cashback->getTransaction();
-
-                    // skip if there is no transaction (?)
-                    if (null === $transaction) {
+                    // not calculating cashback from extrabux or cashback without transaction
+                    if ($cashback->getIsExtrabux() || null === $cashback->getTransaction()) {
                         continue;
                     }
 
+                    $transaction = $cashback->getTransaction();
                     $share = $transaction->getCommissionByLevel($level);
 
                     $commission += $share;
@@ -110,7 +109,7 @@ class ReferralRepository extends EntityRepository
             ->setPending($values['commission'] - $values['available'] - $payment)
             ->setIndirect($values['indirect'])
             ->setDirect($values['direct'])
-            ->setRegisteredAt($values['registeredAt'])
+            ->setRegisteredAt($values['registeredAt'] ?: clone $from) // use first day of month when registeredAt is null
         ;
 
         $em->persist($referral);
