@@ -97,7 +97,11 @@ class ReferralRepository extends EntityRepository
 
         $em = $this->getEntityManager();
 
-        $referral = $this->findOneBy(['user' => $user, 'month' => "$year$month"]) ?: new Referral();
+        $referral = $this->findOneBy([
+            'user' => $user,
+            'month' => "$year$month",
+            'isExtrabux' => false,
+        ]) ?: new Referral();
 
         $payment = $referral->getProcessing() + $referral->getPaid();
 
