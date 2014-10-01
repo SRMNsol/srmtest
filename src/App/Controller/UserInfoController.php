@@ -50,8 +50,8 @@ class UserInfoController
 
                 $referralList = $em->getRepository('App\Entity\Referral')->findReferralForUserByMonthRange(
                     $user,
-                    $data['startDate'] instanceof \DateTime ? $data['startDate']->format('%Y%m') : null,
-                    $data['endDate'] instanceof \DateTime ? $data['endDate']->format('%Y%m') : null
+                    $data['startDate'] instanceof \DateTime ? $data['startDate']->format('Ym') : null,
+                    $data['endDate'] instanceof \DateTime ? $data['endDate']->format('Ym') : null
                 );
                 foreach ($referralList as $referral) {
                     $totalReferral += $referral->getAmount();

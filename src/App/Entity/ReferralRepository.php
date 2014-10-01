@@ -133,23 +133,24 @@ class ReferralRepository extends EntityRepository
         $qb->andWhere('p.status <> :invalid');
         $qb->setParameter('invalid', Payable::STATUS_INVALID);
 
+        if (isset($start)) {
+            $qb->andWhere('p.month >= :start');
+            $qb->setParameter('start', $start);
+        }
+
+        if (isset($end)) {
+            $qb->andWhere('p.month <= :end');
+            $qb->setParameter('end', $end);
+        }
+
         switch ($order) {
             case 'latest' :
                 $qb->orderBy('p.month', 'DESC');
                 break;
             default :
-                $qb->orderBy('p.month', 'ASC');
                 break;
         }
 
-        return array_filter($qb->getQuery()->getResult(), function (Referral $referral) use ($start, $end) {
-            $valid = false;
-            $date = \DateTime::createFromFormat($referral->getMonth(), "Ym");
-
-            if ($start !== null) {
-                $from = \DateTime::createFromFormat($start, "Ym");
-
-            }
-        });
+        return $qb->getQuery()->getResult();
     }
 }
