@@ -121,4 +121,35 @@ class ReferralRepository extends EntityRepository
 
         return $referral;
     }
+
+    /**
+     * Find monthly referral by month range in format YYYYMM
+     */
+    public function findReferralForUserByMonthRange(User $user, $start = null, $end = null, $order = null)
+    {
+        $qb = $this->createQueryBuilder('p');
+        $qb->where('p.user = :user');
+        $qb->setParameter('user', $user);
+        $qb->andWhere('p.status <> :invalid');
+        $qb->setParameter('invalid', Payable::STATUS_INVALID);
+
+        switch ($order) {
+            case 'latest' :
+                $qb->orderBy('p.month', 'DESC');
+                break;
+            default :
+                $qb->orderBy('p.month', 'ASC');
+                break;
+        }
+
+        return array_filter($qb->getQuery()->getResult(), function (Referral $referral) use ($start, $end) {
+            $valid = false;
+            $date = \DateTime::createFromFormat($referral->getMonth(), "Ym");
+
+            if ($start !== null) {
+                $from = \DateTime::createFromFormat($start, "Ym");
+
+            }
+        });
+    }
 }

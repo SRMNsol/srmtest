@@ -109,14 +109,11 @@ class Referral extends Payable
 
     /**
      * Return month and year of Referral
-     *
      */
     public function getFormattedMonth($format = 'm/Y')
     {
-        $year = substr($this->month, 0, 4);
-        $month = substr($this->month, 4);
-        $date = new \DateTime("$year-$month-01");
-
+        $date = \DateTime::createFromFormat('Ymd', $this->month . '01');
+        $date->setTime(0, 0);
         return $date->format($format);
     }
 }

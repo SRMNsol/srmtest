@@ -48,8 +48,14 @@ class UserInfoController
                     $totalPayment += $cashback->getPaid();
                 }
 
-                $referral = $em->getRepository('App\Entity\Referral')->calculateUserReferral($user, $data['startDate'], $data['endDate']);
-                $totalReferral = $referral['commission'];
+                $referralList = $em->getRepository('App\Entity\Referral')->findReferralForUserByMonthRange(
+                    $user,
+                    $data['startDate'] instanceof \DateTime ? $data['startDate']->format('%Y%m') : null,
+                    $data['endDate'] instanceof \DateTime ? $data['endDate']->format('%Y%m') : null
+                );
+                foreach ($referralList as $referral) {
+                    $totalReferral += $referral->getAmount();
+                }
 
             } catch (\Exception $e) {
                 $app['session']->getFlashBag()->add('danger', $e->getMessage());
