@@ -3,8 +3,7 @@
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
 <head>
 <meta name="generator" content="HTML Tidy for Linux (vers 6 November 2007), see www.w3.org" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <meta name="description" content="Save money on millions of products from thousands of top online stores at beesavy.com with comparison shopping, cash back, and coupons." />
 <link rel="shortcut icon" href="<?php echo s3path("/images/favicon.ico") ?>" />
 <title>BeeSavy - Taking the sting out of online shopping</title>
