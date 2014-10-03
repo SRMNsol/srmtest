@@ -66,9 +66,8 @@ googletag.cmd = googletag.cmd || [];
 <script type='text/javascript'>
     googletag.cmd.push(function() {
     $slots
-    googletag.pubads().enableSingleRequest();
-    googletag.enableServices();
     googletag.pubads().collapseEmptyDivs();
+    googletag.enableServices();
 });
 </script>
 <!-- /googletag -->
