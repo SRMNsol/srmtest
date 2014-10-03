@@ -23,15 +23,13 @@
     </div>
     <!-- /page Title -->
 
-
     <!-- Left category -->
     {side_nav}
     <!-- /Left category -->
 
-
     <!-- Right side -->
     <div id="results" class="help">
-       <div class="title">About us</div>
+        <div class="title">About us</div>
         <div style="float:left;width:100%;"><hr color="#e96d08" style="margin-left:10px;"></div>
             <p><strong>BeeSavy is the first website to combine comparison shopping with coupons, cash back discounts and referral cash back. &nbsp;</strong>Compare prices on millions of products from hundreds of trusted online stores. </p>
 
@@ -61,37 +59,36 @@
 
         </div>
         <div style="clear: both;"></div>
-        </div>
-        <div style="clear: both;"></div>
+    </div>
+    <div style="clear: both;"></div>
 
-        <!-- Right side -->
+    <!-- Right side -->
 
-<script>
-$(document).ready(function() {
-    $("div.productResult").mouseover(function () {
-        var element = $(this);
-        element.find('.BtnComparePrice').addClass('BtnOrangeRBg').removeClass('BtnOrangeBg');
-    }).mouseout(function () {
-        var element = $(this);
-        element.find('.BtnComparePrice').addClass('BtnOrangeBg').removeClass('BtnOrangeRBg');
+    <script>
+    $(document).ready(function() {
+        $("div.productResult").mouseover(function () {
+            var element = $(this);
+            element.find('.BtnComparePrice').addClass('BtnOrangeRBg').removeClass('BtnOrangeBg');
+        }).mouseout(function () {
+            var element = $(this);
+            element.find('.BtnComparePrice').addClass('BtnOrangeBg').removeClass('BtnOrangeRBg');
+        });
+        $("div.ShopByStore").mouseover(function () {
+            var element = $(this);
+            element.find('.nav-ShopByStore-Bt').addClass('BtnSBSOrangeRBg').removeClass('BtnSBSOrangeBg');
+        }).mouseout(function () {
+            var element = $(this);
+            element.find('.nav-ShopByStore-Bt').addClass('BtnSBSOrangeBg').removeClass('BtnSBSOrangeRBg');
+        });
+        $("div.FindCoupons").mouseover(function () {
+            var element = $(this);
+            element.find('.nav-FindCoupons-Bt').addClass('BtnFCOrangeRBg').removeClass('BtnFCOrangeBg');
+        }).mouseout(function () {
+            var element = $(this);
+            element.find('.nav-FindCoupons-Bt').addClass('BtnFCOrangeBg').removeClass('BtnFCOrangeRBg');
+        });
     });
-    $("div.ShopByStore").mouseover(function () {
-        var element = $(this);
-        element.find('.nav-ShopByStore-Bt').addClass('BtnSBSOrangeRBg').removeClass('BtnSBSOrangeBg');
-    }).mouseout(function () {
-        var element = $(this);
-        element.find('.nav-ShopByStore-Bt').addClass('BtnSBSOrangeBg').removeClass('BtnSBSOrangeRBg');
-    });
-    $("div.FindCoupons").mouseover(function () {
-        var element = $(this);
-        element.find('.nav-FindCoupons-Bt').addClass('BtnFCOrangeRBg').removeClass('BtnFCOrangeBg');
-    }).mouseout(function () {
-        var element = $(this);
-        element.find('.nav-FindCoupons-Bt').addClass('BtnFCOrangeBg').removeClass('BtnFCOrangeRBg');
-    });
-
-});
-</script>
+    </script>
 
 <!-- /content -->
 
