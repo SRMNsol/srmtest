@@ -94,9 +94,7 @@
 
 <!-- footer -->
 {footer}
-
 <?php echo googletag_ad("BS_help_728x90_2") ?>
-
 </div>
 <!-- /footer -->
 
