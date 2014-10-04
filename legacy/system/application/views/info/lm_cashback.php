@@ -8,7 +8,6 @@
 {banner}
 <!-- /Header -->
 
-
 <!-- Navigation bar -->
 {nav_bar}
 <!-- /Navigation bar -->
