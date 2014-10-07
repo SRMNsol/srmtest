@@ -11,7 +11,7 @@
 {nav_bar}
 <!-- /Navigation bar -->
 
-<?php echo googletag_ad("BS_help_728x90_1") ?>
+<?php echo googletag_ad('BS_help_728x90_1') ?>
 
 <!-- content -->
 <div class="BGLeftCol" style="border:#00C 0px solid" >
@@ -94,7 +94,7 @@
 
 <!-- footer -->
 {footer}
-<?php echo googletag_ad("BS_help_728x90_2") ?>
+<?php echo googletag_ad('BS_help_728x90_2') ?>
 </div>
 <!-- /footer -->
 

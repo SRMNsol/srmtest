@@ -7,13 +7,13 @@
  {banner}
 <!-- /Header -->
 
-<?php echo googletag_ad("BS_home_728x90_1") ?>
+<?php echo googletag_ad('BS_home_728x90_1') ?>
 
 <!-- Navigation bar -->
 {nav_bar}
 <!-- /Navigation bar -->
 
-<?php echo googletag_ad("BS_home_728x90_2") ?>
+<?php echo googletag_ad('BS_home_728x90_2') ?>
 
 <!-- Content -->
     <!-- Daily Deals -->
@@ -97,7 +97,7 @@
 </div>
 </div>
 
-    <?php echo googletag_ad('BS_home_250x250', 0) ?>
+    <?php echo googletag_ad('BS_home_250x250') ?>
 </div>
 
     <!-- /Top stores -->

@@ -34,9 +34,9 @@
 </head>
 <body>
 <div id="container" style="width:100%;">
-    <?php echo googletag_ad('BS_coupon_728x90', 10, 'none') ?>
+    <?php echo googletag_ad('BS_coupon_728x90', 'none') ?>
     <div style="margin:auto; width:1210px;">
-        <div style="width:300px; display:inline-block;"><?php echo googletag_ad('BS_coupon_300x600_1', 0, 'none') ?></div>
+        <div style="width:300px; display:inline-block;"><?php echo googletag_ad('BS_coupon_300x600_1', 'none') ?></div>
         <div style="margin:auto; width:602px; display:inline-block; vertical-align:top;">
             <div id="transfer" style="margin:0;">
                 <div id="title">
@@ -65,7 +65,7 @@
             </div>
             <div id="manualRedirect"><a href="{destination_url}">If you are not automatically redirected, click here</a></div>
         </div>
-        <div style="width:300px; display:inline-block;"><?php echo googletag_ad('BS_coupon_300x600_2', 0, 'none') ?></div>
+        <div style="width:300px; display:inline-block;"><?php echo googletag_ad('BS_coupon_300x600_2', 'none') ?></div>
     </div>
 </div>
 

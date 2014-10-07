@@ -77,7 +77,7 @@ TAG;
 /**
  * Display ad body tag
  */
-function googletag_ad($name, $margin = 10, $float = 'left') {
+function googletag_ad($name, $float = 'left') {
     $adUnits = googletag_adunits();
     if (!isset($adUnits[$name])) {
         throw Exception(sprintf("Undefined ad unit %s", $name));

@@ -9,7 +9,7 @@
 {nav_bar}
 <!-- /Navigation bar -->
 
-<?php echo googletag_ad("BS_search_728x90") ?>
+<?php echo googletag_ad('BS_search_728x90') ?>
 
 <!-- content -->
 

@@ -59,6 +59,6 @@ foreach($states as $state=>$value){
                 <div <?php echo $parentstates['contact']?> ><span><a <?php echo $states['contact']?> href="/info/contact" style='cursor:pointer'><div class="HelpFullBox">Contact Us</div></a></span></div>
             </form>
         </div>
-        <?php echo googletag_ad("BS_help_160x600") ?>
+        <?php echo googletag_ad('BS_help_160x600') ?>
     </div>
 </div>
