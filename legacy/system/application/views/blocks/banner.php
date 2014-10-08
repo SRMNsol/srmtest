@@ -11,6 +11,8 @@
 
                 <div><a id="login2" class="login" href="#_" onclick="$('#banner-ad').stop(true,true);$('#banner-ad').hide();$(this).toggle();$('#login1').toggle();$('#loginBox').slideToggle('slow');$('#inputEmail').focus()">Log In</a> </div>
                 <div><a id="login1" style="display:none" class="loginOpen" href="#_" onclick="$('#loginBox').stop(true,true);$('#loginBox').hide();$(this).toggle();$('#login2').toggle();$('#banner-ad').slideToggle();">Log In</a> </div>
+
+                <?php echo googletag_ad('BS_login_486x60', 'right') ?>
             </div>
 
             <FORM id="loginBox" method=post action=/account/login style="display:none">
