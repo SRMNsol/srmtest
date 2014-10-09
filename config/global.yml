@@ -45,6 +45,8 @@ popshops.pepperjam_publisher_api_key: 38e200f9c64df81f9eaf6fc38d1df40e311748469a
 popshops.shareasale_affiliate_id: 865250
 popshops.shareasale_token: WNT6v2KpPO76cwtJ
 popshops.shareasale_api_secret: DIl1id9n0MKtgz8xZXj2jq1z8DZrfm0q
+popshops.impactradius_account_sid: IRkyr55C73NJ106685okFer5BmhLFqAuP1
+popshops.impactradius_auth_token: fjG9mLxBfZZRHLH4tQ4vZh569ftUUxQ2
 
 # dbal
 db.options:

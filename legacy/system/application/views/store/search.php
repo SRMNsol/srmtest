@@ -3,20 +3,23 @@
 {header}
 <body>
 <div id="container">
-   {banner}
+{banner}
 
 <!-- Navigation bar -->
 {nav_bar}
 <!-- /Navigation bar -->
 
+<?php echo googletag_ad('BS_search_728x90') ?>
+
 <!-- content -->
+<div class="BGNoCol">
+
     <!-- page Title -->
-    <div class="BGNoCol">
-        <div id="pageTitle" >
-            <div id="pageTitleLeft"></div>
-            <h1>Cash Back Stores</h1>
-            <div id="pageTitleRight"></div>
-            <div id="titleNav" class="small">
+    <div id="pageTitle" >
+        <div id="pageTitleLeft"></div>
+        <h1>Cash Back Stores</h1>
+        <div id="pageTitleRight"></div>
+        <div id="titleNav" class="small">
             <a class="pad" href="/stores/search">ALL</a>
             <a href="/stores/search?q=0">#</a>
             <?php for ($ord = ord('a'); $ord <= ord('z'); $ord++) : ?>
@@ -28,96 +31,65 @@
     </div>
     <!-- /page Title -->
 
+    <div class="BGLeftCol">
 
-   		<!-- Left side -->
-        <div class="BGLeftCol">
-                <div id="facetNav">
+        <!-- Left side -->
+        <div id="facetNav">
+            <div id="category">
+                <div class="facet" >
+                    <div id="category-bt" class="cat-bg">
+                        <div id="cat-left-curve"><img src="<?php echo s3path("/images/cat-left-curve.jpg") ?>" width="4" height="35" alt="** PLEASE DESCRIBE THIS IMAGE **"/></div>
+                        <div id="cat-right-curve"><img src="<?php echo s3path("/images/cat-right-curve.jpg") ?>" width="4" height="35" alt="** PLEASE DESCRIBE THIS IMAGE **"/></div>
+                        <div class="parent">Jump to a Store</div>
+                    </div>
 
-<div id="category">
+                    <div id="category-bg">
+                        <div class="child">
+                            <div style="clear:both;height:5px;"></div>
+                            <div style="margin-left:10px;margin-bottom:10px;">
+                                <select name="merchant" id="merchantSelect" onchange="if(this.options[this.selectedIndex].value !=''){window.location=this.options[this.selectedIndex].value}">
+                                    <option selected="selected" value="">ALL</option>
+                                    {store_list}
+                                        <option value="/stores/details/{id}">{name}</option>
+                                    {/store_list}
+                                </select>
+                            </div>
 
-    <div class="facet" >
-    	<div id="category-bt" class="cat-bg">
-        <div id="cat-left-curve"><img src="<?php echo s3path("/images/cat-left-curve.jpg") ?>" width="4" height="35" alt="** PLEASE DESCRIBE THIS IMAGE **"/></div>
-        <div id="cat-right-curve"><img src="<?php echo s3path("/images/cat-right-curve.jpg") ?>" width="4" height="35" alt="** PLEASE DESCRIBE THIS IMAGE **"/></div>
-        <div class="parent">Jump to a Store</div>
-    </div>
+                            <div class="sub-category-txt">Store category</div>
+                            <div id="sub-category-bg">
+                                <div class="child">
+                                    <div class="holder osX">
+                                        <div id="pane1" class="scroll-pane">
+                                            <ul class="bullets">
+                                                <li><a href="/stores/search">ALL</a></li>
+                                                <?php foreach ($categories as $category) :?>
+                                                    <li><a href="<?php echo escape("/stores/search?category=" . $category['id'], 'html_attr')?>"><?php echo escape($category['name']) ?></a></li>
+                                                <?php endforeach ?>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="clear:both;height:5px;"></div>
+                        </div>
+                    </div>
+                </div>
 
-    <div id="category-bg">
-
-    	<div class="child">
-         <div style="clear:both;height:5px;">	</div>
-
-                  <div style="margin-left:10px;margin-bottom:10px;">
-
-                   <select name="merchant" id="merchantSelect" onchange="if(this.options[this.selectedIndex].value !=''){window.location=this.options[this.selectedIndex].value}">
-                        <option selected="selected" value="">ALL</option>
-                        {store_list}
-                            <option value="/stores/details/{id}">{name}</option>
-                        {/store_list}
-                  </select>
-                  </div>
-
-	<div class="sub-category-txt">Store category</div>
-        <div id="sub-category-bg">
-    	<div class="child">
-
-
-        <div class="holder osX">
-            <div id="pane1" class="scroll-pane">
-                <ul class="bullets">
-                    <li><a href="/stores/search">ALL</a></li>
-                    <?php foreach ($categories as $category) :?>
-                    <li><a href="<?php echo escape("/stores/search?category=" . $category['id'], 'html_attr')?>"><?php echo escape($category['name']) ?></a></li>
-                    <?php endforeach ?>
-                </ul>
+                <?php echo googletag_ad('BS_search_160x600_1') ?>
+                <?php echo googletag_ad('BS_search_160x600_2') ?>
             </div>
         </div>
+        <!-- /Left side-->
 
-
-
-
-                    </div>
-
-                    </div>
-                      <div style="clear:both;height:5px;">	</div>
-
-
-
-        </div>
-
-
-                    </div>
-
-
-
-
-           </div>
-           </div>
-
-
-        </div>
-
-       <!-- /Left side-->
-
-
-       <!-- Right side -->
+        <!-- Right side -->
 
 
 <?php $index=0;
 $ad = 0;
 foreach ($stores as $store){
-    if($index==$ad){
-?>
-             <div style="float:right;margin-right:6px;">
-<!-- <script type='text/javascript'>
-    OA_show(6);
-</script><noscript><a target='_blank' href='http://50.16.95.24/openx/www/delivery/ck.php?n=a88fd39'><img border='0' alt='' src='http://50.16.95.24/openx/www/delivery/avw.php?zoneid=6&amp;n=a88fd39' /></a></noscript>
-<!--<img src="<?php echo s3path("/images/rightbanner.jpg") ?>">-->
-                </div>
-<?php }
 ?>
              <div class="couponList inactive" >
-	         <div class="logo" >
+             <div class="logo" >
              <a href="/stores/details/<?php echo $store['id'] ?>"><img class="cdn-image"
 onload="
         var width=100;
@@ -144,8 +116,8 @@ onload="
             </div>
 
             <div class="CashBack" style="border:0px solid #000;"><div class="CashBack-Bt1 BtnCBOrangeBg" <?php if (empty($store['cashback_text'])) : ?>style="visibility:hidden"<?php endif ?>><a href="/stores/details/<?php echo $store['id'] ?>" rel="nofollow"><span class="CashBack-value value"><?php echo $store['cashback_text']?></span></a></div></div>
-         	   <div class="ShopStore" style><div class="ShopStore-Bt BtnSSOrangeBg"><a class="BtnBlackTxt" href="/stores/details/<?php echo $store['id'] ?>" rel="nofollow">SHOP STORE</a></div></div>
-	    </div>
+                <div class="ShopStore" style><div class="ShopStore-Bt BtnSSOrangeBg"><a class="BtnBlackTxt" href="/stores/details/<?php echo $store['id'] ?>" rel="nofollow">SHOP STORE</a></div></div>
+        </div>
 
 <?php
 
@@ -163,38 +135,22 @@ onload="
 <div id="Pagination" class="pagination-controls"></div>
     <div class="pagination-info">Showing results <strong>{start}</strong> to <strong>{end}</strong> of <strong>{count}</strong></div>
 </div>
-			<div style="clear: both;"></div>
-					</div>
-		<div style="clear: both;"></div>
+            <div style="clear: both;"></div>
+                    </div>
+        <div style="clear: both;"></div>
 
 <script>
 $(document).ready(function() {
     $("div.couponList").mouseover(function () {
         var element = $(this);
- 		element.find('.ShopStore-Bt').addClass('BtnSSOrangeRBg').removeClass('BtnSSOrangeBg');
-		element.find('.CashBack-Bt1').addClass('BtnCBOrangeRBg').removeClass('BtnCBOrangeBg');
+        element.find('.ShopStore-Bt').addClass('BtnSSOrangeRBg').removeClass('BtnSSOrangeBg');
+        element.find('.CashBack-Bt1').addClass('BtnCBOrangeRBg').removeClass('BtnCBOrangeBg');
     }).mouseout(function () {
-    	var element = $(this);
-		element.find('.ShopStore-Bt').addClass('BtnSSOrangeBg').removeClass('BtnSSOrangeRBg');
-				element.find('.CashBack-Bt1').addClass('BtnCBOrangeBg').removeClass('BtnCBOrangeRBg');
-    });
-
-
-    $("div.ShopByStore").mouseover(function () {
         var element = $(this);
-		element.find('.nav-ShopByStore-Bt').addClass('BtnSBSOrangeRBg').removeClass('BtnSBSOrangeBg');
-    }).mouseout(function () {
-    	var element = $(this);
-		element.find('.nav-ShopByStore-Bt').addClass('BtnSBSOrangeBg').removeClass('BtnSBSOrangeRBg');
+        element.find('.ShopStore-Bt').addClass('BtnSSOrangeBg').removeClass('BtnSSOrangeRBg');
+        element.find('.CashBack-Bt1').addClass('BtnCBOrangeBg').removeClass('BtnCBOrangeRBg');
     });
 
-	    $("div.FindCoupons").mouseover(function () {
-        var element = $(this);
-		element.find('.nav-FindCoupons-Bt').addClass('BtnFCOrangeRBg').removeClass('BtnFCOrangeBg');
-    }).mouseout(function () {
-    	var element = $(this);
-		element.find('.nav-FindCoupons-Bt').addClass('BtnFCOrangeBg').removeClass('BtnFCOrangeRBg');
-    });
 
     var isInit = true;
     function pageselectCallback(page_index, jq){

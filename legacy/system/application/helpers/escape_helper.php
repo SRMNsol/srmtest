@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Output escaping
  */
-
 function escape($string, $mode = 'html', $enc = 'UTF-8')
 {
     switch ($mode) {
