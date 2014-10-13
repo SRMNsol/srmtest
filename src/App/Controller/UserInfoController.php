@@ -28,7 +28,7 @@ class UserInfoController
         $totalSpending = 0.00;
         $totalPayment = 0.00;
         $totalReferral = 0.00;
-        $totalOtherPayable = 0.00;
+        $totalExtraCashback = 0.00;
         $cashbackList = [];
         $user = null;
 
@@ -58,7 +58,7 @@ class UserInfoController
                     $totalReferral += $referral->getAmount();
                 }
 
-                $totalOtherPayable = $em->getRepository('App\Entity\Payable')->getTotalOtherPayableForUser($user, $data['startDate'], $data['endDate']);
+                $totalExtraCashback = $em->getRepository('App\Entity\Payable')->getTotalExtraCashbackForUser($user, $data['startDate'], $data['endDate']);
 
             } catch (\Exception $e) {
                 $app['session']->getFlashBag()->add('danger', $e->getMessage());
@@ -74,8 +74,8 @@ class UserInfoController
             'totalCashback' => $totalCashback,
             'totalReferral' => $totalReferral,
             'totalPayment' => $totalPayment,
-            'totalOtherPayable' => $totalOtherPayable,
-            'totalEarning' => $totalCashback + $totalReferral + $totalOtherPayable,
+            'totalExtraCashback' => $totalExtraCashback,
+            'totalEarning' => $totalCashback + $totalReferral + $totalExtraCashback,
         ]);
     }
 

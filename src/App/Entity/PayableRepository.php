@@ -73,7 +73,7 @@ class PayableRepository extends EntityRepository
         return $qb->getQuery()->execute();
     }
 
-    public function getTotalOtherPayableForUser(User $user, \DateTime $start = null, \DateTime $end = null)
+    public function getTotalExtraCashbackForUser(User $user, \DateTime $start = null, \DateTime $end = null)
     {
         $qb = $this->createQueryBuilder('p');
         $qb->select('SUM(p.amount)');
