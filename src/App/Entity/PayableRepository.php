@@ -47,4 +47,26 @@ class PayableRepository extends EntityRepository
 
         return $qb->getQuery()->execute();
     }
+
+    public function getTotalOtherPayableForUser(User $user, \DateTime $start = null, \DateTime $end = null)
+    {
+        $qb = $this->createQueryBuilder('p');
+        $qb->select('SUM(p.amount)');
+        $qb->where('p INSTANCE OF App\Entity\Payable');
+        $qb->andWhere('p.user = :user')->setParameter('user', $user);
+        $qb->andWhere('p.status <> :invalid')->setParameter('invalid', Payable::STATUS_INVALID);
+
+        if ($start !== null) {
+            $qb->andWhere('p.registeredAt >= :after')->setParameter('after', $start);
+        }
+
+        if ($end !== null) {
+            $until = clone $end;
+            $until->add(\DateInterval::createFromDateString('+1 day'));
+
+            $qb->andWhere('p.registeredAt < :before')->setParameter('before', $until);
+        }
+
+        return $qb->getQuery()->getSingleScalarResult();
+    }
 }
