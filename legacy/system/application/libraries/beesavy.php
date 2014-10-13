@@ -91,6 +91,7 @@ class Beesavy
         $user = $em->getReference('App\Entity\User', $id);
         $summary = $em->getRepository('App\Entity\Payable')->calculateUserSummary($user);
         $cashback = $em->getRepository('App\Entity\Cashback')->calculateUserSummary($user);
+        $extra = $em->getRepository('App\Entity\Payable')->calculateExtraUserSummary($user);
         $referral = $em->getRepository('App\Entity\Referral')->calculateUserSummary($user);
 
         $data['type'] = 'all';
@@ -100,8 +101,8 @@ class Beesavy
         $total[0]['available'] = sprintf('%.2f', $summary['available']);
         $total[0]['processing'] = sprintf('%.2f', $summary['processing']);
         $total[0]['paid'] = sprintf('%.2f', $summary['paid']);
-        $total[0]['UserPending'] = sprintf('%.2f', $cashback['pending']);
-        $total[0]['UserAvailable'] = sprintf('%.2f', $cashback['available']);
+        $total[0]['UserPending'] = sprintf('%.2f', $cashback['pending'] + $extra['pending']);
+        $total[0]['UserAvailable'] = sprintf('%.2f', $cashback['available'] + $extra['available']);
         $total[0]['referralpending'] = sprintf('%.2f', $referral['pending']);
         $total[0]['referralavailable'] = sprintf('%.2f', $referral['available']);
         $total[0]['referralcountdirect'] = $user->countDirectReferrals();

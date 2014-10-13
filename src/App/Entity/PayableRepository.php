@@ -31,6 +31,31 @@ class PayableRepository extends EntityRepository
         }
     }
 
+    public function calculateExtraUserSummary(User $user)
+    {
+        $qb = $this->createQueryBuilder('p')
+            ->select([
+                'SUM(p.amount) AS amount',
+                'SUM(p.pending) AS pending',
+                'SUM(p.available) AS available',
+                'SUM(p.processing) AS processing',
+                'SUM(p.paid) AS paid'
+            ])
+            ->where('p.user = :user')
+            ->andWhere('p.status <> :invalid')
+            ->andWhere('p INSTANCE OF App\Entity\Payable')
+            ->groupBy('p.user')
+            ->setParameter('user', $user)
+            ->setParameter('invalid', Payable::STATUS_INVALID)
+        ;
+
+        try {
+            return $qb->getQuery()->getSingleResult();
+        } catch (NoResultException $e) {
+            return null;
+        }
+    }
+
     public function makeAvailable(\DateTime $date = null)
     {
         $qb = $this->getEntityManager()->createQueryBuilder()
