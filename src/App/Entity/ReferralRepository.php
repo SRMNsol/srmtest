@@ -59,13 +59,12 @@ class ReferralRepository extends EntityRepository
                 $cashbacks = $cashbackRepository->findCashbackForUserByDateRange($child, $from, $to);
 
                 foreach ($cashbacks as $cashback) {
-                    $transaction = $cashback->getTransaction();
-
-                    // skip if there is no transaction (?)
-                    if (null === $transaction) {
+                    // not calculating cashback from extrabux or cashback without transaction
+                    if ($cashback->getIsExtrabux() || null === $cashback->getTransaction()) {
                         continue;
                     }
 
+                    $transaction = $cashback->getTransaction();
                     $share = $transaction->getCommissionByLevel($level);
 
                     $commission += $share;
@@ -98,7 +97,11 @@ class ReferralRepository extends EntityRepository
 
         $em = $this->getEntityManager();
 
-        $referral = $this->findOneBy(['user' => $user, 'month' => "$year$month"]) ?: new Referral();
+        $referral = $this->findOneBy([
+            'user' => $user,
+            'month' => "$year$month",
+            'isExtrabux' => false,
+        ]) ?: new Referral();
 
         $payment = $referral->getProcessing() + $referral->getPaid();
 
@@ -110,12 +113,44 @@ class ReferralRepository extends EntityRepository
             ->setPending($values['commission'] - $values['available'] - $payment)
             ->setIndirect($values['indirect'])
             ->setDirect($values['direct'])
-            ->setRegisteredAt($values['registeredAt'])
+            ->setRegisteredAt($values['registeredAt'] ?: clone $from) // use first day of month when registeredAt is null
         ;
 
         $em->persist($referral);
         $em->flush();
 
         return $referral;
+    }
+
+    /**
+     * Find monthly referral by month range in format YYYYMM
+     */
+    public function findReferralForUserByMonthRange(User $user, $start = null, $end = null, $order = null)
+    {
+        $qb = $this->createQueryBuilder('p');
+        $qb->where('p.user = :user');
+        $qb->setParameter('user', $user);
+        $qb->andWhere('p.status <> :invalid');
+        $qb->setParameter('invalid', Payable::STATUS_INVALID);
+
+        if (isset($start)) {
+            $qb->andWhere('p.month >= :start');
+            $qb->setParameter('start', $start);
+        }
+
+        if (isset($end)) {
+            $qb->andWhere('p.month <= :end');
+            $qb->setParameter('end', $end);
+        }
+
+        switch ($order) {
+            case 'latest' :
+                $qb->orderBy('p.month', 'DESC');
+                break;
+            default :
+                break;
+        }
+
+        return $qb->getQuery()->getResult();
     }
 }

@@ -40,7 +40,7 @@ class Cashback extends Payable
             return $this;
         }
 
-        $this->amount = $this->getCommissionShare(0);
+        $this->amount = $this->getCommissionShare();
         $this->registeredAt = $this->getTransactionDate();
         $this->updateAvailableDate();
 

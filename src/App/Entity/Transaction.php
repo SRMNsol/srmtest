@@ -96,6 +96,6 @@ class Transaction extends BaseTransaction
             $commission = $share * $this->getRealCommission();
         }
 
-        return $commission;
+        return self::round($commission);
     }
 }
