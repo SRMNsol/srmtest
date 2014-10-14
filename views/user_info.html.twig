@@ -63,13 +63,22 @@
   <tbody>
     <tr>
       <td>$ {{ totalSpending|number_format(2) }}</td>
-      <td>$ {{ totalCashback|number_format(2) }}</td>
+      <td>
+        $ {{ (totalCashback + totalExtraCashback)|number_format(2) }}
+        {% if totalExtraCashback > 0 %}
+        <span class="text-success">*</span>
+        {% endif %}
+      </td>
       <td>$ {{ totalReferral|number_format(2) }}</td>
       <td>$ {{ totalEarning|number_format(2) }}</td>
       <td>$ {{ totalPayment|number_format(2) }}</td>
     </tr>
   </tbody>
 </table>
+
+{% if totalExtraCashback > 0 %}
+<p class="text-success"><small>* including ${{ totalExtraCashback|number_format(2) }} Extrabux adjustment amount</small></p>
+{% endif %}
 
 <div class="row" style="margin-bottom: 12px;">
   <div class="col-md-9">
