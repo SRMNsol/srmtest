@@ -3,8 +3,8 @@
 /**
  * Define available ad units
  */
-function googletag_adunits() {
-    static $adUnits = [
+function googletag_adslots() {
+    static $adslots = [
         'BS_account_300x600'   => ['width' => 300, 'height' => 600, 'id' => 'div-gpt-ad-1410546596995-0',  'collapse' => false],
         'BS_account_728x90_1'  => ['width' => 728, 'height' => 90,  'id' => 'div-gpt-ad-1410546596995-1',  'collapse' => false],
         'BS_account_728x90_2'  => ['width' => 728, 'height' => 90,  'id' => 'div-gpt-ad-1410546596995-2',  'collapse' => false],
@@ -31,7 +31,7 @@ function googletag_adunits() {
         'BS_stores_728x90'     => ['width' => 728, 'height' => 90,  'id' => 'div-gpt-ad-1410546596995-23', 'collapse' => false],
     ];
 
-    return $adUnits;
+    return $adslots;
 }
 
 /**
@@ -39,14 +39,14 @@ function googletag_adunits() {
  */
 function googletag_head() {
 
-    $slots = implode(PHP_EOL, array_map(function($adUnit, $name) {
-        $width = $adUnit['width'];
-        $height = $adUnit['height'];
-        $id = $adUnit['id'];
+    $slots = implode(PHP_EOL, array_map(function($slot, $name) {
+        $width = $slot['width'];
+        $height = $slot['height'];
+        $id = $slot['id'];
         return "googletag.defineSlot('/45213388/$name', [$width, $height], '$id').addService(googletag.pubads())"
-          . ($adUnit['collapse'] ? '.setCollapseEmptyDiv(true, true)' : '')
+          . ($slot['collapse'] ? '.setCollapseEmptyDiv(true, true)' : '')
           . ";";
-    }, googletag_adunits(), array_keys(googletag_adunits())));
+    }, googletag_adslots(), array_keys(googletag_adslots())));
 
     return <<<TAG
 <!-- googletag -->
@@ -80,14 +80,14 @@ TAG;
  * Display ad body tag
  */
 function googletag_ad($name, $float = 'left') {
-    $adUnits = googletag_adunits();
-    if (!isset($adUnits[$name])) {
+    $slots = googletag_adslots();
+    if (!isset($slots[$name])) {
         throw Exception(sprintf("Undefined ad unit %s", $name));
     }
 
-    $width = $adUnits[$name]['width'];
-    $height = $adUnits[$name]['height'];
-    $id = $adUnits[$name]['id'];
+    $width = $slots[$name]['width'];
+    $height = $slots[$name]['height'];
+    $id = $slots[$name]['id'];
 
     return <<<TAG
 <div style="width:100%; float:{$float};">
