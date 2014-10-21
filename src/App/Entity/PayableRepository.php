@@ -94,4 +94,36 @@ class PayableRepository extends EntityRepository
 
         return $qb->getQuery()->getSingleScalarResult();
     }
+
+    public function findExtraCashbackForUserByDateRange(User $user, \DateTime $start = null, \DateTime $end = null, $order = null)
+    {
+        $qb = $this->createQueryBuilder('p');
+        $qb->where('p INSTANCE OF App\Entity\Payable');
+        $qb->andWhere('p.user = :user');
+        $qb->setParameter('user', $user);
+        $qb->andWhere('p.status <> :invalid');
+        $qb->setParameter('invalid', Payable::STATUS_INVALID);
+
+        if (isset($start)) {
+            $start->setTime(0, 0);
+            $qb->andWhere('p.registeredAt >= :start');
+            $qb->setParameter('start', $start);
+        }
+
+        if (isset($end)) {
+            $end->add(\DateInterval::createFromDateString('+1 day'))->setTime(0, 0);
+            $qb->andWhere('p.registeredAt < :end');
+            $qb->setParameter('end', $end);
+        }
+
+        switch ($order) {
+            case 'latest' :
+                $qb->orderBy('p.registeredAt', 'DESC');
+                break;
+            default :
+                break;
+        }
+
+        return $qb->getQuery()->getResult();
+    }
 }
