@@ -56,10 +56,14 @@ class UserInfoController
                 );
                 foreach ($referralList as $referral) {
                     $totalReferral += $referral->getAmount();
+                    $totalPayment += $referral->getPaid();
                 }
 
-                $totalExtraCashback = $em->getRepository('App\Entity\Payable')->getTotalExtraCashbackForUser($user, $data['startDate'], $data['endDate']);
-
+                $extraCashbackList = $em->getRepository('App\Entity\Payable')->findExtraCashbackForUserByDateRange($user, $data['startDate'], $data['endDate']);
+                foreach ($extraCashbackList as $extraCashback) {
+                    $totalExtraCashback += $extraCashback->getAmount();
+                    $totalPayment += $extraCashback->getPaid();
+                }
             } catch (\Exception $e) {
                 $app['session']->getFlashBag()->add('danger', $e->getMessage());
             }
