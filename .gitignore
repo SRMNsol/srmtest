@@ -6,3 +6,4 @@ vendor
 *~
 opsworks.php
 .s3cfg
+.vagrant

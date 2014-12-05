@@ -33,22 +33,22 @@
   "minimum-stability": "dev",
   "prefer-stable": true,
   "repositories": [
-    { "type": "vcs", "url": "https://github.com/doblebjp/popshops-api.git" },
-    { "type": "vcs", "url": "https://github.com/doblebjp/easy-csv.git" }
+    { "type": "vcs", "url": "git@github.com:doblebjp/popshops-api.git" },
+    { "type": "vcs", "url": "git@github.com:doblebjp/easy-csv.git" }
   ],
   "scripts": {
     "post-install-cmd": [
       "App\\Setup\\WritePermissions::checkPaths",
       "php bin/console.php asset:dump",
-      "vendor/bin/doctrine migrations:migrate --no-interaction",
-      "vendor/bin/doctrine orm:generate-proxies",
-      "vendor/bin/doctrine orm:clear-cache:result"
+      "php vendor/bin/doctrine migrations:migrate --no-interaction",
+      "php vendor/bin/doctrine orm:generate-proxies",
+      "php vendor/bin/doctrine orm:clear-cache:result"
     ],
     "post-update-cmd": [
       "App\\Setup\\WritePermissions::checkPaths",
       "php bin/console.php asset:dump",
-      "vendor/bin/doctrine orm:generate-proxies",
-      "vendor/bin/doctrine orm:clear-cache:result"
+      "php vendor/bin/doctrine orm:generate-proxies",
+      "php vendor/bin/doctrine orm:clear-cache:result"
     ]
   },
   "autoload": {
