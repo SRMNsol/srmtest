@@ -2,6 +2,8 @@
 
 # variables
 SERVER_TIMEZONE="Europe/Madrid"
+APP_ROOT="/var/www/app"
+MYSQLDUMP="$APP_ROOT/data/beesavy_dev.sql"
 
 # set timezone
 echo $SERVER_TIMEZONE | tee /etc/timezone
@@ -32,7 +34,12 @@ rm /etc/php5/apache2/conf.d/8*
 
 # mysql
 DEBIAN_FRONTEND=noninteractive apt-get install -y mysql-server
+echo "Creating database"
 echo "CREATE DATABASE IF NOT EXISTS app DEFAULT CHARACTER SET utf8" | mysql -uroot
+if [ -f "$MYSQLDUMP" ]; then
+  echo "Loading database backup"
+  cat "$MYSQLDUMP" | mysql -uroot app
+fi
 
 # nodejs and modules
 sudo apt-get install -y nodejs npm
@@ -50,35 +57,34 @@ curl -s https://getcomposer.org/installer | php
 mv composer.phar /usr/local/bin/composer
 chmod u+x /usr/local/bin/composer
 
-# application setup
+# front-end web 
 cat <<CONF > /etc/apache2/sites-available/001-app.conf
 <VirtualHost *:80>
-  DocumentRoot /var/www/app/legacy/public
-  <Directory /var/www/app/legacy/public>
+  DocumentRoot "$APP_ROOT/legacy/public"
+  <Directory "$APP_ROOT/legacy/public">
     AllowOverride All
     Require all granted
   </Directory>
 </VirtualHost>
 CONF
-cat <<CONF > /etc/apache2/sites-available/002-admin.conf
-<VirtualHost *:81>
-  DocumentRoot /var/www/app/web
-  <Directory /var/www/app/web>
-    AllowOverride All
-    Require all granted
-  </Directory>
-</VirtualHost>
-CONF
-a2dissite 000-default
 a2ensite 001-app
+
+# admin web
+cat <<CONF > /etc/apache2/sites-available/002-admin.conf
+Listen 81
+<VirtualHost *:81>
+  DocumentRoot "$APP_ROOT/web"
+  <Directory "$APP_ROOT/web">
+    AllowOverride All
+    Require all granted
+  </Directory>
+</VirtualHost>
+CONF
 a2ensite 002-admin
 
-# load db backup
-if [ -f /var/www/app/data/beesavy_dev.sql ]; then
-  echo "Loading database backup"
-  cat /var/www/app/data/beesavy_dev.sql | mysql -uroot app
-fi
+# composer install
 (cd /var/www/app && composer install)
 
 # reload
+a2dissite 000-default
 service apache2 reload
