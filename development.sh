@@ -20,3 +20,7 @@ rm /etc/php5/apache2/conf.d/9*
 
 # s3cmd
 apt-get install -y s3cmd
+
+# avoid time synchronization issues with Amazon S3
+# http://digitalsanctum.com/2009/08/22/solved-time-synchronization-issues-with-amazon-s3/
+ntpdate ntp.ubuntu.com

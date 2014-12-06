@@ -13,7 +13,7 @@ class FixDuplicateUserCommand extends Command
 {
     public function configure()
     {
-        $this->setName('beesavy:fix:duplicate-user');
+        $this->setName('dev:cleanup-user');
         $this->setDescription('Fix db entry where multiple users have the same email');
     }
 

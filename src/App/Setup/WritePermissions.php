@@ -12,5 +12,6 @@ class WritePermissions
         chmod($app['log_dir'], 0777);
         chmod($app['cache_dir'], 0777);
         chmod($app['legacy_cache_dir'], 0777);
+        chmod($app['temp_dir'], 0777);
     }
 }

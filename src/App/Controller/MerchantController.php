@@ -38,10 +38,12 @@ class MerchantController
             try {
                 $this->em->flush();
                 $app['session']->getFlashBag()->add('success', 'Merchant updated');
-                return $app->redirect($app['url_generator']->generate('merchant_list'));
+                return $app->redirect($app['url_generator']->generate('merchant_edit', ['merchantId' => $merchant->getId()]));
             } catch (\Exception $e) {
                 $app['session']->getFlashBag()->add('danger', 'Update failed');
             }
+        } else {
+            $this->em->refresh($merchant);
         }
 
         return new Response($app['twig']->render('merchant_edit.html.twig', [

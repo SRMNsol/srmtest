@@ -19,6 +19,8 @@ class MainController
     {
         $merchants['total'] = $this->em->createQuery('SELECT COUNT(m) FROM App\Entity\Merchant m')->getSingleScalarResult();
         $merchants['totalNoCashback'] = $this->em->createQuery('SELECT COUNT(m) FROM App\Entity\Merchant m WHERE m.commission = 0')->getSingleScalarResult();
+        $merchants['totalLogoDownloaded'] = $this->em->createQuery('SELECT COUNT(m) FROM App\Entity\Merchant m WHERE m.logoPath IS NOT NULL')->getSingleScalarResult();
+        $merchants['totalLogoInvalid'] = $this->em->createQuery('SELECT COUNT(m) FROM App\Entity\Merchant m WHERE m.logoPath IS NULL AND m.logoUpdatedAt IS NOT NULL')->getSingleScalarResult();
 
         $networks = $this->em->createQuery('SELECT n FROM App\Entity\Network n WHERE n.lastTransactionDownloadAt IS NOT NULL OR n.lastTransactionHistoryDownloadAt IS NOT NULL')->getResult();
 

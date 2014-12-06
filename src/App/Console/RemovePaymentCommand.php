@@ -12,7 +12,7 @@ class RemovePaymentCommand extends Command
 {
     public function configure()
     {
-        $this->setName('beesavy:payment:remove');
+        $this->setName('dev:remove-payment');
         $this->setDescription('Remove payment and reset amounts');
         $this->addArgument('id', InputArgument::REQUIRED, 'Payment id');
     }

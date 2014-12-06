@@ -31,6 +31,8 @@ class Application extends SilexApplication
         $app->register(new PopshopsServiceProvider());
         $app->register(new CacheProvider());
         $app->register(new MailerProvider());
+        $app->register(new ValidatorServiceProvider());
+        $app->register(new AwsProvider());
     }
 
     public static function registerWebServices(Application $app)
@@ -39,7 +41,6 @@ class Application extends SilexApplication
         $app->register(new SessionServiceProvider());
         $app->register(new MonologServiceProvider());
         $app->register(new FormServiceProvider());
-        $app->register(new ValidatorServiceProvider());
         $app->register(new DoctrineOrmManagerRegistryProvider());
         $app->register(new TranslationServiceProvider());
         $app->register(new ServiceControllerServiceProvider());
