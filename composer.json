@@ -46,8 +46,6 @@
     ],
     "post-update-cmd": [
       "App\\Setup\\WritePermissions::checkPaths",
-      "php bin/console.php asset:dump",
-      "php vendor/bin/doctrine orm:generate-proxies",
       "php vendor/bin/doctrine orm:clear-cache:result"
     ],
     "pre-autoload-dump": [
