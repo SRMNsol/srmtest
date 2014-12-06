@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "7182658488d439524ea185f35936fa31",
+    "hash": "b67f46bc33f33e166dd9ebb84331f1c5",
     "packages": [
         {
             "name": "dflydev/doctrine-orm-service-provider",
@@ -74,12 +74,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:doblebjp/popshops-api.git",
-                "reference": "b9900c8134539f38627132136bc8798cfe24adc6"
+                "reference": "d6bea41b1882db4762da2feba5f1f06fdf7f8175"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doblebjp/popshops-api/zipball/b9900c8134539f38627132136bc8798cfe24adc6",
-                "reference": "b9900c8134539f38627132136bc8798cfe24adc6",
+                "url": "https://api.github.com/repos/doblebjp/popshops-api/zipball/d6bea41b1882db4762da2feba5f1f06fdf7f8175",
+                "reference": "d6bea41b1882db4762da2feba5f1f06fdf7f8175",
                 "shasum": ""
             },
             "require": {
@@ -109,8 +109,8 @@
             ],
             "type": "library",
             "autoload": {
-                "psr-0": {
-                    "Popshops": "src/"
+                "psr-4": {
+                    "Popshops\\": "src/Popshops"
                 }
             },
             "license": [
@@ -126,7 +126,7 @@
                 "source": "https://github.com/doblebjp/popshops-api/tree/master",
                 "issues": "https://github.com/doblebjp/popshops-api/issues"
             },
-            "time": "2014-10-17 19:30:35"
+            "time": "2014-12-06 15:14:10"
         },
         {
             "name": "doctrine/annotations",
