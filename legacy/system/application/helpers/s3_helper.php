@@ -32,7 +32,7 @@ function s3rotate($url)
         return $url;
     }
 
-    $url = str_replace('0', $counter, $url);
+    $url = str_replace('http://static0', 'http://static'.$counter, $url);
     $counter += ($counter < 3) ? 1 : -3;
 
     return $url;
