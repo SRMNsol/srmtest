@@ -23,37 +23,42 @@
     "doctrine/migrations": "v1.0-alpha1",
     "saxulum/saxulum-doctrine-orm-manager-registry-provider": "2.1.0",
     "symfony/doctrine-bridge": "~2.5",
-    "swiftmailer/swiftmailer": "~4.1.2"
+    "swiftmailer/swiftmailer": "~4.1.2",
+    "aws/aws-sdk-php": "~2.7"
   },
   "require-dev": {
     "doctrine/data-fixtures": "~1.0",
     "symfony/browser-kit": "~2.5",
-    "symfony/css-selector": "~2.5"
+    "symfony/css-selector": "~2.5",
+    "phpunit/phpunit": "~4.4",
+    "mikey179/vfsStream": "~1"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
   "repositories": [
-    { "type": "vcs", "url": "https://github.com/doblebjp/popshops-api.git" },
-    { "type": "vcs", "url": "https://github.com/doblebjp/easy-csv.git" }
+    { "type": "vcs", "url": "git@github.com:doblebjp/popshops-api.git" },
+    { "type": "vcs", "url": "git@github.com:doblebjp/easy-csv.git" }
   ],
   "scripts": {
     "post-install-cmd": [
       "App\\Setup\\WritePermissions::checkPaths",
-      "php bin/console.php asset:dump",
-      "vendor/bin/doctrine migrations:migrate --no-interaction",
-      "vendor/bin/doctrine orm:generate-proxies",
-      "vendor/bin/doctrine orm:clear-cache:result"
+      "php bin/console.php dev:compile-assets",
+      "php vendor/bin/doctrine migrations:migrate --no-interaction",
+      "php vendor/bin/doctrine orm:generate-proxies",
+      "php vendor/bin/doctrine orm:clear-cache:result"
     ],
     "post-update-cmd": [
       "App\\Setup\\WritePermissions::checkPaths",
-      "php bin/console.php asset:dump",
-      "vendor/bin/doctrine orm:generate-proxies",
-      "vendor/bin/doctrine orm:clear-cache:result"
+      "php bin/console.php dev:compile-assets",
+      "php vendor/bin/doctrine orm:generate-proxies",
+      "php vendor/bin/doctrine orm:clear-cache:result"
+    ],
+    "pre-autoload-dump": [
+      "touch opsworks.php"
     ]
   },
   "autoload": {
-    "psr-0": {
-      "App": "src/"
-    }
+    "psr-4": { "App\\": "src/App" },
+    "classmap": ["opsworks.php"]
   }
 }

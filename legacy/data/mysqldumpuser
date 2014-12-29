@@ -1,3 +1,0 @@
-#!/bin/bash
-
-mysqldump -u"$1" -p --no-create-db --no-create-info --extended-insert --complete-insert beesavy user

@@ -20,7 +20,7 @@
 
 <?php echo googletag_head() ?>
 
-<link rel="shortcut icon" href="<?php echo s3path("images/favicon.ico") ?>" />
+<link rel="shortcut icon" href="<?php echo s3path("/images/favicon.ico") ?>" />
 <link rel="stylesheet" type="text/css" href="<?php echo s3path("/styles/main.css") ?>" media="screen"/>
 <link rel="stylesheet" type="text/css" href="<?php echo s3path("/styles/home.css") ?>" media="screen"/>
 <link rel="stylesheet" type="text/css" href="<?php echo s3path("/styles/results.css") ?>" media="screen"/>

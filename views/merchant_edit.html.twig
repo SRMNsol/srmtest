@@ -1,6 +1,11 @@
 {% extends 'common/layout.html.twig' %}
 
-{% form_theme form 'common/form_horizontal.html.twig' %}
+{% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
+{% form_theme form.commission _self %}
+{% form_theme form.commissionMax _self %}
+{% form_theme form.commissionType _self %}
+
+{% block form_group_class %}col-sm-4{% endblock %}
 
 {% block content %}
 <div class="page-header">
@@ -12,20 +17,50 @@
     {{ form_start(form, { attr: { class: 'merchant-edit' } }) }}
       {{ form_errors(form) }}
       <div class="form-group">
-        <label class="col-md-2 control-label">Store Name</label>
-        <div class="col-md-6">
+        <label class="col-sm-2 control-label">Name</label>
+        <div class="col-sm-6">
           <p class="form-control-static">{{ merchant.name }}</p>
         </div>
       </div>
-      {{ form_row(form.alternativeName) }}
-      {{ form_row(form.description, { attr: { rows: 15 }, label_attr: { class: 'col-md-2' }, div_attr: { class: 'col-md-8' } }) }}
-
-      {{ form_row(form.commission, { div_attr: { class: 'col-md-3' } }) }}
-      {{ form_row(form.commissionMax, { label: 'Up to',  div_attr: { class: 'col-md-3' } }) }}
-
-      {{ form_row(form.commissionType, { label: 'Type', label_attr: { class: 'col-md-2' }, div_attr: { class: 'col-md-3' } }) }}
       <div class="form-group">
-        <div class="col-md-6 col-md-offset-2">
+        <label class="col-sm-2 control-label">Logo</label>
+        <div class="col-sm-8">
+          <p class="form-control-static">
+            {% if merchant.logoPath %}
+            <a href="{{ merchant.logoWebUrl }}" target="_blank">{{ merchant.logoWebUrl }}</a>
+            {% else %}
+            <span class="text-danger"><i class="glyphicon glyphicon-remove"></i> not available</span>
+            {% endif %}
+            <span class="text-muted"> - updated {{ merchant.logoUpdatedAt|date('m/d/Y') }}</span>
+          </p>
+        </div>
+      </div>
+      {% if merchant.logoPath %}
+        <div class="form-group">
+          <div class="col-sm-2 col-sm-offset-2">
+            <div class="thumbnail">
+              <img src="{{ merchant.logoWebUrl }}">
+            </div>
+          </div>
+        </div>
+      {% endif %}
+      <div class="form-group">
+        <label class="col-sm-2 control-label">Origin</label>
+        <div class="col-sm-8">
+          <p class="form-control-static">
+            <a href="{{ merchant.logoUrl }}" target="_blank">{{ merchant.logoUrl }}</a>
+          </p>
+        </div>
+      </div>
+      {{ form_row(form.logoFile, { label: 'Upload logo' }) }}
+      {{ form_row(form.skipLogoUpdate, { label: 'Skip automatic logo update' }) }}
+      {{ form_row(form.alternativeName, { label: 'Display name' }) }}
+      {{ form_row(form.description, { attr: { rows: 15 } }) }}
+      {{ form_row(form.commission) }}
+      {{ form_row(form.commissionMax, { label: 'Up to' }) }}
+      {{ form_row(form.commissionType, { label: 'Type' }) }}
+      <div class="form-group">
+        <div class="col-sm-6 col-sm-offset-2">
           <button type="submit" class="btn btn-primary">Update</button>
           <a href="{{ path('merchant_list') }}" class="btn btn-default">Cancel</a>
         </div>

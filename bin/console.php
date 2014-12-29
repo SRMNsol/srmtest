@@ -32,14 +32,16 @@ $console->addCommands([
     new App\Console\ExtrabuxImportUserCommand(),
 
     /* Beesavy */
-    new App\Console\AssetDumpCommand(),
     new App\Console\ReferralTreeCommand(),
     new App\Console\ReferralCalculationCommand(),
+    new App\Console\UpdateLogoCommand(),
+
+    /* Dev */
+    new App\Console\AssetDumpCommand(),
+    new App\Console\FixDuplicateUserCommand(),
     new App\Console\MailerTestCommand(),
     new App\Console\RemovePaymentCommand(),
-
-    /* Fixer */
-    new App\Console\FixDuplicateUserCommand(),
+    new App\Console\S3TestCommand(),
 
     /* Transaction related */
     new Popshops\Console\MerchantCommand(),

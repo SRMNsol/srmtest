@@ -12,7 +12,7 @@ class MailerTestCommand extends Command
 {
     public function configure()
     {
-        $this->setName('beesavy:mailer:test');
+        $this->setName('dev:test-mailer');
         $this->setDescription('Send test mail');
         $this->addArgument('to', InputArgument::OPTIONAL, 'Destination email (default to postmaster@beesavy.com)');
     }

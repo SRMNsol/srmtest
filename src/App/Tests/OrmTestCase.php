@@ -10,13 +10,18 @@ use Popshops\Test\OrmTestCase as BaseOrmTestCase;
 use App\Application;
 use App\OrmProvider;
 use App\Entity\User;
+use Silex\Provider\ValidatorServiceProvider;
 
 class OrmTestCase extends BaseOrmTestCase
 {
+    protected $validator;
+
     public function setUpOrm()
     {
         $app = new Application();
         $app->register(new OrmProvider());
+        $app->register(new ValidatorServiceProvider());
+
         Application::loadConfig($app, __DIR__ . '/../../../config', [
             'root_dir' => realpath(__DIR__ . '/../../..'),
         ]);
@@ -31,6 +36,8 @@ class OrmTestCase extends BaseOrmTestCase
         $this->schemaTool = new SchemaTool($this->em);
         $this->loader = new Loader();
         $this->executor = new ORMExecutor($this->em, new ORMPurger());
+
+        $this->validator = $app['validator'];
     }
 
     public function setUp()

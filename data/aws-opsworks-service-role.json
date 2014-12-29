@@ -1,0 +1,15 @@
+{
+  "Statement": [
+    {
+      "Action": [
+        "ec2:*",
+        "iam:PassRole",
+        "cloudwatch:GetMetricStatistics",
+        "elasticloadbalancing:*",
+        "rds:*"
+      ],
+      "Effect": "Allow",
+      "Resource": ["*"]
+    }
+  ]
+}

@@ -13,8 +13,8 @@ class AssetDumpCommand extends Command
     public function configure()
     {
         $this
-            ->setName('asset:dump')
-            ->setDescription('Compile and dump all assets to public directory');
+            ->setName('dev:compile-assets')
+            ->setDescription('Compile assets to public directory');
     }
 
     public function execute(InputInterface $input, OutputInterface $output)

@@ -5,9 +5,14 @@ namespace App\Entity;
 use Popshops\Merchant as BaseMerchant;
 use Popshops\MerchantCommissionShareTrait;
 use Popshops\SubidTrait;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\GroupSequenceProviderInterface;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Filesystem\Filesystem;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -16,10 +21,11 @@ use Doctrine\ORM\Mapping as ORM;
  *   @ORM\AttributeOverride(name="commissionType", column=@ORM\Column(length=20))
  * })
  */
-class Merchant extends BaseMerchant
+class Merchant extends BaseMerchant implements GroupSequenceProviderInterface
 {
     use MerchantCommissionShareTrait;
     use SubidTrait;
+    use FileTrait;
 
     /**
      * @ORM\Column(type="decimal", scale=2)
@@ -30,6 +36,25 @@ class Merchant extends BaseMerchant
      * @ORM\Column(nullable=true)
      */
     protected $alternativeName;
+
+    /**
+     * @ORM\Column(nullable=true)
+     */
+    protected $logoPath;
+
+    protected $logoFile;
+
+    protected $uploadedLogoHash;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $skipLogoUpdate = false;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    protected $logoUpdatedAt;
 
     const COMMISSION_TYPE_FIXED_VAR = 'fixed_var';
     const COMMISSION_TYPE_PERCENTAGE_VAR = 'percentage_var';
@@ -149,12 +174,22 @@ class Merchant extends BaseMerchant
     static public function loadValidatorMetadata(ClassMetadata $metadata)
     {
         $metadata->addPropertyConstraint('commission', new Assert\NotBlank());
-        $metadata->addPropertyConstraint('commission', new Assert\GreaterThanOrEqual(['value' => 0]));
-        $metadata->addPropertyConstraint('commission', new Assert\LessThanOrEqual(['value' => 100, 'groups' => ['Percentage']]));
+        $metadata->addPropertyConstraint('commission', new Assert\GreaterThanOrEqual([
+            'value' => 0
+        ]));
+        $metadata->addPropertyConstraint('commission', new Assert\LessThanOrEqual([
+            'value'  => 100,
+            'groups' => ['percentage'],
+        ]));
 
         $metadata->addPropertyConstraint('commissionMax', new Assert\NotBlank());
-        $metadata->addPropertyConstraint('commissionMax', new Assert\GreaterThanOrEqual(['value' => 0]));
-        $metadata->addPropertyConstraint('commissionMax', new Assert\LessThanOrEqual(['value' => 100, 'groups' => ['Percentage']]));
+        $metadata->addPropertyConstraint('commissionMax', new Assert\GreaterThanOrEqual([
+            'value' => 0
+        ]));
+        $metadata->addPropertyConstraint('commissionMax', new Assert\LessThanOrEqual([
+            'value'  => 100,
+            'groups' => ['percentage'],
+        ]));
 
         $metadata->addPropertyConstraint('commissionType', new Assert\Choice([
             self::COMMISSION_TYPE_FIXED,
@@ -162,20 +197,34 @@ class Merchant extends BaseMerchant
             self::COMMISSION_TYPE_FIXED_VAR,
             self::COMMISSION_TYPE_PERCENTAGE_VAR,
         ]));
+
+        $metadata->addPropertyConstraint('logoFile', new Assert\Image([
+            'maxSize'       => 3000000,
+            'minWidth'      => 50,
+            'minHeight'     => 10,
+            'allowPortrait' => false,
+            'allowSquare'   => false,
+            'groups'        => ['logo'],
+        ]));
+
+        $metadata->setGroupSequenceProvider(true);
     }
 
     /**
      * Set validation groups based on commission type
      */
-    static public function determineValidationGroups(FormInterface $form)
+    public function getGroupSequence()
     {
-        $merchant = $form->getData();
         $groups = ['Merchant'];
-        if ($merchant->getCommissionType() === self::COMMISSION_TYPE_PERCENTAGE
-            || $merchant->getCommissionType() === self::COMMISSION_TYPE_PERCENTAGE_VAR
+
+        if ($this->getCommissionType() === self::COMMISSION_TYPE_PERCENTAGE
+            || $this->getCommissionType() === self::COMMISSION_TYPE_PERCENTAGE_VAR
         ) {
-            $groups[] = 'Percentage';
+            $groups[] = 'percentage';
         }
+
+        $groups[] = 'logo';
+
         return $groups;
     }
 
@@ -193,5 +242,253 @@ class Merchant extends BaseMerchant
     public function getNetworkMerchantName()
     {
         return sprintf('[%s] %s', (string) $this->network ?: '?', $this->getDisplayName());
+    }
+
+    public function getLogoPath()
+    {
+        return $this->logoPath;
+    }
+
+    public function setLogoPath($path)
+    {
+        $this->logoPath = $path;
+    }
+
+    public function getSlug()
+    {
+        $slug = $this->getDisplayName();
+        $slug = strtolower(trim($slug));
+        $slug = preg_replace('/[^a-z0-9\-_]/', '_', $slug);
+
+        return $slug;
+    }
+
+    public function getLogoAbsolutePath()
+    {
+        return null === $this->logoPath
+            ? null
+            : $this->getLogoUploadRootDir().'/'.$this->logoPath;
+    }
+
+    public function getLogoWebPath()
+    {
+        return null === $this->logoPath
+            ? null
+            : $this->getLogoUploadDir().'/'.$this->logoPath;
+    }
+
+    public function getLogoWebUrl()
+    {
+        return null === $this->logoPath
+            ? null
+            : $this->getUploadRootUrl().'/'.$this->getLogoWebPath();
+    }
+
+    protected function getLogoUploadRootDir()
+    {
+        return $this->getUploadRootDir().'/'.$this->getLogoUploadDir();
+    }
+
+    /**
+     * Relative path to uploaded logo directory from
+     * upload root directory
+     */
+    protected function getLogoUploadDir()
+    {
+        return 'logo';
+    }
+
+    /**
+     * Relative path to logo download directory from
+     * download root directory
+     */
+    protected function getLogoDownloadDir()
+    {
+        return 'logo';
+    }
+
+    /**
+     * Return File from url.
+     *
+     * Cannot validate file existence due to http stream limitation
+     */
+    public function getOriginalLogo()
+    {
+        if (null !== $this->logoUrl) {
+            return new File($this->logoUrl, false);
+        }
+    }
+
+    /**
+     * Return File from logo absolute path
+     */
+    public function getCurrentLogo()
+    {
+        if (null !== $this->getLogoAbsolutePath()) {
+            return new File($this->getLogoAbsolutePath());
+        }
+    }
+
+    /**
+     * Compare $file with current logo
+     */
+    public function isCurrentLogo($file)
+    {
+        try {
+            $current = $this->getCurrentLogo();
+        } catch (FileException $e) {
+            // current logo not readable
+            return false;
+        }
+
+        // any of $file or $current is empty
+        if (!isset($file) || !isset($current)) {
+            return false;
+        }
+
+        // identical path
+        if ((string) $file === (string) $current) {
+            return true;
+        }
+
+        // identical content
+        if (sha1_file((string) $file) === sha1_file((string) $current)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Download original logo to download directory
+     */
+    public function downloadOriginalLogo()
+    {
+        $original = $this->getOriginalLogo();
+        if (null === $original) {
+            return;
+        }
+
+        $name = uniqid($this->getSlug().'_');
+        return $this->download($original, $name, $this->getLogoDownloadDir());
+    }
+
+    /**
+     * Deletes current logo
+     */
+    public function deleteCurrentLogo()
+    {
+        try {
+            $current = $this->getCurrentLogo();
+            if (isset($current)) {
+                $this->delete($current);
+                $this->logoPath = null;
+            }
+        } catch (FileException $e) {
+            return;
+        }
+    }
+
+    public function setLogoFile(File $file = null)
+    {
+        $this->logoFile = $file;
+
+        // prevent deleting current logo
+        // $file is current logo or null
+        if (!isset($file) || $this->isCurrentLogo($file)) {
+            return $this;
+        }
+
+        // file is new delete current logo
+        if (isset($this->logoPath)) {
+            try {
+                $this->delete($this->getCurrentLogo());
+            } catch (FileException $e) {
+                // current logo not found
+            }
+            $this->logoPath = null;
+        }
+
+        return $this;
+    }
+
+    public function getLogoFile()
+    {
+        return $this->logoFile;
+    }
+
+    public function setSkipLogoUpdate($value)
+    {
+        $this->skipLogoUpdate = (boolean) $value;
+    }
+
+    public function getSkipLogoUpdate()
+    {
+        return $this->skipLogoUpdate;
+    }
+
+    public function setLogoUpdatedAt(\DateTime $date = null)
+    {
+        $this->logoUpdatedAt = $date;
+
+        return $this;
+    }
+
+    public function getLogoUpdatedAt()
+    {
+        return $this->logoUpdatedAt;
+    }
+
+    /**
+     * Set logoPath to unique name for logoFile.
+     * To be run on prePersist and preUpdate events
+     */
+    public function setUploadedLogoPath()
+    {
+        $file = $this->getLogoFile();
+
+        if (isset($file) && !$this->isCurrentLogo($file)) {
+            $fileHash = sha1_file($file);
+            if ($this->uploadedLogoHash === $fileHash) {
+                return;
+            }
+            $this->uploadedLogoHash = $fileHash;
+
+            $name = uniqid($this->getSlug().'_');
+            if ($file->guessExtension() !== '') {
+                $name .= '.'.$file->guessExtension();
+            }
+
+            $this->setLogoPath($name);
+        }
+    }
+
+    public function uploadLogo()
+    {
+        $logo = $this->getLogoFile();
+
+        if (isset($logo) && !$this->isCurrentLogo($logo)) {
+            $this->setUploadedLogoPath();
+            $remote = $this->upload($logo, $this->logoPath, $this->getLogoUploadDir());
+        } else {
+            try {
+                $remote = $this->getCurrentLogo();
+            } catch (FileException $e) {
+                $remote = null;
+            }
+        }
+
+        $this->logoFile = null;
+        return $remote;
+    }
+
+    public function deleteLogo()
+    {
+        $this->delete($this->getLogoAbsolutePath());
+    }
+
+    public function logoInvalid()
+    {
+        return !isset($this->logoPath) && isset($this->logoUpdatedAt);
     }
 }

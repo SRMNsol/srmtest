@@ -1,4 +1,3 @@
-data/*.sql*
 public/*
 !public/holding
 !public/index.php

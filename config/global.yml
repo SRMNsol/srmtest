@@ -9,6 +9,12 @@ assets_dir:       %root_dir%/assets
 web_dir:          %root_dir%/web
 twbs_dir:         %root_dir%/vendor/twbs/bootstrap
 legacy_cache_dir: %root_dir%/legacy/system/application/cache
+temp_dir:         %root_dir%/data/temp
+
+# storage
+bucket_dir: %root_dir%/legacy/public
+bucket_url: "" # relative url
+# bucket_url: http://static0.beesavy.com # rotated
 
 # twig
 twig.path: %root_dir%/views
@@ -87,3 +93,10 @@ swiftmailer.options:
   password: SMTP_PASSWORD
   encryption: tls
   auth_mode: plain
+
+# aws
+# not used in production (using IAM role)
+# suply in local.yml for dev
+# aws.config:
+#   key: ACCESS_KEY
+#   secret: SECRET

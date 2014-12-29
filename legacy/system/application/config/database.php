@@ -34,13 +34,7 @@
 | the active record class
 */
 
-try {
-  include('../../opsworks.php');
-  $opsworks = new OpsWorks;
-} catch(Exception $e) {
-  log_message('error', $e->getMessage());
-  show_error($e->getMessage());
-}
+$opsworks = new OpsWorks();
 
 $active_group = "default";
 $active_record = TRUE;
