@@ -155,7 +155,7 @@ class DownloadAllTransactionsCommand extends Command
         $this->updateDownloadDate($network, $args, 'history');
 
         /**
-         * EBay Enterprise (ID 1)
+         * Share A Sale (ID 1)
          */
         $output->writeln('Shareasale');
 
