@@ -55,15 +55,6 @@ class Stores extends Controller
         $this->parser->parse('store/store', $data);
     }
 
-    public function _get_list()
-    {
-        $q = "select * from store;";
-        $res = $this->db->query($q);
-        $res = $res->result_array();
-
-        return $res;
-    }
-
     public function search()
     {
         //Grab information
@@ -89,12 +80,7 @@ class Stores extends Controller
 
         $result = $client->findMerchants($catalogs['all_stores'], $params);
         $merchants = $result->getMerchants()->sortByMerchantName();
-        $allStores = array_map(function ($merchant) {
-            return [
-                'id' => $merchant->getId(),
-                'name' => $merchant->getName(),
-            ];
-        }, $merchants->toArray());
+        $allStores = result_merchants($merchants, $rate);
 
         $merchants = $merchants->filterByNamePrefix($search === '0' ? '*' : $search);
         $stores = result_merchants($merchants->slice($limit * ($page - 1), $limit), $rate);

@@ -27,15 +27,6 @@ class Coupon extends Controller
         $this->container = silex();
     }
 
-    public function _get_list()
-    {
-        $q = "select * from store;";
-        $res = $this->db->query($q);
-        $res = $res->result_array();
-
-        return $res;
-    }
-
     public function index()
     {
     }

@@ -24,7 +24,6 @@ Vagrant.configure("2") do |config|
 
   # provision
   config.vm.provision :shell, path: "provision.sh"
-  config.vm.provision :shell, path: "development.sh"
 
   # networking
   config.vm.network "forwarded_port", guest: 80, host: 8080
