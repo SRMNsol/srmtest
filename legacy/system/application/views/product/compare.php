@@ -114,10 +114,7 @@ for($i=0; $i<count($compare); $i++){
     $result = $compare[$i];
     $store_price = $result['retail_amount'];
     $cashback_amount = ($result['cashback_type'] === 'variable' ? 'Up to ' : '') . '$' . $result['cashback_amount'];
-    $price = (float) $store_price;
-    $cb = (float) $cashback_amount;
-    $cashp = round(($cb / $price) * 100, 1);
-    $cashback_text = $cashp."% cash back";
+    $cashback_text = round(($result['cashback_amount'] / $result['retail_amount']) * 100, 1) . '% cash back';
     $shipping = "";
     $ts = $result['t&s'];
     $final = $result['final_amount'];
