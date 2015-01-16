@@ -40,15 +40,15 @@ class Stores extends Controller
 
         //Load the page
         $data = $this->blocks->getBlocks();
-        $data['top_stores']=$top_stores;
-        $data['store']=$store;
-        $data['id']=$id;
-        $data['store_name']=$store['name'];
-        $data['description']=$store['description'];
-        $data['restrictions']=$store['restrictions'];
-        $data['logo_thumb']=$store['logo_thumb'];
+        $data['top_stores'] = $top_stores;
+        $data['store'] = $store;
+        $data['id'] = $id;
+        $data['store_name'] = $store['name'];
+        $data['description'] = $store['description'];
+        $data['restrictions'] = $store['restrictions'];
+        $data['logo_thumb'] = $store['logo_thumb'];
         $data['cashback_text'] = $store['cashback_text'];
-        $data['link']=$store['link'];
+        $data['link'] = $store['link'];
         $data['coupons'] = $store['coupons'];
 
         $this->load->vars($data);
