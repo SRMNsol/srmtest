@@ -40,28 +40,19 @@ class Stores extends Controller
 
         //Load the page
         $data = $this->blocks->getBlocks();
-        $data['top_stores']=$top_stores;
-        $data['store']=$store;
-        $data['id']=$id;
-        $data['store_name']=$store['name'];
-        $data['description']=$store['description'];
-        $data['restrictions']=$store['restrictions'];
-        $data['logo_thumb']=$store['logo_thumb'];
+        $data['top_stores'] = $top_stores;
+        $data['store'] = $store;
+        $data['id'] = $id;
+        $data['store_name'] = $store['name'];
+        $data['description'] = $store['description'];
+        $data['restrictions'] = $store['restrictions'];
+        $data['logo_thumb'] = $store['logo_thumb'];
         $data['cashback_text'] = $store['cashback_text'];
-        $data['link']=$store['link'];
+        $data['link'] = $store['link'];
         $data['coupons'] = $store['coupons'];
 
         $this->load->vars($data);
         $this->parser->parse('store/store', $data);
-    }
-
-    public function _get_list()
-    {
-        $q = "select * from store;";
-        $res = $this->db->query($q);
-        $res = $res->result_array();
-
-        return $res;
     }
 
     public function search()
@@ -89,12 +80,7 @@ class Stores extends Controller
 
         $result = $client->findMerchants($catalogs['all_stores'], $params);
         $merchants = $result->getMerchants()->sortByMerchantName();
-        $allStores = array_map(function ($merchant) {
-            return [
-                'id' => $merchant->getId(),
-                'name' => $merchant->getName(),
-            ];
-        }, $merchants->toArray());
+        $allStores = result_merchants($merchants, $rate);
 
         $merchants = $merchants->filterByNamePrefix($search === '0' ? '*' : $search);
         $stores = result_merchants($merchants->slice($limit * ($page - 1), $limit), $rate);

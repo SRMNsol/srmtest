@@ -4,6 +4,7 @@
 SERVER_TIMEZONE="Europe/Madrid"
 APP_ROOT="/var/www/app"
 MYSQLDUMP="$APP_ROOT/data/beesavy_dev.sql"
+HOST_IP=`route -n | grep UG | grep -Eo '[1-9][0-9]*\.[0-9]+\.[0-9]+\.[0-9]+'`
 
 # set timezone
 echo $SERVER_TIMEZONE | tee /etc/timezone
@@ -21,10 +22,14 @@ service apache2 restart
 apt-get install memcached
 
 # php
-apt-get install -y php5 php-apc php5-mysql php5-sqlite php5-json php5-intl php5-curl php5-memcache
+apt-get install -y php5 php-apc php5-mysql php5-sqlite php5-json php5-intl php5-curl php5-memcache php5-xdebug
 
 cat <<CONF > /etc/php5/mods-available/app.ini
 date.timezone = $SERVER_TIMEZONE
+display_errors = 1
+xdebug.max_nesting_level = 250
+xdebug.remote_enable = 1
+xdebug.remote_host = $HOST_IP
 CONF
 
 rm /etc/php5/cli/conf.d/8*
@@ -61,6 +66,7 @@ chmod u+x /usr/local/bin/composer
 cat <<CONF > /etc/apache2/sites-available/001-app.conf
 <VirtualHost *:80>
   DocumentRoot "$APP_ROOT/legacy/public"
+  SetEnv APP_ENV devel
   <Directory "$APP_ROOT/legacy/public">
     AllowOverride All
     Require all granted
@@ -88,3 +94,10 @@ a2ensite 002-admin
 # reload
 a2dissite 000-default
 service apache2 reload
+
+# s3cmd
+apt-get install -y s3cmd
+
+# avoid time synchronization issues with Amazon S3
+# http://digitalsanctum.com/2009/08/22/solved-time-synchronization-issues-with-amazon-s3/
+ntpdate ntp.ubuntu.com

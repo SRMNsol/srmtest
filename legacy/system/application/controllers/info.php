@@ -41,18 +41,6 @@ class Info extends Controller
         $this->parser->parse('info/contact', $this->data);
     }
 
-    public function j06242012_contact()
-    {
-        $success = $this->input->get('success');
-            $this->data['success'] = $success;
-        if ($success) {
-            $this->data['success'] = "Your message has been sent";
-        }
-        $store_list = $this->_get_list();
-        $this->data['store_list'] = $store_list;
-        $this->parser->parse('info/j06242012_contact', $this->data);
-    }
-
     public function faq()
     {
         $this->parser->parse('info/faq', $this->data);
@@ -153,6 +141,7 @@ class Info extends Controller
             redirect("info/contact?error=1");
         }
     }
+
     public function _get_list()
     {
         $client = $this->container['popshops.client'];

@@ -114,10 +114,7 @@ for($i=0; $i<count($compare); $i++){
     $result = $compare[$i];
     $store_price = $result['retail_amount'];
     $cashback_amount = ($result['cashback_type'] === 'variable' ? 'Up to ' : '') . '$' . $result['cashback_amount'];
-    $price = (float) $store_price;
-    $cb = (float) $cashback_amount;
-    $cashp = round(($cb / $price) * 100, 1);
-    $cashback_text = $cashp."% cash back";
+    $cashback_text = sprintf('%s cash back', $result['cashback_text'] === null ? '0%' : $result['cashback_text']);
     $shipping = "";
     $ts = $result['t&s'];
     $final = $result['final_amount'];
@@ -158,7 +155,7 @@ onload=\"
     var nheight=ratio*this.height;
     this.width=nwidth;
     this.height=nheight;\"
-                    src='$image' alt='** PLEASE DESCRIBE THIS IMAGE **' onerror=\"this.src='" . s3path("/../images/no-image-100px.gif") . "'\"/></a><br/>
+                    src='$image' alt='** PLEASE DESCRIBE THIS IMAGE **' onerror=\"this.src='" . s3path("/images/no-image-100px.gif") . "'\"/></a><br/>
                     </div>
                 </td>
                 <td class='base-price'>$$store_price</td>

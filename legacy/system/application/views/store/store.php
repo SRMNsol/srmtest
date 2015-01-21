@@ -78,8 +78,12 @@
                         </a>
                     </div>
                 </div>
-                <div style="margin-top: 15px; clear: both;">{description}</div>
-                <div style="margin-top: 15px; clear: both;">{restrictions}</div>
+                <div style="margin-top: 15px; clear: both;"><?php
+                    foreach (explode("\n", $description) as $line) {
+                        echo escape($line) . '<br>';
+                    }
+                ?></div>
+                <div style="margin-top: 15px; clear: both;"><?php echo escape($restrictions) ?></div>
             </div>
         </div>
 
