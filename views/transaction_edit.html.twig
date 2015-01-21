@@ -1,6 +1,6 @@
 {% extends 'common/layout.html.twig' %}
 
-{% form_theme form 'common/form_horizontal.html.twig' %}
+{% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
 
 {% block content %}
 <div class="page-header">
@@ -11,13 +11,20 @@
   <div class="col-md-9">
     {{ form_start(form, { attr: { class: 'transaction' } }) }}
       {{ form_errors(form) }}
+      <div class="form-group">
+        <label class="col-sm-2 control-label">User</label>
+        <div class="col-sm-10">
+          <p class="form-control-static">{{ user.email }}</p>
+        </div>
+      </div>
       {{ form_row(form.merchant) }}
+      {{ form_row(form.customMerchant, { attr: { placeholder: 'Custom merchant name' } }) }}
       {{ form_row(form.orderNumber) }}
       {{ form_row(form.registeredAt, { label: 'Date' }) }}
       {{ form_row(form.total) }}
       {{ form_row(form.commission) }}
       <div class="form-group">
-        <div class="col-md-6 col-md-offset-2">
+        <div class="col-sm-6 col-sm-offset-2">
           <a href="{{ path('user_info', {'user_search[email]': user.email }) }}" class="btn btn-default">Cancel</a>
           <button type="submit" class="btn btn-primary">Update</button>
         </div>

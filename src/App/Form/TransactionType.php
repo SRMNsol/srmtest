@@ -19,9 +19,14 @@ class TransactionType extends AbstractType
                 return $er->createQueryBuilder('m')
                     ->orderBy('m.name', 'ASC');
             },
-            'required' => true,
-            'empty_value' => 'Choose merchant',
+            'empty_value' => 'Use custom merchant',
         ]);
+
+        $builder->add('customMerchant', null, [
+            'label' => 'Merchant Name',
+            'required' => false,
+        ]);
+
         $builder->add('orderNumber');
         $builder->add('registeredAt', 'date', ['widget' => 'single_text']);
         $builder->add('total');

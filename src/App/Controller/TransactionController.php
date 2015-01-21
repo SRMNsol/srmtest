@@ -25,17 +25,21 @@ class TransactionController
         $form = $app['form.factory']->create(new TransactionType(), $transaction);
 
         $form->handleRequest($request);
+
         if ($form->isValid()) {
             try {
-                $transaction = $form->getData();
-
                 if (null === $transaction->getTag()) {
                     $subid = new Subid();
                     $subid->setUserId($user->getId());
                     $transaction->setTag((string) $subid);
                 }
 
-                $transaction->setNetwork($transaction->getMerchant()->getNetwork());
+                if ($transaction->getMerchant() !== null) {
+                    $transaction->setNetwork($transaction->getMerchant()->getNetwork());
+                }
+
+                $transaction->setManual(true);
+
                 $this->em->persist($transaction);
                 $this->em->flush();
 
@@ -53,5 +57,20 @@ class TransactionController
             'form' => $form->createView(),
             'user' => $user,
         ]);
+    }
+
+    public function deleteTransaction(Transaction $transaction, User $user, Application $app)
+    {
+        try {
+            $app['orm.em']->remove($transaction);
+            $app['orm.em']->flush();
+            $app['session']->getFlashBag()->add('success', 'Transaction deleted');
+        } catch (\Exception $e) {
+            $app['session']->getFlashBag()->add('danger', 'Delete failed');
+        }
+
+        return $app->redirect($app['url_generator']->generate('user_info', [
+            'user_search' => ['email' => $user->getEmail()]
+        ]));
     }
 }

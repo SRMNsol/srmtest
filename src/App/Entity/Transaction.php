@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\GroupSequenceProviderInterface;
 
 /**
  * @ORM\Entity
@@ -14,7 +15,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\HasLifecycleCallbacks
  * @ORM\EntityListeners({"TransactionListener"})
  */
-class Transaction extends BaseTransaction
+class Transaction extends BaseTransaction implements GroupSequenceProviderInterface
 {
     use MoneyTrait;
 
@@ -29,6 +30,16 @@ class Transaction extends BaseTransaction
     protected $rate;
 
     /**
+     * @ORM\Column(nullable=true)
+     */
+    protected $customMerchant;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $manual = false;
+
+    /**
      * Validation
      */
     public static function loadValidatorMetadata(ClassMetadata $metadata)
@@ -37,9 +48,25 @@ class Transaction extends BaseTransaction
             'fields' => ['orderNumber', 'merchant'],
             'message' => 'Order number exists for this merchant',
         ]));
-        $metadata->addPropertyConstraint('merchant', new Assert\NotBlank());
+
+        $metadata->addPropertyConstraint('customMerchant', new Assert\NotBlank([
+            'groups' => 'CustomMerchant'
+        ]));
+
         $metadata->addPropertyConstraint('orderNumber', new Assert\NotBlank());
         $metadata->addPropertyConstraint('registeredAt', new Assert\NotBlank());
+
+        $metadata->setGroupSequenceProvider(true);
+    }
+
+    public function getGroupSequence()
+    {
+        $groups = ['Transaction'];
+        if (null === $this->getMerchant()) {
+            $groups[] = 'CustomMerchant';
+        }
+
+        return $groups;
     }
 
     public function getCashback()
@@ -62,6 +89,30 @@ class Transaction extends BaseTransaction
     public function setRate(Rate $rate = null)
     {
         $this->rate = $rate;
+
+        return $this;
+    }
+
+    public function getCustomMerchant()
+    {
+        return $this->customMerchant;
+    }
+
+    public function setCustomMerchant($name)
+    {
+        $this->customMerchant = $name;
+
+        return $this;
+    }
+
+    public function getManual()
+    {
+        return $this->manual;
+    }
+
+    public function setManual($value)
+    {
+        $this->manual = (bool) $value;
 
         return $this;
     }
