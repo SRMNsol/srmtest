@@ -155,7 +155,7 @@ onload=\"
     var nheight=ratio*this.height;
     this.width=nwidth;
     this.height=nheight;\"
-                    src='$image' alt='** PLEASE DESCRIBE THIS IMAGE **' onerror=\"this.src='" . s3path("/../images/no-image-100px.gif") . "'\"/></a><br/>
+                    src='$image' alt='** PLEASE DESCRIBE THIS IMAGE **' onerror=\"this.src='" . s3path("/images/no-image-100px.gif") . "'\"/></a><br/>
                     </div>
                 </td>
                 <td class='base-price'>$$store_price</td>
