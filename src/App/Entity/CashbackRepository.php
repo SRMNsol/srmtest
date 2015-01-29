@@ -83,6 +83,7 @@ class CashbackRepository extends EntityRepository
         switch ($order) {
             case 'latest' :
                 $qb->orderBy('c.registeredAt', 'DESC');
+                $qb->addOrderBy('c.id', 'DESC');
                 break;
             default :
                 break;

@@ -95,9 +95,9 @@
       <th class="col-md-1">Date</th>
       <th class="col-md-3">Store</th>
       <th class="col-md-3">Order</th>
-      <th class="col-md-2">Amount</th>
+      <th class="col-md-1">Amount</th>
       <th class="col-md-2">Cashback</th>
-      <th class="col-md-1">Status</th>
+      <th class="col-md-2">Status</th>
     </tr>
   </thead>
   <tbody>
@@ -108,7 +108,15 @@
       <td>{{ cashback.orderNumber }}</td>
       <td>$ {{ cashback.totalPurchase|number_format(2) }}</td>
       <td>$ {{ cashback.amount|number_format(2) }}</td>
-      <td>{{ cashback.status }}</td>
+      <td>
+        {% if cashback.transaction.manual %}
+        <span class="pull-right">
+          <a href="{{ path('transaction_edit', { user: cashback.user.id, transaction: cashback.transaction.id }) }}" class="btn btn-default btn-xs">Edit</a>
+          <a href="{{ path('transaction_delete', { user: cashback.user.id, transaction: cashback.transaction.id }) }}" class="btn btn-default btn-xs">Delete</a>
+        </span>
+        {% endif %}
+        {{ cashback.status }}
+      </td>
     </tr>
     {% endfor %}
   </tbody>

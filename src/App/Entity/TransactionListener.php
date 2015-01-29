@@ -62,6 +62,10 @@ class TransactionListener
             $merchant = $transaction->getMerchant();
             if (isset($merchant)) {
                 $cashback->setConcept($merchant->getName());
+            } elseif ($transaction->getCustomMerchant() !== null) {
+                $cashback->setConcept($transaction->getCustomMerchant());
+            } else {
+                $cashback->setConcept('Cashback');
             }
         }
     }

@@ -98,32 +98,44 @@ class ControllerProvider implements ControllerProviderInterface
         $controllers->get('/statistics', 'statistics.controller:display')
             ->bind('statistics');
 
+        $transactionConverter = function ($transactionId) use ($app) {
+            $transaction = isset($transactionId)
+                ? $app['orm.em']->find('App\Entity\Transaction', $transactionId)
+                : new Entity\Transaction();
+
+            if (null === $transaction) {
+                throw new NotFoundHttpException('Transaction not found');
+            }
+
+            return $transaction;
+        };
+
+        $userConverter = function ($userId) use ($app) {
+            $user = isset($userId)
+                ? $app['orm.em']->find('App\Entity\User', $userId)
+                : new Entity\User();
+
+            if (null === $user) {
+                throw new NotFoundHttpException('User not found');
+            }
+
+            return $user;
+        };
+
         $controllers->match('/transaction/edit/{user}/{transaction}', 'transaction.controller:editTransaction')
             ->bind('transaction_edit')
             ->value('transaction', null)
+            ->assert('user', '\d+')
             ->assert('transaction', '\d*')
-            ->convert('transaction', function ($transactionId) use ($app) {
-                $transaction = isset($transactionId)
-                    ? $app['orm.em']->find('App\Entity\Transaction', $transactionId)
-                    : new Entity\Transaction();
+            ->convert('user', $userConverter)
+            ->convert('transaction', $transactionConverter);
 
-                if (null === $transaction) {
-                    throw new NotFoundHttpException('Transaction not found');
-                }
-
-                return $transaction;
-            })
-            ->convert('user', function ($userId) use ($app) {
-                $user = isset($userId)
-                    ? $app['orm.em']->find('App\Entity\User', $userId)
-                    : new Entity\User();
-
-                if (null === $user) {
-                    throw new NotFoundHttpException('User not found');
-                }
-
-                return $user;
-            });
+        $controllers->match('/transaction/delete/{user}/{transaction}', 'transaction.controller:deleteTransaction')
+            ->bind('transaction_delete')
+            ->assert('user', '\d+')
+            ->assert('transaction', '\d+')
+            ->convert('user', $userConverter)
+            ->convert('transaction', $transactionConverter);
 
         $controllers->match('/payment-request', 'payment_request.controller:display')
             ->bind('payment_request');
