@@ -125,7 +125,7 @@
                                         <dl class="extrabux_form">
                                             <table cellspacing=0 cellpadding=0 border=0 width=350>
                                                 <tr><td><dt id="email-labelHome"><label for="email" class="required">Email Address:  *</label></dt></td><td><dd id="email-elementHome"><input name="email" onfocus="" id="email" class="required email" type="text"></dd></td></tr>
-                                                <tr><td><dt><label for="referral">Referral Code: <br><span style="font-weight: normal;">(Who referred you?)</span></label></dt></td><td><dd id="referral-code-elementHome"><input name="referral" id="email" class="required email" type="text" value="{referral}"></dd></td></tr>
+                                                <tr><td><dt><label for="referral">Referral Code: <br><span style="font-weight: normal;">(Who referred you?)</span></label></dt></td><td><dd id="referral-code-elementHome"><input name="referral" id="email" class="required email" type="text" value="<?php echo escape($referral) ?>"></dd></td></tr>
                                                 <tr><td></td><td height=25 valign=top><font style="font-size:9pt;"><i>Not Case Sensitive</i></font></td></tr>
                                                 <tr><td ><dt id="password-labelHome"><label for="password" class="required">Password: *</label></dt></td><td><dd id="password-elementHome"><input name="password" id="password" value="" class="required password" type="password"></dd></td></tr>
                                                 <tr><td><dt id="password_confirm-labelHome"><label for="password_confirm" class="required">Confirm Password: *</label></dt></td><td><dd id="password_confirm-elementHome"><input name="password_confirm" id="password_confirm" value="" class="required password" type="password"></dd></td></tr>
@@ -177,7 +177,7 @@
             <?php $i = 0 ?>
             <?php foreach ($deals as $deal) : ?>
                 <div class="HomeDailyDeals">
-                    <div class="ProductName"><a class="title" href="<?php echo escape($deal['link'], 'html_attr') ?>" onclick="window.open(this.href); return false;" rel="nofollow"> <strong><?php echo escape($deal['merchant_name']) ?></strong> </a></div>
+                    <div class="ProductName"><a class="title" href="<?php echo escape($deal['link']) ?>" onclick="window.open(this.href); return false;" rel="nofollow"> <strong><?php echo escape($deal['merchant_name']) ?></strong> </a></div>
                     <div class="DealsCt">
                         <div class="DealsLogo"><img
                             src="<?php echo escape($deal['merchant_logo']) ?>"
@@ -196,7 +196,7 @@
                         </div>
 
                         <div class="DealsText">
-                            <p><a class="title" href="<?php echo escape($deal['link'], 'html_attr') ?>"><?php echo escape($deal['name-abrv']) ?></a></p>
+                            <p><a class="title" href="<?php echo escape($deal['link']) ?>"><?php echo escape($deal['name-abrv']) ?></a></p>
                         </div>
                     </div>
                     <div class="savings-container"<?php if (empty($deal['cashback_text'])) : ?>style="visibility: hidden;"<?php endif ?>>
@@ -206,7 +206,7 @@
                     <div style="clear:both;line-height:1px;">&nbsp;</div>
                     <div class="expdate"><?php echo escape($deal['exp_date_short']) ?></div>
                     <?php if ($deal['code']) : ?>
-                        <div class="btnCouponCode"><a class="BtnBlackTxt" href="<?php echo escape($deal['link'], 'html_attr') ?>">Coupon: <?php echo escape($deal['code']) ?></a></div>
+                        <div class="btnCouponCode"><a class="BtnBlackTxt" href="<?php echo escape($deal['link']) ?>">Coupon: <?php echo escape($deal['code']) ?></a></div>
                     <?php endif ?>
                     <div style="clear:both;line-height:1px;">&nbsp;</div>
                 </div>
@@ -225,9 +225,9 @@
             <div id="top-stores" class="h1">Top Stores</div>
             <div class="seeAll"><a href="/stores/search">See All Stores »</a></div>
         </div>
-        {stores}
-             <div class="store">
-                <div class="logo"><a href="/stores/details/{id}"><img class="cdn-image" onload="
+        <?php foreach ($stores as $store) : ?>
+            <div class="store">
+                <div class="logo"><a href="<?php echo escape('/stores/details/'.$store['id']) ?>"><img class="cdn-image" onload="
                     var width = 100;
                     var height = 32;
                     var ratio = Math.min(width/this.width, height/this.height);
@@ -236,22 +236,22 @@
                     this.width = nwidth;
                     this.height = nheight;"
                 onerror="this.src='<?php echo s3path("/images/no-image-100px.gif") ?>'"
-                src="{logo_thumb}" alt="{name}"/></a></div>
-                  <div class="cashback"><a href="/stores/details/{id}">{cashback_text} Cash Back</a></div>
-              </div>
-        {/stores}
+                src="<?php echo escape($store['logo_thumb']) ?>" alt="<?php echo escape($store['name']) ?>"/></a></div>
+                <div class="cashback"><a href="<?php echo escape('/stores/details/'.$store['id']) ?>"><?php echo escape($store['cashback_text']) ?> Cash Back</a></div>
+            </div>
+        <?php endforeach ?>
     </div>
     <!-- /Top stores -->
 
     <!-- Hot Coupons -->
     <div id="hot-coupons-container">
         <div style="width:100%;height:35px;">
-             <div id="hot-coupons" class="h1"> Hot Coupons</div>
-              <div class="seeAll"><a href="/coupon/search">See All Coupons »</a></div>
-          </div>
-          {coupons}
+            <div id="hot-coupons" class="h1"> Hot Coupons</div>
+            <div class="seeAll"><a href="/coupon/search">See All Coupons »</a></div>
+        </div>
+        <?php foreach ($coupons as $coupon) : ?>
             <div class="Homecoupon">
-                <div class="descimg"><a href="{linkstore}"><img src="{logo_thumb}" onload="
+                <div class="descimg"><a href="<?php echo escape($coupon['linkstore']) ?>"><img src="<?php echo escape($coupon['logo_thumb']) ?>" onload="
                     var width = 100;
                     var height = 34;
                     var ratio = Math.min(width/this.width, height/this.height);
@@ -261,10 +261,11 @@
                     this.height = nheight;"
                  onerror="this.src='<?php echo s3path("/images/no-image-100px.gif") ?>'"
                  alt="** PLEASE DESCRIBE THIS IMAGE **"/></a></div>
-                <div class="desc"><a class="title" href="{linkstore}" rel="nofollow"> {name-abrv} </a> <br/>{code_prefix}<font class="code" color=black ref=""  rel="nofollow">{code}</font></div>
+                 <div class="desc"><a class="title" href="<?php echo escape($coupon['linkstore']) ?>" rel="nofollow"><?php echo escape($coupon['name-abrv']) ?></a><br/>
+                 <?php echo escape($coupon['code_prefix']) ?><font class="code" color=black ref=""  rel="nofollow"><?php echo escape($coupon['code']) ?></font></div>
                 <div style="clear: both;"></div>
             </div>
-        {/coupons}
+        <?php endforeach ?>
     </div>
     <!-- /Hot Couppons -->
 
