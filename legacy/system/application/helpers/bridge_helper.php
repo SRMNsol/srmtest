@@ -102,9 +102,11 @@ function cached_merchant_types()
 /**
  * Serialize deals into array
  */
-function result_deals(Collection $deals, Rate $rate, Subid $subid = null)
+function result_deals(Collection $deals, Rate $rate, Subid $subid = null, $page = 1, $count = null)
 {
-    return array_values($deals->map(function (Deal $deal) use ($rate, $subid) {
+    $slice = ($page > 0 && $count > 0) ? $deals->slice(($page - 1) * $count, $count) : $deals->getValues();
+
+    return array_map(function (Deal $deal) use ($rate, $subid) {
         $merchant = $deal->getMerchant();
 
         return [
@@ -130,7 +132,7 @@ function result_deals(Collection $deals, Rate $rate, Subid $subid = null)
             'expiration' => $deal->getEndOn()->format('M d, Y'),
             'url' => isset($subid) ? $deal->getTrackingUrl($subid) : $deal->getUrl(),
         ];
-    })->toArray());
+    }, $slice);
 }
 
 /**

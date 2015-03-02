@@ -13,21 +13,26 @@ class Stores extends Controller
 
     public function details($id)
     {
-        //Set defaults
-        $sort='rank';
-        $limit=10;
+        // Coupons paging
+        $page = $this->input->get('page') ?: 1;
+        $limit = 25;
 
         //Run the search query
         $client = $this->container['popshops.client'];
         $catalogs = $this->container['popshops.catalog_keys'];
         $rate = $this->container['orm.em']->getRepository('App\Entity\Rate')->getCurrentRate();
 
-        $result = $client->findMerchants($catalogs['all_stores'], ['merchant_id' => $id]);
+        $result = $client->findMerchants($catalogs['all_stores'], ['merchant_id' => $id, 'deal_limit' => 100]);
         $store_search = random_slice(result_merchants($client->findMerchants($catalogs['all_stores'])->getMerchants(), $rate), 8);
         $store = current(result_merchants($result->getMerchants(), $rate));
 
-        $store['coupons'] = result_deals($result->getDeals(), $rate);
+        $store['coupons'] = result_deals($result->getDeals(), $rate, null, $page, $limit);
         $store['restrictions'] = null;
+
+        // pagination data
+        $start = (($page - 1) * $limit) + 1;
+        $count = $result->getDeals()->count();
+        $end = ($start + $limit - 1 < $count) ? $start + $limit - 1 : $count;
 
         $top_stores = $store_search;
         foreach ($store['coupons'] as &$coupon) {
@@ -50,6 +55,13 @@ class Stores extends Controller
         $data['cashback_text'] = $store['cashback_text'];
         $data['link'] = $store['link'];
         $data['coupons'] = $store['coupons'];
+
+        // coupons pagination
+        $data['page'] = $page;
+        $data['limit'] = $limit;
+        $data['start'] = (($page - 1) * $limit) + 1;
+        $data['end'] = $end;
+        $data['count'] = $count;
 
         $this->load->vars($data);
         $this->parser->parse('store/store', $data);

@@ -146,6 +146,10 @@
                 <div style="clear: both;"></div>
             </div>
         </div>
+        <div class="pag">
+            <div id="Pagination" class="pagination-controls"></div>
+            <div class="pagination-info">Showing results <strong><?php echo escape($start) ?></strong> to <strong><?php echo escape($end) ?></strong> of <strong><?php echo escape($count) ?></strong></div>
+        </div>
     </div>
     <?php } ?>
 
@@ -170,6 +174,49 @@ $(document).ready(function() {
         var element = $(this);
         element.find('.ShopCashBack-Bt').addClass('BtnSCBOrangeBg').removeClass('BtnSCBOrangeRBg');
     });
+
+    // pagination
+    var isInit = true;
+    function pageselectCallback(page_index, $) {
+        if (isInit) {
+            isInit = false;
+            return false;
+        }
+
+        var page = page_index + 1;
+        var pat = new RegExp("page=[0-9]*");
+        if (pat.test(document.URL)) {
+            window.location = (document.URL).replace(pat,"page="+page);
+        }
+        else {
+            var pat = new RegExp("[?]");
+            if (pat.test(document.URL)) {
+                window.location = (document.URL)+"&page="+page;
+            } else {
+                window.location = (document.URL)+"?page="+page;
+            }
+        }
+
+        // Prevent click eventpropagation
+        return false;
+    }
+
+    // When document has loaded, initialize pagination and form
+    // Create pagination element with options from form
+    $("#Pagination").pagination(<?php echo escape($count) ?>, {
+        callback: pageselectCallback,
+        current_page: <?php echo escape($page - 1) ?>,
+        num_edge_entries: 1,
+        num_display_entries: 5,
+        prev_show_always: false,
+        next_show_always: false,
+        prev_text: "Prev <<",
+        next_text: "Next >>",
+        ellipse_text: "<span class='spacer'>...</span>",
+        items_per_page: <?php echo escape($limit) ?>,
+        link_to : document.URL
+    });
+
 });
 </script>
 
