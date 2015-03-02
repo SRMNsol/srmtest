@@ -49,7 +49,6 @@ jQuery.fn.dataTableExt.oSort['date-desc'] = function(x,y) {
         return ((Date.parse(x) < Date.parse(y)) ?  1 : ((Date.parse(x) > Date.parse(y)) ? -1 : 0));
 };
 $(document).ready(function(){
-    $(".make-home").colorbox();
 				$('#profile').dataTable( {
 					"sPaginationType": "full_numbers",
 					"bLengthChange": false,

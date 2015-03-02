@@ -110,11 +110,6 @@
     </script><script async src="<?php echo s3path("/images/ga.js") ?>"></script>
 <?php } ?>
 
-<script type="text/javascript">
-    $(document).ready(function(){
-        $(".make-home").colorbox();
-    });
-</script>
 <script>
     $(document).ready(function() {
         $("div.SaveChanges").mouseover(function () {

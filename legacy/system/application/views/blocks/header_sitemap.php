@@ -39,11 +39,6 @@
 <script type="text/javascript" src="<?php echo s3path("/script_files/ZeroClipboard.js") ?>"></script>
 <script type="text/javascript" src="<?php echo s3path("/script_files/nav_bar.js") ?>"></script>
 
-<script type="text/javascript">
-    $(document).ready(function(){
-        $(".make-home").colorbox();
-    });
-</script>
 <script>
     $(document).ready(function() {
         $("div.SaveChanges").mouseover(function () {

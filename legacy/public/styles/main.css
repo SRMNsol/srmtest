@@ -170,7 +170,7 @@ margin-left:2px;
 #header-links a:hover { text-decoration:underline; }
 #header-links a.shopping-blog {	width:93px;	height:20px;color:#000;font-weight:bold;}
 #header-links a.logout {color:#000;width:48px;font-weight:bold;}
-#header-links a.make-home {color:#767675;width:107px;border:0px solid #6F0;font-weight:bold;}
+#header-links a.tm-marketplace {color:#767675;width:97px;border:0px solid #6F0;font-weight:bold;}
 .orange {color:#e86800;} 
 .header-links-dot {float:right;width:15px;}
 .header-dot { background:url("../images/dot.gif");float:left;width:6px;height:6px;margin-top:5px;}

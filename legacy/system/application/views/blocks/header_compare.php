@@ -40,8 +40,6 @@
 
 <script type="text/javascript">
 $(document).ready(function(){
-    $(".make-home").colorbox();
-
     ZeroClipboard.setMoviePath('<?php echo s3path("/zeroclipboard/ZeroClipboard.swf") ?>');
     var clips = [];
 

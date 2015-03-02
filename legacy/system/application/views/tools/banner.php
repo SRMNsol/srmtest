@@ -66,7 +66,6 @@ $(document).ready(function(){
             }
 			//clip.glue( $('#l1sc'), $('#l1st') );
 		}
-    $(".make-home").colorbox();
     $("#personal").colorbox();
     $("#business").colorbox();
     startZC();
