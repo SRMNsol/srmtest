@@ -30,6 +30,7 @@ class MerchantType extends AbstractType
                     Merchant::COMMISSION_TYPE_PERCENTAGE_VAR => 'Variable Percentage Off',
                 ],
             ])
+            ->add('topStore', 'checkbox', ['required' => false])
         ;
     }
 

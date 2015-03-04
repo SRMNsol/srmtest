@@ -16,7 +16,7 @@ use Symfony\Component\Filesystem\Filesystem;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="MerchantRepository")
  * @ORM\AttributeOverrides({
  *   @ORM\AttributeOverride(name="commissionType", column=@ORM\Column(length=20))
  * })
@@ -55,6 +55,11 @@ class Merchant extends BaseMerchant implements GroupSequenceProviderInterface
      * @ORM\Column(type="datetime", nullable=true)
      */
     protected $logoUpdatedAt;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $topStore = false;
 
     const COMMISSION_TYPE_FIXED_VAR = 'fixed_var';
     const COMMISSION_TYPE_PERCENTAGE_VAR = 'percentage_var';
@@ -490,5 +495,17 @@ class Merchant extends BaseMerchant implements GroupSequenceProviderInterface
     public function logoInvalid()
     {
         return !isset($this->logoPath) && isset($this->logoUpdatedAt);
+    }
+
+    public function getTopStore()
+    {
+        return $this->topStore;
+    }
+
+    public function setTopStore($value)
+    {
+        $this->topStore = (boolean) $value;
+
+        return $this;
     }
 }

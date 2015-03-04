@@ -21,9 +21,10 @@ class Stores extends Controller
         $client = $this->container['popshops.client'];
         $catalogs = $this->container['popshops.catalog_keys'];
         $rate = $this->container['orm.em']->getRepository('App\Entity\Rate')->getCurrentRate();
+        $topStores = $this->container['orm.em']->getRepository('App\Entity\Merchant')->getTopStores();
 
         $result = $client->findMerchants($catalogs['all_stores'], ['merchant_id' => $id, 'deal_limit' => 100]);
-        $store_search = random_slice(result_merchants($client->findMerchants($catalogs['all_stores'])->getMerchants(), $rate), 8);
+        $store_search = random_slice(result_merchants($topStores, $rate), 8);
         $store = current(result_merchants($result->getMerchants(), $rate));
 
         $store['coupons'] = result_deals($result->getDeals(), $rate, null, $page, $limit);
