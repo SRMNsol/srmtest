@@ -114,11 +114,6 @@ imageObj1 = new Image();
 <script type='text/javascript' src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
 <script type='text/javascript' src="/colorbox/jquery.colorbox.js"></script>
 <script type='text/javascript' src='/script_files/nav_bar.js'></script>
-<script type='text/javascript'>
-$(document).ready(function(){
-    $(".make-home").colorbox();
-});
-</script>
 <script>
 $(document).ready(function() {
     $("div.SaveChanges").mouseover(function () {
@@ -164,7 +159,7 @@ $(document).ready(function() {
               <div id="header-links1">
               <div><a class="help" href="/info/how">Help</a></div>
               <div class="header-links-dot"><div class="header-dot"></div></div>
-              <div><a class="make-home cboxElement" href="/info/makehome" target="_blank">Make Home Page</a></div>
+              <div><a class="tm-marketplace" href="http://www.tomorrowsmarketplace.com/" target="_blank">TM Marketplace</a></div>
               <div class="header-links-dot"><div class="header-dot"></div></div>
               <div><a class="join-now" href="/main/joinnow">Join Now</a></div>
               <div class="header-links-dot"><div class="header-dot"></div>

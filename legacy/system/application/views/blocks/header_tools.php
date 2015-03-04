@@ -56,7 +56,6 @@
 
 <script type="text/javascript">
     $(document).ready(function(){
-        $(".make-home").colorbox();
         $("#personal").colorbox();
         $("#business").colorbox();
     });
