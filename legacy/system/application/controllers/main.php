@@ -34,8 +34,9 @@ class Main extends Controller
         $client = $this->container['popshops.client'];
         $catalogs = $this->container['popshops.catalog_keys'];
         $rate = $this->container['orm.em']->getRepository('App\Entity\Rate')->getCurrentRate();
+        $topStores = $this->container['orm.em']->getRepository('App\Entity\Merchant')->getTopStores();
 
-        $data['stores'] = random_slice(result_merchants($client->findMerchants($catalogs['all_stores'])->getMerchants(), $rate), $num_stores);
+        $data['stores'] = random_slice(result_merchants($topStores, $rate), $num_stores);
         $data['coupons'] = random_slice(result_deals($client->findDeals($catalogs['hot_coupons'])->getDeals(), $rate), 5);
         $data['deals'] = random_slice(result_deals($client->findDeals($catalogs['hot_deals'])->getDeals(), $rate), 2);
         $data['home'] = $home['vars'];

@@ -393,4 +393,10 @@ class MerchantTest extends OrmTestCase
         $this->assertStringStartsWith(vfsStream::url('root/download'), $file->getPath());
         $this->assertEquals('Hello!', $file->openFile()->current());
     }
+
+    public function testHasCustomRepository()
+    {
+        $repository = $this->em->getRepository('App\Entity\Merchant');
+        $this->assertInstanceOf('App\Entity\MerchantRepository', $repository);
+    }
 }

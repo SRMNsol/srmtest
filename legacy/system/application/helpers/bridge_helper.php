@@ -44,9 +44,9 @@ function create_subid($userId)
 /**
  * Serialize merchants into array
  */
-function result_merchants(Collection $merchants, Rate $rate, Subid $subid = null)
+function result_merchants($merchants, Rate $rate, Subid $subid = null)
 {
-    return array_values($merchants->map(function (Merchant $merchant) use ($rate, $subid) {
+    return array_map(function (Merchant $merchant) use ($rate, $subid) {
         return [
             'id' => $merchant->getId(),
             'name' => $merchant->getDisplayName(),
@@ -61,21 +61,21 @@ function result_merchants(Collection $merchants, Rate $rate, Subid $subid = null
             'link' => '/transfer/store/' . $merchant->getId(),
             'url' => isset($subid) ? $merchant->getTrackingUrl($subid) : $merchant->getUrl(),
         ];
-    })->toArray());
+    }, $merchants instanceof Collection ? $merchants->getValues() : (array) $merchants);
 }
 
 /**
  * serialize merchant types to array
  */
-function result_merchant_types(Collection $merchantTypes)
+function result_merchant_types($merchantTypes)
 {
-    return array_values($merchantTypes->map(function (MerchantType $merchantType) {
+    return array_map(function (MerchantType $merchantType) {
         return [
             'id' => $merchantType->getId(),
             'name' => $merchantType->getName(),
             'count' => $merchantType->getProductCount(),
         ];
-    })->toArray());
+    }, $merchantTypes instanceof Collection ? $merchantTypes->getValues() : (array) $merchantTypes);
 }
 
 /**
@@ -138,9 +138,9 @@ function result_deals(Collection $deals, Rate $rate, Subid $subid = null, $page 
 /**
  * serialize products to array
  */
-function result_products(Collection $products)
+function result_products($products)
 {
-    return array_values($products->map(function (Product $product) {
+    return array_map(function (Product $product) {
         return [
             'id' => $product->getId(),
             'groupID' => $product->getGroupId(),
@@ -160,21 +160,21 @@ function result_products(Collection $products)
             'score' => 0,
             'image' => $product->getLargeImageUrl(),
         ];
-    })->toArray());
+    }, $products instanceof Collection ? $products->getValues() : (array) $products);
 }
 
 /**
  * serialize brands to array
  */
-function result_brands(Collection $brands)
+function result_brands($brands)
 {
-    return array_values($brands->map(function (Brand $brand) {
+    return array_map(function (Brand $brand) {
         return [
             'id' => $brand->getId(),
             'name' => $brand->getName(),
             'count' => $brand->getProductCount(),
         ];
-    })->toArray());
+    }, $brands instanceof Collection ? $brands->getValues() : (array) $brands);
 }
 
 /**
