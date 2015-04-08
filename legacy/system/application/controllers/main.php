@@ -18,7 +18,6 @@ class Main extends Controller
     {
         $home = $this->user->get_home(0);
         $num_stores = $home['vars']['stores'];
-        $num_deals = $home['vars']['deals'];
 
         $data = $this->blocks->getBlocks();
         $data = array_merge($home['vars'], $data);
@@ -38,7 +37,6 @@ class Main extends Controller
 
         $data['stores'] = random_slice(result_merchants($topStores, $rate), $num_stores);
         $data['coupons'] = random_slice(result_deals($client->findDeals($catalogs['hot_coupons'])->getDeals(), $rate), 5);
-        $data['deals'] = random_slice(result_deals($client->findDeals($catalogs['hot_deals'])->getDeals(), $rate), 2);
         $data['home'] = $home['vars'];
         $data['referral'] = $this->input->get('referral');
         if (!$data['referral']) {

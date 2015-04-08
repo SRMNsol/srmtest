@@ -16,61 +16,29 @@
 <?php echo googletag_ad('BS_home_728x90_2') ?>
 
 <!-- Content -->
+<div>
     <!-- Daily Deals -->
-    <div>
     <div id="daily-deals-SIcontainer">
-    <div style="width:100%;height:41px;border:0px solid #00C;">
-     	<div style="float:left;margin-top:5px;margin-left:10px;"><img src="<?php echo s3path("/images/clock.gif") ?>"></div>
-      <div id="hot-products" class="biggerTitle">Daily Deals</div>
-      <div class="seeAll"><a href="/main/deal">See All Deals »</a></div>
-      </div>
-
-    <?php if (empty($deals)) : ?>
-    <p style='font-size:1.5em;text-align:center;padding-top:20px;'>Currently gathering daily deals</p>
-    <?php else : ?>
-        <?php $i = 0 ?>
-        <?php foreach ($deals as $deal) : ?>
-        <div class="HomeDailyDeals">
-            <div class="ProductName"><a class="title" href="<?php echo escape($deal['link'], 'html_attr') ?>" onclick="window.open(this.href); return false;" rel="nofollow"> <strong><?php echo escape($deal['merchant_name']) ?></strong> </a></div>
-            <div class="DealsCt">
-                <div class="DealsLogo"><img
-                    src="<?php echo escape($deal['merchant_logo']) ?>"
-                    onload="
-                        var width=100;
-                        var height=34;
-                        var ratio= Math.min(width/this.width, height/this.height);
-                        var nwidth=ratio*this.width;
-                        var nheight=ratio*this.height;
-                        this.width=nwidth;
-                        this.height=nheight;
-                    "
-                    onerror="this.src="<?php echo s3path("/images/no-image-100px.gif") ?>""
-                    alt="** PLEASE DESCRIBE THIS IMAGE **"
-                />
-            </div>
-
-            <div class="DealsText">
-                <p><a class="title" href="<?php echo escape($deal['link'], 'html_attr') ?>"><?php echo escape($deal['name-abrv']) ?></a></p>
-            </div>
+        <div style="margin-left:-1px">
+            <!-- Amazon lightning deals -->
+            <script charset="utf-8" type="text/javascript">
+                amzn_assoc_ad_type = "responsive_search_widget";
+                amzn_assoc_tracking_id = "bee053-20";
+                amzn_assoc_link_id = "5ZBNOZHTIPHVJEPF";
+                amzn_assoc_marketplace = "amazon";
+                amzn_assoc_region = "US";
+                amzn_assoc_placement = "";
+                amzn_assoc_search_type = "search_widget";
+                amzn_assoc_width = 356;
+                amzn_assoc_height = 388;
+                amzn_assoc_default_search_category = "";
+                amzn_assoc_default_search_key = "";
+                amzn_assoc_theme = "light";
+                amzn_assoc_bg_color = "FFFFFF";
+            </script>
+            <script src="//z-na.amazon-adsystem.com/widgets/q?ServiceVersion=20070822&Operation=GetScript&ID=OneJS&WS=1&MarketPlace=US"></script>
+            <!-- /Amazon lightning deals -->
         </div>
-        <div class="savings-container"<?php if (empty($deal['cashback_text'])) : ?> style="visibility: hidden;"<?php endif ?>>
-            <div class=percent><?php echo escape($deal['cashback_text']) ?></div>
-                <div class=savings>Back</div>
-            </div>
-            <div style="clear:both;line-height:1px;">&nbsp;</div>
-            <div class="expdate"><?php echo escape($deal['exp_date_short']) ?></div>
-            <?php if ($deal['code']) : ?>
-            <div class="btnCouponCode"><a class="BtnBlackTxt" href="<?php echo escape($deal['link'], 'html_attr') ?>">Coupon: <?php echo escape($deal['code']) ?></a></div>
-            <?php endif ?>
-            <div style="clear:both;line-height:1px;">&nbsp;</div>
-        </div>
-        <?php if ($i < count($deals) - 1) : ?>
-        <div style="background:#c7c7c7;height:2px;width:200px;margin-left:55px;margin-top:5px;margin-bottom:5px;"></div>
-        <?php endif ?>
-        <?php $i++ ?>
-        <?php endforeach ?>
-    <?php endif ?>
-
     </div>
     <!-- /Daily Deals -->
 
