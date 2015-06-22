@@ -21,122 +21,165 @@
             <div class="panel">
                 <div class="panel-wrapper">
                     <div class="slide-container">
-                        <div class="slide">
-                            <div class="slide-pic"><img src="<?php echo s3path("/images/slide-1a.png") ?>" alt="Get Cash Back &amp; Coupons From your Favorite Stores" width="514" height="336" /></div>
-                            <div class="slide-text">
-                                <h1>Get Cash Back &amp; Coupons From Your Favorite Stores!</h1>
-                                <h3>Find the best price on any product, get cash back from over 1,500 trusted online retailers, and find exclusive money-saving coupons at BeeSavy!    </h3>
+                        <div class="slide slide-video">
+                            <div class="col-left">
+                                <!-- video -->
                             </div>
-                            <div class="slide-link">
-                                <div class="slide-LearnMore"><a href="/info/lm_overview" class="slide-LearnMore">Learn More</a></div>
-                                <div class="or">or</div>
-                                <div class="slide-signup"><div class="SlideSignUp"><a href="/main/joinnow" class="BtnSlideSignUpBg BtnSlideSignUp"></a></div></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="panel">
-                <div class="panel-wrapper">
-                    <div class="slide-container">
-                        <div class="slide">
-                            <div class="slide-pic"><img src="<?php echo s3path("/images/slide-2a.png") ?>" alt="Get Cash Back &amp; Coupons From your Favorite Stores" width="514" height="336" /></div>
-                            <div class="slide-text">
-                                <h1>How Cash Back Works </h1>
-                                <h3>Stores pay BeeSavy a sales commission for sending shoppers their way, and BeeSavy uses the commission to pay you cash back. We just need an email address so we can notify you when your cash back has been credited.</h3>
-                            </div>
-                            <div class="slide-link">
-                                <div class="slide-LearnMore"><a href="/info/lm_cashback" class="slide-LearnMore">Learn More</a></div>
-                                <div class="or">or</div>
-                                <div class="slide-signup"><div class="SlideSignUp"><a href="/main/joinnow" class="BtnSlideSignUpBg BtnSlideSignUp"></a></div></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="panel">
-                <div class="panel-wrapper">
-                    <div class="slide-container">
-                        <div class="slide">
-                            <div class="slide-pic"><img src="<?php echo s3path("/images/slide-3a.png") ?>" alt="Get Cash Back &amp; Coupons From your Favorite Stores" width="514" height="336" /></div>
-                            <div class="slide-text">
-                                <h1>Find Any Product At The Best Price!</h1>
-                                <h3>With one search, BeeSavy compares prices from trusted stores, finds you the best coupons, and gets you cash back!</h3>
-                            </div>
-                            <div class="slide-link">
-                                <div class="slide-LearnMore"><a href="/info/lm_compare" class="slide-LearnMore">Learn More</a></div>
-                                <div class="or">or</div>
-                                <div class="slide-signup"><div class="SlideSignUp"><a href="/main/joinnow" class="BtnSlideSignUpBg BtnSlideSignUp"></a></div></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="panel">
-                <div class="panel-wrapper">
-                    <div class="slide-container">
-                        <div class="slide">
-                            <div class="slide-pic"><img src="<?php echo s3path("/images/slide-4a.png") ?>" alt="Get Cash Back &amp; Coupons From your Favorite Stores" width="514" height="336" /></div>
-                            <div class="slide-text">
-                                <h1>Coupons You'll Find Nowhere Else!</h1>
-                                <h3>BeeSavy not only scours the web for the best coupons, we also work directly with retailers to get you exclusive coupons you won't find anywhere else.</h3>
-                            </div>
-                            <div class="slide-link">
-                              <div class="slide-LearnMore"><a href="/info/lm_coupon" class="slide-LearnMore">Learn More</a></div>
-                              <div class="or">or</div>
-                              <div class="slide-signup"><div class="SlideSignUp"><a href="/main/joinnow" class="BtnSlideSignUpBg BtnSlideSignUp"></a></div></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="panel">
-                <div class="panel-wrapper">
-                    <div class="slide-container">
-                        <div class="slide">
-                            <div class="slide-pic"><img src="<?php echo s3path("/images/slide-5a.png") ?>" alt="Get Cash Back &amp; Coupons From your Favorite Stores" width="514" height="336" /></div>
-                            <div class="slide-text">
-                                <h1>Refer Friends and Earn Commission Forever!</h1>
-                                <h3>Other sites pay you a small, one-time commission for referring friends.  BeeSavy pays you great commission on all of your referrals forever.  We even pay you on all of their referrals up to seven (7) levels deep!</h3>
-                            </div>
-                            <div class="slide-link">
-                                <div class="slide-LearnMore"><a href="/info/lm_referral" class="slide-LearnMore">Learn More</a></div>
-                                <div class="or">or</div>
-                                <div class="slide-signup"><div class="SlideSignUp"><a href="/main/joinnow" class="BtnSlideSignUpBg BtnSlideSignUp"></a></div></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="panel">
-                <div class="panel-wrapper">
-                    <div class="slide-container">
-                        <div class="slide" >
-                            <div class="slide-pic"><img src="<?php echo s3path("/images/slide-6a.png") ?>" alt="Get Cash Back &amp; Coupons From your Favorite Stores" width="514" height="336"/></div>
-                            <div id="fullRegister" style="width:350px;margin-top:20px;border:0px solid #00F;">
-                                <div class="heading"><h3>Join BeeSavy For Free!</h3></div>
-                                <div class="JoinFreeForm">
-                                    <form id="registerForm" enctype="application/x-www-form-urlencoded" method="post" action="/account/register">
-                                        <dl class="extrabux_form">
-                                            <table cellspacing=0 cellpadding=0 border=0 width=350>
-                                                <tr><td><dt id="email-labelHome"><label for="email" class="required">Email Address:  *</label></dt></td><td><dd id="email-elementHome"><input name="email" onfocus="" id="email" class="required email" type="text"></dd></td></tr>
-                                                <tr><td><dt><label for="referral">Referral Code: <br><span style="font-weight: normal;">(Who referred you?)</span></label></dt></td><td><dd id="referral-code-elementHome"><input name="referral" id="email" class="required email" type="text" value="<?php echo escape($referral) ?>"></dd></td></tr>
-                                                <tr><td></td><td height=25 valign=top><font style="font-size:9pt;"><i>Not Case Sensitive</i></font></td></tr>
-                                                <tr><td ><dt id="password-labelHome"><label for="password" class="required">Password: *</label></dt></td><td><dd id="password-elementHome"><input name="password" id="password" value="" class="required password" type="password"></dd></td></tr>
-                                                <tr><td><dt id="password_confirm-labelHome"><label for="password_confirm" class="required">Confirm Password: *</label></dt></td><td><dd id="password_confirm-elementHome"><input name="password_confirm" id="password_confirm" value="" class="required password" type="password"></dd></td></tr>
-                                                <tr><td><font size=2>* Required Field </font></td><td valign=top align=right><div class="StartSaving"><div class="BtnStartSavingBg BtnStartSaving"><INPUT type="submit" name="" value=""/></div></div></td></tr>
-                                            </table>
-                                        </dl>
-                                    </form>
+                            <div class="col-right">
+                                <div class="slide-text">
+                                    <h1 class="thin center">Beesavy<br><small>The Home of <b>Social Shopping</b></small></h1>
+                                    <ul class="h4">
+                                        <li class="check"><b>Free</b>. Forever. Seriously.</li>
+                                        <li class="check">Cashback Wherever You Shop Online</li>
+                                        <li class="check"><b>Cashback</b> When Your Friend’s Shop Online</li>
+                                        <li class="check">Cashback When Your <b>Friend’s Friend’s Friend’s Friend’s Friend’s Friend</b> Shops Online</li>
+                                        <li>Seriously. We Aren’t Making This Up.</li>
+                                    </ul>
+                                    <h2></h2>
+                                    <div class="slide-link">
+                                        <div class="slide-press-play">Press <b>Play</b> To Learn More</div>
+                                        <div class="slide-signup"><div class="SlideSignUp"><a href="/main/joinnow" class="BtnSlideSignUpBg BtnSlideSignUp">JOIN NOW</a></div></div>
+                                    </div>
                                 </div>
-                                <div style="float:left;margin-top:15px;width:430px;border:0px solid #00F;margin-left:-60px;">
-                                    <div style="float:left;margin-top:-8px;"><img src="<?php echo s3path("/images/lock.gif") ?>" alt="** PLEASE DESCRIBE THIS IMAGE **" /></div>
-                                    <div>BeeSavy will always be free and your E-mail address will never be shared with anyone</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-wrapper">
+                    <div class="slide-container">
+                        <div class="slide slide-cashback">
+                            <div class="col-right">
+                                <div class="slide-text">
+                                    <h1>How Cash Back Works </h1>
+                                    <h3>Stores pay BeeSavy a sales commission for sending shoppers their way, and BeeSavy uses the commission to pay you cash back. We just need an email address so we can notify you when your cash back has been credited.</h3>
+                                </div>
+                                <div class="slide-link">
+                                    <div class="slide-LearnMore"><a href="/info/lm_cashback" class="slide-LearnMore">Learn More</a></div>
+                                    <div class="or">or</div>
+                                    <div class="slide-signup"><div class="SlideSignUp"><a href="/main/joinnow" class="BtnSlideSignUpBg BtnSlideSignUp">JOIN NOW</a></div></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-wrapper">
+                    <div class="slide-container">
+                        <div class="slide slide-social-shopping">
+                            <div class="col-right">
+                                <div class="slide-text">
+                                    <h1 class="thin bordered">The Home of <b>Social Shopping</b><br><small>Refer Friends and Earn Commission For Life!</small></h1>
+                                    <h3>We know that you and your friends love to
+                                    shop online at the biggest and best stores.
+                                    So just refer them to sign-up for <b>FREE</b>
+                                    at Beesavy, and we give you a commission
+                                    on everything they and their referrals buy
+                                    online, up to <b>7 HIVE LAYERS</b> deep!</h3>
+                                </div>
+                                <div class="slide-link">
+                                    <div class="slide-LearnMore"><a href="/info/lm_coupon" class="slide-LearnMore">Learn More</a></div>
+                                    <div class="or">or</div>
+                                    <div class="slide-signup"><div class="SlideSignUp"><a href="/main/joinnow" class="BtnSlideSignUpBg BtnSlideSignUp">JOIN NOW</a></div></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-wrapper">
+                    <div class="slide-container">
+                        <div class="slide slide-best-price">
+                            <div class="col-right">
+                                <div class="slide-text">
+                                    <h1>Find Any Product At The Best Price!</h1>
+                                    <h3>With one search, BeeSavy compares prices from trusted stores, finds you the best coupons, and gets you cash back!</h3>
+                                </div>
+                                <div class="slide-link">
+                                    <div class="slide-LearnMore"><a href="/info/lm_compare" class="slide-LearnMore">Learn More</a></div>
+                                    <div class="or">or</div>
+                                    <div class="slide-signup"><div class="SlideSignUp"><a href="/main/joinnow" class="BtnSlideSignUpBg BtnSlideSignUp">JOIN NOW</a></div></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-wrapper">
+                    <div class="slide-container">
+                        <div class="slide slide-join">
+                            <div class="col-right">
+                                <div id="fullRegister">
+                                    <div class="JoinFreeForm">
+                                        <form id="registerForm" enctype="application/x-www-form-urlencoded" method="post" action="/account/register">
+                                            <dl class="extrabux_form">
+                                                <table cellspacing=0 cellpadding=0 border=0 width=350>
+                                                    <tr><td><dt id="email-labelHome"><label for="email" class="required">Email Address:  *</label></dt></td><td><dd id="email-elementHome"><input name="email" onfocus="" id="email" class="required email" type="text"></dd></td></tr>
+                                                    <tr><td><dt><label for="referral">Referral Code: <br><span style="font-weight: normal;">(Who referred you?)</span></label></dt></td><td><dd id="referral-code-elementHome"><input name="referral" id="email" class="required email" type="text" value="<?php echo escape($referral) ?>"></dd></td></tr>
+                                                    <tr><td></td><td height=25 valign=top><font style="font-size:9pt;"><i>Not Case Sensitive</i></font></td></tr>
+                                                    <tr><td><dt id="password-labelHome"><label for="password" class="required">Password: *</label></dt></td><td><dd id="password-elementHome"><input name="password" id="password" value="" class="required password" type="password"></dd></td></tr>
+                                                    <tr><td><dt id="password_confirm-labelHome"><label for="password_confirm" class="required">Confirm Password: *</label></dt></td><td><dd id="password_confirm-elementHome"><input name="password_confirm" id="password_confirm" value="" class="required password" type="password"></dd></td></tr>
+                                                    <tr><td><font size=2>* Required Field </font></td><td valign=top align=right><div class="StartSaving"><div class="BtnStartSavingBg BtnStartSaving"><INPUT type="submit" name="" value=""/></div></div></td></tr>
+                                                </table>
+                                            </dl>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-wrapper">
+                    <div class="slide-container">
+                        <div class="slide slide-how-to">
+                            <div class="col-left">
+                                <div class="slide-text">
+                                    <p class="h3 center">Find your favorite stores and products</p>
+                                    <img src="<?php echo s3path('/images/store-logos.png') ?>" class="fit">
+                                    <p class="h3 center">Multiple ways to Search:</p>
+                                    <div class="box">
+                                        <div style="padding: 2px;">
+                                            <form method="get" action="/search" accept-charset="utf-8">
+                                                <button class="button pull-right" type="submit"><small>SEARCH</small></button>
+                                                <input type="text" class="search" name="q">
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <p class="h3 center">
+                                        <a class="button button-small" href="/stores/search">SHOP BY STORE</a>
+                                        <a href="/stores/storelist" class="b link">All Stores</a>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-center">
+                                <div class="slide-text">
+                                    <p class="h3 center">See each stores <b>CASHBACK %</b></p>
+                                    <div class="box">
+                                        <div style="padding: 2px;">
+                                            <a class="button pull-right" href="#"><small>SHOP 3% CASHBACK</small></a>
+                                            <img src="<?php echo s3path('/images/stores_petco.png') ?>">
+                                        </div>
+                                    </div>
+                                    <p class="h3 center">And simply click-thru on the link.</p>
+                                    <p class="h3 center">Finish making your purchase, and the store automatically sends your <b>CASHBACK!</b></p>
+                                </div>
+                            </div>
+                            <div class="col-right">
+                                <div class="slide-text">
+                                    <p class="h3 center">Give your friend’s your secret referral code</p>
+                                    <div class="box"><div class="h3 center">Referral ID Alias: <b>busybee</b></div></div>
+                                    <p class="h3 center">And you will get <b>CASHBACK</b> on every purchase they and their referrals make, up to <b>7 HIVE LAYERS</b> deep!</p>
                                 </div>
                             </div>
                         </div>
@@ -148,12 +191,12 @@
 
         <div id="coda-nav-1" class="coda-nav" style="width: 930px;">
             <ul style="width: 930px;">
-                <li class="tab1" style=""><a href="#1" class="">Overview</a></li>
-                <li class="tab4"><a href="#2" class="">What's Cash Back?</a></li>
-                <li class="tab2"><a href="#3" class="">Compare Prices</a></li>
-                <li class="tab3"><a href="#4">Coupon Savings</a></li>
-                <li class="tab5"><a href="#5" class="">Referral Cash Back</a></li>
-                <li class="tab6"><a href="#6" class="">Join For Free!</a></li>
+                <li><a href="#1">Introduction</a></li>
+                <li><a href="#2">How Cashback Works</a></li>
+                <li><a href="#3">Social Shopping</a></li>
+                <li><a href="#4">Compare Prices</a></li>
+                <li><a href="#5">Join For Free</a></li>
+                <li class="last"><a href="#6">Where Do I Start?</a></li>
             </ul>
         </div>
 
