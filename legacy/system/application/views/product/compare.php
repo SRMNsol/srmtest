@@ -59,7 +59,7 @@
         <div class='promoButton'>
             <div class='ShopNow'>
                 <div class='BtnShopNowSep BtnSNOrangeRBg'>
-                    <a class='BtnBlackTxt' target='_blank' href='<?php echo escape($product_url) ?>' rel='nofollow' >SHOP NOW</a>
+                    <a class='button' target='_blank' href='<?php echo escape($product_url) ?>' rel='nofollow' >SHOP NOW</a>
                 </div>
             </div>
         </div>
@@ -166,7 +166,7 @@ onload=\"
                     <span class='final'>$$final</span><br/>
                     $low</td>
                     <td class='shop-now'>
-   <div class='ShopNow'><div class='BtnShopNow BtnSNOrangeBg'><a class='BtnBlackTxt' target='_blank' href='$url' rel='nofollow'>SHOP NOW</a></div> </div>
+   <div class='ShopNow'><div class='BtnShopNow BtnSNOrangeBg'><a class='button' target='_blank' href='$url' rel='nofollow'>SHOP NOW</a></div> </div>
         </td>
             </tr>";
 }
@@ -182,17 +182,6 @@ onload=\"
 </div>
 
 
-<script>
-$(document).ready(function() {
-    $("div.ShopNow").mouseover(function () {
-        var element = $(this);
-        element.find('.BtnShopNow').addClass('BtnSNOrangeRBg').removeClass('BtnSNOrangeBg');
-    }).mouseout(function () {
-        var element = $(this);
-        element.find('.BtnShopNow').addClass('BtnSNOrangeBg').removeClass('BtnSNOrangeRBg');
-    });
-});
-</script>
 
 <!-- footer -->
 <div style="margin-left:20px;">

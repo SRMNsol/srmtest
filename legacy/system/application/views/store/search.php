@@ -12,26 +12,26 @@
 <?php echo googletag_ad('BS_search_728x90') ?>
 
 <!-- content -->
-<div class="BGNoCol">
-
-    <!-- page Title -->
-    <div id="pageTitle" >
-        <div id="pageTitleLeft"></div>
-        <h1>Cash Back Stores</h1>
-        <div id="pageTitleRight"></div>
-        <div id="titleNav" class="small">
-            <a class="pad" href="/stores/search">ALL</a>
-            <a href="/stores/search?q=0">#</a>
-            <?php for ($ord = ord('a'); $ord <= ord('z'); $ord++) : ?>
-            <?php $chr = chr($ord) ?>
-            <?php $url = "/stores/search/?q=$chr" . ($category ? "&category=$category" : "") ?>
-            <a class="uppercase" href="<?php echo escape($url, 'html_attr') ?>"><?php echo $chr ?></a>
-            <?php endfor ?>
-        </div>
-    </div>
-    <!-- /page Title -->
+<div class="">
 
     <div class="BGLeftCol">
+
+        <!-- page Title -->
+        <div id="pageTitle" >
+            <div id="pageTitleLeft"></div>
+            <h1>Cash Back Stores</h1>
+            <div id="pageTitleRight"></div>
+            <div id="titleNav" class="small">
+                <a class="pad" href="/stores/search">ALL</a>
+                <a href="/stores/search?q=0">#</a>
+                <?php for ($ord = ord('a'); $ord <= ord('z'); $ord++) : ?>
+                <?php $chr = chr($ord) ?>
+                <?php $url = "/stores/search/?q=$chr" . ($category ? "&category=$category" : "") ?>
+                <a class="uppercase" href="<?php echo escape($url, 'html_attr') ?>"><?php echo $chr ?></a>
+                <?php endfor ?>
+            </div>
+        </div>
+        <!-- /page Title -->
 
         <!-- Left side -->
         <div id="facetNav">
@@ -116,7 +116,7 @@ onload="
             </div>
 
             <div class="CashBack" style="border:0px solid #000;"><div class="CashBack-Bt1 BtnCBOrangeBg" <?php if (empty($store['cashback_text'])) : ?>style="visibility:hidden"<?php endif ?>><a href="/stores/details/<?php echo $store['id'] ?>" rel="nofollow"><span class="CashBack-value value"><?php echo $store['cashback_text']?></span></a></div></div>
-                <div class="ShopStore" style><div class="ShopStore-Bt BtnSSOrangeBg"><a class="BtnBlackTxt" href="/stores/details/<?php echo $store['id'] ?>" rel="nofollow">SHOP STORE</a></div></div>
+                <div class="ShopStore" style><div class="ShopStore-Bt"><a class="button" href="/stores/details/<?php echo $store['id'] ?>" rel="nofollow">SHOP STORE</a></div></div>
         </div>
 
 <?php
@@ -141,17 +141,6 @@ onload="
 
 <script>
 $(document).ready(function() {
-    $("div.couponList").mouseover(function () {
-        var element = $(this);
-        element.find('.ShopStore-Bt').addClass('BtnSSOrangeRBg').removeClass('BtnSSOrangeBg');
-        element.find('.CashBack-Bt1').addClass('BtnCBOrangeRBg').removeClass('BtnCBOrangeBg');
-    }).mouseout(function () {
-        var element = $(this);
-        element.find('.ShopStore-Bt').addClass('BtnSSOrangeBg').removeClass('BtnSSOrangeRBg');
-        element.find('.CashBack-Bt1').addClass('BtnCBOrangeBg').removeClass('BtnCBOrangeRBg');
-    });
-
-
     var isInit = true;
     function pageselectCallback(page_index, jq){
 

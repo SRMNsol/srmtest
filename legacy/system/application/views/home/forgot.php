@@ -84,62 +84,6 @@ $(document).ready(function(){
 
        <!-- Right side -->
 
-<script>
-$(document).ready(function() {
-    $("div.productResult").mouseover(function () {
-        var element = $(this);
- 		element.find('.BtnComparePrice').addClass('BtnOrangeRBg').removeClass('BtnOrangeBg');
-    }).mouseout(function () {
-    	var element = $(this);
-		element.find('.BtnComparePrice').addClass('BtnOrangeBg').removeClass('BtnOrangeRBg');
-    });
-	
-		
-    $("div.ShopByStore").mouseover(function () {
-        var element = $(this);
-		element.find('.nav-ShopByStore-Bt').addClass('BtnSBSOrangeRBg').removeClass('BtnSBSOrangeBg');
-    }).mouseout(function () {
-    	var element = $(this);
-		element.find('.nav-ShopByStore-Bt').addClass('BtnSBSOrangeBg').removeClass('BtnSBSOrangeRBg');
-    });
-	
-	    $("div.FindCoupons").mouseover(function () {
-        var element = $(this);
-		element.find('.nav-FindCoupons-Bt').addClass('BtnFCOrangeRBg').removeClass('BtnFCOrangeBg');
-    }).mouseout(function () {
-    	var element = $(this);
-		element.find('.nav-FindCoupons-Bt').addClass('BtnFCOrangeBg').removeClass('BtnFCOrangeRBg');
-    });
-	
-	    $("div.LogIn").mouseover(function () {
-        var element = $(this);
- 		element.find('.BtnLogIn').addClass('BtnLogInRBg').removeClass('BtnLogInBg');
-    }).mouseout(function () {
-    	var element = $(this);
-		element.find('.BtnLogInRBg').addClass('BtnLogInBg').removeClass('BtnLogInRBg');
-    });
-	
-	
-		    $("div.StartSaving").mouseover(function () {
-        var element = $(this);
- 		element.find('.BtnStartSaving').addClass('BtnStartSavingRBg').removeClass('BtnStartSavingBg');
-    }).mouseout(function () {
-    	var element = $(this);
-		element.find('.BtnStartSavingRBg').addClass('BtnStartSavingBg').removeClass('BtnStartSavingRBg');
-    });
-	
-	
-			    $("div.SendPassword").mouseover(function () {
-        var element = $(this);
- 		element.find('.BtnSendPassword').addClass('BtnSendPasswordRBg').removeClass('BtnStartSavingBg');
-    }).mouseout(function () {
-    	var element = $(this);
-		element.find('.BtnSendPasswordRBg').addClass('BtnSendPasswordBg').removeClass('BtnSendPasswordRBg');
-    });
-	
-	});
-</script>
-
 
 <!-- /content -->
 

@@ -47,8 +47,6 @@
 
         <div id="WelcomeUserBg">
 <div  class="orangegradiant-bg">
-	<div id="cat-left-curve"><img src="<?php echo s3path("/images/cat-orange-left-curve.jpg") ?>" width="4" height="35" alt="** PLEASE DESCRIBE THIS IMAGE **"/></div>
-	<div id="cat-right-curve"><img src="<?php echo s3path("/images/cat-orange-right-curve.jpg") ?>" width="4" height="35" alt="** PLEASE DESCRIBE THIS IMAGE **"/></div>
     <div class="title1"><font color=#000>Welcome back!</font></div>
 </div>
 <div class="inner-outerbox">
@@ -91,7 +89,7 @@
 	</div>
 
 <?php if((float)$total[0]['available'] > 10) { ?>
-        <div class="Request"><div class="BtnRequestBg BtnRequest"><a class="BtnRequestTxt" href="/account/index/0/2" rel="nofollow">REQUEST A PAYMENT</a></div></div>
+        <div class="Request"><div class="BtnRequestBg BtnRequest"><a class="button" href="/account/index/0/2" rel="nofollow">REQUEST A PAYMENT</a></div></div>
         <div class="RequestNote">You can now request a payment!</div>
 <?php } else {
     $dif = number_format(10 - (float)$total[0]['available'],2);
@@ -163,61 +161,9 @@ alt="** PLEASE DESCRIBE THIS IMAGE **"/></a></div>
 
    <!-- /Referral Overview -->
 <!-- /Content -->
-    <script>
-$(document).ready(function() {
-	    $("div.ShopByStore").mouseover(function () {
-        var element = $(this);
-		element.find('.nav-ShopByStore-Bt').addClass('BtnSBSOrangeRBg').removeClass('BtnSBSOrangeBg');
-    }).mouseout(function () {
-    	var element = $(this);
-		element.find('.nav-ShopByStore-Bt').addClass('BtnSBSOrangeBg').removeClass('BtnSBSOrangeRBg');
-    });
 
-	    $("div.Request").mouseover(function () {
-        var element = $(this);
- 		element.find('.BtnRequestBg').addClass('BtnRequestRBg').removeClass('BtnRequestBg');
-    }).mouseout(function () {
-    	var element = $(this);
-		element.find('.BtnRequestRBg').addClass('BtnRequestBg').removeClass('BtnRequestRBg');
-    });
-
-	    $("div.FindCoupons").mouseover(function () {
-        var element = $(this);
-		element.find('.nav-FindCoupons-Bt').addClass('BtnFCOrangeRBg').removeClass('BtnFCOrangeBg');
-    }).mouseout(function () {
-    	var element = $(this);
-		element.find('.nav-FindCoupons-Bt').addClass('BtnFCOrangeBg').removeClass('BtnFCOrangeRBg');
-    });
-
-	    $("div.LogIn").mouseover(function () {
-        var element = $(this);
- 		element.find('.BtnLogIn').addClass('BtnLogInRBg').removeClass('BtnLogInBg');
-    }).mouseout(function () {
-    	var element = $(this);
-		element.find('.BtnLogInRBg').addClass('BtnLogInBg').removeClass('BtnLogInRBg');
-    });
-
-	    $("div.SignUp").mouseover(function () {
-        var element = $(this);
- 		element.find('.BtnSignUp').addClass('BtnSignUpRBg').removeClass('BtnSignUpBg');
-    }).mouseout(function () {
-    	var element = $(this);
-		element.find('.BtnSignUpRBg').addClass('BtnSignUpBg').removeClass('BtnSignUpRBg');
-    });
-
-	});
-</script>
 <!-- footer -->
-<div id="ftr" >
-<p id="links" style="height: 20px; line-height: 20px;">Copyright &copy; 2011 - <?php echo date('Y'); ?> BeeSavy, LLC. &nbsp;All Rights Reserved. &nbsp;<a href="/stores/storelist">All Stores</a> | <a href="/info/terms">Terms of Service</a> | <a href="/info/privacy">Privacy Policy</a> | <a href="/info/contact">Contact Us</a></p>
-		<a href="http://twitter.com/beesavy" target="_blank" class="socialMedia twitter">Follow Us On Twitter</a>
-		<a href="http://www.facebook.com/pages/BeeSavy/139324182791301" target="_blank" class="socialMedia facebook">Like Us on Facebook</a>
-		<div style="clear: both;"></div>
-		<p id="disclaimer">Tax and shipping costs are estimates; &nbsp;please see the store's website for exact pricing. &nbsp;BeeSavy does not guarantee the accuracy of information provided by online stores and other third parties, including product information, prices, coupons, and availability. &nbsp;BeeSavy shall not be liable for or responsible to honor any inaccurate information shown on our website. &nbsp;Please see our <a href="/info/terms">Terms of Service</a> for more details.</p>
-	</div>
-   <!-- /footer -->
-</div>
-
+{footer}
 <?php echo googletag_ad('BS_home_728x90_4') ?>
 
 </body>

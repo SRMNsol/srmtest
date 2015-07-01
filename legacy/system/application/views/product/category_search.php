@@ -142,7 +142,7 @@
         <div class="CtA">
             <span class="details">from</span> <a href="<?php echo escape($compare_url, 'html_attr') ?>" class="price">$<?php echo escape($product['lowprice']) ?></a><br/>
             <div class="BtnOrangeBg BtnComparePrice">
-                <a class="BtnBlackTxt" href="<?php echo escape($compare_url, 'html_attr')  ?>" rel="nofollow">COMPARE PRICES</a>
+                <a class="button" href="<?php echo escape($compare_url, 'html_attr')  ?>" rel="nofollow">COMPARE PRICES</a>
             </div>
             <span class="details">available at <a href="<?php echo escape($compare_url, 'html_attr') ?>"><?php echo escape($product['numchildproducts']) ?> stores</a></span>
         </div>
@@ -263,35 +263,6 @@ baseurl = baseurl + "&sort="+sort_type;
         var optInit = getOptions();
         $("#Pagination").pagination({count}, optInit);
 });
-</script>
-<script>
-$(document).ready(function() {
-    $("div.productResult").mouseover(function () {
-        var element = $(this);
- 		element.find('.BtnComparePrice').addClass('BtnOrangeRBg').removeClass('BtnOrangeBg');
-    }).mouseout(function () {
-    	var element = $(this);
-		element.find('.BtnComparePrice').addClass('BtnOrangeBg').removeClass('BtnOrangeRBg');
-    });
-
-
-    $("div.ShopByStore").mouseover(function () {
-        var element = $(this);
-		element.find('.nav-ShopByStore-Bt').addClass('BtnSBSOrangeRBg').removeClass('BtnSBSOrangeBg');
-    }).mouseout(function () {
-    	var element = $(this);
-		element.find('.nav-ShopByStore-Bt').addClass('BtnSBSOrangeBg').removeClass('BtnSBSOrangeRBg');
-    });
-
-	    $("div.FindCoupons").mouseover(function () {
-        var element = $(this);
-		element.find('.nav-FindCoupons-Bt').addClass('BtnFCOrangeRBg').removeClass('BtnFCOrangeBg');
-    }).mouseout(function () {
-    	var element = $(this);
-		element.find('.nav-FindCoupons-Bt').addClass('BtnFCOrangeBg').removeClass('BtnFCOrangeRBg');
-    });
-
-	});
 </script>
 
 

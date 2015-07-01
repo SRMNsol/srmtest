@@ -6,7 +6,7 @@
 <body>
 
     <div style="background:#fff;border:1px solid #999;	margin:0 auto;;width:800px;float:left;">
-		<div style="border:0px solid #000;padding-top:15px;padding-left:15px;"><img src="<?php echo s3path('/images/header-beesavy-logo.gif') ?>"/></div>
+		<div style="border:0px solid #000;padding-top:15px;padding-left:15px;"><img src="<?php echo s3path('/images/beesavy-logo.png') ?>"/></div>
         <div style="border:0px solid #000;padding-top:15px;padding-left:15px;"><img src="<?php echo s3path('/images/newsletter-div.gif') ?>"/></div>
 		<div style="border:0px solid #999;float:left;padding:15px;">
         <div style="width:420px;float:left;border:0px solid #000;">

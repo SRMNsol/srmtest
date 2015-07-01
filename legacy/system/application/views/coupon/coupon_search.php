@@ -6,40 +6,39 @@
 {banner}
 {nav_bar}
 <!-- content -->
-		<!-- page Title -->
 
-		<div id="pageTitle">
-		<div id="pageTitleLeft"></div>
-		<h1>Find Free Coupons</h1>
-		<div id="pageTitleRight"></div>
-            <div id="titleNav" class="large">
-        <a href="/coupon/search?" <?php if(!$sort) echo "id='active'";?>>All</a>
-        <a href="/coupon/search?sort=free_shipping" <?php if($sort=="free_shipping asc") echo "id='active'";?>>Free Shipping</a>
-        <a href="/coupon/search?sort=expire_soon" <?php if($sort=="end_date asc") echo "id='active'";?>>Expiring Soon</a>
-        <a href="/coupon/search?sort=hot_coupons" >Hot Coupons!</a>
-    </div>
-	</div>
-
-   		<!-- /page Title -->
+       <!-- /page Title -->
 
 
-   		<!-- Left side -->
+       <!-- Left side -->
         <div class="BGLeftCol">
+            <!-- page Title -->
+            <div id="pageTitle">
+                <div id="pageTitleLeft"></div>
+                <h1>Find Free Coupons</h1>
+                <div id="pageTitleRight"></div>
+                <div id="titleNav" class="large">
+                    <a href="/coupon/search?" <?php if(!$sort) echo "id='active'";?>>All</a>
+                    <a href="/coupon/search?sort=free_shipping" <?php if($sort=="free_shipping asc") echo "id='active'";?>>Free Shipping</a>
+                    <a href="/coupon/search?sort=expire_soon" <?php if($sort=="end_date asc") echo "id='active'";?>>Expiring Soon</a>
+                    <a href="/coupon/search?sort=hot_coupons" >Hot Coupons!</a>
+                </div>
+            </div>
                 <div id="facetNav">
 
 <div id="category">
 
     <div class="facet" >
-    	<div id="category-bt" class="cat-bg">
+      <div id="category-bt" class="cat-bg">
         <div id="cat-left-curve"><img src="<?php echo s3path("/images/cat-left-curve.jpg") ?>" width="4" height="35" alt="** PLEASE DESCRIBE THIS IMAGE **"/></div>
         <div id="cat-right-curve"><img src="<?php echo s3path("/images/cat-right-curve.jpg") ?>" width="4" height="35" alt="** PLEASE DESCRIBE THIS IMAGE **"/></div>
         <div class="parent">Jump to a Store</div>
-   		 </div>
+        </div>
 
     <div id="category-bg">
 
-    	<div class="child scroll">
-         <div style="clear:both;height:5px;">	</div>
+      <div class="child scroll">
+         <div style="clear:both;height:5px;">  </div>
 
                   <div style="margin-left:10px;margin-bottom:10px;">
 
@@ -82,8 +81,8 @@ foreach($coupons as $coupon){
 <?php }
 ?>
 <div class='couponList inactive'>
-	        <div class='logo'>
-	            <a class='transfer-link' href='<?php echo $coupon['link'] ?>' target='_blank' rel='nofollow'>
+          <div class='logo'>
+              <a class='transfer-link' href='<?php echo $coupon['link'] ?>' target='_blank' rel='nofollow'>
                     <img class='cdn-image' src='<?php echo $coupon['logo_thumb'] ?>'
 onload="
         var width=100;
@@ -94,48 +93,48 @@ onload="
     this.width=nwidth;
     this.height=nheight;"
 alt='$store' onerror="this.src="<?php echo s3path("/../images/no-image-100px.gif") ?>""/>
-	            </a>
-	        </div>
-	        <div class='cInfo'>
-	            <h3><a class='transfer-link' href='<?php echo $coupon['link'] ?>' target='_blank' rel='nofollow'><?php echo $coupon['name'] ?></a></h3>
-	            <div class='details'>
-	                <span>Expires <?php echo $coupon['expiration'] ?> </span>
+              </a>
+          </div>
+          <div class='cInfo'>
+              <h3><a class='transfer-link' href='<?php echo $coupon['link'] ?>' target='_blank' rel='nofollow'><?php echo $coupon['name'] ?></a></h3>
+              <div class='details'>
+                  <span>Expires <?php echo $coupon['expiration'] ?> </span>
                     <br/><div style='padding-top: 3px;'>
                     <img src="<?php echo s3path("/images/tell-a-friend.png") ?>" alt='** PLEASE DESCRIBE THIS IMAGE **' onerror="this.src="<?php echo s3path("/images/no-image-100px.gif") ?>""/>
 <a target='_blank' href='/social/coupon/facebook/<?php echo $coupon['id'] ?>'><img src="<?php echo s3path("/images/facebook-refer.png") ?>" alt='** PLEASE DESCRIBE THIS IMAGE **'/></a>
 <a target='_blank' href='/social/coupon/twitter/<?php echo $coupon['id'] ?>'><img src="<?php echo s3path("/images/twitter-refer.png") ?>" alt='** PLEASE DESCRIBE THIS IMAGE **'/></a>
 <a onclick="$.get($(this).attr('href'),function(data){document.location=data;});return false;" href='/social/coupon/email/<?php echo $coupon['id'] ?>'><img src="<?php echo s3path("/images/email-refer.png") ?>" alt='** PLEASE DESCRIBE THIS IMAGE **'/></a>
                     </div>
-                     	            </div>
-	        </div>
+                                   </div>
+          </div>
 
             <div class="CashBack"><div class='CashBack-Bt BtnCBOrangeBg' <?php if (empty($coupon['cashback_text'])) : ?>style="visibility: hidden"<?php endif ?>>
 
 
-	            <a  href='<?php echo $coupon['link'] ?>' target='_blank' rel='nofollow'>
-	                <span class="CashBack-value value"><?php echo $coupon['cashback_text'] ?></span>
-	            </a>
-	        </div></div>
+              <a  href='<?php echo $coupon['link'] ?>' target='_blank' rel='nofollow'>
+                  <span class="CashBack-value value"><?php echo $coupon['cashback_text'] ?></span>
+              </a>
+          </div></div>
 
 
-	        <div class='CtA'>
+          <div class='CtA'>
                           <div >
-	           <table cellspacing=0 cellpadding=0>
+             <table cellspacing=0 cellpadding=0>
                <tr><td>
 
-	           <div class="ClickToCopyCode"><div style="position:relative;overflow:auto;0" class="click-contain ClickToCopyCode-Bt BtnCTCCOrangeBg-coupon">
-	          <a class="BtnBlackTxt click-button" class='transfer-link' href='<?php echo $coupon['link'] ?>' target='_blank' rel='nofollow'>
-	          <?php echo $coupon['action_text'] ?>
-	          </a>
- 	          </div></div>
-	                	</td></tr>                <tr><td>
-	                			        <div class='instructions'><?php echo $coupon['code_prefix'] ?>
+             <div class="ClickToCopyCode"><div style="position:relative;overflow:auto;0" class="click-contain ClickToCopyCode-Bt">
+            <a class="button click-button" class='transfer-link' href='<?php echo $coupon['link'] ?>' target='_blank' rel='nofollow'>
+            <?php echo $coupon['action_text'] ?>
+            </a>
+             </div></div>
+                    </td></tr>                <tr><td>
+                                <div class='instructions'><?php echo $coupon['code_prefix'] ?>
     <a class='click-text couponCode transfer-link' href='<?php echo $coupon['link'] ?>' target='_blank' rel='nofollow'><?php echo $coupon['code'] ?></a>
-			        </div></td></tr></table>
+              </div></td></tr></table>
 
-	            </div>
-	        </div>
-	    </div>
+              </div>
+          </div>
+      </div>
 <?php
 
     $index += 1;}
@@ -156,9 +155,9 @@ alt='$store' onerror="this.src="<?php echo s3path("/../images/no-image-100px.gif
 <div id="Pagination" class="pagination-controls"></div>
     <div class="pagination-info">Showing results <strong>{start}</strong> to <strong>{end}</strong> of <strong>{count}</strong></div>
 </div>
-			<div style="clear: both;"></div>
-					</div>
-		<div style="clear: both;"></div>
+      <div style="clear: both;"></div>
+          </div>
+    <div style="clear: both;"></div>
 
 <script type="text/javascript">
 $(document).ready(function() {
@@ -225,40 +224,6 @@ $(document).ready(function() {
         $("#Pagination").pagination({count}, optInit);
 });
 </script>
-<script>
-
-$(document).ready(function() {
-    $("div.couponList").mouseover(function () {
-        var element = $(this);
- 		element.find('.ClickToCopyCode-Bt').addClass('BtnCTCCOrangeRBg-coupon').removeClass('BtnCTCCOrangeBg-coupon');
-		 		element.find('.CashBack-Bt').addClass('BtnCBOrangeRBg').removeClass('BtnCBOrangeBg');
-    }).mouseout(function () {
-    	var element = $(this);
-		element.find('.ClickToCopyCode-Bt').addClass('BtnCTCCOrangeBg-coupon').removeClass('BtnCTCCOrangeRBg-coupon');
-				element.find('.CashBack-Bt').addClass('BtnCBOrangeBg').removeClass('BtnCBOrangeRBg');
-    });
-
-
-
-    $("div.ShopByStore").mouseover(function () {
-        var element = $(this);
-		element.find('.nav-ShopByStore-Bt').addClass('BtnSBSOrangeRBg').removeClass('BtnSBSOrangeBg');
-    }).mouseout(function () {
-    	var element = $(this);
-		element.find('.nav-ShopByStore-Bt').addClass('BtnSBSOrangeBg').removeClass('BtnSBSOrangeRBg');
-    });
-
-	    $("div.FindCoupons").mouseover(function () {
-        var element = $(this);
-		element.find('.nav-FindCoupons-Bt').addClass('BtnFCOrangeRBg').removeClass('BtnFCOrangeBg');
-    }).mouseout(function () {
-    	var element = $(this);
-		element.find('.nav-FindCoupons-Bt').addClass('BtnFCOrangeBg').removeClass('BtnFCOrangeRBg');
-    });
-
-	});
-</script>
-
 
        <!-- Right side -->
 

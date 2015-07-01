@@ -1,71 +1,134 @@
 #dailydeals {
-	PADDING-LEFT: 6px
+  PADDING-LEFT: 6px;
 }
 #dailydeals .deal {
-	POSITION: relative; TEXT-ALIGN: center; PADDING-BOTTOM: 0px; MARGIN-TOP: 10px; PADDING-LEFT: 10px; WIDTH: 280px; PADDING-RIGHT: 10px; BACKGROUND:url(../images/daily_deal_container.png) no-repeat; FLOAT: left; HEIGHT: 310px; PADDING-TOP: 15px;border:0px solid #000;
+  POSITION: relative;
+  TEXT-ALIGN: center;
+  PADDING-BOTTOM: 0;
+  MARGIN-TOP: 10px;
+  PADDING-LEFT: 10px;
+  WIDTH: 280px;
+  PADDING-RIGHT: 10px;
+  BACKGROUND: url(../images/daily_deal_container.png) no-repeat;
+  FLOAT: left;
+  HEIGHT: 310px;
+  PADDING-TOP: 15px;
+  border: 0 solid #000;
 }
 #dailydeals .deal .name {
-    COLOR: #000; FONT-SIZE: 14px; FONT-WEIGHT: bold;border:0px solid #03F;float:left;width:100%;
+  COLOR: #000;
+  FONT-SIZE: 14px;
+  FONT-WEIGHT: bold;
+  border: 0 solid #03f;
+  float: left;
+  width: 100%;
 }
-#dailydeals .deal .name A {
-	COLOR: #E96D08; FONT-SIZE: 18px; FONT-WEIGHT: bold
+#dailydeals .deal .name a {
+  COLOR: #e96d08;
+  FONT-SIZE: 18px;
+  FONT-WEIGHT: bold;
 }
 #dailydeals .deal .countdown {
-	COLOR: #b2030a; FONT-SIZE: 14px; FONT-WEIGHT: bold
+  COLOR: #b2030a;
+  FONT-SIZE: 14px;
+  FONT-WEIGHT: bold;
 }
-#dailydeals .deal .description      {text-align:left;line-height:1.2em;height:195px;overflow:auto;margin:30px 0px 0px;font-size:14px;}
-#dailydeals .deal .description p    {margin:10px 0px;}
+#dailydeals .deal .description {
+  text-align: left;
+  line-height: 1.2em;
+  height: 195px;
+  overflow: auto;
+  margin: 30px 0 0;
+  font-size: 14px;
+}
+#dailydeals .deal .description p {
+  margin: 10px 0;
+}
 #dailydeals .deal .image {
-	HEIGHT: 150px;border:0px solid #03F;margin-top:0px;float:left;width:100%;border:0px solid #000;
+  HEIGHT: 150px;
+  border: 0 solid #03f;
+  margin-top: 0;
+  float: left;
+  width: 100%;
+  border: 0 solid #000;
 }
 #dailydeals .deal .transfer {
-	 WIDTH: 100%; HEIGHT: 32px; border:0px solid #03F;float:left;margin-left:0px;margin-top:12px;
+  WIDTH: 100%;
+  HEIGHT: 32px;
+  border: 0 solid #03f;
+  float: left;
+  margin-left: 0;
+  margin-top: 12px;
 }
 #dailydeals .deal .transfer_image {
-	POSITION: absolute; float:left;WIDTH: 85px;HEIGHT: 30px; border:0px solid #03F; bottom:20px; left:10px;
+  POSITION: absolute;
+  float: left;
+  WIDTH: 85px;
+  HEIGHT: 30px;
+  border: 0 solid #03f;
+  bottom: 20px;
+  left: 10px;
 }
 #dailydeals .deal .details {
-	POSITION: absolute;
-	WIDTH: 268px;
-	BOTTOM: 18px;
-	HEIGHT: 40px;
-	LEFT: 9px;
-	margin-right:2px;
-	border:0px solid #00F;
-    text-align:center;
+  POSITION: absolute;
+  WIDTH: 268px;
+  BOTTOM: 18px;
+  HEIGHT: 40px;
+  LEFT: 9px;
+  margin-right: 2px;
+  border: 0 solid #00f;
+  text-align: center;
 }
 #dailydeals .deal .details .list-price-container {
-	WIDTH: 90px; FLOAT: left; HEIGHT: 40px; PADDING-TOP: 8px
+  WIDTH: 90px;
+  FLOAT: left;
+  HEIGHT: 40px;
+  PADDING-TOP: 8px;
 }
 #dailydeals .deal .details .list-price-container .msrp {
-	FONT-WEIGHT: bold; margin-bottom:1px;
+  FONT-WEIGHT: bold;
+  margin-bottom: 1px;
 }
 #dailydeals .deal .details .list-price-container .list-price {
-	FONT-SIZE: 20px; TEXT-DECORATION: line-through;margin-bottom:2px;
+  FONT-SIZE: 20px;
+  TEXT-DECORATION: line-through;
+  margin-bottom: 2px;
 }
 #dailydeals .deal .details .savings-container {
-	HEIGHT: 50px; COLOR: #000; text-align:center; margin: auto 0px;
+  HEIGHT: 50px;
+  COLOR: #000;
+  text-align: center;
+  margin: auto 0;
 }
 #dailydeals .deal .details .savings-container .percent {
-	FONT-SIZE: 15px; FONT-WEIGHT: bold; PADDING-TOP: 8px; margin-left: 9px;
+  FONT-SIZE: 15px;
+  FONT-WEIGHT: bold;
+  PADDING-TOP: 8px;
+  margin-left: 9px;
 }
 #dailydeals .deal .details .savings-container .savings {
-	FONT-SIZE: 12px;  margin-left:10px;
+  FONT-SIZE: 12px;
+  margin-left: 10px;
 }
 #dailydeals .deal .details .deal-price-container {
-	WIDTH: 100px; FLOAT: left; HEIGHT: 40px; PADDING-TOP: 6px;
+  WIDTH: 100px;
+  FLOAT: left;
+  HEIGHT: 40px;
+  PADDING-TOP: 6px;
 }
 #dailydeals .deal .details .deal-price-container .deal-price {
-	COLOR: #b2030a; FONT-SIZE: 20px; FONT-WEIGHT: bold;
+  COLOR: #b2030a;
+  FONT-SIZE: 20px;
+  FONT-WEIGHT: bold;
 }
 #dailydeals .deal .details .deal-price-container .cashback {
-	FONT-WEIGHT: bold;
-	color:#000;
-	font-size:1.1em;
-	border:0px solid #033;
+  FONT-WEIGHT: bold;
+  color: #000;
+  font-size: 1.1em;
+  border: 0 solid #033;
 }
-#dailydeals .deal .ShopNow{
-    position:absolute;
-    right:-15px;
-    bottom:15px;
+#dailydeals .deal .ShopNow {
+  position: absolute;
+  right: -15px;
+  bottom: 15px;
 }

@@ -17,7 +17,7 @@ $product_url = "/product/compare/".$product['groupID'];
     </div>
     <div class="CtA">
         <span class="details">from</span> <a href="<?echo $product_url;?> " class="price">$<?php echo $product['lowprice'];?></a><br/>
-        <div class="BtnComparePrice BtnOrangeBg"><a class="BtnBlackTxt" href="<?echo $product_url;?>">COMPARE PRICES</a></div>
+        <div class="BtnComparePrice BtnOrangeBg"><a class="button" href="<?echo $product_url;?>">COMPARE PRICES</a></div>
         <span class="details">available at <a href="<?echo $product_url;?> "><?php echo $product['numchildproducts'];?> stores</a></span>
     </div>
 </div>

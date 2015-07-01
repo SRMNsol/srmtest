@@ -34,7 +34,7 @@
 </DIV>
 <DIV class="countdown current"><NOSCRIPT><?php echo escape($deal['expiration']) ?> </NOSCRIPT></DIV>
 <div class="transfer_image"><A href="<?php echo escape($deal['link'], 'html_attr') ?>" rel=nofollow target=_blank><IMG src="<?php echo escape($deal['merchant_logo']) ?>" /></A></div>
-<div class="ShopNow"><div class="BtnShopNowDeals BtnSNOrangeBg"><a class="BtnBlackTxt" href="<?php echo escape($deal['link'], 'html_attr') ?>" target="_blank" rel="nofollow">SHOP NOW</a></div>
+<div class="ShopNow"><div class="BtnShopNowDeals BtnSNOrangeBg"><a class="button" href="<?php echo escape($deal['link'], 'html_attr') ?>" target="_blank" rel="nofollow">SHOP NOW</a></div>
 </DIV>
 <DIV class="details">
 <DIV class=savings-container <?php if (empty($deal['cashback_text'])) : ?>style="visibility: hidden"<?php endif ?>>
@@ -48,39 +48,6 @@
 <DIV style="CLEAR: both"></DIV></DIV>
 <SCRIPT type=text/javascript>
 $(document).ready(function () {
-	    $("div.productResult").mouseover(function () {
-        var element = $(this);
- 		element.find('.BtnComparePrice').addClass('BtnOrangeRBg').removeClass('BtnOrangeBg');
-    }).mouseout(function () {
-    	var element = $(this);
-		element.find('.BtnComparePrice').addClass('BtnOrangeBg').removeClass('BtnOrangeRBg');
-    });
-
-	    $("div.ShopNow").mouseover(function () {
-        var element = $(this);
- 		element.find('.BtnShopNowDeals').addClass('BtnSNOrangeRBg').removeClass('BtnSNOrangeBg');
-    }).mouseout(function () {
-    	var element = $(this);
-		element.find('.BtnShopNowDeals').addClass('BtnSNOrangeBg').removeClass('BtnSNOrangeRBg');
-    });
-
-    $("div.ShopByStore").mouseover(function () {
-        var element = $(this);
-		element.find('.nav-ShopByStore-Bt').addClass('BtnSBSOrangeRBg').removeClass('BtnSBSOrangeBg');
-    }).mouseout(function () {
-    	var element = $(this);
-		element.find('.nav-ShopByStore-Bt').addClass('BtnSBSOrangeBg').removeClass('BtnSBSOrangeRBg');
-    });
-
-	    $("div.FindCoupons").mouseover(function () {
-        var element = $(this);
-		element.find('.nav-FindCoupons-Bt').addClass('BtnFCOrangeRBg').removeClass('BtnFCOrangeBg');
-    }).mouseout(function () {
-    	var element = $(this);
-		element.find('.nav-FindCoupons-Bt').addClass('BtnFCOrangeBg').removeClass('BtnFCOrangeRBg');
-    });
-
-
     $(".countdown").each(function () {
         var timestamp = $(this).parent().find('.timestamp').val();
         var date = new Date(timestamp * 1000);

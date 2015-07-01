@@ -69,7 +69,7 @@
                 </div>
                 <div class="ShopCashBack">
                     <div class="ShopCashBack-Bt BtnSCBOrangeBg">
-                        <a class="BtnCBBlackTxt" href="/transfer/store/{id}" target="_blank" rel="nofollow">
+                        <a class="BtnCBBlackTxt button" href="/transfer/store/{id}" target="_blank" rel="nofollow">
                             <?php if ($store['cashback_text']) : ?>
                             Shop <?php echo escape($store['cashback_text']) ?> Cashback
                             <?php else : ?>
@@ -130,7 +130,7 @@
                     <div class="CtA">
                         <table cellspacing=0 cellpadding=0>
                             <tr>
-                                <td><div class="ClickToCopyCode"><div style="position:relative" class="click-contain ClickToCopyCode-Bt BtnCTCCOrangeBg-coupon"><a class="click-button BtnBlackTxt" href="/transfer/coupon/<?php echo $coupon['cid'] ?>" target="_blank" rel="nofollow"><?php echo $coupon['action_text'] ?></a></div></div></td>
+                                <td><div class="ClickToCopyCode"><div style="position:relative" class="click-contain ClickToCopyCode-Bt"><a class="click-button button" href="/transfer/coupon/<?php echo $coupon['cid'] ?>" target="_blank" rel="nofollow"><?php echo $coupon['action_text'] ?></a></div></div></td>
                             </tr>
                             <tr>
                                 <td><div class="instructions"><?php echo $coupon['code_prefix'] ?><a class="click-text couponCode transfer-link" href="" target="_blank" rel="nofollow"><?php echo $coupon['code'] ?></a></div></td>
@@ -159,22 +159,6 @@
 
 <script>
 $(document).ready(function() {
-    $("div.couponList").mouseover(function () {
-        var element = $(this);
-        element.find('.ClickToCopyCode-Bt').addClass('BtnCTCCOrangeRBg-coupon').removeClass('BtnCTCCOrangeBg-coupon');
-    }).mouseout(function () {
-        var element = $(this);
-        element.find('.ClickToCopyCode-Bt').addClass('BtnCTCCOrangeBg-coupon').removeClass('BtnCTCCOrangeRBg-coupon');
-    });
-
-    $("div.ShopCashBack").mouseover(function () {
-        var element = $(this);
-         element.find('.ShopCashBack-Bt').addClass('BtnSCBOrangeRBg').removeClass('BtnSCBOrangeBg');
-    }).mouseout(function () {
-        var element = $(this);
-        element.find('.ShopCashBack-Bt').addClass('BtnSCBOrangeBg').removeClass('BtnSCBOrangeRBg');
-    });
-
     // pagination
     var isInit = true;
     function pageselectCallback(page_index, $) {

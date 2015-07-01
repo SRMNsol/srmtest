@@ -1,44 +1,43 @@
-.BtnOrangeBg {
-  background: url('../images/btn-compare-prices.gif') no-repeat;
+.button {
+  display: inline-block;
+  color: #fff;
+  background-color: #df6c57;
+  border-radius: 3px;
+  height: 30px;
+  font-size: 12px;
+  line-height: 30px;
+  padding: 0 8px;
+  border: 1px solid #df6c57;
+  text-align: center;
 }
 
-.BtnOrangeRBg {
-  background: url('../images/btn-compare-pricesR.gif') repeat-x top left;
+.button:hover, .button:active, .nav-button:hover, .nav-button:active {
+  background-color: #a65041;
+  border-color: #a65041;
 }
 
-
-.BtnSBSOrangeBg {
-  background: url('../images/shopbystoreBt.gif') no-repeat;
+.button.button-small {
+  font-size: 10px;
+  line-height: 10px;
+  height: 10px;
+  padding: 4px;
 }
 
-
-.BtnSBSOrangeRBg {
-  background: url('../images/shopbystoreBtR.gif') no-repeat;
+.link {
+  text-decoration: underline;
 }
 
-
-.BtnFCOrangeBg {
-  background: url('../images/FindCouponsBt.gif') no-repeat;
-}
-
-
-.BtnFCOrangeRBg {
-  background: url('../images/FindCouponsBtR.gif') no-repeat;
-}
-
-.BtnCTCCOrangeBg {
-  background: url('../images/ClickToCopyCodeBt.gif') no-repeat 8px;
-}
-
-.BtnCTCCOrangeRBg {
-  background: url('../images/ClickToCopyCodeBtR.gif') no-repeat 8px;
-}
-.BtnCTCCOrangeBg-coupon {
-  background: url('../images/ClickToCopyCodeBt.gif') no-repeat;
-}
-
-.BtnCTCCOrangeRBg-coupon {
-  background: url('../images/ClickToCopyCodeBtR.gif') no-repeat;
+.nav-button {
+  background-color: #df6c57;
+  color: #fff;
+  height: 32px;
+  font-size: 12px;
+  line-height: 32px;
+  border: none;
+  border-radius: 0 5px 0 5px;
+  padding: 0 5px;
+  box-shadow: 0 1px 1px 0 rgba(255,255,255,.5) inset, -1px 0 1px 0 rgba(0,0,0,.1) inset;
+  -webkit-appearance: none;
 }
 
 .BtnCBOrangeRBg {
@@ -48,47 +47,15 @@
 .BtnCBOrangeBg {
   background: url('../images/CashBackBt.gif') no-repeat;
 }
-.BtnSNOrangeRBg {
-  background: url('../images/ShopNowBtR.gif') no-repeat;
-}
-
-.BtnSNOrangeBg {
-  background: url('../images/ShopNowBt.gif') no-repeat;
-}
-
-.BtnSSOrangeRBg {
-  background: url('../images/ShopNowBtR.gif') no-repeat;
-}
-
-.BtnSSOrangeBg {
-  background: url('../images/ShopNowBt.gif') no-repeat;
-}
-
-.BtnSCBOrangeRBg {
-  background: url('../images/ShopCashBackBtR.gif') no-repeat;
-}
-
-.BtnSCBOrangeBg {
-  background: url('../images/ShopCashBackBt.gif') no-repeat;
-}
 
 div.BtnSaveChangesBg input {
-  background: url('../images/BtnSaveChangesBg.gif') no-repeat;
   cursor: pointer;
   width: 98px;
-  height: 30px;
-  border: none;
-}
-div.BtnSaveChangesRBg input {
-  background: url('../images/BtnSaveChangesRBg.gif') no-repeat;
-  cursor: pointer;
-  width: 98px;
-  height: 30px;
-  border: none;
+  font-size: 10px;
+  height: 32px;
 }
 
 div.BtnLogInBg input {
-  background: url('../images/BtnLogIn.gif') no-repeat;
   cursor: pointer;
   width: 88px;
   height: 30px;
@@ -154,18 +121,8 @@ div.BtnSendMessageRBg input {
 }
 
 div.BtnStartSavingBg input {
-  background: url('../images/BtnStartSaving.gif') no-repeat;
   cursor: pointer;
   width: 115px;
-  height: 30px;
-  border: none;
-}
-div.BtnStartSavingRBg input {
-  background: url('../images/BtnStartSavingR.gif') no-repeat;
-  cursor: pointer;
-  width: 115px;
-  height: 30px;
-  border: none;
 }
 
 div.BtnSendPasswordBg input {
@@ -182,13 +139,6 @@ div.BtnSendPasswordRBg input {
   height: 30px;
   border: none;
 }
-.BtnRequestBg {
-  background: url('../images/BtnRequestBg.gif') no-repeat 9px 4px;
-}
-.BtnRequestRBg {
-  background: url('../images/BtnRequestRBg.gif') no-repeat 9px 4px;
-}
-
 .BtnRequestGrayBg {
   background: url('../images/BtnRequestGrayBg.gif') no-repeat;
 }
@@ -288,7 +238,7 @@ div.BtnSendPasswordRBg input {
 .ClickToCopyCode-Bt {
   float: right;
   width: 125px;
-  height: 30px;
+  height: 32px;
   display: block;
   cursor: pointer;
   border: 0 solid #000;
@@ -305,17 +255,13 @@ div.BtnSendPasswordRBg input {
 }
 .nav-ShopByStore-Bt {
   float: left;
-  width: 114px;
-  height: 30px;
   margin: 5px 0 0 20px;
   display: block;
   cursor: pointer;
 }
 .nav-FindCoupons-Bt {
   float: left;
-  width: 100px;
-  height: 30px;
-  margin: 5px 0 0 -5px;
+  margin: 5px 0 0 5px;
   display: block;
   cursor: pointer;
 }
@@ -324,32 +270,8 @@ div.BtnSendPasswordRBg input {
 
 .BtnGrayBg {
   background: #fff url('../images/BtnGrayBg.gif') repeat-x top left;
-     -moz-border-radius: 7px;
-  -webkit-border-radius: 7px;
-          border-radius: 7px;
+  border-radius: 7px;
   behavior: url(border-radius.htc);
-}
-a.BtnBlackTxt {
-  color: #000;
-  font-size: 8pt;
-  height: 30px;
-  line-height: 30px;
-  text-align: center;
-  display: block;
-  font-weight: bolder;
-  z-index: 1;
-  position: relative;
-}
-a.BtnRequestTxt {
-  color: #000;
-  font-size: 1.2em;
-  height: 30px;
-  line-height: 40px;
-  text-align: center;
-  display: block;
-  font-weight: bolder;
-  z-index: 1;
-  position: relative;
 }
 a.BtnWhiteTxt {
   color: #fff;
@@ -390,14 +312,8 @@ a.BtnPreviewTxt {
 }
 
 a.BtnCBBlackTxt {
-  color: #000;
   font-size: 11pt;
-  height: 30px;
-  line-height: 34px;
-  text-align: center;
-  display: block;
   font-weight: bolder;
-  z-index: 1;
   position: relative;
 }
 
@@ -559,31 +475,11 @@ a.BtnCBBlackTxt {
   margin-top: 5px;
   border: 0 solid #090;
 }
+
 .Preiview {
   float: left;
 }
 
 .Download {
   float: right;
-}
-
-.button {
-  display: inline-block;
-  color: #fff;
-  background-color: #df6c57;
-  border-radius: 3px;
-  font-size: 12px;
-  line-height: 12px;
-  padding: 8px;
-  border: 1px solid #df6c57;
-}
-
-.button.button-small {
-  font-size: 10px;
-  line-height: 10px;
-  padding: 4px;
-}
-
-.link {
-  text-decoration: underline;
 }

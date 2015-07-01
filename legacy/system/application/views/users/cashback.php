@@ -121,7 +121,7 @@
     <table><tbody><tr><td><strong>Pending :</strong></td><td>${pending}</td></tr><tr><td><strong>Available :</strong></td><td>${processing}</td></tr><tr><td><strong>Processing :</strong></td><td>${available}</td></tr><tr><td><strong>Paid :</strong></td><td>${paid}</td></tr></tbody></table>
 	</div>
 	{/total}
-        <div class="Request"><div class="BtnRequestBg BtnRequest"><a class="BtnBlackTxt" href="" target="_blank" rel="nofollow">REQUEST A PAYMENT</a></div></div>
+        <div class="Request"><div class="BtnRequestBg BtnRequest"><a class="button" href="" target="_blank" rel="nofollow">REQUEST A PAYMENT</a></div></div>
         <div class="RequestNote">You can now request a payment!</div>
 	<div style="clear:both;height:10px;"></div>
 </div>
@@ -149,34 +149,6 @@ availability. Beesavy shall not be liable for or responsible to honor any inaccu
   </div>
 <!-- /footer -->
 
-<script>
-$(document).ready(function() {
-
-	    $("div.Request").mouseover(function () {
-        var element = $(this);
- 		element.find('.BtnRequestBg').addClass('BtnRequestRBg').removeClass('BtnRequestBg');
-    }).mouseout(function () {
-    	var element = $(this);
-		element.find('.BtnRequestRBg').addClass('BtnRequestBg').removeClass('BtnRequestRBg');
-    });
-
-	    $("div.ShopByStore").mouseover(function () {
-        var element = $(this);
-		element.find('.nav-ShopByStore-Bt').addClass('BtnSBSOrangeRBg').removeClass('BtnSBSOrangeBg');
-    }).mouseout(function () {
-    	var element = $(this);
-		element.find('.nav-ShopByStore-Bt').addClass('BtnSBSOrangeBg').removeClass('BtnSBSOrangeRBg');
-    });
-
-	    $("div.FindCoupons").mouseover(function () {
-        var element = $(this);
-		element.find('.nav-FindCoupons-Bt').addClass('BtnFCOrangeRBg').removeClass('BtnFCOrangeBg');
-    }).mouseout(function () {
-    	var element = $(this);
-		element.find('.nav-FindCoupons-Bt').addClass('BtnFCOrangeBg').removeClass('BtnFCOrangeRBg');
-    });
-	});
-</script>
 	<script>
 $(window).load(function() {
 	mCustomScrollbars();

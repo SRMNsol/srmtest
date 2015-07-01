@@ -37,12 +37,12 @@
                     	<table cellspacing=0 cellpadding=0 border=0>
                 <tr><td><dt id="email-label"><label for="email" class="required">Email Address: *</label></dt></td><td><dd id="email-element"><input name="email" id="email" class="required email" type="text" value="{email}"></dd></td></tr>
 
-                <tr><td height=60><dt><label>Referral Code: <br><span style="font-weight: normal;">(Who referred you?)</span></label></dt></td><td><dd id="password-element"><input name="referral" id="email" class="required email" value="{referral}" type="text"><div style="font-size:9pt;float:left;margin-top:-5px;"><i>Not Case Sensitive</i></div></dt></td></tr>
+                <tr><td height=60><dt><label>Referral Code: *<br><span style="font-weight: normal;">(Who referred you?)</span></label></dt></td><td><dd id="password-element"><input name="referral" id="email" class="required email" value="{referral}" type="text"><div style="font-size:9pt;float:left;margin-top:-5px;"><i>Not Case Sensitive</i></div></dt></td></tr>
 
                 <tr><td width=150px><dt id="password-label"><label for="password" class="required">Password: *</label></dt></td><td><dd id="password-element"><input name="password" id="password" value="" class="required password" type="password"></dd></td></tr>
 <tr><td><dt id="password_confirm-label"><label for="password_confirm" class="required">Confirm Password: * </label></dt></td><td><dd id="password_confirm-element"><input name="password_confirm" id="password_confirm" value="" class="required password" type="password"></dd></td></tr>
 
-                <tr><td><font size=2>* Required Field </font></td><td valign=top align=right><div class="StartSaving"><div class="BtnStartSavingBg BtnStartSaving"><INPUT type="submit" name="" value=""/></div></div></td></tr>
+                <tr><td><font size=2>* Required Field </font></td><td valign=top align=right><div class="StartSaving"><div class="BtnStartSavingBg BtnStartSaving"><INPUT type="submit" value="START SAVING!" class="button"/></div></div></td></tr>
                 </table>
 </dd></dl></form>
 </div>
@@ -81,54 +81,6 @@ $(document).ready(function(){
 	</div>
 
        <!-- Right side -->
-
-<script>
-$(document).ready(function() {
-    $("div.productResult").mouseover(function () {
-        var element = $(this);
- 		element.find('.BtnComparePrice').addClass('BtnOrangeRBg').removeClass('BtnOrangeBg');
-    }).mouseout(function () {
-    	var element = $(this);
-		element.find('.BtnComparePrice').addClass('BtnOrangeBg').removeClass('BtnOrangeRBg');
-    });
-
-
-    $("div.ShopByStore").mouseover(function () {
-        var element = $(this);
-		element.find('.nav-ShopByStore-Bt').addClass('BtnSBSOrangeRBg').removeClass('BtnSBSOrangeBg');
-    }).mouseout(function () {
-    	var element = $(this);
-		element.find('.nav-ShopByStore-Bt').addClass('BtnSBSOrangeBg').removeClass('BtnSBSOrangeRBg');
-    });
-
-	    $("div.FindCoupons").mouseover(function () {
-        var element = $(this);
-		element.find('.nav-FindCoupons-Bt').addClass('BtnFCOrangeRBg').removeClass('BtnFCOrangeBg');
-    }).mouseout(function () {
-    	var element = $(this);
-		element.find('.nav-FindCoupons-Bt').addClass('BtnFCOrangeBg').removeClass('BtnFCOrangeRBg');
-    });
-
-	    $("div.LogIn").mouseover(function () {
-        var element = $(this);
- 		element.find('.BtnLogIn').addClass('BtnLogInRBg').removeClass('BtnLogInBg');
-    }).mouseout(function () {
-    	var element = $(this);
-		element.find('.BtnLogInRBg').addClass('BtnLogInBg').removeClass('BtnLogInRBg');
-    });
-
-
-		    $("div.StartSaving").mouseover(function () {
-        var element = $(this);
- 		element.find('.BtnStartSaving').addClass('BtnStartSavingRBg').removeClass('BtnStartSavingBg');
-    }).mouseout(function () {
-    	var element = $(this);
-		element.find('.BtnStartSavingRBg').addClass('BtnStartSavingBg').removeClass('BtnStartSavingRBg');
-    });
-
-
-	});
-</script>
 
 
 <!-- /content -->

@@ -77,7 +77,7 @@
                     <TR>
                         <TD>First / Last Name:</TD>
                         <TD><INPUT id=firstName tabIndex=1 type=text name=firstName value="{first_name}"><INPUT id=lastName tabIndex=2 type=text name=lastName value="{last_name}"></TD>
-                        <td class="submit"><div class=SaveChanges><div class="BtnSaveChangesBg BtnSaveChanges"><INPUT type="submit" name="" value=""/></div></div></td>
+                        <td class="submit"><div class=SaveChanges><div class="BtnSaveChangesBg BtnSaveChanges"><INPUT type="submit" name="" value="SAVE CHANGES" class="button"/></div></div></td>
                     </TR>
                     <TR>
                         <TD>Street Address:</TD>
@@ -123,7 +123,7 @@
                     <tbody><tr>
                         <td>PayPal Email Address:</td>
                         <td><input id="paypalEmail" name="paypalEmail" type="text" value="{paypal_email}"></td>
-                        <td class="submit"><div class=SaveChanges><div class="BtnSaveChangesBg BtnSaveChanges"><INPUT type="submit" name="" value=""/></div></div></td>
+                        <td class="submit"><div class=SaveChanges><div class="BtnSaveChangesBg BtnSaveChanges"><INPUT type="submit" name="" value="SAVE CHANGES" class="button"/></div></div></td>
                     </tr>
                 </tbody></table>
             </form>
@@ -155,7 +155,7 @@
                                 ?>
                             </select>
                         </td>
-                        <td class="submit"><div class=SaveChanges><div class="BtnSaveChangesBg BtnSaveChanges"><INPUT type="submit" name="" value=""/></div></div></td>
+                        <td class="submit"><div class=SaveChanges><div class="BtnSaveChangesBg BtnSaveChanges"><INPUT type="submit" name="" value="SAVE CHANGES" class="button"/></div></div></td>
                     </tr>
                 </tbody></table>
             </form>
@@ -190,7 +190,7 @@
   <TR>
     <TD>Current Referral ID Alias :</TD>
     <TD><STRONG>{alias}</STRONG></TD>
-    <TD class=submit rowSpan=3><div class=SaveChanges><div class="BtnSaveChangesBg BtnSaveChanges"><INPUT type="submit" name="" value=""/></div></div> </TD></TR>
+    <TD class=submit rowSpan=3><div class=SaveChanges><div class="BtnSaveChangesBg BtnSaveChanges"><INPUT type="submit" name="" value="SAVE CHANGES" class="button"/></div></div> </TD></TR>
   <TR>
     <TD>New Referral ID Alias:</TD>
     <TD><INPUT tabIndex=10 type=text name=email></TD></TR>
@@ -210,7 +210,7 @@ action=/account/set_email><LABEL>Change Email</LABEL>
   <TR>
     <TD>Current Email Address:</TD>
     <TD><STRONG>{email}</STRONG></TD>
-    <TD class=submit rowSpan=3><div class=SaveChanges><div class="BtnSaveChangesBg BtnSaveChanges"><INPUT type="submit" name="" value=""/></div></div> </TD></TR>
+    <TD class=submit rowSpan=3><div class=SaveChanges><div class="BtnSaveChangesBg BtnSaveChanges"><INPUT type="submit" name="" value="SAVE CHANGES" class="button"/></div></div> </TD></TR>
   <TR>
     <TD>New Email Address:</TD>
     <TD><INPUT tabIndex=12 type=text name=email></TD></TR>
@@ -223,7 +223,7 @@ name=email_confirm></TD></TR></TBODY></TABLE></FORM></DIV>
     <DIV class="slideBox closed" style="height:80px;">
 <FORM id=changeNewsletterForm method=post name=changeNewsletterForm action=/account/set_email_setting>
     <table border=0><tr><td align=left width=15><INPUT id=newsletter value=1 <?php if($send_reminders) echo"CHECKED"?> type=checkbox name=send_reminders></td><td>Please notify me occasionally of special offers from BeeSavy.</td></tr></table>
-        <table><tr><td align=center width=15><INPUT id=newsletter value=1 <?php if($send_updates) echo"CHECKED"?> type=checkbox name=send_updates></td><td>Please notify me of special partner offers.</td><td><div class=SaveChanges><div class="BtnSaveChangesBg BtnSaveChanges"><INPUT type="submit" name="" value=""/></div></div> </td></tr></table>
+        <table><tr><td align=center width=15><INPUT id=newsletter value=1 <?php if($send_updates) echo"CHECKED"?> type=checkbox name=send_updates></td><td>Please notify me of special partner offers.</td><td><div class=SaveChanges><div class="BtnSaveChangesBg BtnSaveChanges"><INPUT type="submit" name="" value="SAVE CHANGES" class="button" /></div></div> </td></tr></table>
 </FORM>
 </DIV>
 
@@ -239,7 +239,7 @@ action=/account/set_password><LABEL>Change Password</LABEL>
   <TR>
     <TD>New Password:</TD>
     <TD><INPUT tabIndex=15 type=password name=password_new></TD>
-    <TD class=submit rowSpan=2><div class="SaveChanges"><div class="BtnSaveChangesBg BtnSaveChanges"><INPUT type="submit" name="" value=""/></div></div> </TD></TR>
+    <TD class=submit rowSpan=2><div class="SaveChanges"><div class="BtnSaveChangesBg BtnSaveChanges"><INPUT type="submit" name="" value="SAVE CHANGES" class="button" /></div></div> </TD></TR>
   <TR>
     <TD>Confirm New Password:</TD>
     <TD><INPUT tabIndex=16 type=password
@@ -280,7 +280,7 @@ name=password_confirm></FORM></TD></TR></TBODY></TABLE>
     {/total}
 <?php if((float)$total[0]['available'] > 10) { ?>
         <div class="Request">
-<div class="BtnRequestBg BtnRequest"><a class="BtnRequestTxt" href="/account/payment" rel="nofollow">REQUEST A PAYMENT</a></div></div>
+<div class="BtnRequestBg BtnRequest"><a class="button" href="/account/payment" rel="nofollow">REQUEST A PAYMENT</a></div></div>
         <div class="RequestNote">You can now request a payment!</div>
 <?php } else {
     $dif = number_format(10 - (float)$total[0]['available'],2);
@@ -311,24 +311,6 @@ name=password_confirm></FORM></TD></TR></TBODY></TABLE>
 <?php echo googletag_ad('BS_account_728x90_2') ?>
 <!-- /footer -->
 
-<script>
-$(document).ready(function() {
-    $("div.SaveChanges").mouseover(function () {
-        var element = $(this);
-        element.find('.BtnSaveChangesBg').addClass('BtnSaveChangesRBg').removeClass('BtnSaveChangesBg');
-    }).mouseout(function () {
-        var element = $(this);
-        element.find('.BtnSaveChangesRBg').addClass('BtnSaveChangesBg').removeClass('BtnSaveChangesRBg');
-    });
-    $("div.Request").mouseover(function () {
-        var element = $(this);
-         element.find('.BtnRequestBg').addClass('BtnRequestRBg').removeClass('BtnRequestBg');
-    }).mouseout(function () {
-        var element = $(this);
-        element.find('.BtnRequestRBg').addClass('BtnRequestBg').removeClass('BtnRequestRBg');
-    });
-});
-</script>
 <script>
 $(window).load(function() {
     mCustomScrollbars();

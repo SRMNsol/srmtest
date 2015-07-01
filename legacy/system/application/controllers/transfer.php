@@ -72,7 +72,7 @@ class Transfer extends Controller
             $errors[] = $this->code->get_code('invalid_email');
             $email = "";
         }
-        if(!$rid = $this->user->check_referral($referral))
+        if(empty($referral) || !$rid = $this->user->check_referral($referral))
             $errors[] = $this->code->get_code('invalid_referral');
         if (empty($errors)) {
             $error = $this->user->add_user($email, $rid, $pass);
