@@ -1,0 +1,22 @@
+{
+    "verbose": true,
+
+    "always-semicolon": true,
+    "block-indent": 2,
+    "color-case": "lower",
+    "color-shorthand": true,
+    "element-case": "lower",
+    "eof-newline": true,
+    "leading-zero": false,
+    "quotes": "single",
+    "remove-empty-rulesets": true,
+    "space-after-colon": 1,
+    "space-after-opening-brace": "\n",
+    "space-before-closing-brace": "\n",
+    "space-before-opening-brace": 1,
+    "space-between-declarations": "\n",
+    "strip-spaces": true,
+    "tab-size": 2,
+    "unitless-zero": true,
+    "vendor-prefix-align": true
+}
