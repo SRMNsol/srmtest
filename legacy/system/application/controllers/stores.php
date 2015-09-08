@@ -77,9 +77,12 @@ class Stores extends Controller
         $sort = $this->input->get('sort');
         $limit = $this->input->get('limit');
 
+        //Show all stores when search by letter
+        $showAll = $search != '';
+
         //Set defaults
-        if (!$page) {$page=1;}
-        if (!$limit) {$limit=25;}
+        if (!$page) { $page = 1; }
+        if (!$limit) { $limit = 25; }
 
         //Run the search query
         $client = $this->container['popshops.client'];
@@ -96,7 +99,12 @@ class Stores extends Controller
         $allStores = result_merchants($merchants, $rate);
 
         $merchants = $merchants->filterByNamePrefix($search === '0' ? '*' : $search);
-        $stores = result_merchants($merchants->slice($limit * ($page - 1), $limit), $rate);
+
+        if ($showAll) {
+            $limit = $merchants->count();
+        }
+
+        $stores = result_merchants($showAll ? $merchants : $merchants->slice($limit * ($page - 1), $limit), $rate);
         $merchantTypes = result_merchant_types($result->getMerchantTypes());
         $count = $merchants->getTotalCount();
 
