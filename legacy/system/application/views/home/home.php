@@ -24,18 +24,18 @@
                         <div class="slide slide-video">
                             <div class="col-left">
                                 <!-- video -->
+                                <iframe width="480" height="269" src="https://www.youtube.com/embed/G1tfGYWIKlI" frameborder="0" allowfullscreen></iframe>
                             </div>
                             <div class="col-right">
                                 <div class="slide-text">
-                                    <h1 class="thin center">Beesavy<br><small>The Home of <b>Social Shopping</b></small></h1>
-                                    <ul class="h4">
-                                        <li class="check"><b>Free</b>. Forever. Seriously.</li>
-                                        <li class="check">Cashback Wherever You Shop Online</li>
-                                        <li class="check"><b>Cashback</b> When Your Friend’s Shop Online</li>
-                                        <li class="check">Cashback When Your <b>Friend’s Friend’s Friend’s Friend’s Friend’s Friend</b> Shops Online</li>
-                                        <li>Seriously. We Aren’t Making This Up.</li>
+                                    <h1 class="center">Beesavy<br><small>The Home of <b>Social Shopping</b></small></h1>
+                                    <ul class="h3">
+                                        <li><b>Free</b>. Forever. Seriously.</li>
+                                        <li>Cashback wherever you shop online</li>
+                                        <li>Cashback when your <b>Friend’s</b> shop online</li>
+                                        <li>Cashback when your <b>Friend’s Friend’s Friend’s Friend’s Friend’s Friend</b> shops online</li>
+                                        <li>Seriously. We aren’t making this up.</li>
                                     </ul>
-                                    <h2></h2>
                                     <div class="slide-link">
                                         <div class="slide-press-play">Press <b>Play</b> To Learn More</div>
                                         <div class="slide-signup"><div class="SlideSignUp"><a href="/main/joinnow" class="BtnSlideSignUpBg BtnSlideSignUp">JOIN NOW</a></div></div>
@@ -73,7 +73,7 @@
                         <div class="slide slide-social-shopping">
                             <div class="col-right">
                                 <div class="slide-text">
-                                    <h1 class="thin bordered">The Home of <b>Social Shopping</b><br><small>Refer Friends and Earn Commission For Life!</small></h1>
+                                    <h1 class="bordered">The Home of <b>Social Shopping</b><br><small>Refer Friends and Earn Commission For Life!</small></h1>
                                     <h3>We know that you and your friends love to
                                     shop online at the biggest and best stores.
                                     So just refer them to sign-up for <b>FREE</b>
@@ -123,11 +123,11 @@
                                             <dl class="extrabux_form">
                                                 <table cellspacing=0 cellpadding=0 border=0 width=350>
                                                     <tr><td><dt id="email-labelHome"><label for="email" class="required">Email Address:  *</label></dt></td><td><dd id="email-elementHome"><input name="email" onfocus="" id="email" class="required email" type="text"></dd></td></tr>
-                                                    <tr><td><dt><label for="referral">Referral Code: <br><span style="font-weight: normal;">(Who referred you?)</span></label></dt></td><td><dd id="referral-code-elementHome"><input name="referral" id="email" class="required email" type="text" value="<?php echo escape($referral) ?>"></dd></td></tr>
+                                                    <tr><td><dt><label for="referral" class="required">Referral Code: *<br><span style="font-weight: normal;">(Who referred you?)</span></label></dt></td><td><dd id="referral-code-elementHome"><input name="referral" id="email" class="required email" type="text" value="<?php echo escape($referral) ?>"></dd></td></tr>
                                                     <tr><td></td><td height=25 valign=top><font style="font-size:9pt;"><i>Not Case Sensitive</i></font></td></tr>
                                                     <tr><td><dt id="password-labelHome"><label for="password" class="required">Password: *</label></dt></td><td><dd id="password-elementHome"><input name="password" id="password" value="" class="required password" type="password"></dd></td></tr>
                                                     <tr><td><dt id="password_confirm-labelHome"><label for="password_confirm" class="required">Confirm Password: *</label></dt></td><td><dd id="password_confirm-elementHome"><input name="password_confirm" id="password_confirm" value="" class="required password" type="password"></dd></td></tr>
-                                                    <tr><td><font size=2>* Required Field </font></td><td valign=top align=right><div class="StartSaving"><div class="BtnStartSavingBg BtnStartSaving"><INPUT type="submit" name="" value=""/></div></div></td></tr>
+                                                    <tr><td><font size=2>* Required Field </font></td><td valign=top align=right><div class="StartSaving"><div class="BtnStartSavingBg BtnStartSaving"><INPUT type="submit" value="START SAVING" class="button"/></div></div></td></tr>
                                                 </table>
                                             </dl>
                                         </form>
@@ -166,7 +166,7 @@
                                 <div class="slide-text">
                                     <p class="h3 center">See each stores <b>CASHBACK %</b></p>
                                     <div class="box">
-                                        <div style="padding: 2px;">
+                                        <div style="padding: 2px; height: 32px;">
                                             <a class="button pull-right" href="#"><small>SHOP 3% CASHBACK</small></a>
                                             <img src="<?php echo s3path('/images/stores_petco.png') ?>">
                                         </div>
@@ -178,7 +178,7 @@
                             <div class="col-right">
                                 <div class="slide-text">
                                     <p class="h3 center">Give your friend’s your secret referral code</p>
-                                    <div class="box"><div class="h3 center">Referral ID Alias: <b>busybee</b></div></div>
+                                    <div class="box"><div class="h3 center">Referral ID Alias: <b>beekeeper</b></div></div>
                                     <p class="h3 center">And you will get <b>CASHBACK</b> on every purchase they and their referrals make, up to <b>7 HIVE LAYERS</b> deep!</p>
                                 </div>
                             </div>
@@ -288,45 +288,7 @@
 </div>
 <!-- /#container -->
 
-<script type="text/javascript">
-    $(document).ready(function() {
-        $("div.couponList").mouseover(function () {
-            var element = $(this);
-            element.find('.ClickToCopyCode-Bt').addClass('BtnCTCCOrangeRBg').removeClass('BtnCTCCOrangeBg');
-        }).mouseout(function () {
-            var element = $(this);
-            element.find('.ClickToCopyCode-Bt').addClass('BtnCTCCOrangeBg').removeClass('BtnCTCCOrangeRBg');
-        });
-        $("div.ShopCashBack").mouseover(function () {
-            var element = $(this);
-            element.find('.ShopCashBack-Bt').addClass('BtnSCBOrangeRBg').removeClass('BtnSCBOrangeBg');
-        }).mouseout(function () {
-            var element = $(this);
-            element.find('.ShopCashBack-Bt').addClass('BtnSCBOrangeBg').removeClass('BtnSCBOrangeRBg');
-        });
-        $("div.LogIn").mouseover(function () {
-            var element = $(this);
-            element.find('.BtnHeaderLogIn').addClass('BtnLogInRBg').removeClass('BtnLogInBg');
-        }).mouseout(function () {
-            var element = $(this);
-            element.find('.BtnLogInRBg').addClass('BtnLogInBg').removeClass('BtnLogInRBg');
-        });
-        $("div.SlideSignUp").mouseover(function () {
-            var element = $(this);
-            element.find('.BtnSlideSignUp').addClass('BtnSlideSignUpRBg').removeClass('BtnSlideSignUpBg');
-        }).mouseout(function () {
-            var element = $(this);
-            element.find('.BtnSlideSignUpRBg').addClass('BtnSlideSignUpBg').removeClass('BtnSlideSignUpRBg');
-        });
-        $("div.StartSaving").mouseover(function () {
-            var element = $(this);
-            element.find('.BtnStartSaving').addClass('BtnStartSavingRBg').removeClass('BtnStartSavingBg');
-        }).mouseout(function () {
-            var element = $(this);
-            element.find('.BtnStartSavingRBg').addClass('BtnStartSavingBg').removeClass('BtnStartSavingRBg');
-        });
-    });
-</script>
+
 <script type="text/javascript" src="<?php echo s3path("/script_files/jquery.easing.1.3.js") ?>"></script>
 <script type="text/javascript" src="<?php echo s3path("/script_files/jquery.coda-slider-2.0.js") ?>"></script>
 
@@ -345,16 +307,7 @@ $(document).ready(function() {
 });
 </script>
 <!-- footer -->
-<div style="clear: both;"></div>
-
-<div id="ftr" >
-    <p id="links" style="height: 20px; line-height: 20px;">Copyright &copy; 2011 - <?php echo date('Y'); ?> BeeSavy, LLC. &nbsp;All Rights Reserved. &nbsp;<a href="/stores/storelist">All Stores</a> | <a href="/info/terms">Terms of Service</a> | <a href="/info/privacy">Privacy Policy</a> | <a href="/info/contact">Contact Us</a></p>
-        <a href="http://twitter.com/beesavy" target="_blank" class="socialMedia twitter">Follow Us On Twitter</a>
-        <a href="http://www.facebook.com/pages/BeeSavy/139324182791301" target="_blank" class="socialMedia facebook">Like Us on Facebook</a>
-        <div style="clear: both;"></div>
-        <p id="disclaimer">Tax and shipping costs are estimates; &nbsp;please see the store's website for exact pricing. &nbsp;BeeSavy does not guarantee the accuracy of information provided by online stores and other third parties, including product information, prices, coupons, and availability. &nbsp;BeeSavy shall not be liable for or responsible to honor any inaccurate information shown on our website. &nbsp;Please see our <a href="/info/terms">Terms of Service</a> for more details.</p>
-    </div>
-</div>
+{footer}
 <?php echo googletag_ad('BS_home_728x90_4') ?>
 <!-- footer -->
 </body>

@@ -79,24 +79,8 @@ onload="
 
 <script>
 $(document).ready(function() {
-    $("div.LogIn").mouseover(function () {
-        var element = $(this);
- 		element.find('.BtnLogIn').addClass('BtnLogInRBg').removeClass('BtnLogInBg');
-    }).mouseout(function () {
-    	var element = $(this);
-		element.find('.BtnLogInRBg').addClass('BtnLogInBg').removeClass('BtnLogInRBg');
-    });
-
-	    $("div.SignUp").mouseover(function () {
-        var element = $(this);
- 		element.find('.BtnSignUp').addClass('BtnSignUpRBg').removeClass('BtnSignUpBg');
-    }).mouseout(function () {
-    	var element = $(this);
-		element.find('.BtnSignUpRBg').addClass('BtnSignUpBg').removeClass('BtnSignUpRBg');
-    });
     setTimeout("transfer()", 3000);
-
-   	});
+});
 function transfer(){
     window.location = '{destination_url}';
 }

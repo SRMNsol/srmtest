@@ -57,7 +57,7 @@
                     <dd id="password-element"><input type="password" name="password" id="password" value=""></dd>
                     <dt style="display:inline; float:left; width:150px; padding-top:15px;"><a href="/main/forgot" target="_blank" style="font-size:12px; color:#666; text-decoration:underline;">Forgot your password?</a></dt>
 
-                    <dd><div class="LogIn"><div class="BtnLogInBg BtnLogIn"><INPUT type="submit" name="" value=""/></div></div></dd>
+                    <dd><div class="LogIn"><div class="BtnLogInBg BtnLogIn"><INPUT type="submit" value="LOG IN" class="button" /></div></div></dd>
                 </dl>
             </form>
         </div>
@@ -71,10 +71,10 @@
             	<table cellspacing=0 cellpadding=0 border=0>
                 <tr><td><label for="email" class="required">Email Address:  *</label></td></tr>
                 <tr><td><input name="email" id="email" class="required email" type="text"></td></tr>
-                <tr><td><label>Referral Code: <font style="font-size:8pt;"></font></label></td></tr>
+                <tr><td><label>Referral Code: *<font style="font-size:8pt;"></font></label></td></tr>
 				<tr><td><input name="referral" value="{referral}" id="email" class="required email" type="text"></td></tr>
                 <tr><td height=20><font style="font-size:9pt;"><i>Not Case Sensitive</i></font></td></tr>
-                <tr><table cellspacing=0 cellpadding=0 width=100%><tr><td align=left><font size=2>* Required Field </font></td><td valign=top align=right><div class="StartSaving"><div class="BtnStartSavingBg BtnStartSaving"><INPUT type="submit" name="" value=""/></div></div></td></tr></table></td></tr>
+                <tr><table cellspacing=0 cellpadding=0 width=100%><tr><td align=left><font size=2>* Required Field </font></td><td valign=top align=right><div class="StartSaving"><div class="BtnStartSavingBg BtnStartSaving"><INPUT type="submit" value="START SAVING" class="button" /></div></div></td></tr></table></td></tr>
                 </table>
             </dl></form>
         </div>
@@ -82,25 +82,5 @@
 	</div>
 </div></div>
 
-<script>
-$(document).ready(function() {
-    $("div.LogIn").mouseover(function () {
-        var element = $(this);
- 		element.find('.BtnLogIn').addClass('BtnLogInRBg').removeClass('BtnLogInBg');
-    }).mouseout(function () {
-    	var element = $(this);
-		element.find('.BtnLogInRBg').addClass('BtnLogInBg').removeClass('BtnLogInRBg');
-    });
-
-	    $("div.StartSaving").mouseover(function () {
-        var element = $(this);
- 		element.find('.BtnStartSaving').addClass('BtnStartSavingRBg').removeClass('BtnStartSavingBg');
-    }).mouseout(function () {
-    	var element = $(this);
-		element.find('.BtnStartSavingRBg').addClass('BtnStartSavingBg').removeClass('BtnStartSavingRBg');
-    });
-
-   	});
-</script>
 </body>
 </html>

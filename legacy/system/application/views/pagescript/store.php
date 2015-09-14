@@ -15,32 +15,6 @@ if (!isset($query_string)){
     // this initialises the demo scollpanes on the page.
     $('#pane1').jScrollPane({ showArrows: true, scrollbarWidth: 15, arrowSize: 16 });
     $('#pane2').jScrollPane({ showArrows: true, scrollbarWidth: 15, arrowSize: 16 });
-    $("div.couponList").mouseover(function () {
-        var element = $(this);
- 		element.find('.ShopStore-Bt').addClass('BtnSSOrangeRBg').removeClass('BtnSSOrangeBg');
-		element.find('.CashBack-Bt').addClass('BtnCBOrangeRBg').removeClass('BtnCBOrangeBg');
-    }).mouseout(function () {
-    	var element = $(this);
-		element.find('.ShopStore-Bt').addClass('BtnSSOrangeBg').removeClass('BtnSSOrangeRBg');
-				element.find('.CashBack-Bt').addClass('BtnCBOrangeBg').removeClass('BtnCBOrangeRBg');
-    });
-	
-		
-    $("div.ShopByStore").mouseover(function () {
-        var element = $(this);
-		element.find('.nav-ShopByStore-Bt').addClass('BtnSBSOrangeRBg').removeClass('BtnSBSOrangeBg');
-    }).mouseout(function () {
-    	var element = $(this);
-		element.find('.nav-ShopByStore-Bt').addClass('BtnSBSOrangeBg').removeClass('BtnSBSOrangeRBg');
-    });
-	
-	    $("div.FindCoupons").mouseover(function () {
-        var element = $(this);
-		element.find('.nav-FindCoupons-Bt').addClass('BtnFCOrangeRBg').removeClass('BtnFCOrangeBg');
-    }).mouseout(function () {
-    	var element = $(this);
-		element.find('.nav-FindCoupons-Bt').addClass('BtnFCOrangeBg').removeClass('BtnFCOrangeRBg');
-    });
 
     var text = "Enter a product or store";
     var search = $("#nav-search-input");

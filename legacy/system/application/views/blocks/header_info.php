@@ -44,39 +44,4 @@
         $('#pane2').jScrollPane({ showArrows: true, scrollbarWidth: 15, arrowSize: 16 });
     });
 </script>
-<script>
-    $(document).ready(function() {
-        $("div.SaveChanges").mouseover(function () {
-            var element = $(this);
-            element.find('.BtnSaveChangesBg').addClass('BtnSaveChangesRBg').removeClass('BtnSaveChangesBg');
-        }).mouseout(function () {
-            var element = $(this);
-            element.find('.BtnSaveChangesRBg').addClass('BtnSaveChangesBg').removeClass('BtnSaveChangesRBg');
-        });
-
-        $("div.Request").mouseover(function () {
-            var element = $(this);
-            element.find('.BtnRequestBg').addClass('BtnRequestRBg').removeClass('BtnRequestBg');
-        }).mouseout(function () {
-            var element = $(this);
-            element.find('.BtnRequestRBg').addClass('BtnRequestBg').removeClass('BtnRequestRBg');
-        });
-
-        $("div.ShopByStore").mouseover(function () {
-            var element = $(this);
-            element.find('.nav-ShopByStore-Bt').addClass('BtnSBSOrangeRBg').removeClass('BtnSBSOrangeBg');
-        }).mouseout(function () {
-            var element = $(this);
-            element.find('.nav-ShopByStore-Bt').addClass('BtnSBSOrangeBg').removeClass('BtnSBSOrangeRBg');
-        });
-
-        $("div.FindCoupons").mouseover(function () {
-            var element = $(this);
-            element.find('.nav-FindCoupons-Bt').addClass('BtnFCOrangeRBg').removeClass('BtnFCOrangeBg');
-        }).mouseout(function () {
-            var element = $(this);
-            element.find('.nav-FindCoupons-Bt').addClass('BtnFCOrangeBg').removeClass('BtnFCOrangeRBg');
-        });
-    });
-</script>
 </head>

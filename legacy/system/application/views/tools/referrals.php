@@ -173,7 +173,7 @@ echo 90-$val;
 	</div>
 	{/total}
 <?php if((float)$total[0]['available'] > 10){ ?>
-        <div class="Request"><div class="BtnRequestBg BtnRequest"><a class="BtnRequestTxt" href="/account/index/0/2" rel="nofollow">REQUEST A PAYMENT</a></div></div>
+        <div class="Request"><div class="BtnRequestBg BtnRequest"><a class="button" href="/account/index/0/2" rel="nofollow">REQUEST A PAYMENT</a></div></div>
         <div class="RequestNote">You can now request a payment!</div>
 <?php } else {
     $dif = number_format(10 - (float)$total[0]['available'],2);
@@ -209,34 +209,6 @@ availability. BeeSavy shall not be liable for or responsible to honor any inaccu
   </div>
 <!-- /footer -->
 
-<script>
-$(document).ready(function() {
-
-	    $("div.Request").mouseover(function () {
-        var element = $(this);
- 		element.find('.BtnRequestBg').addClass('BtnRequestRBg').removeClass('BtnRequestBg');
-    }).mouseout(function () {
-    	var element = $(this);
-		element.find('.BtnRequestRBg').addClass('BtnRequestBg').removeClass('BtnRequestRBg');
-    });
-
-	    $("div.ShopByStore").mouseover(function () {
-        var element = $(this);
-		element.find('.nav-ShopByStore-Bt').addClass('BtnSBSOrangeRBg').removeClass('BtnSBSOrangeBg');
-    }).mouseout(function () {
-    	var element = $(this);
-		element.find('.nav-ShopByStore-Bt').addClass('BtnSBSOrangeBg').removeClass('BtnSBSOrangeRBg');
-    });
-
-	    $("div.FindCoupons").mouseover(function () {
-        var element = $(this);
-		element.find('.nav-FindCoupons-Bt').addClass('BtnFCOrangeRBg').removeClass('BtnFCOrangeBg');
-    }).mouseout(function () {
-    	var element = $(this);
-		element.find('.nav-FindCoupons-Bt').addClass('BtnFCOrangeBg').removeClass('BtnFCOrangeRBg');
-    });
-	});
-</script>
 	<script>
 $(window).load(function() {
 	mCustomScrollbars();

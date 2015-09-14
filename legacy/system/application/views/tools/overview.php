@@ -14,8 +14,13 @@
 
 
 <!-- content -->
+    <div id="content">
+
+
+
+<div class="BGNoCol">
+
 	<!-- page Title -->
-    <div id="content" class="BGNoCol">
 	<div id="pageTitle">
 		<div id="pageTitleLeft"></div>
 		<h1 class="profile">My Account Settings</h1>
@@ -28,11 +33,7 @@
 	</div>
    	<!-- /page Title -->
 
-
-
-<div class="BGNoCol">
-
-	<!-- Left Catagoty -->
+    <!-- Left Catagoty -->
     <div class="AccountLeftside">
 		<div class="merchantView_Width" style="border:0px solid #090;">
 		<div>
@@ -161,7 +162,7 @@ Email your favorite websites and watch your cash back grow!</td></tr></table>
 	</div>
 <?php
 if((float)$total[0]['available'] > 10){ ?>
-        <div class="Request"><div class="BtnRequestBg BtnRequest"><a class="BtnRequestTxt" href="/account/index/0/2" rel="nofollow">REQUEST A PAYMENT</a></div></div>
+        <div class="Request"><div class="BtnRequestBg BtnRequest"><a class="button" href="/account/index/0/2" rel="nofollow">REQUEST A PAYMENT</a></div></div>
         <div class="RequestNote">You can now request a payment!</div>
 <?php } else {
     $dif = number_format(10 - (float)$total[0]['available'],2);

@@ -120,12 +120,14 @@ class Account extends Controller
         }
         if($pass != $passC)
             $errors[] = $this->code->get_code('password_mismatch');
-        if (!$rid = $this->user->check_referral($referral)) {
+        if (empty($referral) || !$rid = $this->user->check_referral($referral)) {
             $errors[] = $this->code->get_code('invalid_referral');
         }
-            if ($rid == 1) {
-                $rid = 0;
-            }
+
+        if ($rid == 1) {
+            $rid = 0;
+        }
+
         if (empty($errors)) {
             $error = $this->user->add_user($email, $rid, $pass);
             if ($error) {

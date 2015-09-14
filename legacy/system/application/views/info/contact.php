@@ -568,39 +568,6 @@ $(document).ready(function() {
     });
 });
 </script>
-<script>
-$(document).ready(function() {
-    $("div.ShopByStore").mouseover(function () {
-        var element = $(this);
-        element.find('.nav-ShopByStore-Bt').addClass('BtnSBSOrangeRBg').removeClass('BtnSBSOrangeBg');
-    }).mouseout(function () {
-        var element = $(this);
-        element.find('.nav-ShopByStore-Bt').addClass('BtnSBSOrangeBg').removeClass('BtnSBSOrangeRBg');
-    });
-    $("div.FindCoupons").mouseover(function () {
-        var element = $(this);
-        element.find('.nav-FindCoupons-Bt').addClass('BtnFCOrangeRBg').removeClass('BtnFCOrangeBg');
-    }).mouseout(function () {
-        var element = $(this);
-        element.find('.nav-FindCoupons-Bt').addClass('BtnFCOrangeBg').removeClass('BtnFCOrangeRBg');
-    });
-    $("div.LogIn").mouseover(function () {
-        var element = $(this);
-        element.find('.BtnLogIn').addClass('BtnLogInRBg').removeClass('BtnLogInBg');
-    }).mouseout(function () {
-        var element = $(this);
-        element.find('.BtnLogInRBg').addClass('BtnLogInBg').removeClass('BtnLogInRBg');
-    });
-    $("div.SendMessage").mouseover(function () {
-        var element = $(this);
-        element.find('.BtnSendMessage').addClass('BtnSendMessageRBg').removeClass('BtnSendMessageBg');
-    }).mouseout(function () {
-        var element = $(this);
-        element.find('.BtnSendMessageRBg').addClass('BtnSendMessageBg').removeClass('BtnSendMessageRBg');
-    });
-});
-</script>
-
 <!-- footer -->
 {footer}
 

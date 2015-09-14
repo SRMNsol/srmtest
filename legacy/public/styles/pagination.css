@@ -2,67 +2,66 @@
 /* ---->>> BOTTOM PAGINATION <<<------*/
 /* -----------------------------------*/
 
-.pag{
-    clear:both;
+.pag {
+  clear: both;
 }
-.pagination { margin:10px 5px;float:right;}
+.pagination {
+  margin: 10px 5px;
+  float: right;
+}
 
 .pagination-info {
-    margin:10px 5px;
-	color:#252525;
-	float: right;
-	font-size: 1.2em;
-	line-height:2em;
-	height:2em;
-	padding-right:5px;
-	text-align: right;
-	text-transform:uppercase;
+  margin: 10px 5px;
+  color: #252525;
+  float: right;
+  font-size: 1.2em;
+  line-height: 2em;
+  height: 2em;
+  padding-right: 5px;
+  text-align: right;
+  text-transform: uppercase;
 }
 
-.pagination-controls { float: right; }
-	
-.pagination a,
-.pagination span{
-/*	background-color: #8b8b8b; */
-	display: block;
-	float: left;
-	font-size: 1.4em;
-	height: 22px;
-	line-height:22px;
-	margin: 0 3px;
-	padding:0 8px;
-	text-align: center;
-	text-decoration: none;
+.pagination-controls {
+  float: right;
 }
 
-.pagination prev,
-.pagination next,
-.pagination a {
-	border: 1px solid #f5a91a;
-	color: #252525;
+.pagination a, .pagination span {
+  /*	background-color: #8b8b8b; */
+  display: block;
+  float: left;
+  font-size: 1.4em;
+  height: 22px;
+  line-height: 22px;
+  margin: 0 3px;
+  padding: 0 8px;
+  text-align: center;
+  text-decoration: none;
 }
 
-.pagination prev:hover,
-.pagination next:hover,
-.pagination a:hover {
-	color:#000;
-	background:#fee67e;
-	border: 1px solid #f5a91a; 
+.pagination prev, .pagination next, .pagination a {
+  border: 1px solid #f5a91a;
+  color: #252525;
+}
+
+.pagination prev:hover, .pagination next:hover, .pagination a:hover {
+  color: #000;
+  background: #fee67e;
+  border: 1px solid #f5a91a;
 }
 
 .pagination .current {
-/*	border: 1px solid #558628; */
-	background-color: #f5a91a;
-	color: #FFF;
-	font-weight: bold;
+  /*	border: 1px solid #558628; */
+  background-color: #f5a91a;
+  color: #fff;
+  font-weight: bold;
 }
 
 .pagination .spacer {
-	display: block;
-	float: left;
-	font-weight: bold;
-	height: 15px;
-	width: 15px;
-	text-align: center;
+  display: block;
+  float: left;
+  font-weight: bold;
+  height: 15px;
+  width: 15px;
+  text-align: center;
 }
-

@@ -87,39 +87,5 @@ echo $html;
     </div>
     <!-- /Hot Couppons -->
 <!-- /Content -->  
-    <script>
-$(document).ready(function() {
-    $("div.couponList").mouseover(function () {
-        var element = $(this);
- 		element.find('.ClickToCopyCode-Bt').addClass('BtnCTCCOrangeRBg').removeClass('BtnCTCCOrangeBg');
-    }).mouseout(function () {
-    	var element = $(this);
-		element.find('.ClickToCopyCode-Bt').addClass('BtnCTCCOrangeBg').removeClass('BtnCTCCOrangeRBg');
-    });
-	    $("div.ShopCashBack").mouseover(function () {
-        var element = $(this);
- 		element.find('.ShopCashBack-Bt').addClass('BtnSCBOrangeRBg').removeClass('BtnSCBOrangeBg');
-    }).mouseout(function () {
-    	var element = $(this);
-		element.find('.ShopCashBack-Bt').addClass('BtnSCBOrangeBg').removeClass('BtnSCBOrangeRBg');
-    });
-		
-    $("div.ShopByStore").mouseover(function () {
-        var element = $(this);
-		element.find('.nav-ShopByStore-Bt').addClass('BtnSBSOrangeRBg').removeClass('BtnSBSOrangeBg');
-    }).mouseout(function () {
-    	var element = $(this);
-		element.find('.nav-ShopByStore-Bt').addClass('BtnSBSOrangeBg').removeClass('BtnSBSOrangeRBg');
-    });
-	
-	    $("div.FindCoupons").mouseover(function () {
-        var element = $(this);
-		element.find('.nav-FindCoupons-Bt').addClass('BtnFCOrangeRBg').removeClass('BtnFCOrangeBg');
-    }).mouseout(function () {
-    	var element = $(this);
-		element.find('.nav-FindCoupons-Bt').addClass('BtnFCOrangeBg').removeClass('BtnFCOrangeRBg');
-    });
-	
-	});
-</script>	
+
 <?php $this->load->view('blocks/closepage');?>

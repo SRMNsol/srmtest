@@ -1,10 +1,8 @@
 <div id="header">
-    <div id="header-beesavy-logo"><a href="/" name="top"><img src="<?php echo s3path("/images/header-beesavy-logo.gif") ?>" alt="beesavy.com" width="356" height="93" /></a></div>
+    <div id="header-beesavy-logo"><a href="/" name="top"><img src="<?php echo s3path("/images/beesavy-logo.png") ?>" alt="beesavy.com" width="356" height="93" /></a></div>
         <div id="header-links">
             <div id="header-links1">
                 <div><a class="help" href="/info/how">Help</a></div>
-                <div class="header-links-dot"><div class="header-dot"></div></div>
-                <div><a class="tm-marketplace" href="http://www.tomorrowsmarketplace.com/" target="_blank">TM Marketplace</a></div>
                 <div class="header-links-dot"><div class="header-dot"></div></div>
                 <div><a class="join-now" href="/main/joinnow">Join Now</a></div>
                 <div class="header-links-dot"><div class="header-dot"></div></div>
@@ -21,7 +19,7 @@
                        <LABEL id=labelEmail for=inputEmail>Email Address: </LABEL>
                        <LABEL id="labelPass" for="inputPass">Password: </LABEL><a href="/main/forgot" class="questionmark"><img src="<?php echo s3path("/images/qmark.jpg") ?>"></a><BR>
                        <INPUT id=inputEmail name=email> <INPUT id=inputPass type=password name=password>
-                       <div class="LogIn"><div class="BtnLogInBg BtnHeaderLogIn"><INPUT type="submit" name="" value=""/></div>
+                       <div class="LogIn"><div class="BtnLogInBg BtnHeaderLogIn"><INPUT type="submit" value="LOG IN" class="button" /></div>
                     </div>
                 </DIV>
             </FORM>

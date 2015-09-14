@@ -6,7 +6,7 @@
 <body>
 
     <div style="background:#fff;border: 1px solid #999;	margin:0 auto;width:800px;float:left;">
-		<div style="border:0px solid #000;padding-top:15px;padding-left:15px;"><img src="<?php echo s3path('/images/header-beesavy-logo.gif') ?>" /></div>
+		<div style="border:0px solid #000;padding-top:15px;padding-left:15px;"><img src="<?php echo s3path('/images/beesavy-logo.png') ?>" /></div>
         <div style="border:0px solid #000;padding-top:15px;padding-left:15px;"><img src="<?php echo s3path('/images/newsletter-div.gif') ?>"/></div>
 		<div style="border:0px solid #999;	margin:0 auto;float:left;padding:15px;">
 <p style="margin-top:10px;margin-left:10px;margin-bottom:10px;font-size:15px;font-family:arial;color:#000;"><strong>Welcome to BeeSavy,</strong> where you can now compare prices on millions of products with cash back and coupons.

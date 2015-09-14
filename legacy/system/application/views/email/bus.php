@@ -33,25 +33,5 @@ Thanks,
 			</div>
 	</div>
 
-<script>
-$(document).ready(function() {
-    $("div.LogIn").mouseover(function () {
-        var element = $(this);
- 		element.find('.BtnLogIn').addClass('BtnLogInRBg').removeClass('BtnLogInBg');
-    }).mouseout(function () {
-    	var element = $(this);
-		element.find('.BtnLogInRBg').addClass('BtnLogInBg').removeClass('BtnLogInRBg');
-    });
-
-	    $("div.StartSaving").mouseover(function () {
-        var element = $(this);
- 		element.find('.BtnStartSaving').addClass('BtnStartSavingRBg').removeClass('BtnStartSavingBg');
-    }).mouseout(function () {
-    	var element = $(this);
-		element.find('.BtnStartSavingRBg').addClass('BtnStartSavingBg').removeClass('BtnStartSavingRBg');
-    });
-
-   	});
-</script>
 </body>
 </html>

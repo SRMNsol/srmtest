@@ -11,6 +11,7 @@
     "quotes": "single",
     "remove-empty-rulesets": true,
     "space-after-colon": 1,
+    "space-after-selector-delimiter": 1,
     "space-after-opening-brace": "\n",
     "space-before-closing-brace": "\n",
     "space-before-opening-brace": 1,

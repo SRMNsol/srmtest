@@ -29,19 +29,6 @@
 	</div>
 </div>
 
-<script>
-$(document).ready(function() {
 
-
-	    $("div.GetStarted").mouseover(function () {
-        var element = $(this);
- 		element.find('.BtnGetStarted').addClass('BtnGetStartedRBg').removeClass('BtnGetStartedBg');
-    }).mouseout(function () {
-    	var element = $(this);
-		element.find('.BtnGetStartedRBg').addClass('BtnGetStartedBg').removeClass('BtnGetStartedRBg');
-    });
-
-   	});
-</script>
 </body>
 </html>
