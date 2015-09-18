@@ -146,18 +146,6 @@ div.BtnSendPasswordRBg input {
   background: url('../images/BtnRequestGrayRBg.gif') no-repeat;
 }
 
-.BtnPreviewBg {
-  background: url('../images/BtnPreviewBg.gif') no-repeat;
-  width: 129px;
-  height: 40px;
-  border: 2px solid #00f;
-}
-.BtnPreviewRBg {
-  background: url('../images/BtnPreviewRBg.gif') no-repeat;
-  width: 129px;
-  height: 40px;
-}
-
 .BtnGetStartedBg {
   background: url('../images/BtnGetStartedBg.gif') no-repeat;
   width: 71px;
@@ -278,18 +266,6 @@ a.BtnWhiteTxt {
   font-size: 8pt;
   height: 30px;
   line-height: 30px;
-  text-align: center;
-  display: block;
-  font-weight: bolder;
-  z-index: 1;
-  position: relative;
-}
-
-a.BtnPreviewTxt {
-  color: #000;
-  font-size: 8pt;
-  height: 30px;
-  line-height: 25px;
   text-align: center;
   display: block;
   font-weight: bolder;

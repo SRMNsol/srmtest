@@ -458,7 +458,7 @@ body {
   margin-top: 10px;
   clear: both;
   display: block;
-  padding-left: 4px;
+  padding-left: 7px;
   width: 918px;
   height: 80px;
   -moz-border-radius-bottomleft: 4px;
@@ -469,14 +469,14 @@ body {
 
 #catDropdown1 {
   position: relative;
-  background: #ffec9e;
+  background-color: #ffe37a;
   border: 2px solid #fca13b;
   border-top: none;
   clear: both;
   display: block;
   padding-left: 4px;
-  width: 918px;
-  height: 60px;
+  width: 922px;
+  height: 320px;
   margin-bottom: 2px;
 }
 
@@ -773,19 +773,17 @@ body {
   -webkit-border-radius: 4px;
 }
 
-#pageTitle #titleNav a:hover {
-  background: #fee67e;
-  border: 1px solid #e96d08;
+#pageTitle #titleNav a#active {
+  border: 1px solid #df6c57;
+  background-color: #df6c57;
+  color: #fff;
      -moz-border-radius: 4px;
   -webkit-border-radius: 4px;
 }
 
-#pageTitle #titleNav a#active {
-  border: 1px solid #e96d08;
-  background: #f5a91a;
-  color: #fff;
-     -moz-border-radius: 4px;
-  -webkit-border-radius: 4px;
+#pageTitle #titleNav a#active:hover {
+  border: 1px solid #a65041;
+  background-color: #a65041;
 }
 
 #pageTitle #titleNav.small a, #pageTitle #titleNav.small span {
