@@ -16,7 +16,7 @@
 </div>
 
 <div>
-    <div id="catDropdown1" style="float:left;width:921px;height:320px;display: none;">
+    <div id="catDropdown1" style="float:left; display:none;">
         <ul id="catDropdown">
             <?php foreach ($categories as $category) : ?>
                 <li><a href="/product/category?category=<?php echo escape($category['id'], 'html_attr') ?>" class="col2" style="width: 210px; padding-left: 10px;"><?php echo escape($category['name']) ?></a></li>

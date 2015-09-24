@@ -223,9 +223,9 @@
 
 
 .tabs .active {
-  background: #eb9a25 url('../images/matrix-nav-bg.gif') repeat-x;
-  border: 1px solid #eb9a25;
-  color: #000;
+  background-color: #df6c57;
+  border: 1px solid #df6c57;
+  color: #fff;
   cursor: pointer;
   font-weight: bold;
   font-size: 1.1em;
@@ -280,7 +280,7 @@
 }
 
 #tabBorder {
-  border-top: 3px solid #eb9a25;
+  border-top: 3px solid #df6c57;
   clear: left;
   color: #252525;
   margin-left: 20px;

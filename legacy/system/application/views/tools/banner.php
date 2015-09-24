@@ -44,7 +44,7 @@ $(document).ready(function(){
 		function startZC() {
             var elements = $(".Material");
             var container = $(".Material .BannerClickCode");
-            var buttons = $(".Material .button");
+            var buttons = $(".Material .BannerClickCode .button");
             var text = $(".Material input")
             for(var i=0; i<elements.length; i++){
                 var clip = new ZeroClipboard.Client();
@@ -129,8 +129,12 @@ $("#hb2f").colorbox();
 
 
 <!-- content -->
+
+
+
+<div class="BGNoCol" style="border:0px solid #090;">
+
 	<!-- page Title -->
-    <div id="content" class="BGNoCol">
 	<div id="pageTitle">
 		<div id="pageTitleLeft"></div>
 		<h1 class="profile">My Account Settings</h1>
@@ -143,11 +147,7 @@ $("#hb2f").colorbox();
 	</div>
    	<!-- /page Title -->
 
-
-
-<div class="BGNoCol" style="border:0px solid #090;">
-
-	<!-- Left Catagoty -->
+    <!-- Left Catagoty -->
     <div style="width:900px;border:0px solid #090;float:left;">
 		<div class="merchantView_Width" style="border:0px solid #090;width:920px;">
 		<div>
@@ -177,10 +177,10 @@ $("#hb2f").colorbox();
                             <table border=0><tr><td colspan=2 class="MaterialTitle" align=center height=25>Static</td></tr><tr><td colspan=2 ><img src="<?php echo s3path("/images/BannerLeaderboard_01.gif") ?>" style="border:1px solid #CCC;"></td></tr><tr><td colspan=2 align=left><table border=0 width=100%>
 
 <tr>
-<td align=center><div class="Preview"><div class="BtnPreviewBg BtnPreiviewBanner">
-<a class="BtnPreviewTxt" id="l1s" href="{leaderboard_1_static_url}"  rel="nofollow">PREVIEW</a></div></div></td>
+<td align=center><div class="Preview"><div class="BtnPreiviewBanner">
+<a class="button button-small" id="l1s" href="{leaderboard_1_static_url}"  rel="nofollow">PREVIEW</a></div></div></td>
 <td colspan=2 align=center><input id="l1st" class="BannerInput" type=text value="{leaderboard_1_static}"/></td>
-<td align=center colspan=2><div class="ClickCode"><div id="l1sc" class="BannerClickCode"><a id="l1sb" class="button" href="#_" rel="nofollow">CLICK TO COPY CODE</a>
+<td align=center colspan=2><div class="ClickCode"><div id="l1sc" class="BannerClickCode"><a id="l1sb" class="button button-small" href="#_" rel="nofollow">CLICK TO COPY CODE</a>
 </div></div></td>
 </tr></table>
 </td></tr></table>
@@ -189,7 +189,7 @@ $("#hb2f").colorbox();
 
         	        <div class="LeaderboardInnerBox">
  						<div class="Material">
-							<table border=0><tr><td colspan=2 class="MaterialTitle" align=center height=25>Animated</td></tr><tr><td colspan=2 ><img src="<?php echo s3path("/images/BannerLeaderboard_01.gif") ?>" style="border:1px solid #CCC;"></td></tr><tr><td colspan=2 align=left><table border=0 width=100%><tr><td align=center><div class="Preview"><div class="BtnPreviewBg BtnPreiviewBanner"><a class="BtnPreviewTxt" id="l1f" href="{leaderboard_1_flash_url}"  rel="nofollow">PREVIEW</a></div></div></td><td colspan=2 align=center><input "l1ft" class="BannerInput" type=text value="{leaderboard_1_flash}" /></td><td align=center colspan=2><div class="ClickCode"><div "l1fc" class="BannerClickCode"><a id="l1fb" class="button" href="#_"  rel="nofollow">CLICK TO COPY CODE</a></div></div></td></tr></table></td></tr></table>
+							<table border=0><tr><td colspan=2 class="MaterialTitle" align=center height=25>Animated</td></tr><tr><td colspan=2 ><img src="<?php echo s3path("/images/BannerLeaderboard_01.gif") ?>" style="border:1px solid #CCC;"></td></tr><tr><td colspan=2 align=left><table border=0 width=100%><tr><td align=center><div class="Preview"><div class="BtnPreiviewBanner"><a class="button button-small" id="l1f" href="{leaderboard_1_flash_url}"  rel="nofollow">PREVIEW</a></div></div></td><td colspan=2 align=center><input "l1ft" class="BannerInput" type=text value="{leaderboard_1_flash}" /></td><td align=center colspan=2><div class="ClickCode"><div "l1fc" class="BannerClickCode"><a id="l1fb" class="button button-small" href="#_"  rel="nofollow">CLICK TO COPY CODE</a></div></div></td></tr></table></td></tr></table>
                     	</div>
 					</div>
                     <div class="space">&nbsp;</div>
@@ -200,13 +200,13 @@ $("#hb2f").colorbox();
                    	<table cellspacing=0 cellpadding=0 align=center width=97% height=40><tr><td><font class="BannerTypeText">LeaderBoard - Option 2</font></td><td align=right><font class="SizeText">size: 728 x 90</font></td></tr></table>
         	        <div class="LeaderboardInnerBox">
  						<div class="Material">
-							<table border=0><tr><td colspan=2 class="MaterialTitle" align=center height=25>Static</td></tr><tr><td colspan=2 ><img src="<?php echo s3path("/images/BannerLeaderboard_02.gif") ?>" style="border:1px solid #CCC;"></td></tr><tr><td colspan=2 align=left><table border=0 width=100%><tr><td align=center><div class="Preview"><div class="BtnPreviewBg BtnPreiviewBanner"><a class="BtnPreviewTxt" id="l2s" href="{leaderboard_2_static_url}"  rel="nofollow">PREVIEW</a></div></div></td><td colspan=2 align=center><input "l2st" class="BannerInput" type=text value="{leaderboard_2_static}"/></td><td align=center colspan=2><div class="ClickCode"><div "l2sc" class="BannerClickCode"><a class="button" href="#_"  rel="nofollow" id="l2sb">CLICK TO COPY CODE</a></div></div></td></tr></table></td></tr></table>
+							<table border=0><tr><td colspan=2 class="MaterialTitle" align=center height=25>Static</td></tr><tr><td colspan=2 ><img src="<?php echo s3path("/images/BannerLeaderboard_02.gif") ?>" style="border:1px solid #CCC;"></td></tr><tr><td colspan=2 align=left><table border=0 width=100%><tr><td align=center><div class="Preview"><div class="BtnPreiviewBanner"><a class="button button-small" id="l2s" href="{leaderboard_2_static_url}"  rel="nofollow">PREVIEW</a></div></div></td><td colspan=2 align=center><input "l2st" class="BannerInput" type=text value="{leaderboard_2_static}"/></td><td align=center colspan=2><div class="ClickCode"><div "l2sc" class="BannerClickCode"><a class="button button-small" href="#_"  rel="nofollow" id="l2sb">CLICK TO COPY CODE</a></div></div></td></tr></table></td></tr></table>
                     	</div>
 					</div>
 
         	        <div class="LeaderboardInnerBox">
  						<div class="Material">
-							<table border=0><tr><td colspan=2 class="MaterialTitle" align=center height=25>Animated</td></tr><tr><td colspan=2 ><img src="<?php echo s3path("/images/BannerLeaderboard_02.gif") ?>" style="border:1px solid #CCC;"></td></tr><tr><td colspan=2 align=left><table border=0 width=100%><tr><td align=center><div class="Preview"><div class="BtnPreviewBg BtnPreiviewBanner"><a class="BtnPreviewTxt" id="l2f" href="{leaderboard_2_flash_url}"  rel="nofollow">PREVIEW</a></div></div></td><td colspan=2 align=center><input "l2ft" class="BannerInput" type=text value="{leaderboard_2_flash}"/></td><td align=center colspan=2><div "l2fc" class="ClickCode"><div class="BannerClickCode"><a class="button" href="#_"  rel="nofollow" "l2fb">CLICK TO COPY CODE</a></div></div></td></tr></table></td></tr></table>
+							<table border=0><tr><td colspan=2 class="MaterialTitle" align=center height=25>Animated</td></tr><tr><td colspan=2 ><img src="<?php echo s3path("/images/BannerLeaderboard_02.gif") ?>" style="border:1px solid #CCC;"></td></tr><tr><td colspan=2 align=left><table border=0 width=100%><tr><td align=center><div class="Preview"><div class="BtnPreiviewBanner"><a class="button button-small" id="l2f" href="{leaderboard_2_flash_url}"  rel="nofollow">PREVIEW</a></div></div></td><td colspan=2 align=center><input "l2ft" class="BannerInput" type=text value="{leaderboard_2_flash}"/></td><td align=center colspan=2><div "l2fc" class="ClickCode"><div class="BannerClickCode"><a class="button button-small" href="#_"  rel="nofollow" "l2fb">CLICK TO COPY CODE</a></div></div></td></tr></table></td></tr></table>
                     	</div>
 					</div>
                       <div class="space">&nbsp;</div>
@@ -221,12 +221,12 @@ $("#hb2f").colorbox();
                    	<table cellspacing=0 cellpadding=0 align=center width=90% height=40><tr><td><font class="BannerTypeText">Wide skyscraper - Option 1</font></td><td align=right><font class="SizeText">size: 160 X 600</font></td></tr></table>
         	        <div class="SkyscraperInnerBox">
  						<div class="Material">
-							<table border=0><tr><td colspan=2 class="MaterialTitle" align=center height=25>Static</td></tr><tr><td colspan=2 align=center><img src="<?php echo s3path("/images/BannerSkyscraper_01.gif") ?>" style="border:1px solid #CCC;"></td></tr><tr><td colspan=2 align=center height=35><div class="Preview"><div class="BtnPreviewBg BtnPreiviewBanner"><a class="BtnPreviewTxt" id="ws1s" href="{wide_skyscraper_1_static_url}"  rel="nofollow">PREVIEW</a></div></div></td></tr><tr><td colspan=2 align=center><input id="ws1st" class="BannerInput" type=text value="{wide_skyscraper_1_static}"/></td></tr><tr><td align=center colspan=2><div id="ws1sc" class="ClickCode"><div class="BannerClickCode"><a class="button" href="#_"  rel="nofollow" id="ws1sb">CLICK TO COPY CODE</a></div></div></td></tr></table>
+							<table border=0><tr><td colspan=2 class="MaterialTitle" align=center height=25>Static</td></tr><tr><td colspan=2 align=center><img src="<?php echo s3path("/images/BannerSkyscraper_01.gif") ?>" style="border:1px solid #CCC;"></td></tr><tr><td colspan=2 align=center height=35><div class="Preview"><div class="BtnPreiviewBanner"><a class="button button-small" id="ws1s" href="{wide_skyscraper_1_static_url}"  rel="nofollow">PREVIEW</a></div></div></td></tr><tr><td colspan=2 align=center><input id="ws1st" class="BannerInput" type=text value="{wide_skyscraper_1_static}"/></td></tr><tr><td align=center colspan=2><div id="ws1sc" class="ClickCode"><div class="BannerClickCode"><a class="button button-small" href="#_"  rel="nofollow" id="ws1sb">CLICK TO COPY CODE</a></div></div></td></tr></table>
                     	</div>
 					</div>
         	        <div class="SkyscraperInnerBox">
  						<div class="Material">
-							<table><tr><td colspan=2 class="MaterialTitle" align=center height=25>Animated</td></tr><tr><td colspan=2 ><img src="<?php echo s3path("/images/BannerSkyscraper_01.gif") ?>" style="border:1px solid #CCC;"></td></tr><tr><td colspan=2 align=center height=35><div class="Preview"><div class="BtnPreviewBg BtnPreiviewBanner"><a class="BtnPreviewTxt" href="{wide_skyscraper_1_flash_url}" id="ws1f"  rel="nofollow">PREVIEW</a></div></div></td></tr><tr><td colspan=2 align=center><input id="ws1ft" class="BannerInput" type=text value="{wide_skyscraper_1_flash}"/></td></tr><tr><td align=center colspan=2><div class="ClickCode"><div id="ws1fc" class="BannerClickCode"><a class="button" href="#_"  rel="nofollow" id="ws1fb">CLICK TO COPY CODE</a></div></div></td></tr></table>
+							<table><tr><td colspan=2 class="MaterialTitle" align=center height=25>Animated</td></tr><tr><td colspan=2 ><img src="<?php echo s3path("/images/BannerSkyscraper_01.gif") ?>" style="border:1px solid #CCC;"></td></tr><tr><td colspan=2 align=center height=35><div class="Preview"><div class="BtnPreiviewBanner"><a class="button button-small" href="{wide_skyscraper_1_flash_url}" id="ws1f"  rel="nofollow">PREVIEW</a></div></div></td></tr><tr><td colspan=2 align=center><input id="ws1ft" class="BannerInput" type=text value="{wide_skyscraper_1_flash}"/></td></tr><tr><td align=center colspan=2><div class="ClickCode"><div id="ws1fc" class="BannerClickCode"><a class="button button-small" href="#_"  rel="nofollow" id="ws1fb">CLICK TO COPY CODE</a></div></div></td></tr></table>
                     	</div>
 					</div>
                       <div class="space">&nbsp;</div>
@@ -236,12 +236,12 @@ $("#hb2f").colorbox();
                    	<table cellspacing=0 cellpadding=0 align=center width=90% height=40><tr><td><font class="BannerTypeText">Wide skyscraper - Option 2</font></td><td align=right><font class="SizeText">size: 160 X 600</font></td></tr></table>
         	        <div class="SkyscraperInnerBox">
  						<div class="Material">
-							<table border=0><tr><td colspan=2 class="MaterialTitle" align=center height=25>Static</td></tr><tr><td colspan=2 align=center><img src="<?php echo s3path("/images/BannerSkyscraper_02.gif") ?>" style="border:1px solid #CCC;"></td></tr><tr><td colspan=2 align=center height=35><div class="Preview"><div class="BtnPreviewBg BtnPreiviewBanner"><a class="BtnPreviewTxt" id="ws2s" href="{wide_skyscraper_2_static_url}"  rel="nofollow">PREVIEW</a></div></div></td></tr><tr><td colspan=2 align=center><input id="ws2st" class="BannerInput" type=text value="{wide_skyscraper_2_static}"/></td></tr><tr><td align=center colspan=2><div class="ClickCode"><div id="ws2sc" class="BannerClickCode"><a class="button" href="#_"  rel="nofollow" id="ws2sb">CLICK TO COPY CODE</a></div></div></td></tr></table>
+							<table border=0><tr><td colspan=2 class="MaterialTitle" align=center height=25>Static</td></tr><tr><td colspan=2 align=center><img src="<?php echo s3path("/images/BannerSkyscraper_02.gif") ?>" style="border:1px solid #CCC;"></td></tr><tr><td colspan=2 align=center height=35><div class="Preview"><div class="BtnPreiviewBanner"><a class="button button-small" id="ws2s" href="{wide_skyscraper_2_static_url}"  rel="nofollow">PREVIEW</a></div></div></td></tr><tr><td colspan=2 align=center><input id="ws2st" class="BannerInput" type=text value="{wide_skyscraper_2_static}"/></td></tr><tr><td align=center colspan=2><div class="ClickCode"><div id="ws2sc" class="BannerClickCode"><a class="button button-small" href="#_"  rel="nofollow" id="ws2sb">CLICK TO COPY CODE</a></div></div></td></tr></table>
                     	</div>
 					</div>
         	        <div class="SkyscraperInnerBox">
  						<div class="Material">
-							<table><tr><td colspan=2 class="MaterialTitle" align=center height=25>Animated</td></tr><tr><td colspan=2 ><img src="<?php echo s3path("/images/BannerSkyscraper_02.gif") ?>" style="border:1px solid #CCC;"></td></tr><tr><td colspan=2 align=center height=35><div class="Preview"><div class="BtnPreviewBg BtnPreiviewBanner"><a class="BtnPreviewTxt" href="{wide_skyscraper_2_flash_url}" id="ws2f"  rel="nofollow">PREVIEW</a></div></div></td></tr><tr><td colspan=2 align=center><input id="ws2ft" class="BannerInput" type=text value="{wide_skyscraper_2_flash}"/></td></tr><tr><td align=center colspan=2><div class="ClickCode"><div id="ws2fc" class="BannerClickCode"><a class="button" href="#_"  rel="nofollow" id="ws2fb">CLICK TO COPY CODE</a></div></div></td></tr></table>
+							<table><tr><td colspan=2 class="MaterialTitle" align=center height=25>Animated</td></tr><tr><td colspan=2 ><img src="<?php echo s3path("/images/BannerSkyscraper_02.gif") ?>" style="border:1px solid #CCC;"></td></tr><tr><td colspan=2 align=center height=35><div class="Preview"><div class="BtnPreiviewBanner"><a class="button button-small" href="{wide_skyscraper_2_flash_url}" id="ws2f"  rel="nofollow">PREVIEW</a></div></div></td></tr><tr><td colspan=2 align=center><input id="ws2ft" class="BannerInput" type=text value="{wide_skyscraper_2_flash}"/></td></tr><tr><td align=center colspan=2><div class="ClickCode"><div id="ws2fc" class="BannerClickCode"><a class="button button-small" href="#_"  rel="nofollow" id="ws2fb">CLICK TO COPY CODE</a></div></div></td></tr></table>
                     	</div>
 					</div>
                       <div class="space">&nbsp;</div>
@@ -252,13 +252,13 @@ $("#hb2f").colorbox();
                    	<table cellspacing=0 cellpadding=0 align=center width=90% height=40><tr><td><font class="BannerTypeText">Medum Rectangle - Option 1</font></td><td align=right><font class="SizeText">size: 300 x 250</font></td></tr></table>
         	        <div class="MediumInnerBox">
  						<div class="Material">
-							<table><tr><td colspan=2 class="MaterialTitle" align=center height=25>Static</td></tr><tr><td colspan=2 ><img src="<?php echo s3path("/images/BannerMedium_01.gif") ?>" style="border:1px solid #CCC;"></td></tr><tr><td colspan=2 align=center height=35><div class="Preview"><div class="BtnPreviewBg BtnPreiviewBanner"><a class="BtnPreviewTxt" href="{medium_rectangle_1_static_url}" id="mr1s"  rel="nofollow">PREVIEW</a></div></div></td></tr><tr><td colspan=2 align=center><input id="mr1st" class="BannerInput" type=text value="{medium_rectangle_1_static}"/></td></tr><tr><td align=center colspan=2><div class="ClickCode"><div id="mr1sc" class="BannerClickCode"><a class="button" href="#_"  rel="nofollow" id="mr1sb">CLICK TO COPY CODE</a></div></div></td></tr></table>
+							<table><tr><td colspan=2 class="MaterialTitle" align=center height=25>Static</td></tr><tr><td colspan=2 ><img src="<?php echo s3path("/images/BannerMedium_01.gif") ?>" style="border:1px solid #CCC;"></td></tr><tr><td colspan=2 align=center height=35><div class="Preview"><div class="BtnPreiviewBanner"><a class="button button-small" href="{medium_rectangle_1_static_url}" id="mr1s"  rel="nofollow">PREVIEW</a></div></div></td></tr><tr><td colspan=2 align=center><input id="mr1st" class="BannerInput" type=text value="{medium_rectangle_1_static}"/></td></tr><tr><td align=center colspan=2><div class="ClickCode"><div id="mr1sc" class="BannerClickCode"><a class="button button-small" href="#_"  rel="nofollow" id="mr1sb">CLICK TO COPY CODE</a></div></div></td></tr></table>
                     	</div>
 					</div>
 
         	        <div class="MediumInnerBox">
  						<div class="Material">
-							<table><tr><td colspan=2 class="MaterialTitle" align=center height=25>Animated</td></tr><tr><td colspan=2 ><img src="<?php echo s3path("/images/BannerMedium_01.gif") ?>" style="border:1px solid #CCC;"></td></tr><tr><td colspan=2 align=center height=35><div class="Preview"><div class="BtnPreviewBg BtnPreiviewBanner"><a class="BtnPreviewTxt" href="{medium_rectangle_1_flash_url}" id="mr1f"  rel="nofollow">PREVIEW</a></div></div></td></tr><tr><td colspan=2 align=center><input class="BannerInput" type=text value="{medium_rectangle_1_flash}"/></td></tr><tr><td align=center colspan=2><div class="ClickCode"><div class="BannerClickCode"><a class="button" href="#_"  rel="nofollow">CLICK TO COPY CODE</a></div></div></td></tr></table>
+							<table><tr><td colspan=2 class="MaterialTitle" align=center height=25>Animated</td></tr><tr><td colspan=2 ><img src="<?php echo s3path("/images/BannerMedium_01.gif") ?>" style="border:1px solid #CCC;"></td></tr><tr><td colspan=2 align=center height=35><div class="Preview"><div class="BtnPreiviewBanner"><a class="button button-small" href="{medium_rectangle_1_flash_url}" id="mr1f"  rel="nofollow">PREVIEW</a></div></div></td></tr><tr><td colspan=2 align=center><input class="BannerInput" type=text value="{medium_rectangle_1_flash}"/></td></tr><tr><td align=center colspan=2><div class="ClickCode"><div class="BannerClickCode"><a class="button button-small" href="#_"  rel="nofollow">CLICK TO COPY CODE</a></div></div></td></tr></table>
                     	</div>
 					</div>
                       <div class="space">&nbsp;</div>
@@ -268,13 +268,13 @@ $("#hb2f").colorbox();
                    	<table cellspacing=0 cellpadding=0 align=center width=90% height=40><tr><td><font class="BannerTypeText">Medum Rectangle - Option 2</font></td><td align=right><font class="SizeText">size: 300 x 250</font></td></tr></table>
         	        <div class="MediumInnerBox">
  						<div class="Material">
-							<table><tr><td colspan=2 class="MaterialTitle" align=center height=25>Static</td></tr><tr><td colspan=2 ><img src="<?php echo s3path("/images/BannerMedium_02.gif") ?>" style="border:1px solid #CCC;"></td></tr><tr><td colspan=2 align=center height=35><div class="Preview"><div class="BtnPreviewBg BtnPreiviewBanner"><a class="BtnPreviewTxt" id="mr2s" href="{medium_rectangle_2_static_url}"  rel="nofollow">PREVIEW</a></div></div></td></tr><tr><td colspan=2 align=center><input class="BannerInput" type=text value="{medium_rectangle_2_static}"/></td></tr><tr><td align=center colspan=2><div class="ClickCode"><div class="BannerClickCode"><a class="button" href="#_"  rel="nofollow">CLICK TO COPY CODE</a></div></div></td></tr></table>
+							<table><tr><td colspan=2 class="MaterialTitle" align=center height=25>Static</td></tr><tr><td colspan=2 ><img src="<?php echo s3path("/images/BannerMedium_02.gif") ?>" style="border:1px solid #CCC;"></td></tr><tr><td colspan=2 align=center height=35><div class="Preview"><div class="BtnPreiviewBanner"><a class="button button-small" id="mr2s" href="{medium_rectangle_2_static_url}"  rel="nofollow">PREVIEW</a></div></div></td></tr><tr><td colspan=2 align=center><input class="BannerInput" type=text value="{medium_rectangle_2_static}"/></td></tr><tr><td align=center colspan=2><div class="ClickCode"><div class="BannerClickCode"><a class="button button-small" href="#_"  rel="nofollow">CLICK TO COPY CODE</a></div></div></td></tr></table>
                     	</div>
 					</div>
 
         	        <div class="MediumInnerBox">
  						<div class="Material">
-							<table><tr><td colspan=2 class="MaterialTitle" align=center height=25>Animated</td></tr><tr><td colspan=2 ><img src="<?php echo s3path("/images/BannerMedium_02.gif") ?>" style="border:1px solid #CCC;"></td></tr><tr><td colspan=2 align=center height=35><div class="Preview"><div class="BtnPreviewBg BtnPreiviewBanner"><a class="BtnPreviewTxt" href="{medium_rectangle_2_flash_url}" id="mr2f"  rel="nofollow">PREVIEW</a></div></div></td></tr><tr><td colspan=2 align=center><input class="BannerInput" type=text value="{medium_rectangle_2_flash}"/></td></tr><tr><td align=center colspan=2><div class="ClickCode"><div class="BannerClickCode"><a class="button" href="#_"  rel="nofollow">CLICK TO COPY CODE</a></div></div></td></tr></table>
+							<table><tr><td colspan=2 class="MaterialTitle" align=center height=25>Animated</td></tr><tr><td colspan=2 ><img src="<?php echo s3path("/images/BannerMedium_02.gif") ?>" style="border:1px solid #CCC;"></td></tr><tr><td colspan=2 align=center height=35><div class="Preview"><div class="BtnPreiviewBanner"><a class="button button-small" href="{medium_rectangle_2_flash_url}" id="mr2f"  rel="nofollow">PREVIEW</a></div></div></td></tr><tr><td colspan=2 align=center><input class="BannerInput" type=text value="{medium_rectangle_2_flash}"/></td></tr><tr><td align=center colspan=2><div class="ClickCode"><div class="BannerClickCode"><a class="button button-small" href="#_"  rel="nofollow">CLICK TO COPY CODE</a></div></div></td></tr></table>
                     	</div>
 					</div>
                       <div class="space">&nbsp;</div>
@@ -286,13 +286,13 @@ $("#hb2f").colorbox();
                    	<table cellspacing=0 cellpadding=0 align=center width=90% height=40><tr><td><font class="BannerTypeText">Square Popup - Option 1</font></td><td align=right><font class="SizeText">size: 250 x 250</font></td></tr></table>
         	        <div class="MediumInnerBox">
  						<div class="Material">
-							<table><tr><td colspan=2 class="MaterialTitle" align=center height=25>Static</td></tr><tr><td colspan=2 ><img src="<?php echo s3path("/images/BannerMedium_01.gif") ?>" style="border:1px solid #CCC;"></td></tr><tr><td colspan=2 align=center height=35><div class="Preview"><div class="BtnPreviewBg BtnPreiviewBanner"><a id="sp1s" class="BtnPreviewTxt" href="{square_popup_1_static_url}"  rel="nofollow">PREVIEW</a></div></div></td></tr><tr><td colspan=2 align=center><input class="BannerInput" type=text value="{square_popup_1_static}"/></td></tr><tr><td align=center colspan=2><div class="ClickCode"><div class="BannerClickCode"><a class="button" href="#_"  rel="nofollow">CLICK TO COPY CODE</a></div></div></td></tr></table>
+							<table><tr><td colspan=2 class="MaterialTitle" align=center height=25>Static</td></tr><tr><td colspan=2 ><img src="<?php echo s3path("/images/BannerMedium_01.gif") ?>" style="border:1px solid #CCC;"></td></tr><tr><td colspan=2 align=center height=35><div class="Preview"><div class="BtnPreiviewBanner"><a id="sp1s" class="button button-small" href="{square_popup_1_static_url}"  rel="nofollow">PREVIEW</a></div></div></td></tr><tr><td colspan=2 align=center><input class="BannerInput" type=text value="{square_popup_1_static}"/></td></tr><tr><td align=center colspan=2><div class="ClickCode"><div class="BannerClickCode"><a class="button button-small" href="#_"  rel="nofollow">CLICK TO COPY CODE</a></div></div></td></tr></table>
                     	</div>
 					</div>
 
         	        <div class="MediumInnerBox">
  						<div class="Material">
-							<table><tr><td colspan=2 class="MaterialTitle" align=center height=25>Animated</td></tr><tr><td colspan=2 ><img src="<?php echo s3path("/images/BannerMedium_01.gif") ?>" style="border:1px solid #CCC;"></td></tr><tr><td colspan=2 align=center height=35><div class="Preview"><div class="BtnPreviewBg BtnPreiviewBanner"><a class="BtnPreviewTxt" href="{square_popup_1_flash_url}" id="sp1f"  rel="nofollow">PREVIEW</a></div></div></td></tr><tr><td colspan=2 align=center><input class="BannerInput" type=text value="{square_popup_1_flash}"/></td></tr><tr><td align=center colspan=2><div class="ClickCode"><div class="BannerClickCode"><a class="button" href="#_"  rel="nofollow">CLICK TO COPY CODE</a></div></div></td></tr></table>
+							<table><tr><td colspan=2 class="MaterialTitle" align=center height=25>Animated</td></tr><tr><td colspan=2 ><img src="<?php echo s3path("/images/BannerMedium_01.gif") ?>" style="border:1px solid #CCC;"></td></tr><tr><td colspan=2 align=center height=35><div class="Preview"><div class="BtnPreiviewBanner"><a class="button button-small" href="{square_popup_1_flash_url}" id="sp1f"  rel="nofollow">PREVIEW</a></div></div></td></tr><tr><td colspan=2 align=center><input class="BannerInput" type=text value="{square_popup_1_flash}"/></td></tr><tr><td align=center colspan=2><div class="ClickCode"><div class="BannerClickCode"><a class="button button-small" href="#_"  rel="nofollow">CLICK TO COPY CODE</a></div></div></td></tr></table>
                     	</div>
 					</div>
                       <div class="space">&nbsp;</div>
@@ -302,13 +302,13 @@ $("#hb2f").colorbox();
                    	<table cellspacing=0 cellpadding=0 align=center width=90% height=40><tr><td><font class="BannerTypeText">Square Popup - Option 2</font></td><td align=right><font class="SizeText">size: 250 x 250</font></td></tr></table>
         	        <div class="MediumInnerBox">
  						<div class="Material">
-							<table><tr><td colspan=2 class="MaterialTitle" align=center height=25>Static</td></tr><tr><td colspan=2 ><img src="<?php echo s3path("/images/BannerMedium_02.gif") ?>" style="border:1px solid #CCC;"></td></tr><tr><td colspan=2 align=center height=35><div class="Preview"><div class="BtnPreviewBg BtnPreiviewBanner"><a class="BtnPreviewTxt" href="{square_popup_2_static_url}" id="sp2s"  rel="nofollow">PREVIEW</a></div></div></td></tr><tr><td colspan=2 align=center><input class="BannerInput" type=text value="{square_popup_2_static}"/></td></tr><tr><td align=center colspan=2><div class="ClickCode"><div class="BannerClickCode"><a class="button" href="#_"  rel="nofollow">CLICK TO COPY CODE</a></div></div></td></tr></table>
+							<table><tr><td colspan=2 class="MaterialTitle" align=center height=25>Static</td></tr><tr><td colspan=2 ><img src="<?php echo s3path("/images/BannerMedium_02.gif") ?>" style="border:1px solid #CCC;"></td></tr><tr><td colspan=2 align=center height=35><div class="Preview"><div class="BtnPreiviewBanner"><a class="button button-small" href="{square_popup_2_static_url}" id="sp2s"  rel="nofollow">PREVIEW</a></div></div></td></tr><tr><td colspan=2 align=center><input class="BannerInput" type=text value="{square_popup_2_static}"/></td></tr><tr><td align=center colspan=2><div class="ClickCode"><div class="BannerClickCode"><a class="button button-small" href="#_"  rel="nofollow">CLICK TO COPY CODE</a></div></div></td></tr></table>
                     	</div>
 					</div>
 
         	        <div class="MediumInnerBox">
  						<div class="Material">
-							<table><tr><td colspan=2 class="MaterialTitle" align=center height=25>Animated</td></tr><tr><td colspan=2 ><img src="<?php echo s3path("/images/BannerMedium_02.gif") ?>" style="border:1px solid #CCC;"></td></tr><tr><td colspan=2 align=center height=35><div class="Preview"><div class="BtnPreviewBg BtnPreiviewBanner"><a class="BtnPreviewTxt" href="{square_popup_2_flash_url}" id="sp2f"  rel="nofollow">PREVIEW</a></div></div></td></tr><tr><td colspan=2 align=center><input class="BannerInput" type=text value="{square_popup_2_flash}"/></td></tr><tr><td align=center colspan=2><div class="ClickCode"><div class="BannerClickCode"><a class="button" href="#_"  rel="nofollow">CLICK TO COPY CODE</a></div></div></td></tr></table>
+							<table><tr><td colspan=2 class="MaterialTitle" align=center height=25>Animated</td></tr><tr><td colspan=2 ><img src="<?php echo s3path("/images/BannerMedium_02.gif") ?>" style="border:1px solid #CCC;"></td></tr><tr><td colspan=2 align=center height=35><div class="Preview"><div class="BtnPreiviewBanner"><a class="button button-small" href="{square_popup_2_flash_url}" id="sp2f"  rel="nofollow">PREVIEW</a></div></div></td></tr><tr><td colspan=2 align=center><input class="BannerInput" type=text value="{square_popup_2_flash}"/></td></tr><tr><td align=center colspan=2><div class="ClickCode"><div class="BannerClickCode"><a class="button button-small" href="#_"  rel="nofollow">CLICK TO COPY CODE</a></div></div></td></tr></table>
                     	</div>
 					</div>
                       <div class="space">&nbsp;</div>
@@ -320,12 +320,12 @@ $("#hb2f").colorbox();
                    	<table cellspacing=0 cellpadding=0 align=center width=90% height=40><tr><td><font class="BannerTypeText">Full Banner - Option 1</font></td><td align=right><font class="SizeText">size: 468 X 60</font></td></tr></table>
         	        <div class="FullInnerBox">
  						<div class="Material">
-							<table><tr><td colspan=2 class="MaterialTitle" align=center height=25>Static</td></tr><tr><td colspan=2 ><img src="<?php echo s3path("/images/BannerFull_01.gif") ?>" style="border:1px solid #CCC;"></td></tr><tr><td colspan=2><table border=0 width=100%><tr><td align=center><div class="Preview"><div class="BtnPreviewBg BtnPreiviewBanner"><a class="BtnPreviewTxt" href="{full_banner_1_static_url}" id="fb1s"  rel="nofollow">PREVIEW</a></div></div></td><td colspan=2 align=center><input class="BannerInput" type=text value="{full_banner_1_static}"/></td><td align=center colspan=2><div class="ClickCode"><div class="BannerClickCode"><a class="button" href="#_"  rel="nofollow">CLICK TO COPY CODE</a></div></div></td></tr></table></td></tr></table>
+							<table><tr><td colspan=2 class="MaterialTitle" align=center height=25>Static</td></tr><tr><td colspan=2 ><img src="<?php echo s3path("/images/BannerFull_01.gif") ?>" style="border:1px solid #CCC;"></td></tr><tr><td colspan=2><table border=0 width=100%><tr><td align=center><div class="Preview"><div class="BtnPreiviewBanner"><a class="button button-small" href="{full_banner_1_static_url}" id="fb1s"  rel="nofollow">PREVIEW</a></div></div></td><td colspan=2 align=center><input class="BannerInput" type=text value="{full_banner_1_static}"/></td><td align=center colspan=2><div class="ClickCode"><div class="BannerClickCode"><a class="button button-small" href="#_"  rel="nofollow">CLICK TO COPY CODE</a></div></div></td></tr></table></td></tr></table>
                     	</div>
 					</div>
                     <div class="FullInnerBox">
  						<div class="Material">
-							<table><tr><td colspan=2 class="MaterialTitle" align=center height=25>Animated</td></tr><tr><td colspan=2 ><img src="<?php echo s3path("/images/BannerFull_01.gif") ?>" style="border:1px solid #CCC;"></td></tr><tr><td colspan=2><table border=0 width=100%><tr><td align=center><div class="Preview"><div class="BtnPreviewBg BtnPreiviewBanner"><a class="BtnPreviewTxt" href="{full_banner_1_flash_url}" id="fb1f"  rel="nofollow">PREVIEW</a></div></div></td><td colspan=2 align=center><input class="BannerInput" type=text value="{full_banner_1_flash}"/></td><td align=center colspan=2><div class="ClickCode"><div class="BannerClickCode"><a class="button" href="#_"  rel="nofollow">CLICK TO COPY CODE</a></div></div></td></tr></table></td></tr></table>
+							<table><tr><td colspan=2 class="MaterialTitle" align=center height=25>Animated</td></tr><tr><td colspan=2 ><img src="<?php echo s3path("/images/BannerFull_01.gif") ?>" style="border:1px solid #CCC;"></td></tr><tr><td colspan=2><table border=0 width=100%><tr><td align=center><div class="Preview"><div class="BtnPreiviewBanner"><a class="button button-small" href="{full_banner_1_flash_url}" id="fb1f"  rel="nofollow">PREVIEW</a></div></div></td><td colspan=2 align=center><input class="BannerInput" type=text value="{full_banner_1_flash}"/></td><td align=center colspan=2><div class="ClickCode"><div class="BannerClickCode"><a class="button button-small" href="#_"  rel="nofollow">CLICK TO COPY CODE</a></div></div></td></tr></table></td></tr></table>
                     	</div>
 					</div>
                       <div class="space">&nbsp;</div>
@@ -336,12 +336,12 @@ $("#hb2f").colorbox();
                    	<table cellspacing=0 cellpadding=0 align=center width=90% height=40><tr><td><font class="BannerTypeText">Full Banner - Option 2</font></td><td align=right><font class="SizeText">size: 468 X 60</font></td></tr></table>
         	        <div class="FullInnerBox">
  						<div class="Material">
-							<table><tr><td colspan=2 class="MaterialTitle" align=center height=25>Static</td></tr><tr><td colspan=2 ><img src="<?php echo s3path("/images/BannerFull_02.gif") ?>" style="border:1px solid #CCC;"></td></tr><tr><td colspan=2><table border=0 width=100%><tr><td align=center><div class="Preview"><div class="BtnPreviewBg BtnPreiviewBanner"><a class="BtnPreviewTxt" href="{full_banner_2_static_url}" id="fb2s"  rel="nofollow">PREVIEW</a></div></div></td><td colspan=2 align=center><input class="BannerInput" type=text value="{full_banner_2_static}"/></td><td align=center colspan=2><div class="ClickCode"><div class="BannerClickCode"><a class="button" href="#_"  rel="nofollow">CLICK TO COPY CODE</a></div></div></td></tr></table></td></tr></table>
+							<table><tr><td colspan=2 class="MaterialTitle" align=center height=25>Static</td></tr><tr><td colspan=2 ><img src="<?php echo s3path("/images/BannerFull_02.gif") ?>" style="border:1px solid #CCC;"></td></tr><tr><td colspan=2><table border=0 width=100%><tr><td align=center><div class="Preview"><div class="BtnPreiviewBanner"><a class="button button-small" href="{full_banner_2_static_url}" id="fb2s"  rel="nofollow">PREVIEW</a></div></div></td><td colspan=2 align=center><input class="BannerInput" type=text value="{full_banner_2_static}"/></td><td align=center colspan=2><div class="ClickCode"><div class="BannerClickCode"><a class="button button-small" href="#_"  rel="nofollow">CLICK TO COPY CODE</a></div></div></td></tr></table></td></tr></table>
                     	</div>
 					</div>
                     <div class="FullInnerBox">
  						<div class="Material">
-                            <table><tr><td colspan=2 class="MaterialTitle" align=center height=25>Animated</td></tr><tr><td colspan=2 ><img src="<?php echo s3path("/images/BannerFull_02.gif") ?>" style="border:1px solid #CCC;"></td></tr><tr><td colspan=2><table border=0 width=100%><tr><td align=center><div class="Preview"><div class="BtnPreviewBg BtnPreiviewBanner"><a class="BtnPreviewTxt" href="{full_banner_2_flash_url}" id="fb2f"  rel="nofollow">PREVIEW</a></div></div></td><td colspan=2 align=center><input class="BannerInput" type=text value="{full_banner_2_flash}" /></td><td align=center colspan=2><div class="ClickCode"><div class="BannerClickCode"><a class="button" href="#_"  rel="nofollow">CLICK TO COPY CODE</a></div></div></td></tr></table></td></tr></table>
+                            <table><tr><td colspan=2 class="MaterialTitle" align=center height=25>Animated</td></tr><tr><td colspan=2 ><img src="<?php echo s3path("/images/BannerFull_02.gif") ?>" style="border:1px solid #CCC;"></td></tr><tr><td colspan=2><table border=0 width=100%><tr><td align=center><div class="Preview"><div class="BtnPreiviewBanner"><a class="button button-small" href="{full_banner_2_flash_url}" id="fb2f"  rel="nofollow">PREVIEW</a></div></div></td><td colspan=2 align=center><input class="BannerInput" type=text value="{full_banner_2_flash}" /></td><td align=center colspan=2><div class="ClickCode"><div class="BannerClickCode"><a class="button button-small" href="#_"  rel="nofollow">CLICK TO COPY CODE</a></div></div></td></tr></table></td></tr></table>
                     	</div>
 					</div>
                       <div class="space">&nbsp;</div>
@@ -356,12 +356,12 @@ $("#hb2f").colorbox();
                    	<table cellspacing=0 cellpadding=0 align=center width=90% height=40><tr><td><font class="BannerTypeText">Half Banner - Option 1</font></td><td align=right><font class="SizeText">size: 234 x 60</font></td></tr></table>
         	        <div class="SkyscraperInnerBox">
  						<div class="Material">
-							<table><tr><td colspan=2 class="MaterialTitle" align=center height=25>Static</td></tr><tr><td colspan=2 ><img src="<?php echo s3path("/images/BannerHalf_01.gif") ?>" style="border:1px solid #CCC;"></td></tr><tr><td colspan=2 align=center height=35><div class="Preview"><div class="BtnPreviewBg BtnPreiviewBanner"><a class="BtnPreviewTxt" id="hb1s" href="{half_banner_1_static_url}"  rel="nofollow">PREVIEW</a></div></div></td></tr><tr><td colspan=2 align=center><input class="BannerInput" type=text value="{half_banner_1_static}" /></td></tr><tr><td align=center colspan=2><div class="ClickCode"><div class="BannerClickCode"><a class="button" href="#_"  rel="nofollow">CLICK TO COPY CODE</a></div></div></td></tr></table>
+							<table><tr><td colspan=2 class="MaterialTitle" align=center height=25>Static</td></tr><tr><td colspan=2 ><img src="<?php echo s3path("/images/BannerHalf_01.gif") ?>" style="border:1px solid #CCC;"></td></tr><tr><td colspan=2 align=center height=35><div class="Preview"><div class="BtnPreiviewBanner"><a class="button button-small" id="hb1s" href="{half_banner_1_static_url}"  rel="nofollow">PREVIEW</a></div></div></td></tr><tr><td colspan=2 align=center><input class="BannerInput" type=text value="{half_banner_1_static}" /></td></tr><tr><td align=center colspan=2><div class="ClickCode"><div class="BannerClickCode"><a class="button button-small" href="#_"  rel="nofollow">CLICK TO COPY CODE</a></div></div></td></tr></table>
                     	</div>
 					</div>
         	        <div class="SkyscraperInnerBox">
  						<div class="Material">
-							<table><tr><td colspan=2 class="MaterialTitle" align=center height=25>Animated</td></tr><tr><td colspan=2 ><img src="<?php echo s3path("/images/BannerHalf_01.gif") ?>" style="border:1px solid #CCC;"></td></tr><tr><td colspan=2 align=center height=35><div class="Preview"><div class="BtnPreviewBg BtnPreiviewBanner"><a class="BtnPreviewTxt" href="{half_banner_1_flash_url}" id="hb1f"  rel="nofollow">PREVIEW</a></div></div></td></tr><tr><td colspan=2 align=center><input class="BannerInput" type=text value="{half_banner_1_flash}"/></td></tr><tr><td align=center colspan=2><div class="ClickCode"><div class="BannerClickCode"><a class="button" href="#_"  rel="nofollow">CLICK TO COPY CODE</a></div></div></td></tr></table>
+							<table><tr><td colspan=2 class="MaterialTitle" align=center height=25>Animated</td></tr><tr><td colspan=2 ><img src="<?php echo s3path("/images/BannerHalf_01.gif") ?>" style="border:1px solid #CCC;"></td></tr><tr><td colspan=2 align=center height=35><div class="Preview"><div class="BtnPreiviewBanner"><a class="button button-small" href="{half_banner_1_flash_url}" id="hb1f"  rel="nofollow">PREVIEW</a></div></div></td></tr><tr><td colspan=2 align=center><input class="BannerInput" type=text value="{half_banner_1_flash}"/></td></tr><tr><td align=center colspan=2><div class="ClickCode"><div class="BannerClickCode"><a class="button button-small" href="#_"  rel="nofollow">CLICK TO COPY CODE</a></div></div></td></tr></table>
                     	</div>
 					</div>
                       <div class="space">&nbsp;</div>
@@ -371,12 +371,12 @@ $("#hb2f").colorbox();
                    	<table cellspacing=0 cellpadding=0 align=center width=90% height=40><tr><td><font class="BannerTypeText">Half Banner - Option 2</font></td><td align=right><font class="SizeText">size: 234 x 60</font></td></tr></table>
         	        <div class="SkyscraperInnerBox">
  						<div class="Material">
-							<table><tr><td colspan=2 class="MaterialTitle" align=center height=25>Static</td></tr><tr><td colspan=2 ><img src="<?php echo s3path("/images/BannerHalf_02.gif") ?>" style="border:1px solid #CCC;"></td></tr><tr><td colspan=2 align=center height=35><div class="Preview"><div class="BtnPreviewBg BtnPreiviewBanner"><a id="hb2s" class="BtnPreviewTxt" href="{half_banner_2_static_url}"  rel="nofollow">PREVIEW</a></div></div></td></tr><tr><td colspan=2 align=center><input class="BannerInput" type=text value="{half_banner_2_static}"/></td></tr><tr><td align=center colspan=2><div class="ClickCode"><div class="BannerClickCode"><a class="button" href="#_"  rel="nofollow">CLICK TO COPY CODE</a></div></div></td></tr></table>
+							<table><tr><td colspan=2 class="MaterialTitle" align=center height=25>Static</td></tr><tr><td colspan=2 ><img src="<?php echo s3path("/images/BannerHalf_02.gif") ?>" style="border:1px solid #CCC;"></td></tr><tr><td colspan=2 align=center height=35><div class="Preview"><div class="BtnPreiviewBanner"><a id="hb2s" class="button button-small" href="{half_banner_2_static_url}"  rel="nofollow">PREVIEW</a></div></div></td></tr><tr><td colspan=2 align=center><input class="BannerInput" type=text value="{half_banner_2_static}"/></td></tr><tr><td align=center colspan=2><div class="ClickCode"><div class="BannerClickCode"><a class="button button-small" href="#_"  rel="nofollow">CLICK TO COPY CODE</a></div></div></td></tr></table>
                     	</div>
 					</div>
         	        <div class="SkyscraperInnerBox">
  						<div class="Material">
-							<table><tr><td colspan=2 class="MaterialTitle" align=center height=25>Animated</td></tr><tr><td colspan=2 ><img src="<?php echo s3path("/images/BannerHalf_02.gif") ?>" style="border:1px solid #CCC;"></td></tr><tr><td colspan=2 align=center height=35><div class="Preview"><div class="BtnPreviewBg BtnPreiviewBanner"><a class="BtnPreviewTxt" href="{half_banner_2_flash_url}" id="hb2f"  rel="nofollow">PREVIEW</a></div></div></td></tr><tr><td colspan=2 align=center><input class="BannerInput" value="{half_banner_2_flash}" type=text /></td></tr><tr><td align=center colspan=2><div class="ClickCode"><div class="BannerClickCode"><a class="button" href="#_"  rel="nofollow">CLICK TO COPY CODE</a></div></div></td></tr></table>
+							<table><tr><td colspan=2 class="MaterialTitle" align=center height=25>Animated</td></tr><tr><td colspan=2 ><img src="<?php echo s3path("/images/BannerHalf_02.gif") ?>" style="border:1px solid #CCC;"></td></tr><tr><td colspan=2 align=center height=35><div class="Preview"><div class="BtnPreiviewBanner"><a class="button button-small" href="{half_banner_2_flash_url}" id="hb2f"  rel="nofollow">PREVIEW</a></div></div></td></tr><tr><td colspan=2 align=center><input class="BannerInput" value="{half_banner_2_flash}" type=text /></td></tr><tr><td align=center colspan=2><div class="ClickCode"><div class="BannerClickCode"><a class="button button-small" href="#_"  rel="nofollow">CLICK TO COPY CODE</a></div></div></td></tr></table>
                     	</div>
 					</div>
                       <div class="space">&nbsp;</div>
@@ -389,6 +389,7 @@ $("#hb2f").colorbox();
 
 
 
+               </div>
                </div>
                </div>
 

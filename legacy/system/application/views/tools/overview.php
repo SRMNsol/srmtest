@@ -186,22 +186,7 @@ if((float)$total[0]['available'] > 10){ ?>
 
 
 
-<!-- footer -->
-    <div style="clear: both;"></div>
-
-<div id="ftr" class="ftrLeftCol">
-		<p id="links" style="height: 20px; line-height: 20px;">Copyright © 2010 BeeSavy, LLC. All Rights Reserved. <a href="/stores/storelist">All Stores</a> |  <a href="/info/terms">Terms of Service</a> | <a href="/info/privacy">Privacy Policy</a> | <a href="/info/contact">Contact Us</a></p>
-		<a href="http://twitter.com/" target="_blank" class="socialMedia twitter">Follow Us On Twitter</a>
-		<a href="http://facebook.com/" target="_blank" class="socialMedia facebook">Like Us on Facebook</a>
-		<div style="clear: both;"></div>
-		<p id="disclaimer">Tax and shipping costs are estimates; please see the store's website for exact pricing. BeeSavy does not guarantee the
-accuracy of information provided by online stores and other third parties, including product information, prices, coupons, and
-availability. BeeSavy shall not be liable for or responsible to honor any inaccurate information shown on our website. Please see our <a href="">Terms of Service</a> for more details.</p>
-	</div>
-	</div>
-  </div>
-<!-- /footer -->
-
+{footer}
 
 	<script>
 $(window).load(function() {
