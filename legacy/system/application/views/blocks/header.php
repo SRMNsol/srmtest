@@ -20,6 +20,9 @@
 
 <?php echo googletag_head() ?>
 
+<!-- pinterest -->
+<meta name="p:domain_verify" content="625b87a98e72ecd64457d22d9521191d"/>
+
 <link rel="shortcut icon" href="<?php echo s3path("/images/favicon.ico") ?>" />
 <link rel="stylesheet" type="text/css" href="<?php echo s3path("/styles/main.css") ?>" media="screen"/>
 <link rel="stylesheet" type="text/css" href="<?php echo s3path("/styles/home.css") ?>" media="screen"/>
