@@ -61,6 +61,11 @@ class Merchant extends BaseMerchant implements GroupSequenceProviderInterface
      */
     protected $topStore = false;
 
+    /**
+     * @ORM\Column(nullable=true)
+     */
+    protected $clickoutUrl;
+
     const COMMISSION_TYPE_FIXED_VAR = 'fixed_var';
     const COMMISSION_TYPE_PERCENTAGE_VAR = 'percentage_var';
 
@@ -210,6 +215,11 @@ class Merchant extends BaseMerchant implements GroupSequenceProviderInterface
             'allowPortrait' => false,
             'allowSquare'   => false,
             'groups'        => ['logo'],
+        ]));
+
+        $metadata->addPropertyConstraint('clickoutUrl', new Assert\Regex([
+            'pattern' => '/\{SUBID\}/',
+            'message' => 'Missing {SUBID} placeholder in the url.',
         ]));
 
         $metadata->setGroupSequenceProvider(true);
@@ -505,6 +515,18 @@ class Merchant extends BaseMerchant implements GroupSequenceProviderInterface
     public function setTopStore($value)
     {
         $this->topStore = (boolean) $value;
+
+        return $this;
+    }
+
+    public function getClickoutUrl()
+    {
+        return $this->clickoutUrl;
+    }
+
+    public function setClickoutUrl($url)
+    {
+        $this->clickoutUrl = $url;
 
         return $this;
     }

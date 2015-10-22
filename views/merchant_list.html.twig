@@ -12,8 +12,9 @@
     <table class="table table-bordered table-hover">
       <thead>
         <tr>
-          <th class="col-md-8">Merchant Name</th>
+          <th class="col-md-7">Merchant Name</th>
           <th class="col-md-1">Top Store</th>
+          <th class="col-md-1">URL</th>
           <th class="col-md-1">Logo</th>
           <th class="col-md-1">Comm.</th>
           <th class="col-md-1"></th>
@@ -25,6 +26,11 @@
           <td>{{ merchant.displayName }}</td>
           <td>
             {% if merchant.topStore %}
+            <i class="glyphicon glyphicon-ok text-success"></i>
+            {% endif %}
+          </td>
+          <td>
+            {% if merchant.clickoutUrl %}
             <i class="glyphicon glyphicon-ok text-success"></i>
             {% endif %}
           </td>
