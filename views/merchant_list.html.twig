@@ -12,7 +12,8 @@
     <table class="table table-bordered table-hover">
       <thead>
         <tr>
-          <th class="col-md-7">Merchant Name</th>
+          <th class="col-md-5">Merchant Name</th>
+          <th class="col-md-2">Network</th>
           <th class="col-md-1">Top Store</th>
           <th class="col-md-1">URL</th>
           <th class="col-md-1">Logo</th>
@@ -24,6 +25,7 @@
         {% for merchant in merchants %}
         <tr>
           <td>{{ merchant.displayName }}</td>
+          <td>{% if merchant.network %}{{ merchant.network.name }}{% endif %}</td>
           <td>
             {% if merchant.topStore %}
             <i class="glyphicon glyphicon-ok text-success"></i>
@@ -32,6 +34,7 @@
           <td>
             {% if merchant.clickoutUrl %}
             <i class="glyphicon glyphicon-ok text-success"></i>
+            <a href="{{ merchant.testTrackingUrl }}" class="btn btn-default btn-xs pull-right" target="_blank">Test</a>
             {% endif %}
           </td>
           <td>

@@ -530,4 +530,9 @@ class Merchant extends BaseMerchant implements GroupSequenceProviderInterface
 
         return $this;
     }
+
+    public function getTestTrackingUrl()
+    {
+        return str_replace('{SUBID}', 'TEST', $this->clickoutUrl);
+    }
 }
