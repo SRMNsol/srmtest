@@ -28,8 +28,8 @@ class CacheProvider implements ServiceProviderInterface
             return $storage;
         });
 
-        // popshops cache uses default cache storage
-        $app['popshops.cache_storage'] = $app->share(function () use ($app) {
+        // default cache storage
+        $app['cache.default_storage'] = $app->share(function () use ($app) {
             return $app['cache.create_storage']();
         });
     }

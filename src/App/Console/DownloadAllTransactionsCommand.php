@@ -104,13 +104,6 @@ class DownloadAllTransactionsCommand extends Command
     {
         $app = $this->getSilexApplication();
 
-        $output->writeln('Popshops network and stores');
-
-        $ret = $this->getApplication()->find('api:networks')->run(new ArrayInput([
-            'command' => 'api:networks',
-            '--catalog-key' => $app['popshops.catalog_keys']['all_stores']
-        ]), $output);
-
         /**
          * Linkshare (ID 4)
          */

@@ -7,6 +7,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use App\Entity\Merchant;
@@ -15,28 +16,29 @@ class MerchantType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->add('network')
-            ->add('networkMerchantId', null, ['required' => false])
-            ->add('logoFile')
-            ->add('skipLogoUpdate', 'checkbox', ['required' => false])
-            ->add('name')
-            ->add('alternativeName')
-            ->add('description')
-            ->add('commission', null, ['precision' => 2])
-            ->add('commissionMax', null, ['precision' => 2])
-            ->add('commissionType', 'choice', [
-                'choices' => [
-                    Merchant::COMMISSION_TYPE_FIXED => 'Fixed Amount',
-                    Merchant::COMMISSION_TYPE_PERCENTAGE => 'Percentage Off',
-                    Merchant::COMMISSION_TYPE_FIXED_VAR => 'Variable Fixed Amount',
-                    Merchant::COMMISSION_TYPE_PERCENTAGE_VAR => 'Variable Percentage Off',
-                ],
-            ])
-            ->add('topStore', 'checkbox', ['required' => false])
-            ->add('clickoutUrl', null, ['required' => false])
-            ->add('active', 'checkbox', ['required' => false])
-        ;
+        $builder->add('name');
+        $builder->add('alternativeName');
+        $builder->add('category');
+        $builder->add('network');
+        $builder->add('networkMerchantId', null, ['required' => false]);
+        $builder->add('logoFile');
+        $builder->add('description');
+        $builder->add('commission', null, ['precision' => 2]);
+        $builder->add('commissionMax', null, ['precision' => 2]);
+        $builder->add('commissionType', 'choice', [
+            'choices' => [
+                Merchant::COMMISSION_TYPE_FIXED => 'Fixed Amount',
+                Merchant::COMMISSION_TYPE_PERCENTAGE => 'Percentage Off',
+                Merchant::COMMISSION_TYPE_FIXED_VAR => 'Variable Fixed Amount',
+                Merchant::COMMISSION_TYPE_PERCENTAGE_VAR => 'Variable Percentage Off',
+            ],
+        ]);
+        $builder->add('topStore', 'checkbox', ['required' => false]);
+        $builder->add('clickoutUrl', null, ['required' => false]);
+        $builder->add('active', 'checkbox', ['required' => false]);
+        $builder->add('submit', SubmitType::class, [
+            'attr' => ['class' => 'btn-primary'],
+        ]);
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

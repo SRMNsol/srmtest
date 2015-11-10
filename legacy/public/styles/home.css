@@ -22,6 +22,15 @@
   float: left;
   margin-left: 0;
   margin-top: 0;
+  margin-bottom: 3px;
+}
+
+#WelcomeUserBg .innerbox {
+  width: 222px;
+}
+
+#WelcomeUserBg .title1 {
+  color: #000;
 }
 
 #WelcomeUserBg p {
@@ -395,7 +404,6 @@
 }
 
 #hot-products-container {
-  background: url('../images/home_productBg.gif') no-repeat top left;
   float: left;
   height: 320px;
   width: 307px;
@@ -404,12 +412,14 @@
 }
 
 #top-stores-container {
-  background: url('../images/home_productBg.gif') no-repeat top left;
+  background-color: #fff;
   float: left;
-  height: 320px;
-  width: 307px;
+  height: 313px;
+  width: 614px;
   margin-left: 5px;
   margin-top: 5px;
+  border-radius: 10px;
+  border: 1px solid #d9d9d9;
 }
 
 #hot-coupons-container {
@@ -421,13 +431,29 @@
   margin-left: 2px;
 }
 
-#daily-deals-SIcontainer {
-  background: url('../images/Daily_DetailsSIBg.jpg') no-repeat top left;
+#guide-beesavy {
   float: left;
   height: 390px;
   width: 360px;
   margin-left: 5px;
   margin-top: 5px;
+}
+
+#guide-beesavy .inner-outerbox {
+  width: 358px;
+  min-height: 356px;
+}
+
+#guide-beesavy .video {
+  margin: 10px auto;
+  width: 213px;
+}
+
+#guide-beesavy .innerbox {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  width: 332px;
+  text-align: center;
 }
 
 #accounts-summary-container {
@@ -436,15 +462,6 @@
   width: 298px;
   margin-left: 10px;
   margin-top: 0;
-}
-
-#welcome-top-stores-container {
-  background: url('../images/welcome_TSBg.gif') no-repeat top left;
-  float: left;
-  height: 320px;
-  width: 616px;
-  margin-left: 5px;
-  margin-top: 5px;
 }
 
 .HomeDailyDeals {
@@ -724,26 +741,6 @@
   width: 100px;;
   margin: 10px 10px;
   font-size: 2em;
-}
-
-#welcome-top-stores-container .store {
-  background-repeat: no-repeat;
-  float: left;
-  height: 70px;
-  text-align: center;
-  margin-top: 10px;
-  margin-left: 10px;
-  width: 137px;
-}
-
-#welcome-top-stores-container .logo {
-  float: left;
-  text-align: center;
-  margin-top: 7px;
-  margin-bottom: 5px;
-  margin-left: 0;
-  width: 137px;
-  height: 35px;
 }
 
 #top-stores-container .store {

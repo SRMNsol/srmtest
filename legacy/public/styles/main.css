@@ -1138,7 +1138,7 @@ a.BtnShopNow:hover {
 
 
 #error {
-  HEIGHT: 250px;
+  min-height: 250px;
 }
 #error p {
   PADDING-BOTTOM: 5px;

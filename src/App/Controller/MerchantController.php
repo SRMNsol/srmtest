@@ -29,23 +29,24 @@ class MerchantController
         ]));
     }
 
-    public function editMerchant($merchantId = null, Request $request, Application $app)
+    public function editMerchant(Merchant $merchant = null, Request $request, Application $app)
     {
-        $merchant = null === $merchantId ? new Merchant() : $this->em->find('App\Entity\Merchant', $merchantId);
         $form = $app['form.factory']->create(new MerchantType(), $merchant);
-
         $form->handleRequest($request);
+
         if ($form->isValid()) {
             try {
                 $merchant = $form->getData();
                 $this->em->persist($merchant);
                 $this->em->flush();
                 $app['session']->getFlashBag()->add('success', 'Merchant updated');
-                return $app->redirect($app['url_generator']->generate('merchant_edit', ['merchantId' => $merchant->getId()]));
+
+                return $app->redirect($app['url_generator']->generate('merchant_edit', ['merchant' => $merchant->getId()]));
             } catch (\Exception $e) {
                 $app['session']->getFlashBag()->add('danger', 'Update failed');
             }
-        } elseif ($this->em->contains($merchant)) {
+        }  elseif ($this->em->contains($merchant)) {
+            // we do this to restore logo path to display, in case of invalid image uploaded in form
             $this->em->refresh($merchant);
         }
 
@@ -55,16 +56,14 @@ class MerchantController
         ]));
     }
 
-    public function deleteMerchant($merchantId, Application $app)
+    public function deleteMerchant(Merchant $merchant, Application $app)
     {
-        $merchant = $this->em->find('App\Entity\Merchant', $merchantId);
         try {
-            $merchantName = $merchant->getName();
             $this->em->remove($merchant);
             $this->em->flush();
-            $app['session']->getFlashBag()->add('success', sprintf('Merchant %s deleted', $merchantName));
+            $app['session']->getFlashBag()->add('success', sprintf('Merchant %s deleted', $merchant->getName()));
         } catch (ForeignKeyConstraintViolationException $e) {
-            $app['session']->getFlashBag()->add('danger', sprintf('Merchant %s cannot be deleted because it has related transaction data', $merchantName));
+            $app['session']->getFlashBag()->add('danger', sprintf('Merchant %s cannot be deleted because it has related transaction data', $merchant->getName()));
         } catch (\Exception $e) {
             $app['session']->getFlashBag()->add('danger', 'Delete failed');
         }

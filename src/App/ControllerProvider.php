@@ -48,6 +48,10 @@ class ControllerProvider implements ControllerProviderInterface
             return new Controller\PaymentRequestController($app['orm.em']);
         });
 
+        $app['category.controller'] = $app->share(function () use ($app) {
+            return new Controller\CategoryController($app['orm.em']->getRepository('App\Entity\Category'), $app['orm.em']);
+        });
+
         $controllers->get('/', 'main.controller:dashboard')
             ->bind('homepage');
 
@@ -57,14 +61,26 @@ class ControllerProvider implements ControllerProviderInterface
         $controllers->get('/merchant/list', 'merchant.controller:listMerchants')
             ->bind('merchant_list');
 
-        $controllers->match('/merchant/edit/{merchantId}', 'merchant.controller:editMerchant')
-            ->bind('merchant_edit');
+        $merchantConverter = function ($merchantId) use ($app) {
+            $merchant =  $app['orm.em']->find('App\Entity\Merchant', $merchantId);
+
+            if (null === $merchant) {
+                throw new NotFoundHttpException('Merchant not found');
+            }
+
+            return $merchant;
+        };
 
         $controllers->match('/merchant/create', 'merchant.controller:editMerchant')
             ->bind('merchant_create');
 
-        $controllers->post('/merchant/delete/{merchantId}', 'merchant.controller:deleteMerchant')
-            ->bind('merchant_delete');
+        $controllers->match('/merchant/edit/{merchant}', 'merchant.controller:editMerchant')
+            ->bind('merchant_edit')
+            ->convert('merchant', $merchantConverter);
+
+        $controllers->post('/merchant/delete/{merchant}', 'merchant.controller:deleteMerchant')
+            ->bind('merchant_delete')
+            ->convert('merchant', $merchantConverter);
 
         $controllers->get('/user/info', 'user_info.controller:display')
             ->bind('user_info');
@@ -79,9 +95,7 @@ class ControllerProvider implements ControllerProviderInterface
             ->bind('charity_list');
 
         $charityConverter = function ($charityId) use ($app) {
-            $charity = isset($charityId)
-                ? $app['orm.em']->find('App\Entity\Charity', $charityId)
-                : new Entity\Charity();
+            $charity =  $app['orm.em']->find('App\Entity\Charity', $charityId);
 
             if (null === $charity) {
                 throw new NotFoundHttpException('Charity not found');
@@ -90,24 +104,22 @@ class ControllerProvider implements ControllerProviderInterface
             return $charity;
         };
 
+        $controllers->match('/charity/create', 'charity.controller:editCharity')
+            ->bind('charity_create');
+
         $controllers->match('/charity/edit/{charity}', 'charity.controller:editCharity')
             ->bind('charity_edit')
-            ->value('charity', null)
-            ->assert('charity', '\d*')
             ->convert('charity', $charityConverter);
 
         $controllers->post('/charity/delete/{charity}', 'charity.controller:deleteCharity')
             ->bind('charity_delete')
-            ->assert('charity', '\d+')
             ->convert('charity', $charityConverter);
 
         $controllers->get('/statistics', 'statistics.controller:display')
             ->bind('statistics');
 
         $transactionConverter = function ($transactionId) use ($app) {
-            $transaction = isset($transactionId)
-                ? $app['orm.em']->find('App\Entity\Transaction', $transactionId)
-                : new Entity\Transaction();
+            $transaction = $app['orm.em']->find('App\Entity\Transaction', $transactionId);
 
             if (null === $transaction) {
                 throw new NotFoundHttpException('Transaction not found');
@@ -117,9 +129,7 @@ class ControllerProvider implements ControllerProviderInterface
         };
 
         $userConverter = function ($userId) use ($app) {
-            $user = isset($userId)
-                ? $app['orm.em']->find('App\Entity\User', $userId)
-                : new Entity\User();
+            $user = $app['orm.em']->find('App\Entity\User', $userId);
 
             if (null === $user) {
                 throw new NotFoundHttpException('User not found');
@@ -128,23 +138,46 @@ class ControllerProvider implements ControllerProviderInterface
             return $user;
         };
 
+        $controllers->match('/transaction/create/{user}', 'transaction.controller:editTransaction')
+            ->bind('transaction_create')
+            ->convert('user', $userConverter);
+
         $controllers->match('/transaction/edit/{user}/{transaction}', 'transaction.controller:editTransaction')
             ->bind('transaction_edit')
-            ->value('transaction', null)
-            ->assert('user', '\d+')
-            ->assert('transaction', '\d*')
             ->convert('user', $userConverter)
             ->convert('transaction', $transactionConverter);
 
-        $controllers->match('/transaction/delete/{user}/{transaction}', 'transaction.controller:deleteTransaction')
+        $controllers->post('/transaction/delete/{user}/{transaction}', 'transaction.controller:deleteTransaction')
             ->bind('transaction_delete')
-            ->assert('user', '\d+')
-            ->assert('transaction', '\d+')
             ->convert('user', $userConverter)
             ->convert('transaction', $transactionConverter);
 
         $controllers->match('/payment-request', 'payment_request.controller:display')
             ->bind('payment_request');
+
+        $categoryConverter = function ($categoryId) use ($app) {
+            $category = $app['orm.em']->find('App\Entity\Category', $categoryId);
+
+            if ($category === null) {
+                throw new NotFoundHttpException('Invalid category id');
+            }
+
+            return $category;
+        };
+
+        $controllers->get('/category/list', 'category.controller:listCategories')
+            ->bind('category_list');
+
+        $controllers->match('/category/edit/{category}', 'category.controller:editCategory')
+            ->bind('category_edit')
+            ->convert('category', $categoryConverter);
+
+        $controllers->match('/category/create', 'category.controller:editCategory')
+            ->bind('category_create');
+
+        $controllers->post('/category/delete/{category}', 'category.controller:deleteCategory')
+            ->bind('category_delete')
+            ->convert('category', $categoryConverter);
 
         return $controllers;
     }

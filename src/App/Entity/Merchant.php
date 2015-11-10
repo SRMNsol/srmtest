@@ -2,9 +2,6 @@
 
 namespace App\Entity;
 
-use Popshops\Merchant as BaseMerchant;
-use Popshops\MerchantCommissionShareTrait;
-use Popshops\SubidTrait;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
@@ -17,17 +14,60 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="MerchantRepository")
- * @ORM\AttributeOverrides({
- *   @ORM\AttributeOverride(name="commissionType", column=@ORM\Column(length=20)),
- *   @ORM\AttributeOverride(name="popshopsId", column=@ORM\Column(type="integer", nullable=true, unique=true)),
- *   @ORM\AttributeOverride(name="networkMerchantId", column=@ORM\Column(type="integer", nullable=true))
- * })
  */
-class Merchant extends BaseMerchant implements GroupSequenceProviderInterface
+class Merchant implements GroupSequenceProviderInterface
 {
-    use MerchantCommissionShareTrait;
-    use SubidTrait;
     use FileTrait;
+
+    /**
+     * @ORM\Id @ORM\Column(type="integer") @ORM\GeneratedValue
+     */
+    protected $id;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true, unique=true)
+     */
+    protected $popshopsId;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    protected $networkMerchantId;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Category", inversedBy="merchants")
+     */
+    protected $category;
+
+    /**
+     * @ORM\Column
+     */
+    protected $name;
+
+    /**
+     * @ORM\Column(nullable=true)
+     */
+    protected $url;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    protected $description;
+
+    const COMMISSION_TYPE_FIXED = 'fixed';
+    const COMMISSION_TYPE_PERCENTAGE = 'percentage';
+    const COMMISSION_TYPE_FIXED_VAR = 'fixed_var';
+    const COMMISSION_TYPE_PERCENTAGE_VAR = 'percentage_var';
+
+    /**
+     * @ORM\Column(length=20)
+     */
+    protected $commissionType = self::COMMISSION_TYPE_FIXED;
+
+    /**
+     * @ORM\Column(type="decimal", scale=2)
+     */
+    protected $commission = 0.00;
 
     /**
      * @ORM\Column(type="decimal", scale=2)
@@ -40,6 +80,16 @@ class Merchant extends BaseMerchant implements GroupSequenceProviderInterface
     protected $alternativeName;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Network", inversedBy="merchants")
+     */
+    protected $network;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Transaction", mappedBy="merchant")
+     */
+    protected $transactions;
+
+    /**
      * @ORM\Column(nullable=true)
      */
     protected $logoPath;
@@ -47,11 +97,6 @@ class Merchant extends BaseMerchant implements GroupSequenceProviderInterface
     protected $logoFile;
 
     protected $uploadedLogoHash;
-
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    protected $skipLogoUpdate = false;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
@@ -73,8 +118,106 @@ class Merchant extends BaseMerchant implements GroupSequenceProviderInterface
      */
     protected $active = false;
 
-    const COMMISSION_TYPE_FIXED_VAR = 'fixed_var';
-    const COMMISSION_TYPE_PERCENTAGE_VAR = 'percentage_var';
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public function getPopshopsId()
+    {
+        return $this->popshopsId;
+    }
+
+    public function setPopshopsId($id)
+    {
+        $this->popshopsId = (int) $id;
+
+        return $this;
+    }
+
+    public function getNetworkMerchantId()
+    {
+        return $this->networkMerchantId;
+    }
+
+    public function setNetworkMerchantId($id)
+    {
+        $this->networkMerchantId = (int) $id;
+
+        return $this;
+    }
+
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+    public function setCategory(Category $category = null)
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    public function getUrl()
+    {
+        return $this->url;
+    }
+
+    public function setUrl($url)
+    {
+        $this->url = $url;
+
+        return $this;
+    }
+
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    public function setDescription($text)
+    {
+        $this->description = $text;
+
+        return $this;
+    }
+
+    public function getCommissionType()
+    {
+        return $this->commissionType;
+    }
+
+    public function setCommissionType($value)
+    {
+        $this->commissionType = $value;
+
+        return $this;
+    }
+
+    public function getCommission()
+    {
+        return $this->commission;
+    }
+
+    public function setCommission($value)
+    {
+        $this->commission = (float) $value;
+
+        return $this;
+    }
 
     public function getCommissionMax()
     {
@@ -98,6 +241,62 @@ class Merchant extends BaseMerchant implements GroupSequenceProviderInterface
         $this->alternativeName = $name;
 
         return $this;
+    }
+
+    /**
+     * Set network
+     *
+     * @param Network $network
+     * @return Merchant
+     */
+    public function setNetwork(Network $network = null)
+    {
+        $this->network = $network;
+
+        return $this;
+    }
+
+    /**
+     * Get network
+     *
+     * @return Network
+     */
+    public function getNetwork()
+    {
+        return $this->network;
+    }
+
+    /**
+     * Add transactions
+     *
+     * @param Transaction $transactions
+     * @return Merchant
+     */
+    public function addTransaction(Transaction $transaction)
+    {
+        $this->transactions[] = $transaction;
+
+        return $this;
+    }
+
+    /**
+     * Remove transactions
+     *
+     * @param Transaction $transaction
+     */
+    public function removeTransaction(Transaction $transaction)
+    {
+        $this->transactions->removeElement($transaction);
+    }
+
+    /**
+     * Get transactions
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getTransactions()
+    {
+        return $this->transactions;
     }
 
     public function getDisplayName()
@@ -135,6 +334,29 @@ class Merchant extends BaseMerchant implements GroupSequenceProviderInterface
         }
 
         return $amount;
+    }
+
+    public function getCommissionSharePercentage($sharePct = 100)
+    {
+        if ($this->commissionType === self::COMMISSION_TYPE_PERCENTAGE) {
+            return $this->commissionType * ($sharePct / 100);
+        }
+
+        return 0;
+    }
+
+    public function getCommissionShareFixed($sharePct = 100)
+    {
+        if ($this->commissionType === self::COMMISSION_TYPE_FIXED) {
+            return $this->commissionType * ($sharePct / 100);
+        }
+
+        return 0;
+    }
+
+    public function calculateFinalPrice($price, $sharePct = 100)
+    {
+        return $price - $this->calculateCommissionShareAmount($price, $sharePct);
     }
 
     public function getCommissionShareText($sharePct = 100, $currency = '$', $rangeTemplate = ':min-:max')
@@ -223,7 +445,6 @@ class Merchant extends BaseMerchant implements GroupSequenceProviderInterface
             'minHeight'     => 10,
             'allowPortrait' => false,
             'allowSquare'   => false,
-            'groups'        => ['logo'],
         ]));
 
         $metadata->addPropertyConstraint('clickoutUrl', new Assert\Regex([
@@ -246,8 +467,6 @@ class Merchant extends BaseMerchant implements GroupSequenceProviderInterface
         ) {
             $groups[] = 'percentage';
         }
-
-        $groups[] = 'logo';
 
         return $groups;
     }
@@ -323,27 +542,6 @@ class Merchant extends BaseMerchant implements GroupSequenceProviderInterface
     }
 
     /**
-     * Relative path to logo download directory from
-     * download root directory
-     */
-    protected function getLogoDownloadDir()
-    {
-        return 'logo';
-    }
-
-    /**
-     * Return File from url.
-     *
-     * Cannot validate file existence due to http stream limitation
-     */
-    public function getOriginalLogo()
-    {
-        if (null !== $this->logoUrl) {
-            return new File($this->logoUrl, false);
-        }
-    }
-
-    /**
      * Return File from logo absolute path
      */
     public function getCurrentLogo()
@@ -381,20 +579,6 @@ class Merchant extends BaseMerchant implements GroupSequenceProviderInterface
         }
 
         return false;
-    }
-
-    /**
-     * Download original logo to download directory
-     */
-    public function downloadOriginalLogo()
-    {
-        $original = $this->getOriginalLogo();
-        if (null === $original) {
-            return;
-        }
-
-        $name = uniqid($this->getSlug().'_');
-        return $this->download($original, $name, $this->getLogoDownloadDir());
     }
 
     /**
@@ -439,16 +623,6 @@ class Merchant extends BaseMerchant implements GroupSequenceProviderInterface
     public function getLogoFile()
     {
         return $this->logoFile;
-    }
-
-    public function setSkipLogoUpdate($value)
-    {
-        $this->skipLogoUpdate = (boolean) $value;
-    }
-
-    public function getSkipLogoUpdate()
-    {
-        return $this->skipLogoUpdate;
     }
 
     public function setLogoUpdatedAt(\DateTime $date = null)
@@ -555,5 +729,12 @@ class Merchant extends BaseMerchant implements GroupSequenceProviderInterface
         $this->active = (boolean) $value;
 
         return $this;
+    }
+
+    public function getTrackingUrl(Subid $subid = null)
+    {
+        $param = isset($subid) ? $subid->encode() : '';
+
+        return str_replace('{SUBID}', $param, $this->clickoutUrl);
     }
 }

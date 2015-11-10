@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Form\FormFactory;
 use Doctrine\ORM\EntityManager;
 use App\Entity\Charity;
+use App\Form\CharityType;
 
 class CharityController
 {
@@ -31,16 +32,15 @@ class CharityController
         ]);
     }
 
-    public function editCharity(Charity $charity, Request $request, Application $app)
+    public function editCharity(Charity $charity = null, Request $request, Application $app)
     {
-        $form = $app['form.factory']->createBuilder('form', $charity)
-            ->add('name')
-            ->getForm();
+        $form = $app['form.factory']->create(new CharityType(), $charity);
 
         $form->handleRequest($request);
 
         if ($form->isValid()) {
             try {
+                $charity = $form->getData();
                 $app['orm.em']->persist($charity);
                 $app['orm.em']->flush();
 
@@ -58,17 +58,12 @@ class CharityController
 
     public function deleteCharity(Charity $charity, Request $request, Application $app)
     {
-        $form = $app['form.factory']->createBuilder('form', $charity)->getForm();
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
-            try {
-                $app['orm.em']->remove($charity);
-                $app['orm.em']->flush();
-                $app['session']->getFlashBag()->add('success', sprintf('Charity %s deleted', $charity->getName()));
-            } catch (\Exception $e) {
-                $app['session']->getFlashBag()->add('danger', 'Delete failed');
-            }
+        try {
+            $app['orm.em']->remove($charity);
+            $app['orm.em']->flush();
+            $app['session']->getFlashBag()->add('success', sprintf('Charity %s deleted', $charity->getName()));
+        } catch (\Exception $e) {
+            $app['session']->getFlashBag()->add('danger', 'Delete failed');
         }
 
         return $app->redirect($app['url_generator']->generate('charity_list'));

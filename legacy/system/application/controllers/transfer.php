@@ -1,13 +1,14 @@
 <?php
 /**
+ * Transfer (click out) controller
  */
 class Transfer extends Controller
 {
     protected $container;
 
-    public function Transfer()
+    public function __construct()
     {
-        parent::Controller();
+        parent::__construct();
         $this->load->model('user');
         $this->load->model('admin');
         $this->load->helper('url_helper');
@@ -34,9 +35,9 @@ class Transfer extends Controller
             $logged_in = $this->user->login_status();
             $skip = $this->uri->segment(4);
             if ($skip || $logged_in) {
-                $this->$type($id);
+                $this->store($id);
             } else {
-                $this->guest($type, $id);
+                $this->guest($id);
             }
         }
     }
@@ -93,23 +94,18 @@ class Transfer extends Controller
         }
     }
 
-    public function guest($type, $id)
+    public function guest($id)
     {
-        if ($type == "store") {
-            $data = $this->getMerchantData($id);
-        } elseif ($type == "product") {
-            $data = $this->getProductData($id);
-        } elseif ($type == "coupon") {
-            $data = $this->getDealData($id);
-        } elseif ($type == "deal") {
-            $data = $this->getDealData($id);
-        } else {
+        $data = $this->getMerchantData($id);
+
+        if ($data === null) {
             show_404();
         }
+
         $data['code'] = $this->input->get('codes');
         $data['codes'] = explode(",",$this->input->get('codes'));
         $data['errors'] = $this->code->get_errors($data['codes']);
-        $data['type']= $type;
+        $data['type']= 'store';
         $data['type_id'] = $id;
         $data['referral'] = $this->db_session->userdata('referral');
         $this->parser->parse('transfer/guest', $data);
@@ -117,112 +113,28 @@ class Transfer extends Controller
 
     public function store($id)
     {
-        $store = $this->getMerchantData($id);
-        $store['cookie_url'] = $store['url'];
-        $store['destination_url'] = $store['cookie_url'];
-        $this->parser->parse('transfer/store', $store);
-    }
+        $data = $this->getMerchantData($id);
 
-    public function product($id)
-    {
-        $product = $this->getProductData($id);
-        $product['cookie_url'] = $product['url'];
-        $product['destination_url'] = $product['url'];
-        $this->parser->parse('transfer/product', $product);
-    }
-
-    public function coupon($id)
-    {
-        $coupon = $this->getDealData($id);
-        $coupon['cookie_url'] = $coupon['url'];
-        $coupon['destination_url'] = $coupon['url'];
-        $this->parser->parse('transfer/coupon', $coupon);
-    }
-
-    public function deal($id)
-    {
-        $deal = $this->getDealData($id);
-        $deal['cookie_url'] = $deal['url'];
-        $deal['destination_url'] = $deal['url'];
-        $deal['final_amount'] = 0.00;
-        $this->parser->parse('transfer/deal', $deal);
-    }
-
-    protected function getProductData($id)
-    {
-        $client = $this->container['popshops.client'];
-        $catalogs = $this->container['popshops.catalog_keys'];
-        $rate = $this->container['orm.em']->getRepository('App\Entity\Rate')->getCurrentRate();
-        $subid = create_subid($this->user_id);
-
-        list($productGroupId, $productId) = explode('-', $id);
-        $params = [];
-        if (strpos($productGroupId, '0') === 0) {
-            $params['product_id'] = $productId;
-        } else {
-            $params['product_group_id'] = $productGroupId;
+        if ($data === null) {
+            show_404();
         }
 
-        $product = current(array_filter(
-            comparison_result(
-                $client->findProducts($catalogs['all_stores'], null, $params),
-                $rate,
-                $subid
-            ),
-            function ($item) use ($productId) {
-                if ($item['id'] == $productId) {
-                    return $item;
-                }
-            }
-        ));
-
-        return $product;
+        $data['cookie_url'] = $data['url'];
+        $data['destination_url'] = $data['cookie_url'];
+        $this->parser->parse('transfer/store', $data);
     }
 
     protected function getMerchantData($id)
     {
-        $client = $this->container['popshops.client'];
-        $catalogs = $this->container['popshops.catalog_keys'];
-        $rate = $this->container['orm.em']->getRepository('App\Entity\Rate')->getCurrentRate();
-        $subid = create_subid($this->user_id);
-        $merchant = $this->container['orm.em']->find('App\Entity\Merchant', $id);
+        $merchant = $this->container['orm.em']->getRepository('App\Entity\Merchant')->getActiveMerchant($id);
 
-        $result = current(
-            result_merchants(
-                $client->findMerchants($catalogs['all_stores'], ['merchant_id' => $merchant->getPopshopsId()])->getMerchants(),
-                $rate,
-                $subid
-            )
-        );
+        if ($merchant === null) {
+            return;
+        }
 
-        return $result;
-    }
-
-    protected function getDealData($id)
-    {
-        $client = $this->container['popshops.client'];
-        $catalogs = $this->container['popshops.catalog_keys'];
         $rate = $this->container['orm.em']->getRepository('App\Entity\Rate')->getCurrentRate();
         $subid = create_subid($this->user_id);
 
-        list($dealId, $merchantId) = explode('-', $id);
-
-        $merchant = $this->container['orm.em']->find('App\Entity\Merchant', $merchantId);
-
-        $deal = current(
-            result_deals(
-                $client->findMerchants($catalogs['all_stores'], ['merchant_id' => $merchant->getPopshopsId()])
-                    ->getDeals()
-                    ->filter(function ($deal) use ($dealId) {
-                        if ($deal->getId() == $dealId) {
-                            return $deal;
-                        }
-                    }),
-                $rate,
-                $subid
-            )
-        );
-
-        return $deal;
+        return current(result_merchants([$merchant], $rate, $subid));
     }
 }

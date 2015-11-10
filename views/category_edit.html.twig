@@ -1,0 +1,18 @@
+{% extends 'common/layout.html.twig' %}
+
+{% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
+
+{% block content %}
+<div class="page-header">
+  <h1>Merchant Category</h1>
+</div>
+
+<div class="row">
+  <div class="col-md-9">
+    {{ form(form) }}
+  </div>
+  <div class="col-md-3">
+    <a class="btn btn-default pull-right" href="{{ path('category_list') }}">See all categories</a>
+  </div>
+</div>
+{% endblock content %}

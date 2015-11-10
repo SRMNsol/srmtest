@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Assets;
+namespace App\Entity;
 
 use Doctrine\ORM\Events;
 use Doctrine\Common\EventSubscriber;
@@ -9,13 +9,11 @@ use App\Entity\Merchant;
 
 class LogoEventSubscriber implements EventSubscriber
 {
-    protected $downloadRootDir;
     protected $uploadRootDir;
     protected $uploadRootUrl;
 
-    public function __construct($downloadRootDir, $uploadRootDir, $uploadRootUrl)
+    public function __construct($uploadRootDir, $uploadRootUrl)
     {
-        $this->downloadRootDir = $downloadRootDir;
         $this->uploadRootDir = $uploadRootDir;
         $this->uploadRootUrl = $uploadRootUrl;
     }
@@ -25,7 +23,6 @@ class LogoEventSubscriber implements EventSubscriber
      */
     protected function updatePaths(Merchant $merchant)
     {
-        $merchant->setDownloadRootDir($this->downloadRootDir);
         $merchant->setUploadRootDir($this->uploadRootDir);
         $merchant->setUploadRootUrl($this->uploadRootUrl);
     }

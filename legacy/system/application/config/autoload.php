@@ -39,7 +39,7 @@
 |	$autoload['libraries'] = array('database', 'session', 'xmlrpc');
 */
 
-$autoload['libraries'] = array('database', 'parser', 'db_session', 'cache', 'PopshopsCache');
+$autoload['libraries'] = array('database', 'parser', 'db_session', 'cache', 'DefaultCache');
 
 
 /*

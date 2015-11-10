@@ -46,7 +46,7 @@ foreach($states as $state=>$value){
                         <li><a href="/info/lm_cashback">Cash Back</a></li>
                         <li><a href="/info/lm_compare">Compare Prices</a></li>
                         <li><a href="/info/lm_shop">Shop By Store</a></li>
-                        <li><a href="/info/lm_coupon">Coupon Savings</a></li>
+                        <li><a href="/info/lm_guide">Build Your Hive</a></li>
                         <li><a href="/info/lm_referral" >Referral Cash Back</a></li>
                         <li><a href="/info/lm_join">Join For Free</a></li>
                     </ul>

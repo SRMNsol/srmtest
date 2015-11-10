@@ -1,17 +1,18 @@
 <?php
 /**
+ * Help pages controller
  */
 class Info extends Controller
 {
-    public function Info()
+    public function __construct()
     {
-        parent::Controller();
+        parent::__construct();
         $this->load->library('beesavy');
         $this->load->model('emailer');
         $this->data = array();
         $info = end($this->uri->segments);
         $this->data = $this->blocks->getBlocks();
-        $this->data['side_nav'] = $this->parser->parse('blocks/side_bar',array('info'=>$info), TRUE);
+        $this->data['side_nav'] = $this->parser->parse('blocks/side_bar', ['info' => $info], true);
 
         $this->load->helper('bridge');
         $this->container = silex();
@@ -34,10 +35,14 @@ class Info extends Controller
         if ($error == 1) {
             $this->data['error'] = "Incorrect Captcha - Please Try Again";
         }
-        $store_list = $this->_get_list();
+
+        $rate = $this->container['orm.em']->getRepository('App\Entity\Rate')->getCurrentRate();
+        $merchants = $this->container['orm.em']->getRepository('App\Entity\Merchant')->getActiveMerchants();
+        $stores = result_merchants($merchants, $rate);
+
         $this->load->library('recaptcha');
         $this->data['recaptcha_html'] = $this->recaptcha->recaptcha_get_html();
-        $this->data['store_list'] = $store_list;
+        $this->data['store_list'] = $stores;
         $this->parser->parse('info/contact', $this->data);
     }
 
@@ -45,54 +50,67 @@ class Info extends Controller
     {
         $this->parser->parse('info/faq', $this->data);
     }
+
     public function privacy()
     {
         $this->parser->parse('info/privacy', $this->data);
     }
+
     public function aboutus()
     {
         $this->parser->parse('info/aboutus', $this->data);
     }
+
     public function how()
     {
         $this->parser->parse('info/how', $this->data);
     }
+
     public function terms()
     {
         $this->parser->parse('info/terms', $this->data);
     }
+
     public function lm_cashback()
     {
         $this->parser->parse('info/lm_cashback', $this->data);
     }
+
     public function lm_compare()
     {
         $this->parser->parse('info/lm_compare', $this->data);
     }
-    public function lm_coupon()
+
+    public function lm_guide()
     {
-        $this->parser->parse('info/lm_coupon', $this->data);
+        $this->parser->parse('info/lm_guide', $this->data);
     }
+
     public function lm_join()
     {
         $this->parser->parse('info/lm_join', $this->data);
     }
+
     public function lm_overview()
     {
         $this->parser->parse('info/lm_overview', $this->data);
     }
+
     public function lm_referral()
     {
         $this->parser->parse('info/lm_referral', $this->data);
     }
+
     public function lm_shop()
     {
         $this->parser->parse('info/lm_shop', $this->data);
     }
+
     public function makehome()
     {
         $this->parser->parse('info/makehome', array());
     }
+
     public function contact_submit()
     {
         $this->load->library('recaptcha');
@@ -100,16 +118,16 @@ class Info extends Controller
         $this->recaptcha->recaptcha_check_answer($_SERVER['REMOTE_ADDR'],$this->input->post('recaptcha_challenge_field'),$this->input->post('recaptcha_response_field'));
         if ($this->recaptcha->is_valid) {
             $name = $this->input->post('name');
-            $email =$this->input->post('email');
+            $email = $this->input->post('email');
             $subject = $this->input->post('subject');
             $message = $this->input->post('message');
-            $data = array(
-                'name'=>$name,
-                'email'=>$email,
-                'subject'=>$subject,
-                'message'=>$message
-            );
-            if ($subject == "Where is My Cash Back?") {
+            $data = [
+                'name' => $name,
+                'email' => $email,
+                'subject' => $subject,
+                'message' => $message
+            ];
+            if ($subject === "Where is My Cash Back?") {
                 $order_num = $this->input->post('order_number');
                 $store = $this->input->post('store_name');
                 $subtotal = $this->input->post('purchase_subtotal');
@@ -121,39 +139,24 @@ class Info extends Controller
                 $data['subtotal'] = $subtotal;
                 $data['store'] = $store;
                 $data['order_num'] = $order_num;
-                $msg = $this->parser->parse('email/missing_cashback', $data, True);
-                $tmsg = $this->parser->parse('email/missing_cashback', $data, True);
-                $this->emailer->sendMessage($msg,$tmsg, $email,"Contact us: $subject");
-                $this->emailer->sendMessage($msg,$tmsg, "help@beesavy.com","Contact us: $subject");
+                $msg = $this->parser->parse('email/missing_cashback', $data, true);
+                $tmsg = $this->parser->parse('email/missing_cashback', $data, true);
+                $this->emailer->sendMessage($msg, $tmsg, $email, "Contact us: $subject");
+                $this->emailer->sendMessage($msg, $tmsg, "help@beesavy.com", "Contact us: $subject");
             } else {
                 $msg = $this->parser->parse('email/incomplete', $data, True);
                 $tmsg = $this->parser->parse('email/incompletet', $data, True);
                 if ($subject == "Biz dev/advertising/media") {
-                $this->emailer->sendMessage($msg,$tmsg, $email,"Contact us: $subject");
-                $this->emailer->sendMessage($msg,$tmsg, "rhoner@beesavy.com","Contact us: $subject");
+                    $this->emailer->sendMessage($msg, $tmsg, $email,"Contact us: $subject");
+                    $this->emailer->sendMessage($msg, $tmsg, "rhoner@beesavy.com", "Contact us: $subject");
                 } else {
-                $this->emailer->sendMessage($msg,$tmsg, $email,"Contact us: $subject");
-                $this->emailer->sendMessage($msg,$tmsg, "help@beesavy.com", "Contact us: $subject");
+                    $this->emailer->sendMessage($msg, $tmsg, $email,"Contact us: $subject");
+                    $this->emailer->sendMessage($msg, $tmsg, "help@beesavy.com", "Contact us: $subject");
                 }
             }
             redirect("info/contact?success=1");
         } else {
             redirect("info/contact?error=1");
         }
-    }
-
-    public function _get_list()
-    {
-        $client = $this->container['popshops.client'];
-        $catalogs = $this->container['popshops.catalog_keys'];
-        $rate = $this->container['orm.em']->getRepository('App\Entity\Rate')->getCurrentRate();
-
-        $merchants = $client
-            ->findMerchants($catalogs['all_stores'])
-            ->getMerchants()
-            ->sortByMerchantName();
-        $stores = result_merchants($merchants, $rate);
-
-        return $stores;
     }
 }

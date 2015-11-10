@@ -3,9 +3,9 @@
 if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 /**
- * Caching library using common popshops.cache_storage implementation
+ * Caching library using cache.default_storage implementation
  */
-class PopshopsCache
+class DefaultCache
 {
     protected $ci;
     protected $storage;
@@ -15,7 +15,7 @@ class PopshopsCache
         $this->ci = get_instance();
         $this->ci->load->helper('bridge');
         $container = silex();
-        $this->storage = $container['popshops.cache_storage'];
+        $this->storage = $container['cache.default_storage'];
     }
 
     /**

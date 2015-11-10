@@ -8,16 +8,13 @@ class MerchantRepositoryTest extends OrmTestCase
     public function testGetTopStores()
     {
         $merchant1 = new Merchant();
-        $merchant1->setId(1);
         $merchant1->setNetworkMerchantId('111');
         $merchant1->setName('Merchant 1');
 
         $merchant2 = new Merchant();
         $merchant2->setTopStore(true);
-        $merchant2->setId(2);
         $merchant2->setNetworkMerchantId('222');
         $merchant2->setName('Merchant 2');
-
 
         $this->em->persist($merchant1);
         $this->em->persist($merchant2);

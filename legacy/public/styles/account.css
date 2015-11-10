@@ -821,7 +821,6 @@ a:hover.share {
   margin-left: 10px;
   margin-top: 10px;
   font-weight: bold;
-  float: left;
 }
 
 .FAQtitle2 {
@@ -841,20 +840,19 @@ a:hover.share {
   background-image: -webkit-linear-gradient(#bbe5d9, #78ccb4);
   background-image:         -webkit-gradient(linear, left top, left bottom, from(#bbe5d9), to(#78ccb4));
   background-image:         linear-gradient(#bbe5d9, #78ccb4);
-  height: 35px;
+  height: 30px;
   width: 100%;
   border-radius: 5px 5px 0 0;
 }
 
 .outerbox {
-  background: #e9e8e8;
+  background: #fff;
   width: 300px;
   border: 1px solid #d9d9d9;
   float: left;
-  margin-top: -5px;
-     -moz-border-radius: 0 0 10px 10px;
-  -webkit-border-radius: 0 0 10px 10px;
-  border-top-right-radius: 0;
+  margin-top: -4px;
+  border-radius: 0 0 10px 10px;
+  min-height: 356px;
 }
 
 .CurveBox {
@@ -868,25 +866,19 @@ a:hover.share {
 }
 
 .inner-outerbox {
-  background: #e9e8e8;
+  background: #fff;
   width: 248px;
   border: 1px solid #d9d9d9;
   float: left;
-  margin-top: -5px;
-     -moz-border-radius: 0 0 10px 10px;
-  -webkit-border-radius: 0 0 10px 10px;
-  border-top-right-radius: 0;
+  border-radius: 0 0 10px 10px;
 }
+
 .innerbox {
   background: #f4f2f2;
-  width: 92%;
+  margin: 10px auto;
   border: 1px solid #d9d9d9;
-  float: left;
-  margin-left: 2%;
-  margin-top: 2%;
   padding: 3px;
-     -moz-border-radius: 10px 10px 10px 10px;
-  -webkit-border-radius: 1px 10px 10px 10px;
+  border-radius: 10px 10px 10px 10px;
 }
 
 .TotalBox {
@@ -894,6 +886,10 @@ a:hover.share {
   border: 0 solid #c00;
   float: right;
   margin-top: 5px;
+}
+
+.TotalBox .innerbox {
+  width: 274px;
 }
 
 .GraphicBox {
@@ -1126,14 +1122,7 @@ a:hover.share {
   font-size: 1.2em;
   float: left;
   width: 100%;
-  borer: 1px solid #000;
-  margin-top: 10px;
-}
-
-.innerbox a {
-  text-decoration: underline;
-  color: #000;
-  font-size: .9em;
+  margin-bottom: 10px;
 }
 
 .innerbox input[type='text'] {

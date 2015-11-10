@@ -41,7 +41,7 @@ class LogoManagerTest extends OrmTestCase
     public function testValidateLogo()
     {
         $merchant = new App\Entity\Merchant();
-        $merchant->setId(1);
+        //$merchant->setId(1);
         $merchant->setNetworkMerchantId(1);
         $merchant->setName('Store 123');
         $merchant->setUploadRootDir(vfsStream::url('root/web'));
@@ -75,8 +75,6 @@ class LogoManagerTest extends OrmTestCase
     public function testUpdateLogo()
     {
         $merchant = new App\Entity\Merchant();
-        $merchant->setId(1);
-        $merchant->setNetworkMerchantId(1);
         $merchant->setName('Store 123');
         $merchant->setLogoUrl(vfsStream::url('root/download/valid.gif'));
         $merchant->setUploadRootDir(vfsStream::url('root/web'));

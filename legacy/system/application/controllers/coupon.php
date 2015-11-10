@@ -44,11 +44,8 @@ class Coupon extends Controller
         if (!$limit) {$limit=25;}
 
         //Run the search query
-        $client = $this->container['popshops.client'];
-        $catalogs = $this->container['popshops.catalog_keys'];
         $rate = $this->container['orm.em']->getRepository('App\Entity\Rate')->getCurrentRate();
 
-        $catalogKey = $catalogs['all_stores'];
         $params = [
             'deal_limit' => $limit,
             'deal_offset' => ($page - 1) * 25,
@@ -64,14 +61,12 @@ class Coupon extends Controller
                 ];
                 break;
             case 'hot_coupons' :
-                $catalogKey = $catalogs['hot_coupons'];
                 break;
         }
 
-        $result = $client->findDeals($catalogKey, $params);
-        $stores = result_merchants($result->getMerchants()->sortByMerchantName(), $rate);
-        $count = $result->getDeals()->getTotalCount();
-        $coupons = result_deals($result->getDeals(), $rate);
+        $stores = [];
+        $count = 0;
+        $coupons = [];
 
         foreach ($coupons as &$coupon) {
             if ($coupon['code']) {

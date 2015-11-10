@@ -13,7 +13,7 @@
 
 		<div id="pageTitle">
 		<div id="pageTitleLeft"></div>
-		<h1>We Found {count} Products Matching "{category_name}"</h1>
+		<h1>We Found {count} Stores Matching "{category_name}"</h1>
 		<div id="pageTitleRight"></div>
 	</div>
    		<!-- /page Title -->
@@ -23,7 +23,6 @@
                 <div class="BGLeftCol">
 <div id="facetNav">
 <div id="category">
-	<form id="facetForm" name="facetForm" action="//categories?category=62" method="get">
     <div class="facet" >
     	<div id="category-bt" class="cat-bg">
         <div id="cat-left-curve"><img src="<?php echo s3path("/images/cat-left-curve.jpg") ?>" width="4" height="35" alt="** PLEASE DESCRIBE THIS IMAGE **"/></div>
@@ -33,24 +32,6 @@
 
     <div id="category-bg">
 
-                        <div class="sub-category-txt">Brand</div>
-        <div id="sub-category-bg">
-
-    <div class="child">
-            		<div class="holder osX">
-						<div id="pane1" class="scroll-pane">
-        <ul>
-            <li><a href="<?php echo escape('/product/category/?' . http_build_query(['category' => $category]), 'html_attr') ?>">All</a></li>
-            <?php foreach ($brands as $item) : ?>
-            <?php $brand_url = '/product/category/?' . http_build_query(['category' => $category, 'brand' => $item['id']]) ?>
-            <li><a href="<?php echo escape($brand_url, 'html_attr') ?>"><?php echo escape($item['name']) ?></a> <span class="count">(<?php echo escape($item['count'])?>)</span></li>
-            <?php endforeach ?>
-        </ul>
-                                    </div></div>
-                <br style="clear: both;"/>
-    </div>
-</div>
-          </form>
                   <div style="clear:both;height:10px;">	</div>
 
 
@@ -63,8 +44,8 @@
 
 <ul class="bullets">
 <?php foreach ($categories as $item) : ?>
-<?php $category_url = '/product/category?' . http_build_query(['category' => $item['id'], 'brand' => $brand]) ?>
-<li style="padding-left:5px;"><a href="<?php echo escape($category_url, 'html_attr') ?>"><?php echo escape($item['name']) ?></a> <span class="count">(<?php echo escape($item['count']) ?>)</span></li>
+<?php $category_url = '/product/category?' . http_build_query(['category' => $item['id']]) ?>
+<li style="padding-left:5px;"><a href="<?php echo escape($category_url, 'html_attr') ?>"><?php echo escape($item['name']) ?></a></li>
 <?php endforeach ?>
 </ul>
 
@@ -101,54 +82,6 @@
 	</div>
 {/stores}
     </div>
-		    		    <div id="refine">
-                <div id="sort"><label>Sort By:</label>&nbsp;&nbsp;
-                <select name="sort" id="sortField">
-                    <option value="">Relevance</option>
-                    <option value="price_asc" >Price (Lowest)</option>
-                    <option value="price_desc" >Price (Highest)</option>
-                </select>
-                </div>
-
-
-            </div>
-
-<?php $index = 0; ?>
-<?php $ad = 0; ?>
-<?php foreach ($products as $product) : ?>
-    <?php if ($index === $ad) : ?>
-    <div style="float:right;margin-right:-24px;border:0px solid #000;"><!--
-    <script type='text/javascript'>
-        OA_show(11);
-    </script><noscript><a target='_blank' href='http://50.16.95.24/openx/www/delivery/ck.php?n=a88fd39'><img border='0' alt='' src='http://50.16.95.24/openx/www/delivery/avw.php?zoneid=11&amp;n=a88fd39' /></a></noscript>
-    <!--<img src="<?php echo s3path("/images/rightbanner.jpg") ?>">-->
-    </div>
-    <?php endif ?>
-    <div class="productResult inactive">
-        <?php $compare_url = '/product/compare/' . ($product['groupID'] ?: '0' . $product['id'])  ?>
-        <input name="group_id" value="<?php echo escape($product['groupID'], 'html_attr') ?>" type="hidden"/>
-        <div class="thumb">
-            <a href="<?php echo escape($compare_url, 'html_attr') ?>">
-                <img class="cdn-image" src="<?php echo escape($product['image'], 'html_attr') ?>" alt="** PLEASE DESCRIBE THIS IMAGE **" onerror="this.src="<?php echo s3path("/images/no-image-100px.gif") ?>""/>
-            </a>
-        </div>
-        <div class="pInfo">
-            <h3>
-            <a href="<?php echo escape($compare_url, 'html_attr') ?>" title="<?php echo escape($product['name'], 'html_attr') ?>">
-                <?php echo escape($product['name-abrv']) ?></a>
-            </h3>
-            <span class="desc"><?php echo escape($product['description-abrv']) ?> <a href="<?php echo escape($compare_url, 'html_attr') ?>" class="more">more ›</a></span>
-        </div>
-        <div class="CtA">
-            <span class="details">from</span> <a href="<?php echo escape($compare_url, 'html_attr') ?>" class="price">$<?php echo escape($product['lowprice']) ?></a><br/>
-            <div class="BtnOrangeBg BtnComparePrice">
-                <a class="button" href="<?php echo escape($compare_url, 'html_attr')  ?>" rel="nofollow">COMPARE PRICES</a>
-            </div>
-            <span class="details">available at <a href="<?php echo escape($compare_url, 'html_attr') ?>"><?php echo escape($product['numchildproducts']) ?> stores</a></span>
-        </div>
-    </div>
-<?php $index++ ?>
-<?php endforeach ?>
 </div>
 
 
@@ -159,16 +92,12 @@
       <div style="clear: both;"></div>
 <script type="text/javascript">
     $(function() {
-        $("#sortField").val('{sort}');
-
         $("input.facet-value").bind("click", function(){
             var input = this;
             var baseurl = '<?php $query = $query_string['search'];
                 $base_url = "/product/category?q=$query";
                 if($query_string['page'])
                    $base_url.="&page=".$query_string['page'];
-                if($query_string['sort'])
-                    $base_url.="&sort=".$query_string['sort'];
                 if($query_string['category'])
                     $base_url.="&category=".$query_string['category'];
                 echo $base_url;?>';
@@ -191,21 +120,6 @@
         // this initialises the demo scollpanes on the page.
     $('#pane1').jScrollPane({ showArrows: true, scrollbarWidth: 15, arrowSize: 16 });
     $('#pane2').jScrollPane({ showArrows: true, scrollbarWidth: 15, arrowSize: 16 });
-    $("#sortField").change(function() {
-    var baseurl = '<?php $query = $query_string['search'];
-    $base_url = "/product/category?q=$query";
-    if($query_string['brand'])
-       $base_url.="&brand=".$query_string['brand'];
-    if($query_string['category'])
-        $base_url.="&category=".$query_string['category'];
-    echo $base_url;
-?>';
-var sort_type = $("#sortField").val();
-baseurl = baseurl + "&sort="+sort_type;
-
-
-        document.location = baseurl;
-    });
     var isInit = true;
     function pageselectCallback(page_index, jq){
         if (isInit){
