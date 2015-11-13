@@ -4,13 +4,13 @@
 Vagrant.configure("2") do |config|
 
   # base box
-  config.vm.box = "chef/ubuntu-14.10"
+  config.vm.box = "ubuntu/trusty64"
 
   # machine configuration
-  # config.vm.provider "virtualbox" do |v|
-  #   v.memory = 1024
-  #   v.gui = true
-  # end
+  config.vm.provider "virtualbox" do |v|
+    v.customize ["modifyvm", :id, "--cpuexecutioncap", "50", "--memory", "512"]
+    # v.gui = true
+  end
 
   # ssh
   config.ssh.forward_agent = true

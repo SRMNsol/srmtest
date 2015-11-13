@@ -18,7 +18,9 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass="MerchantRepository")
  * @ORM\AttributeOverrides({
- *   @ORM\AttributeOverride(name="commissionType", column=@ORM\Column(length=20))
+ *   @ORM\AttributeOverride(name="commissionType", column=@ORM\Column(length=20)),
+ *   @ORM\AttributeOverride(name="popshopsId", column=@ORM\Column(type="integer", nullable=true, unique=true)),
+ *   @ORM\AttributeOverride(name="networkMerchantId", column=@ORM\Column(type="integer", nullable=true))
  * })
  */
 class Merchant extends BaseMerchant implements GroupSequenceProviderInterface
@@ -183,6 +185,8 @@ class Merchant extends BaseMerchant implements GroupSequenceProviderInterface
      */
     static public function loadValidatorMetadata(ClassMetadata $metadata)
     {
+        $metadata->addPropertyConstraint('name', new Assert\NotBlank());
+
         $metadata->addPropertyConstraint('commission', new Assert\NotBlank());
         $metadata->addPropertyConstraint('commission', new Assert\GreaterThanOrEqual([
             'value' => 0

@@ -112,9 +112,9 @@
        <div id="top-stores" class="h1">Top Stores</div>
 	   <div class="seeAll"><a href="/stores/search">See All Stores »</a></div>
        </div>
-       {stores}
+    <?php foreach ($stores as $store) : ?>
  	      <div class="store">
-                  <div class="logo"><a href="/stores/details/{id}"><img class="cdn-image"
+          <div class="logo"><a href="/stores/details/<?php echo escape($store['id']) ?>"><img class="cdn-image"
 onload="
         var width=100;
     var height=34;
@@ -123,10 +123,10 @@ onload="
     var nheight=ratio*this.height;
     this.width=nwidth;
     this.height=nheight;"  onerror="this.src="<?php echo s3path("/images/no-image-100px.gif") ?>""
-src="{logo_thumb}" alt="{name}"/></a></div>
-		          <div class="cashback"><a href="/stores/details/{id}">{cashback_text} Cash Back</a></div>
+        src="<?php echo escape($store['logo_thumb']) ?>" alt="<?php echo escape($store['name']) ?>"/></a></div>
+        <div class="cashback"><a href="/stores/details/<?php echo escape($store['id']) ?>"><?php echo escape($store['cashback_text']) ?> Cash Back</a></div>
 	          </div>
-	   {/stores}
+    <?php endforeach ?>
     </div>
 
     <!-- /Top stores -->

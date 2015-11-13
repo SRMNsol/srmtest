@@ -5,15 +5,24 @@
   <h1>Merchants <small>Store Database</small></h1>
 </div>
 
-<p>Total {{ merchants|length }} merchants</p>
+<div class="row">
+  <div class="col-md-6">
+    Total {{ merchants|length }} merchants
+  </div>
+  <div class="col-md-6 text-right">
+    <a href="{{ path('merchant_create') }}" class="btn btn-primary">New Merchant</a>
+    <p></p>
+  </div>
+</div>
 
 <div class="row">
   <div class="col-md-12">
     <table class="table table-bordered table-hover">
       <thead>
         <tr>
-          <th class="col-md-5">Merchant Name</th>
+          <th class="col-md-4">Merchant Name</th>
           <th class="col-md-2">Network</th>
+          <th class="col-md-1">Merchant Id</th>
           <th class="col-md-1">Top Store</th>
           <th class="col-md-1">URL</th>
           <th class="col-md-1">Logo</th>
@@ -26,6 +35,7 @@
         <tr>
           <td>{{ merchant.displayName }}</td>
           <td>{% if merchant.network %}{{ merchant.network.name }}{% endif %}</td>
+          <td>{{ merchant.networkMerchantId }}</td>
           <td>
             {% if merchant.topStore %}
             <i class="glyphicon glyphicon-ok text-success"></i>

@@ -42,6 +42,7 @@ $console->addCommands([
     new App\Console\MailerTestCommand(),
     new App\Console\RemovePaymentCommand(),
     new App\Console\S3TestCommand(),
+    new App\Console\PopshopsMerchantIdCommand(),
 
     /* Transaction related */
     new Popshops\Console\MerchantCommand(),

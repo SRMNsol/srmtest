@@ -185,16 +185,17 @@ class Transfer extends Controller
         $catalogs = $this->container['popshops.catalog_keys'];
         $rate = $this->container['orm.em']->getRepository('App\Entity\Rate')->getCurrentRate();
         $subid = create_subid($this->user_id);
+        $merchant = $this->container['orm.em']->find('App\Entity\Merchant', $id);
 
-        $merchant = current(
+        $result = current(
             result_merchants(
-                $client->findMerchants($catalogs['all_stores'], ['merchant_id' => $id])->getMerchants(),
+                $client->findMerchants($catalogs['all_stores'], ['merchant_id' => $merchant->getPopshopsId()])->getMerchants(),
                 $rate,
                 $subid
             )
         );
 
-        return $merchant;
+        return $result;
     }
 
     protected function getDealData($id)
@@ -206,9 +207,11 @@ class Transfer extends Controller
 
         list($dealId, $merchantId) = explode('-', $id);
 
+        $merchant = $this->container['orm.em']->find('App\Entity\Merchant', $merchantId);
+
         $deal = current(
             result_deals(
-                $client->findMerchants($catalogs['all_stores'], ['merchant_id' => $merchantId])
+                $client->findMerchants($catalogs['all_stores'], ['merchant_id' => $merchant->getPopshopsId()])
                     ->getDeals()
                     ->filter(function ($deal) use ($dealId) {
                         if ($deal->getId() == $dealId) {
