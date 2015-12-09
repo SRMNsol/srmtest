@@ -23,7 +23,8 @@ class Stores extends Controller
         $rate = $this->container['orm.em']->getRepository('App\Entity\Rate')->getCurrentRate();
         $topStores = $this->container['orm.em']->getRepository('App\Entity\Merchant')->getTopStores();
 
-        $result = $client->findMerchants($catalogs['all_stores'], ['merchant_id' => $id, 'deal_limit' => 100]);
+        $merchant = $this->container['orm.em']->find('App\Entity\Merchant', $id);
+        $result = $client->findMerchants($catalogs['all_stores'], ['merchant_id' => $merchant->getPopshopsId(), 'deal_limit' => 100]);
         $store_search = random_slice(result_merchants($topStores, $rate), 8);
         $store = current(result_merchants($result->getMerchants(), $rate));
 

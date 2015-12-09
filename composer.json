@@ -17,7 +17,7 @@
     "symfony/security": "~2.5",
     "symfony/translation": "~2.5",
     "symfony/config": "~2.5",
-    "doblebjp/popshops-api": "dev-master",
+    "doblebjp/popshops-api": "dev-autoincrement",
     "knplabs/console-service-provider": "dev-master",
     "doctrine/orm": "~2.4",
     "doctrine/migrations": "v1.0-alpha1",

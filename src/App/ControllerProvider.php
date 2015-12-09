@@ -60,6 +60,9 @@ class ControllerProvider implements ControllerProviderInterface
         $controllers->match('/merchant/edit/{merchantId}', 'merchant.controller:editMerchant')
             ->bind('merchant_edit');
 
+        $controllers->match('/merchant/create', 'merchant.controller:editMerchant')
+            ->bind('merchant_create');
+
         $controllers->get('/user/info', 'user_info.controller:display')
             ->bind('user_info');
 

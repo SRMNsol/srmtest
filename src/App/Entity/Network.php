@@ -7,6 +7,9 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
+ * @ORM\AttributeOverrides({
+ *   @ORM\AttributeOverride(name="popshopsId", column=@ORM\Column(type="integer", nullable=true, unique=true))
+ * })
  */
 class Network extends BaseNetwork
 {

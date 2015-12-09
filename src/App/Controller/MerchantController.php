@@ -28,21 +28,23 @@ class MerchantController
         ]));
     }
 
-    public function editMerchant($merchantId, Request $request, Application $app)
+    public function editMerchant($merchantId = null, Request $request, Application $app)
     {
-        $merchant = $this->em->find('App\Entity\Merchant', $merchantId);
+        $merchant = null === $merchantId ? new Merchant() : $this->em->find('App\Entity\Merchant', $merchantId);
         $form = $app['form.factory']->create(new MerchantType(), $merchant);
 
         $form->handleRequest($request);
         if ($form->isValid()) {
             try {
+                $merchant = $form->getData();
+                $this->em->persist($merchant);
                 $this->em->flush();
                 $app['session']->getFlashBag()->add('success', 'Merchant updated');
                 return $app->redirect($app['url_generator']->generate('merchant_edit', ['merchantId' => $merchant->getId()]));
             } catch (\Exception $e) {
                 $app['session']->getFlashBag()->add('danger', 'Update failed');
             }
-        } else {
+        } elseif ($this->em->contains($merchant)) {
             $this->em->refresh($merchant);
         }
 

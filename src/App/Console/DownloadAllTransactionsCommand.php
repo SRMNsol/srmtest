@@ -116,7 +116,7 @@ class DownloadAllTransactionsCommand extends Command
          */
         $output->writeln('Linkshare');
 
-        $network = $app['orm.em']->find('App\Entity\Network', 4);
+        $network = $app['orm.em']->getRepository('App\Entity\Network')->findOneByPopshopsId(4);
         $args = $this->getTransactionDownloadArguments($input, $network);
         $ret = $this->getApplication()->find('linkshare:transactions')->run(new ArrayInput([
             'command' => 'linkshare:transactions',
@@ -128,7 +128,7 @@ class DownloadAllTransactionsCommand extends Command
          */
         $output->writeln('CJ');
 
-        $network = $app['orm.em']->find('App\Entity\Network', 2);
+        $network = $app['orm.em']->getRepository('App\Entity\Network')->findOneByPopshopsId(2);
         $args = $this->getTransactionDownloadArguments($input, $network);
         $ret = $this->getApplication()->find('cj:transactions')->run(new ArrayInput([
             'command' => 'cj:transactions',
@@ -140,7 +140,7 @@ class DownloadAllTransactionsCommand extends Command
          */
         $output->writeln('Pepperjam');
 
-        $network = $app['orm.em']->find('App\Entity\Network', 8);
+        $network = $app['orm.em']->getRepository('App\Entity\Network')->findOneByPopshopsId(8);
         $args = $this->getTransactionDownloadArguments($input, $network);
         $ret = $this->getApplication()->find('pepperjam:transactions')->run(new ArrayInput([
             'command' => 'pepperjam:transactions',
@@ -159,7 +159,7 @@ class DownloadAllTransactionsCommand extends Command
          */
         $output->writeln('Shareasale');
 
-        $network = $app['orm.em']->find('App\Entity\Network', 1);
+        $network = $app['orm.em']->getRepository('App\Entity\Network')->findOneByPopshopsId(1);
         $args = $this->getTransactionDownloadArguments($input, $network);
         $ret = $this->getApplication()->find('shareasale:transactions')->run(new ArrayInput([
             'command' => 'shareasale:transactions',
@@ -178,7 +178,7 @@ class DownloadAllTransactionsCommand extends Command
          */
         $output->writeln('Impact Radius');
 
-        $network = $app['orm.em']->find('App\Entity\Network', 15);
+        $network = $app['orm.em']->getRepository('App\Entity\Network')->findOneByPopshopsId(15);
         $args = $this->getTransactionDownloadArguments($input, $network);
         $ret = $this->getApplication()->find('impactradius:transactions')->run(new ArrayInput([
             'command' => 'impactradius:transactions',

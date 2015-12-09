@@ -16,8 +16,11 @@ class MerchantType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('network')
+            ->add('networkMerchantId', null, ['required' => false])
             ->add('logoFile')
             ->add('skipLogoUpdate', 'checkbox', ['required' => false])
+            ->add('name')
             ->add('alternativeName')
             ->add('description')
             ->add('commission', null, ['precision' => 2])

@@ -16,28 +16,24 @@
 {% endif %}
 
 <div class="page-header">
+  {% if merchant.id %}
   <h1>Edit Merchant</h1>
+  {% else %}
+  <h1>Create Merchant</h1>
+  {% endif %}
 </div>
 
 <div class="row">
   <div class="col-md-9">
     {{ form_start(form, { attr: { class: 'merchant-edit' } }) }}
       {{ form_errors(form) }}
-      <div class="form-group">
-        <label class="col-sm-2 control-label">Name</label>
-        <div class="col-sm-6">
-          <p class="form-control-static">{{ merchant.name }}</p>
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="col-sm-2 control-label">Network</label>
-        <div class="col-sm-6">
-          <p class="form-control-static">{% if merchant.network %}{{ merchant.network.name }}{% endif %}</p>
-        </div>
-      </div>
+      {{ form_row(form.name, { label: 'Name' }) }}
+      {{ form_row(form.alternativeName, { label: 'Display name' }) }}
+      {{ form_row(form.network) }}
+      {{ form_row(form.networkMerchantId) }}
       <div class="form-group">
         <label class="col-sm-2 control-label">Logo</label>
-        <div class="col-sm-8">
+        <div class="col-sm-10">
           <p class="form-control-static">
             {% if merchant.logoPath %}
             <a href="{{ merchant.logoWebUrl }}" target="_blank">{{ merchant.logoWebUrl }}</a>
@@ -59,7 +55,7 @@
       {% endif %}
       <div class="form-group">
         <label class="col-sm-2 control-label">Origin</label>
-        <div class="col-sm-8">
+        <div class="col-sm-10">
           <p class="form-control-static">
             <a href="{{ merchant.logoUrl }}" target="_blank">{{ merchant.logoUrl }}</a>
           </p>
@@ -67,7 +63,6 @@
       </div>
       {{ form_row(form.logoFile, { label: 'Upload logo' }) }}
       {{ form_row(form.skipLogoUpdate, { label: 'Skip automatic logo update' }) }}
-      {{ form_row(form.alternativeName, { label: 'Display name' }) }}
       {{ form_row(form.topStore, { label: 'Display in Top Store sections' }) }}
       {{ form_row(form.description, { attr: { rows: 15 } }) }}
       {{ form_row(form.commission) }}
