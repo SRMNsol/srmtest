@@ -74,6 +74,7 @@
           Use <code>{SUBID}</code> as subid value placeholder in the url
         </div>
       </div>
+      {{ form_row(form.active, { label: 'Store is active' }) }}
       <div class="form-group">
         <div class="col-sm-6 col-sm-offset-2">
           <button type="submit" class="btn btn-primary">Update</button>
@@ -81,6 +82,13 @@
         </div>
       </div>
     {{ form_end(form) }}
+  </div>
+  <div class="col-md-3 text-right">
+    {% if merchant.id %}
+    <form method="post" action="{{ path('merchant_delete', { merchantId: merchant.id }) }}" class="form-mini">
+      <button type="button" class="btn btn-danger merchant-delete" data-merchant-name="{{ merchant.name }}">Delete Merchant</button>
+    </form>
+    {% endif %}
   </div>
 </div>
 {% endblock %}

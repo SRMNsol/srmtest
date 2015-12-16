@@ -19,7 +19,8 @@
     {% endblock %}
 
     {% block scripts %}
-      <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+      <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+      <script src="/bower_components/bootbox.js/bootbox.js"></script>
       {% javascripts "@custom_js" "@bootstrap_js" filter="?yui_js" output="/assets/js/scripts-combined.min.js" %}
         <script src="{{ asset_url }}"></script>
       {% endjavascripts %}

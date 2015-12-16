@@ -1,0 +1,24 @@
+{
+  "name": "beesavy-app",
+  "homepage": "https://github.com/rehoner/beesavy-app",
+  "authors": [
+    "Benedict <benedict@phpdevel.net>"
+  ],
+  "description": "Beesavy Admin",
+  "main": "",
+  "moduleType": [],
+  "license": "Proprietary",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "web/bower_components/",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "3.0.0",
+    "bootbox.js": "bootbox#~4.4.0"
+  }
+}

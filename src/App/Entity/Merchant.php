@@ -68,6 +68,11 @@ class Merchant extends BaseMerchant implements GroupSequenceProviderInterface
      */
     protected $clickoutUrl;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $active = false;
+
     const COMMISSION_TYPE_FIXED_VAR = 'fixed_var';
     const COMMISSION_TYPE_PERCENTAGE_VAR = 'percentage_var';
 
@@ -538,5 +543,17 @@ class Merchant extends BaseMerchant implements GroupSequenceProviderInterface
     public function getTestTrackingUrl()
     {
         return str_replace('{SUBID}', 'TEST', $this->clickoutUrl);
+    }
+
+    public function getActive()
+    {
+        return $this->active;
+    }
+
+    public function setActive($value)
+    {
+        $this->active = (boolean) $value;
+
+        return $this;
     }
 }

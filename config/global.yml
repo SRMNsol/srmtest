@@ -7,7 +7,7 @@ log_dir:          %root_dir%/data/log
 cache_dir:        %root_dir%/data/cache
 assets_dir:       %root_dir%/assets
 web_dir:          %root_dir%/web
-twbs_dir:         %root_dir%/vendor/twbs/bootstrap
+twbs_dir:         %root_dir%/web/bower_components/bootstrap
 legacy_cache_dir: %root_dir%/legacy/system/application/cache
 temp_dir:         %root_dir%/data/temp
 
