@@ -35,6 +35,7 @@ class MerchantType extends AbstractType
             ])
             ->add('topStore', 'checkbox', ['required' => false])
             ->add('clickoutUrl', null, ['required' => false])
+            ->add('active', 'checkbox', ['required' => false])
         ;
     }
 

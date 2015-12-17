@@ -4,7 +4,6 @@
     "twig/twig": "~1.14",
     "dflydev/doctrine-orm-service-provider": "~1.0",
     "igorw/config-service-provider": "~1.2",
-    "twbs/bootstrap": "3.0.0",
     "monolog/monolog": "~1.6",
     "mheap/silex-assetic": "~1.0",
     "guzzle/guzzle": "~3.7",

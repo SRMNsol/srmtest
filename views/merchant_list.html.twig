@@ -23,11 +23,10 @@
           <th class="col-md-4">Merchant Name</th>
           <th class="col-md-2">Network</th>
           <th class="col-md-1">Merchant Id</th>
-          <th class="col-md-1">Top Store</th>
           <th class="col-md-1">URL</th>
-          <th class="col-md-1">Logo</th>
           <th class="col-md-1">Comm.</th>
-          <th class="col-md-1"></th>
+          <th class="col-md-1">Status</th>
+          <th class="col-md-2"></th>
         </tr>
       </thead>
       </tbody>
@@ -37,26 +36,22 @@
           <td>{% if merchant.network %}{{ merchant.network.name }}{% endif %}</td>
           <td>{{ merchant.networkMerchantId }}</td>
           <td>
-            {% if merchant.topStore %}
-            <i class="glyphicon glyphicon-ok text-success"></i>
-            {% endif %}
-          </td>
-          <td>
             {% if merchant.clickoutUrl %}
             <i class="glyphicon glyphicon-ok text-success"></i>
             <a href="{{ merchant.testTrackingUrl }}" class="btn btn-default btn-xs pull-right" target="_blank">Test</a>
             {% endif %}
           </td>
-          <td>
-            {% if merchant.logoInvalid %}
-            <i class="glyphicon glyphicon-remove text-danger"></i>
-            {% elseif merchant.logoPath %}
-            <i class="glyphicon glyphicon-ok text-success"></i>
-            {% endif %}
-          </td>
           <td>{{ merchant.commissionShareText }}</td>
           <td>
-            <a href="{{ path('merchant_edit', { merchantId: merchant.id }) }}" class="btn btn-default btn-xs pull-right">Edit</a>
+            {% if merchant.topStore %}<span class="label label-primary">Top Store</span>{% endif %}
+            {% if merchant.logoInvalid %}<span class="label label-warning">Invalid Logo</span>{% endif %}
+            {% if not merchant.active %}<span class="label label-danger">Inactive</span>{% endif %}
+          </td>
+          <td class="text-right">
+            <a href="{{ path('merchant_edit', { merchantId: merchant.id }) }}" class="btn btn-default btn-xs">Edit</a>
+            <form method="post" action="{{ path('merchant_delete', { merchantId: merchant.id }) }}" class="form-mini">
+              <button type="button" class="btn btn-default btn-xs merchant-delete" data-merchant-name="{{ merchant.name }}">Delete</button>
+            </form>
           </td>
         </tr>
         {% endfor %}

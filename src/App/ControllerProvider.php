@@ -63,6 +63,9 @@ class ControllerProvider implements ControllerProviderInterface
         $controllers->match('/merchant/create', 'merchant.controller:editMerchant')
             ->bind('merchant_create');
 
+        $controllers->post('/merchant/delete/{merchantId}', 'merchant.controller:deleteMerchant')
+            ->bind('merchant_delete');
+
         $controllers->get('/user/info', 'user_info.controller:display')
             ->bind('user_info');
 
