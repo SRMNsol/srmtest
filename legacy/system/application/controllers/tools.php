@@ -29,8 +29,8 @@ class Tools extends Controller
             redirect('main/signin?user=&code=20');
         }
         $data = array_merge(
-            $this->popshopscache->library('beesavy', 'getUserStats', array($this->user_id), 3600),
-            $this->popshopscache->library('beesavy', 'getUser', array($this->user_id,'', TRUE), 3600)
+            $this->defaultcache->library('beesavy', 'getUserStats', array($this->user_id), 3600),
+            $this->defaultcache->library('beesavy', 'getUser', array($this->user_id,'', TRUE), 3600)
         );
         $this->__get_header($data);
         $this->parser->parse('tools/overview', $data);
@@ -41,8 +41,8 @@ class Tools extends Controller
         if (!$this->user->login_status()) {
             redirect('main/signin?user=&code=20');
         }
-        $data = $this->popshopscache->library('beesavy', 'getUserStats', array($this->user_id), 3600);
-        $data2 = $this->popshopscache->library('beesavy', 'getUser', array($this->user_id,'', TRUE), 3600);
+        $data = $this->defaultcache->library('beesavy', 'getUserStats', array($this->user_id), 3600);
+        $data2 = $this->defaultcache->library('beesavy', 'getUser', array($this->user_id,'', TRUE), 3600);
         $data2 = array_merge($data2, $this->user->info());
         $data = array_merge($data, $data2);
         $data3 = $this->beesavy->getUserReferrals($this->user_id);

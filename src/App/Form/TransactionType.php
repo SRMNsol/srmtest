@@ -5,6 +5,7 @@ namespace App\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Doctrine\ORM\EntityRepository;
 use App\Entity\Transaction;
 
@@ -31,6 +32,10 @@ class TransactionType extends AbstractType
         $builder->add('registeredAt', 'date', ['widget' => 'single_text']);
         $builder->add('total');
         $builder->add('commission');
+
+        $builder->add('submit', SubmitType::class, [
+            'attr' => ['class' => 'btn-primary'],
+        ]);
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

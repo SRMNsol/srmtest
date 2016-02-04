@@ -8,8 +8,7 @@ use Guzzle\Http\Client as HttpClient;
 use Guzzle\Cache\DoctrineCacheAdapter;
 use Doctrine\Common\Cache\FilesystemCache;
 use Aws\Common\Aws;
-use App\Assets\LogoManager;
-use App\Assets\LogoEventSubscriber;
+use App\Entity\LogoEventSubscriber;
 
 class AwsProvider implements ServiceProviderInterface
 {
@@ -34,21 +33,10 @@ class AwsProvider implements ServiceProviderInterface
 
         $app['orm.em'] = $app->share(
             $app->extend('orm.em', function ($em) use ($app) {
-                $em->getEventManager()->addEventSubscriber(
-                    new LogoEventSubscriber(
-                        $app['temp_dir'],
-                        $app['bucket_dir'],
-                        $app['bucket_url']
-                    )
-                );
+                $em->getEventManager()->addEventSubscriber(new LogoEventSubscriber($app['bucket_dir'], $app['bucket_url']));
                 return $em;
             })
         );
-
-        $app['logo_manager'] = $app->share(function () use ($app) {
-            $lm = new LogoManager($app['orm.em'], $app['validator']);
-            return $lm;
-        });
     }
 
     public function boot(SilexApp $app)

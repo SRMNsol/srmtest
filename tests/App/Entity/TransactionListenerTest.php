@@ -36,7 +36,6 @@ class TransactionListenerTest extends OrmTestCase
         $transaction->setTag((string) $subid);
 
         $merchant = new Merchant();
-        $merchant->setId(123);
         $merchant->setName('Test');
         $merchant->setNetworkMerchantId('123');
         $merchant->setUrl('http://');

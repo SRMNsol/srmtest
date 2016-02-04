@@ -6,14 +6,17 @@ use Doctrine\ORM\Tools\SchemaTool;
 use Doctrine\Common\DataFixtures\Loader;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
-use Popshops\Test\OrmTestCase as BaseOrmTestCase;
 use App\Application;
 use App\OrmProvider;
 use App\Entity\User;
 use Silex\Provider\ValidatorServiceProvider;
 
-class OrmTestCase extends BaseOrmTestCase
+class OrmTestCase
 {
+    protected $em;
+    protected $schemaTool;
+    protected $loader;
+    protected $executor;
     protected $validator;
 
     public function setUpOrm()
@@ -44,6 +47,22 @@ class OrmTestCase extends BaseOrmTestCase
     {
         $this->setUpOrm();
         $this->createFullSchema();
+    }
+
+    public function createSchema(array $classes)
+    {
+        $em = $this->em;
+        $metadatas = array_map(function ($class) use ($em) {
+            return $em->getClassMetadata($class);
+        }, $classes);
+
+        $this->schemaTool->createSchema($metadatas);
+    }
+
+    public function createFullSchema()
+    {
+        $metadatas = $this->em->getMetadataFactory()->getAllMetadata();
+        $this->schemaTool->createSchema($metadatas);
     }
 
     protected function createUserEntity($i)

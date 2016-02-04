@@ -13,15 +13,9 @@
 <link href="<?php echo s3path("/styles/button.css") ?>" media="screen" rel="stylesheet" type="text/css" />
 <link href="<?php echo s3path("/styles/view.css") ?>" media="screen" rel="stylesheet" type="text/css" />
 <link media="screen" rel="stylesheet" href="<?php echo s3path("/styles/colorbox.css") ?>" />
-		<style type="text/css" title="currentStyle">
-			@import "/css/matrix_table.css";
-		</style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
 <script src="<?php echo s3path("/colorbox/jquery.colorbox.js") ?>"></script>
 <script type='text/javascript' src="<?php echo s3path("/script_files/nav_bar.js") ?>"></script>
-<script type="text/javascript" src="<?php echo s3path("/zeroclipboard/ZeroClipboard.js") ?>"></script>
-		<script type="text/javascript" language="javascript" src="<?php echo s3path("/script_files/jquery.dataTables.js") ?>"></script>
-<script type='text/javascript' src="<?php echo s3path("/script_files/money.js") ?>"></script>
 </head>
 <body>
 <div id="container">
@@ -40,10 +34,10 @@
 		<DIV id=content class=BGNoCol>
 <DIV id=pageTitle>
 <DIV id=pageTitleLeft></DIV>
-<H1>We Found 0 Products Matching {search}</H1>
+<H1>We Found 0 Stores Matching {search}</H1>
 <DIV id=pageTitleRight></DIV></DIV>
 
-<DIV id=error class=BGNoCol>
+<DIV id=error>
 <table cellspacing=0 cellpadding=0 style="margin-left:10px;">
 <tr><td><img src="<?php echo s3path("/images/sorry_bee.jpg") ?>"></td><td>
 <P>

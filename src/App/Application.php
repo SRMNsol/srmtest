@@ -14,8 +14,6 @@ use Silex\Provider\ValidatorServiceProvider;
 use Silex\Provider\TranslationServiceProvider;
 use Silex\Provider\ServiceControllerServiceProvider;
 use Igorw\Silex\ConfigServiceProvider;
-use Popshops\Silex\PopshopsServiceProvider;
-use Popshops\Silex\PopshopsExtraServiceProvider;
 use Saxulum\DoctrineOrmManagerRegistry\Silex\Provider\DoctrineOrmManagerRegistryProvider;
 
 class Application extends SilexApplication
@@ -28,7 +26,6 @@ class Application extends SilexApplication
     public static function registerBaseServices(Application $app)
     {
         $app->register(new OrmProvider());
-        $app->register(new PopshopsServiceProvider());
         $app->register(new CacheProvider());
         $app->register(new MailerProvider());
         $app->register(new ValidatorServiceProvider());
@@ -48,7 +45,7 @@ class Application extends SilexApplication
 
     public static function registerReportingServices(Application $app)
     {
-        $app->register(new PopshopsExtraServiceProvider());
+        $app->register(new ReportingServiceProvider());
     }
 
     public static function loadConfig(Application $app, $dir, $params)

@@ -22,7 +22,7 @@ class Blocks extends Model
         $class = $this->router->class;
         $banner = $this->get_banner();
 
-        $merchantTypes = cached_merchant_types();
+        $categories = cached_categories();
 
         $data['banner'] = $this->parser->parse($banner['page'], $banner['vars'],TRUE);
         if ($class=="product" && $method =="compare") {
@@ -42,7 +42,7 @@ class Blocks extends Model
         } else {
             $data['header'] = $this->parser->parse('blocks/header',array(), TRUE);
         }
-        $data['nav_bar'] = $this->parser->parse('blocks/nav_bar',array('categories' => $merchantTypes), TRUE);
+        $data['nav_bar'] = $this->parser->parse('blocks/nav_bar',array('categories' => $categories), TRUE);
         $data['footer'] = $this->parser->parse('blocks/footer',array(), TRUE);
 
         return $data;

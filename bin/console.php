@@ -1,6 +1,18 @@
 <?php
 
-$app = require __DIR__ . '/../config/popshops-cli-config.php';
+require __DIR__ . '/../vendor/autoload.php';
+
+use App\Application;
+
+$app = new Application();
+Application::registerBaseServices($app);
+Application::registerReportingServices($app);
+$app->register(new App\TemplatingProvider());
+
+Application::loadConfig($app, __DIR__ . '/../config', [
+    'root_dir' => realpath(__DIR__ . '/..'),
+    'date' => date('Ymd'),
+]);
 
 use Symfony\Component\Console\Helper\HelperSet;
 use Symfony\Component\Console\Helper\TableHelper;
@@ -25,16 +37,9 @@ $console->setHelperSet(new HelperSet([
 ]));
 
 $console->addCommands([
-    /* Extrabux imports */
-    new App\Console\ExtrabuxImportTransactionCommand(),
-    new App\Console\ExtrabuxImportReferralCommand(),
-    new App\Console\ExtrabuxImportAdjustmentCommand(),
-    new App\Console\ExtrabuxImportUserCommand(),
-
     /* Beesavy */
     new App\Console\ReferralTreeCommand(),
     new App\Console\ReferralCalculationCommand(),
-    new App\Console\UpdateLogoCommand(),
 
     /* Dev */
     new App\Console\AssetDumpCommand(),
@@ -43,17 +48,14 @@ $console->addCommands([
     new App\Console\RemovePaymentCommand(),
     new App\Console\S3TestCommand(),
     new App\Console\PopshopsMerchantIdCommand(),
+    new App\Console\ExportCategoriesCommand(),
 
     /* Transaction related */
-    new Popshops\Console\MerchantCommand(),
-    new Popshops\Console\ProductCommand(),
-    new Popshops\Console\DealCommand(),
-    new Popshops\Console\NetworkCommand(),
-    new Popshops\Console\LinkshareTransactionReportCommand(),
-    new Popshops\Console\CommissionJunctionTransactionReportCommand(),
-    new Popshops\Console\PepperjamTransactionReportCommand(),
-    new Popshops\Console\ShareasaleTransactionReportCommand(),
-    new Popshops\Console\ImpactRadiusTransactionReportCommand(),
+    new App\Console\LinkshareTransactionReportCommand(),
+    new App\Console\CommissionJunctionTransactionReportCommand(),
+    new App\Console\PepperjamTransactionReportCommand(),
+    new App\Console\ShareasaleTransactionReportCommand(),
+    new App\Console\ImpactRadiusTransactionReportCommand(),
     new App\Console\DownloadAllTransactionsCommand(),
 ]);
 

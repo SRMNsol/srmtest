@@ -118,42 +118,54 @@ class MerchantTest extends OrmTestCase
         $merchant->setCommission(0.00);
         $merchant->setCommissionMax(0.00);
         $merchant->setCommissionType(Merchant::COMMISSION_TYPE_FIXED);
-        $errors = $this->validator->validate($merchant);
+        $errors = $this->validator->validateProperty($merchant, 'commission');
+        $this->assertEquals(0, count($errors));
+        $errors = $this->validator->validateProperty($merchant, 'commissionMax');
         $this->assertEquals(0, count($errors));
 
         $commission->setValue($merchant, null);
         $commissionMax->setValue($merchant, null);
-        $errors = $this->validator->validate($merchant);
-        $this->assertEquals(2, count($errors));
+        $errors = $this->validator->validateProperty($merchant, 'commission');
+        $this->assertEquals(1, count($errors));
         $this->assertEquals('This value should not be blank.', $errors[0]->getMessage());
-        $this->assertEquals('This value should not be blank.', $errors[1]->getMessage());
+        $errors = $this->validator->validateProperty($merchant, 'commissionMax');
+        $this->assertEquals(1, count($errors));
+        $this->assertEquals('This value should not be blank.', $errors[0]->getMessage());
 
         $merchant->setCommission(-1);
         $merchant->setCommissionMax(-1);
-        $errors = $this->validator->validate($merchant);
-        $this->assertEquals(2, count($errors));
+        $errors = $this->validator->validateProperty($merchant, 'commission');
+        $this->assertEquals(1, count($errors));
         $this->assertEquals('This value should be greater than or equal to 0.', $errors[0]->getMessage());
-        $this->assertEquals('This value should be greater than or equal to 0.', $errors[1]->getMessage());
+        $errors = $this->validator->validateProperty($merchant, 'commissionMax');
+        $this->assertEquals(1, count($errors));
+        $this->assertEquals('This value should be greater than or equal to 0.', $errors[0]->getMessage());
 
         $merchant->setCommissionType(Merchant::COMMISSION_TYPE_FIXED_VAR);
-        $errors = $this->validator->validate($merchant);
-        $this->assertEquals(2, count($errors));
+        $errors = $this->validator->validateProperty($merchant, 'commission');
+        $this->assertEquals(1, count($errors));
         $this->assertEquals('This value should be greater than or equal to 0.', $errors[0]->getMessage());
-        $this->assertEquals('This value should be greater than or equal to 0.', $errors[1]->getMessage());
+        $errors = $this->validator->validateProperty($merchant, 'commissionMax');
+        $this->assertEquals(1, count($errors));
+        $this->assertEquals('This value should be greater than or equal to 0.', $errors[0]->getMessage());
 
         $merchant->setCommission(200);
         $merchant->setCommissionMax(200);
         $merchant->setCommissionType(Merchant::COMMISSION_TYPE_PERCENTAGE);
-        $errors = $this->validator->validate($merchant);
-        $this->assertEquals(2, count($errors));
+        $errors = $this->validator->validateProperty($merchant, 'commission', ['percentage']);
+        $this->assertEquals(1, count($errors));
         $this->assertEquals('This value should be less than or equal to 100.', $errors[0]->getMessage());
-        $this->assertEquals('This value should be less than or equal to 100.', $errors[1]->getMessage());
+        $errors = $this->validator->validateProperty($merchant, 'commissionMax', ['percentage']);
+        $this->assertEquals(1, count($errors));
+        $this->assertEquals('This value should be less than or equal to 100.', $errors[0]->getMessage());
 
         $merchant->setCommissionType(Merchant::COMMISSION_TYPE_PERCENTAGE_VAR);
-        $errors = $this->validator->validate($merchant);
-        $this->assertEquals(2, count($errors));
+        $errors = $this->validator->validateProperty($merchant, 'commission', ['percentage']);
+        $this->assertEquals(1, count($errors));
         $this->assertEquals('This value should be less than or equal to 100.', $errors[0]->getMessage());
-        $this->assertEquals('This value should be less than or equal to 100.', $errors[1]->getMessage());
+        $errors = $this->validator->validateProperty($merchant, 'commissionMax', ['percentage']);
+        $this->assertEquals(1, count($errors));
+        $this->assertEquals('This value should be less than or equal to 100.', $errors[0]->getMessage());
     }
 
     public function testIsCurrentLogo()
@@ -318,7 +330,6 @@ class MerchantTest extends OrmTestCase
     public function testUploadOrm()
     {
         $merchant = new Merchant();
-        $merchant->setId(1);
         $merchant->setNetworkMerchantId(1);
         $merchant->setName('Store 123');
         $merchant->setLogoFile(new File(vfsStream::url('root/download/valid.gif')));

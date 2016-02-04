@@ -85,7 +85,7 @@
     <h4>Transactions</h4>
   </div>
   <div class="col-md-3">
-    <a href="{{ path('transaction_edit', { user: user.id }) }}" class="btn btn-default pull-right">Add transaction</a>
+    <a href="{{ path('transaction_create', { user: user.id }) }}" class="btn btn-default pull-right">Add transaction</a>
   </div>
 </div>
 
@@ -112,7 +112,9 @@
         {% if cashback.transaction.manual %}
         <span class="pull-right">
           <a href="{{ path('transaction_edit', { user: cashback.user.id, transaction: cashback.transaction.id }) }}" class="btn btn-default btn-xs">Edit</a>
-          <a href="{{ path('transaction_delete', { user: cashback.user.id, transaction: cashback.transaction.id }) }}" class="btn btn-default btn-xs">Delete</a>
+          <form method="post" action="{{ path('transaction_delete', { user: cashback.user.id, transaction: cashback.transaction.id }) }}" class="form-mini">
+            <button type="button" class="btn btn-default btn-xs transaction-delete" data-transaction-detail="{{ cashback.transaction.merchantName ~ ' $' ~ cashback.totalPurchase|number_format(2)}}">Delete</button>
+          </form>
         </span>
         {% endif %}
         {{ cashback.status }}

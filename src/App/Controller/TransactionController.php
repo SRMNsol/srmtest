@@ -20,7 +20,7 @@ class TransactionController
         $this->em = $em;
     }
 
-    public function editTransaction(Transaction $transaction, User $user, Request $request, Application $app)
+    public function editTransaction(Transaction $transaction = null, User $user, Request $request, Application $app)
     {
         $form = $app['form.factory']->create(new TransactionType(), $transaction);
 
@@ -28,6 +28,8 @@ class TransactionController
 
         if ($form->isValid()) {
             try {
+                $transaction = $form->getData();
+
                 if (null === $transaction->getTag()) {
                     $subid = new Subid();
                     $subid->setUserId($user->getId());

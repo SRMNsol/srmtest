@@ -10,7 +10,7 @@
             </div>
         </form>
         <div class="ShopByStore"><a href="/stores/search" class="nav-ShopByStore-Bt nav-button">SHOP BY STORE</a></div>
-        <div class="FindCoupons"><a href="/coupon/search" class="nav-FindCoupons-Bt nav-button">FIND COUPONS</a></div>
+        <div class="FindCoupons"><a href="/stores/storelist" class="nav-FindCoupons-Bt nav-button">ALL STORES</a></div>
     </div>
     <div id="nav-right-curve"></div>
 </div>

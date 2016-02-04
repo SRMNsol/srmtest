@@ -1,12 +1,12 @@
 <?php
 /**
+ * Stores controller
  */
 class Stores extends Controller
 {
-    public function Stores()
+    public function __construct()
     {
-        parent::Controller();
-        parse_str($_SERVER['QUERY_STRING'],$_GET);
+        parent::__construct();
         $this->load->helper('bridge');
         $this->container = silex();
     }
@@ -18,36 +18,28 @@ class Stores extends Controller
         $limit = 25;
 
         //Run the search query
-        $client = $this->container['popshops.client'];
-        $catalogs = $this->container['popshops.catalog_keys'];
         $rate = $this->container['orm.em']->getRepository('App\Entity\Rate')->getCurrentRate();
         $topStores = $this->container['orm.em']->getRepository('App\Entity\Merchant')->getTopStores();
 
-        $merchant = $this->container['orm.em']->find('App\Entity\Merchant', $id);
-        $result = $client->findMerchants($catalogs['all_stores'], ['merchant_id' => $merchant->getPopshopsId(), 'deal_limit' => 100]);
-        $store_search = random_slice(result_merchants($topStores, $rate), 8);
-        $store = current(result_merchants($result->getMerchants(), $rate));
+        $merchant = $this->container['orm.em']->getRepository('App\Entity\Merchant')->getActiveMerchant($id);
+        if ($merchant === null) {
+            show_404();
+        }
 
-        $store['coupons'] = result_deals($result->getDeals(), $rate, null, $page, $limit);
+        $topStores = random_slice(result_merchants($topStores, $rate), 8);
+        $store = current(result_merchants([$merchant], $rate));
+
+        $store['coupons'] = [];
         $store['restrictions'] = null;
 
         // pagination data
         $start = (($page - 1) * $limit) + 1;
-        $count = $result->getDeals()->count();
+        $count = 0;
         $end = ($start + $limit - 1 < $count) ? $start + $limit - 1 : $count;
-
-        $top_stores = $store_search;
-        foreach ($store['coupons'] as &$coupon) {
-            if ($coupon['code']!='') {
-                $coupon['action_text']='CLICK TO COPY';
-            } else {
-                $coupon['action_text']='CLICK TO ACTIVATE';
-            }
-        }
 
         //Load the page
         $data = $this->blocks->getBlocks();
-        $data['top_stores'] = $top_stores;
+        $data['top_stores'] = $topStores;
         $data['store'] = $store;
         $data['id'] = $id;
         $data['store_name'] = $store['name'];
@@ -74,61 +66,53 @@ class Stores extends Controller
         //Grab information
         $search = $this->input->get('q');
         $category = $this->input->get('category');
-        $page = $this->input->get('page');
+        $page = $this->input->get('page') ?: 1;
         $sort = $this->input->get('sort');
-        $limit = $this->input->get('limit');
+        $limit = $this->input->get('limit') ?: 25;
 
         //Show all stores when search by letter
         $showAll = $search != '';
 
-        //Set defaults
-        if (!$page) { $page = 1; }
-        if (!$limit) { $limit = 25; }
-
         //Run the search query
-        $client = $this->container['popshops.client'];
-        $catalogs = $this->container['popshops.catalog_keys'];
         $rate = $this->container['orm.em']->getRepository('App\Entity\Rate')->getCurrentRate();
 
-        $params = [];
-        if ($category > 0) {
-            $params['merchant_type_id'] = $category;
-        }
-
-        $result = $client->findMerchants($catalogs['all_stores'], $params);
-        $merchants = $result->getMerchants()->sortByMerchantName();
+        $merchants = $this->container['orm.em']->getRepository('App\Entity\Merchant')->getActiveMerchants();
         $allStores = result_merchants($merchants, $rate);
 
-        $merchants = $merchants->filterByNamePrefix($search === '0' ? '*' : $search);
-
-        if ($showAll) {
-            $limit = $merchants->count();
+        if ($category > 0) {
+            $merchants = $this->container['orm.em']->find('App\Entity\Category', $category)->getActiveMerchants()->toArray();
         }
 
-        $stores = result_merchants($showAll ? $merchants : $merchants->slice($limit * ($page - 1), $limit), $rate);
-        $merchantTypes = result_merchant_types($result->getMerchantTypes());
-        $count = $merchants->getTotalCount();
+        $merchants = merchants_filter_prefix($merchants, $search === '0' ? '*' : $search);
+
+        if ($showAll) {
+            $limit = count($merchants);
+        }
+
+        $stores = result_merchants($showAll ? $merchants : array_slice($merchants, $limit * ($page - 1), $limit), $rate);
+        $categories = cached_categories();
+        $count = count($merchants);
 
         //Load the page
         $data = $this->blocks->getBlocks();
 
-        $data['search']=$search;
-        $data['category']=$category;
-        $data['categories'] = $merchantTypes;
-        $data['count']=$count;
-        $data['page']=$page;
-        $data['page_index']=$page-1;
-        $data['limit']=$limit;
-        $data['start']=($page-1)*$limit+1;
+        $data['search'] = $search;
+        $data['category'] = $category;
+        $data['categories'] = $categories;
+        $data['count'] = $count;
+        $data['page'] = $page;
+        $data['page_index'] = $page-1;
+        $data['limit'] = $limit;
+        $data['start'] = ($page-1)*$limit+1;
         $end = ($page)*$limit;
-        if($end>$count)
+        if ($end > $count) {
             $end = $count;
-        $data['end']=$end;
-        $data['stores']=$stores;
+        }
+        $data['end'] = $end;
+        $data['stores'] = $stores;
         $data['store_list'] = $allStores;
         $data['base_url'] = "/stores/search?q=$search";
-        $data['query_string']=array('search'=>$search,
-            'page'=>$page,'sort'=>$sort);
+        $data['query_string'] = ['search' => $search, 'page' => $page, 'sort' => $sort];
 
         $this->parser->parse('store/search', $data);
     }
@@ -143,19 +127,16 @@ class Stores extends Controller
         $category = "";
 
         //Set defaults
-        $page=1;
-        $limit=1000;
+        $page = 1;
+        $limit = 1000;
         $sort = '';
 
         //Run the search query
-        $client = $this->container['popshops.client'];
-        $catalogs = $this->container['popshops.catalog_keys'];
         $rate = $this->container['orm.em']->getRepository('App\Entity\Rate')->getCurrentRate();
 
-        $result = $client->findMerchants($catalogs['all_stores']);
-        $merchants = $result->getMerchants()
-            ->sortByMerchantName()
-            ->filterByNamePrefix($search === '0' ? '*' : $search);
+        $merchants = $this->container['orm.em']->getRepository('App\Entity\Merchant')->getActiveMerchants();
+        $merchants = merchants_filter_prefix($merchants, $search === '0' ? '*' : $search);
+
         $stores = result_merchants($merchants, $rate);
 
         $count = count($stores)/3;
@@ -164,10 +145,10 @@ class Stores extends Controller
         //Load the page
         $data = $this->blocks->getBlocks();
 
-        $data['search']=$search;
-        $data['stores1']=$split[0];
-        $data['stores2']=$split[1];
-        $data['stores3']=$split[2];
+        $data['search'] = $search;
+        $data['stores1'] = $split[0];
+        $data['stores2'] = $split[1];
+        $data['stores3'] = $split[2];
 
         $this->load->vars($data);
         $this->parser->parse('store/list', $data);

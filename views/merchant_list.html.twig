@@ -48,8 +48,8 @@
             {% if not merchant.active %}<span class="label label-danger">Inactive</span>{% endif %}
           </td>
           <td class="text-right">
-            <a href="{{ path('merchant_edit', { merchantId: merchant.id }) }}" class="btn btn-default btn-xs">Edit</a>
-            <form method="post" action="{{ path('merchant_delete', { merchantId: merchant.id }) }}" class="form-mini">
+            <a href="{{ path('merchant_edit', { merchant: merchant.id }) }}" class="btn btn-default btn-xs">Edit</a>
+            <form method="post" action="{{ path('merchant_delete', { merchant: merchant.id }) }}" class="form-mini">
               <button type="button" class="btn btn-default btn-xs merchant-delete" data-merchant-name="{{ merchant.name }}">Delete</button>
             </form>
           </td>

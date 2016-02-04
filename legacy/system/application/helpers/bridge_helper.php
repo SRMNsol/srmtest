@@ -1,18 +1,14 @@
 <?php
 /**
- * Bridge between CI front end and new popshops backend.
+ * Bridge between CI front end and new backend.
  * The legacy CI app is located under the root of the new backend.
  */
 
 use Doctrine\Common\Collections\Collection;
 use App\Entity\Rate;
 use App\Entity\Subid;
-use Popshops\Merchant;
-use Popshops\Product;
-use Popshops\Deal;
-use Popshops\MerchantType;
-use Popshops\Brand;
-use Popshops\ProductSearchResult;
+use App\Entity\Merchant;
+use App\Entity\Category;
 
 /**
  * Silex container loader
@@ -57,181 +53,40 @@ function result_merchants($merchants, Rate $rate, Subid $subid = null)
             'cashback_percent' => $merchant->getCommissionSharePercentage($rate->getLevel0() * 100),
             'cashback_flat' => $merchant->getCommissionShareFixed($rate->getLevel0() * 100),
             'cashback_text' => $merchant->getCommissionShareText($rate->getLevel0() * 100, '$', 'Up to :max'),
-            'coupons' => $merchant->getDealCount(),
+            'coupons' => 0,
             'link' => '/transfer/store/' . $merchant->getId(),
-            'url' => isset($subid) ? $merchant->getTrackingUrl($subid) : $merchant->getUrl(),
+            'url' => $merchant->getTrackingUrl($subid),
         ];
     }, $merchants instanceof Collection ? $merchants->getValues() : (array) $merchants);
 }
 
 /**
- * serialize merchant types to array
+ * serialize categories to array
  */
-function result_merchant_types($merchantTypes)
+function result_categories($categories)
 {
-    return array_map(function (MerchantType $merchantType) {
+    return array_map(function (Category $category) {
         return [
-            'id' => $merchantType->getId(),
-            'name' => $merchantType->getName(),
-            'count' => $merchantType->getProductCount(),
+            'id' => $category->getId(),
+            'name' => $category->getName(),
         ];
-    }, $merchantTypes instanceof Collection ? $merchantTypes->getValues() : (array) $merchantTypes);
+    }, (array) $categories);
 }
 
 /**
- * cached merchant types
+ * cached categories
  */
-function cached_merchant_types()
+function cached_categories()
 {
     $container = silex();
-    $cache = $container['popshops.cache_storage'];
-    $key = 'WWW_MERCHANT_TYPES';
+    $cache = $container['cache.default_storage'];
+    $key = 'WWW_CATEGORIES';
     if ($cache->contains($key)) {
         return $cache->fetch($key);
     }
-
-    $client = $container['popshops.client'];
-    $catalogs = $container['popshops.catalog_keys'];
-    $merchantTypes = result_merchant_types($client->findMerchants($catalogs['all_stores'])->getMerchantTypes());
-
-    $cache->save($key, $merchantTypes, 12*3600);
-
-    return $merchantTypes;
-}
-
-/**
- * Serialize deals into array
- */
-function result_deals(Collection $deals, Rate $rate, Subid $subid = null, $page = 1, $count = null)
-{
-    $slice = ($page > 0 && $count > 0) ? $deals->slice(($page - 1) * $count, $count) : $deals->getValues();
-
-    return array_map(function (Deal $deal) use ($rate, $subid) {
-        $merchant = $deal->getMerchant();
-
-        return [
-            'id' => $deal->getId(),
-            'cid' => $deal->getId() . '-' . ($merchant ? $merchant->getId() : 0),
-            'merchant_id' => $merchant ? $merchant->getId() : null,
-            'name' => $deal->getName(),
-            'code' => $deal->getCode(),
-            'link' => '/transfer/coupon/' . $deal->getId() . '-' . ($merchant ? $merchant->getId() : 0),
-            'cashback_flat' => $merchant ? $merchant->getCommissionShareFixed($rate->getLevel0() * 100) : null,
-            'cashback_percent' => $merchant ? $merchant->getCommissionSharePercentage($rate->getLevel0() * 100) : null,
-            'logo' => $merchant ? s3rotate($merchant->getLogoWebUrl()) : null,
-            'logo_thumb' => $merchant ? s3rotate($merchant->getLogoWebUrl()) : null,
-            'merchant_name' => $merchant ? $merchant->getName() : null,
-            'merchant_logo' => $merchant ? s3rotate($merchant->getLogoWebUrl()) : null,
-            'end_date' => $deal->getEndOn()->format('m/d/Y'),
-            'restrictions' => $deal->getDescription(),
-            'code_prefix' => $deal->getCode() ? 'Coupon: ' : '',
-            'cashback_text' => $merchant ? $merchant->getCommissionShareText($rate->getLevel0() * 100, '$', 'Up to :max') : null,
-            'linkstore' => '/stores/details/' . ($merchant ? $merchant->getId() : null),
-            'name-abrv' => truncate_str($deal->getName(), 50),
-            'exp_date_short' => $deal->getEndOn() < new \DateTime('1 month') ? $deal->getEndOn()->diff(new DateTime())->format('Expires in %a days') : '',
-            'expiration' => $deal->getEndOn()->format('M d, Y'),
-            'url' => isset($subid) ? $deal->getTrackingUrl($subid) : $deal->getUrl(),
-        ];
-    }, $slice);
-}
-
-/**
- * serialize products to array
- */
-function result_products($products)
-{
-    return array_map(function (Product $product) {
-        return [
-            'id' => $product->getId(),
-            'groupID' => $product->getGroupId(),
-            'name' => $product->getName(),
-            'name-abrv' => truncate_str($product->getName(), 100),
-            'description' => $product->getDescription(),
-            'description-abrv' => truncate_str($product->getDescription(), 100),
-            'category_id' => null,
-            'category_name' => null,
-            'parent_category_id' => null,
-            'parent_category_name' => null,
-            'grandparent_category_name' => null,
-            'grandparent_category_id' => null,
-            'lowprice' => $product->getLowestPrice() ,
-            'numchildproducts' => $product->getMerchantCount(),
-            'sales_rank' => 0,
-            'score' => 0,
-            'image' => $product->getLargeImageUrl(),
-        ];
-    }, $products instanceof Collection ? $products->getValues() : (array) $products);
-}
-
-/**
- * serialize brands to array
- */
-function result_brands($brands)
-{
-    return array_map(function (Brand $brand) {
-        return [
-            'id' => $brand->getId(),
-            'name' => $brand->getName(),
-            'count' => $brand->getProductCount(),
-        ];
-    }, $brands instanceof Collection ? $brands->getValues() : (array) $brands);
-}
-
-/**
- * build comparison result
- */
-function comparison_result(ProductSearchResult $result, Rate $rate, Subid $subid = null)
-{
-    $comparison = [];
-    foreach ($result->getProducts() as $product) {
-        $deal = $result->getDeals()->filter(function (Deal $deal) use ($product) {
-            return $deal->getMerchant() === $product->getMerchant();
-        })->current();
-
-        $comparison[] = [
-            'id' => $product->getId(),
-            'name' => $product->getName(),
-            'parent_id' => null,
-            'brand' => $product->getBrand() ? $product->getBrand()->getName() : null,
-            'description' => $product->getDescription(),
-            'manufacturer_model' => null,
-            'upc' => null,
-            'sku' => null,
-            'availability' => null,
-            'condition' => null,
-            'group_id' => $product->getGroupId(),
-            'product_url' => $product->getUrl(),
-            'cashback_type' => $product->getMerchant() ? ($product->getMerchant()->hasVariableCommission() ? 'variable' : 'fixed') : null,
-            'retail_amount' => number_format($product->getRetailPrice(), 2),
-            'cashback_amount' => number_format($product->calculateCommissionShareAmount($rate->getLevel0() * 100), 2),
-            'final_amount' => number_format($product->calculateFinalPrice($rate->getLevel0() * 100), 2),
-            'cashback_amount_half' => 0,
-            'final_amount_half' => $product->getMerchantPrice() - 0,
-            'cashback_text' => $product->getMerchant() ? $product->getMerchant()->getCommissionShareText($rate->getLevel0() * 100, '$', 'Up to :max') : null,
-            'merchant_id' => $product->getMerchant() ? $product->getMerchant()->getId() : null,
-            'merchant_name' => $product->getMerchant() ? $product->getMerchant()->getName() : null,
-            'merchant_image' => $product->getMerchant() ? $product->getMerchant()->getLogoUrl() : null,
-            'shipping_amount' => null,
-            'tax_amount' => null,
-            't&s' => null,
-            'coupon_discount' => $deal ? $deal->getName() : null,
-            'coupon_id' => $deal ? $deal->getName() : null,
-            'code' => $deal ? $deal->getCode() : null,
-            'expiration' => $deal ? $deal->getEndOn()->format('M d,Y') : null,
-            'image' => $product->getLargeImageUrl(),
-            'thumb' => $product->getLargeImageUrl(),
-            'link' => '/transfer/product/' . ($product->getGroupId() ?: '0' . $product->getId()) . '-' . $product->getId(),
-            'url' => isset($subid) ? $product->getTrackingUrl($subid) : $product->getUrl(),
-        ];
-    }
-
-    $comparison[0]['lowest_price'] = $result->getLowestPrice();
-    $comparison[0]['highest_price'] = $result->getHighestPrice();
-    $comparison[0]['lowest_price_half'] = $result->getLowestPrice();
-    $comparison[0]['highest_price_half'] = $result->getHighestPrice();
-    $comparison[0]['num_child_products'] = $result->getMerchants()->count();
-
-    return $comparison;
+    $categories = result_categories($container['orm.em']->getRepository('App\Entity\Category')->findBy([], ['name' => 'ASC']));
+    $cache->save($key, $categories, 3600);
+    return $categories;
 }
 
 /**
@@ -252,4 +107,17 @@ function truncate_str($str, $length = 20)
         return substr($str, 0, $length - 3) . '...';
     }
     return $str;
+}
+
+/**
+ * Filter merchants by name
+ */
+function merchants_filter_prefix(array $merchants, $prefix)
+{
+    return array_filter($merchants, function ($merchant) use ($prefix) {
+        $pattern = ($prefix === '*') ? '\d' : preg_quote($prefix);
+        if (preg_match("/^$pattern/i", $merchant->getName())) {
+            return $merchant;
+        }
+    });
 }

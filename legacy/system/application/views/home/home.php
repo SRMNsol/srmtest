@@ -209,26 +209,24 @@
 <div style="width:930px;height:330px;margin-top:0px;margin-left:0px;border:0px solid #00F;float:left;">
     <!-- Daily Deals -->
     <div id="hot-products-container" class="home-daily-deals">
-        <div style="padding-top:2px">
-            <!-- Amazon lightning deals -->
-            <script charset="utf-8" type="text/javascript">
-                amzn_assoc_ad_type = "responsive_search_widget";
-                amzn_assoc_tracking_id = "bee053-20";
-                amzn_assoc_link_id = "5ZBNOZHTIPHVJEPF";
-                amzn_assoc_marketplace = "amazon";
-                amzn_assoc_region = "US";
-                amzn_assoc_placement = "";
-                amzn_assoc_search_type = "search_widget";
-                amzn_assoc_width = 302;
-                amzn_assoc_height = 314;
-                amzn_assoc_default_search_category = "";
-                amzn_assoc_default_search_key = "";
-                amzn_assoc_theme = "light";
-                amzn_assoc_bg_color = "FFFFFF";
-            </script>
-            <script src="//z-na.amazon-adsystem.com/widgets/q?ServiceVersion=20070822&Operation=GetScript&ID=OneJS&WS=1&MarketPlace=US"></script>
-            <!-- /Amazon lightning deals -->
-        </div>
+        <!-- Amazon lightning deals -->
+        <script charset="utf-8" type="text/javascript">
+            amzn_assoc_ad_type = "responsive_search_widget";
+            amzn_assoc_tracking_id = "bee053-20";
+            amzn_assoc_link_id = "5ZBNOZHTIPHVJEPF";
+            amzn_assoc_marketplace = "amazon";
+            amzn_assoc_region = "US";
+            amzn_assoc_placement = "";
+            amzn_assoc_search_type = "search_widget";
+            amzn_assoc_width = 302;
+            amzn_assoc_height = 314;
+            amzn_assoc_default_search_category = "";
+            amzn_assoc_default_search_key = "";
+            amzn_assoc_theme = "light";
+            amzn_assoc_bg_color = "FFFFFF";
+        </script>
+        <script src="//z-na.amazon-adsystem.com/widgets/q?ServiceVersion=20070822&Operation=GetScript&ID=OneJS&WS=1&MarketPlace=US"></script>
+        <!-- /Amazon lightning deals -->
     </div>
     <!-- /Daily Deals -->
 
@@ -255,32 +253,6 @@
         <?php endforeach ?>
     </div>
     <!-- /Top stores -->
-
-    <!-- Hot Coupons -->
-    <div id="hot-coupons-container">
-        <div style="width:100%;height:35px;">
-            <div id="hot-coupons" class="h1"> Hot Coupons</div>
-            <div class="seeAll"><a href="/coupon/search">See All Coupons »</a></div>
-        </div>
-        <?php foreach ($coupons as $coupon) : ?>
-            <div class="Homecoupon">
-                <div class="descimg"><a href="<?php echo escape($coupon['linkstore']) ?>"><img src="<?php echo escape($coupon['logo_thumb']) ?>" onload="
-                    var width = 100;
-                    var height = 34;
-                    var ratio = Math.min(width/this.width, height/this.height);
-                    var nwidth = ratio*this.width;
-                    var nheight = ratio*this.height;
-                    this.width = nwidth;
-                    this.height = nheight;"
-                 onerror="this.src='<?php echo s3path("/images/no-image-100px.gif") ?>'"
-                 alt="** PLEASE DESCRIBE THIS IMAGE **"/></a></div>
-                 <div class="desc"><a class="title" href="<?php echo escape($coupon['linkstore']) ?>" rel="nofollow"><?php echo escape($coupon['name-abrv']) ?></a><br/>
-                 <?php echo escape($coupon['code_prefix']) ?><font class="code" color=black ref=""  rel="nofollow"><?php echo escape($coupon['code']) ?></font></div>
-                <div style="clear: both;"></div>
-            </div>
-        <?php endforeach ?>
-    </div>
-    <!-- /Hot Couppons -->
 
 </div>
 <!-- /Content -->

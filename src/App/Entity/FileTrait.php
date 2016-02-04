@@ -16,12 +16,6 @@ trait FileTrait
     protected $uploadRootDir;
 
     /**
-     * Download root directory path
-     * To be set by event listener to the configured path
-     */
-    protected $downloadRootDir;
-
-    /**
      * Upload directory root url
      */
     protected $uploadRootUrl;
@@ -48,23 +42,6 @@ trait FileTrait
         return $this->uploadRootDir;
     }
 
-    public function setDownloadRootDir($path)
-    {
-        $this->downloadRootDir = $path;
-
-        return $this;
-    }
-
-    public function getDownloadRootDir()
-    {
-        $fs = new Filesystem();
-        if ($fs->exists($this->downloadRootDir)) {
-            return $this->downloadRootDir;
-        }
-
-        return sys_get_temp_dir();
-    }
-
     public function setUploadRootUrl($url)
     {
         $this->uploadRootUrl = $url;
@@ -73,23 +50,6 @@ trait FileTrait
     public function getUploadRootUrl()
     {
         return $this->uploadRootUrl;
-    }
-
-    /**
-     * Download file to download directory
-     */
-    protected function download(File $file, $name, $dir = null)
-    {
-        $targetPath = $this->getDownloadRootDir();
-        if (strlen($dir) > 1) {
-            $targetPath .= '/'.$dir;
-        }
-        $targetPath .= '/'.$name;
-
-        $fs = new Filesystem();
-        $fs->copy($file, $targetPath);
-
-        return new File($targetPath);
     }
 
     /**
