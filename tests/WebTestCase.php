@@ -21,8 +21,8 @@ class WebTestCase extends SilexWebTestCase
         $app->register(new TemplatingProvider());
         $app->register(new ServiceControllerServiceProvider());
 
-        Application::loadConfig($app, __DIR__ . '/../../../config', [
-            'root_dir' => realpath(__DIR__ . '/../../..'),
+        Application::loadConfig($app, __DIR__ . '/../config', [
+            'root_dir' => realpath(__DIR__ . '/..'),
         ]);
 
         // firewalls

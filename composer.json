@@ -29,7 +29,7 @@
   "require-dev": {
     "doctrine/data-fixtures": "~1.0",
     "symfony/browser-kit": "~2.5",
-    "phpunit/phpunit": "~4.4",
+    "phpunit/phpunit": "~4.8",
     "mikey179/vfsStream": "~1"
   },
   "minimum-stability": "dev",
@@ -55,5 +55,8 @@
   "autoload": {
     "psr-4": { "App\\": "src/App" },
     "classmap": ["opsworks.php"]
+  },
+  "autoload-dev": {
+    "psr-4": { "App\\Tests\\": "tests" }
   }
 }
