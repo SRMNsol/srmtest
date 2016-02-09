@@ -45,7 +45,7 @@ class MerchantController
             } catch (\Exception $e) {
                 $app['session']->getFlashBag()->add('danger', 'Update failed');
             }
-        }  elseif ($this->em->contains($merchant)) {
+        } elseif ($form->isSubmitted() && $this->em->contains($merchant)) {
             // we do this to restore logo path to display, in case of invalid image uploaded in form
             $this->em->refresh($merchant);
         }

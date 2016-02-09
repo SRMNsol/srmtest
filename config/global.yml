@@ -29,23 +29,6 @@ assetic.options:
 # monolog
 monolog.logfile: %root_dir%/data/log/app_%date%.log
 
-# popshops
-popshops.public_key: 7otijzbtj2q6uv4hhlwcz58ua
-popshops.catalog_keys:
-  all_stores:  74762wn6w9utgw6khg2ta92gz
-  hot_coupons: b0oe38oleq6ginsuaf78sj258
-  hot_deals:   3lmudy8xyefrwgs3u67li8uft
-popshops.entity_manager_key: orm.em
-popshops.cache_dir: %root_dir%/data/cache/popshops
-popshops.log_dir: %root_dir%/data/log
-popshops.classnames:
-  entity.merchant: App\Entity\Merchant
-  entity.network: App\Entity\Network
-  entity.product: App\Entity\Product
-  entity.transaction: App\Entity\Transaction
-  entity.transactionHistory: App\Entity\TransactionHistory
-  entity.deal: App\Entity\Deal
-
 # reporting
 reporting.cache_dir: %root_dir%/data/cache/reports
 linkshare_security_token: 8a2fe0db57eb01d3da33c506c103ec99148c604e480ee8a90a756ed5049ce806

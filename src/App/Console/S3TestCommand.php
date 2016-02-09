@@ -10,6 +10,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\Console\Question\ConfirmationQuestion;
 
 class S3TestCommand extends Command
 {
@@ -27,8 +28,6 @@ class S3TestCommand extends Command
         $bucket = $input->getOption('prod')
             ? 's3://static.beesavy.com'
             : 's3://static-dev.beesavy.com';
-
-        $dialog = $this->getHelper('dialog');
 
         $output->writeln(sprintf('Using <comment>%s</comment> bucket <info>%s</info>',
             $input->getOption('prod') ? 'PRODUCTION' : 'DEV',
@@ -48,7 +47,7 @@ class S3TestCommand extends Command
             date('Y-m-d H:i:s')
         ));
 
-        if (false === $dialog->askConfirmation($output, '<question>Continue ?</question> [y/N] ', false)) {
+        if (false === $this->getHelper('question')->ask($input, $output, new ConfirmationQuestion('<question>Continue ?</question> [y/N] ', false))) {
             $output->writeln('Aborting');
             return;
         }
@@ -83,7 +82,7 @@ class S3TestCommand extends Command
             }
             $output->writeln(sprintf(' <info>OK</info> <comment>%s</comment>', $copy));
 
-            if ($dialog->askConfirmation($output, '<question>Clean up files ?</question> [Y/n] ', true)) {
+            if ($this->getHelper('question')->ask($input, $output, new ConfirmationQuestion('<question>Clean up files ?</question> [Y/n] ', true))) {
                 $output->write('Clean up ...');
                 $fs->remove([$source, dirname($copy)]);
                 $output->writeln(' <info>OK</info>');

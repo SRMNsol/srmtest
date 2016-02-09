@@ -349,4 +349,15 @@ class MerchantTest extends OrmTestCase
         $repository = $this->em->getRepository('App\Entity\Merchant');
         $this->assertInstanceOf('App\Entity\MerchantRepository', $repository);
     }
+
+    public function testValidateClickoutUrl()
+    {
+        $merchant = new Merchant();
+        $merchant->setClickoutUrl('http://example.com/?subid={SUBID}');
+        $errors = $this->validator->validateProperty($merchant, 'clickoutUrl', ['subid']);
+        $this->assertEquals(0, count($errors));
+        $merchant->setClickoutUrl('http://example.com/');
+        $errors = $this->validator->validateProperty($merchant, 'clickoutUrl', ['subid']);
+        $this->assertEquals(1, count($errors));
+    }
 }

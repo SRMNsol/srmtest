@@ -70,6 +70,7 @@
           Use <code>{SUBID}</code> as subid value placeholder in the url
         </div>
       </div>
+      {{ form_row(form.noSubid, { label: 'Check if URL does not use SUBID' }) }}
       {{ form_row(form.active, { label: 'Store is active' }) }}
       {{ form_row(form.submit) }}
     {{ form_end(form) }}
