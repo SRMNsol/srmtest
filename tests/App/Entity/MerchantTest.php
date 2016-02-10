@@ -7,7 +7,6 @@ use Symfony\Component\HttpFoundation\File\File;
 
 class MerchantTest extends OrmTestCase
 {
-    private $downloadPath;
     private $webPath;
 
     public function setUp()
@@ -15,25 +14,25 @@ class MerchantTest extends OrmTestCase
         parent::setUp();
 
         $root = vfsStream::setup('root', null, [
-            'download' => [
-                'original.gif' => file_get_contents(__DIR__.'/blank.gif'),
-                'valid.gif' => file_get_contents(__DIR__.'/valid.gif')
-            ],
             'web' => [
                 'cached.png' => file_get_contents(__DIR__.'/blank.png'),
+                'other.gif' => file_get_contents(__DIR__.'/blank.gif'),
+            ],
+            'local' => [
+                'image1.gif' => file_get_contents(__DIR__.'/blank.gif'),
+                'image1_copy.gif' => file_get_contents(__DIR__.'/blank.gif'),
+                'image2.png' => file_get_contents(__DIR__.'/blank.png'),
             ],
         ]);
 
-        $this->downloadPath = $root->getChild('download');
-        $this->webPath = $root->getChild('web');
-
         $this->em->getEventManager()->addEventSubscriber(
-            new App\Assets\LogoEventSubscriber(
-                vfsStream::url('root/download'),
+            new App\Entity\LogoEventSubscriber(
                 vfsStream::url('root/web'),
                 '*******'
             )
         );
+
+        $this->webPath = $root->getChild('web');
     }
 
     public function testDisplayName()
@@ -64,47 +63,6 @@ class MerchantTest extends OrmTestCase
         $merchant->setLogoPath('image.png');
         $this->assertEquals('/upload/logo/image.png', $merchant->getLogoAbsolutePath());
         $this->assertEquals('logo/image.png', $merchant->getLogoWebPath());
-    }
-
-    public function testGetOriginalLogo()
-    {
-        $merchant = new Merchant();
-        $this->assertNull($merchant->getOriginalLogo());
-
-        $merchant->setLogoUrl('http://example/test.png');
-        $this->assertInstanceOf('Symfony\Component\HttpFoundation\File\File', $merchant->getOriginalLogo());
-    }
-
-    public function testHasDownloadRootDir()
-    {
-        $merchant = new Merchant();
-        $this->assertEquals(sys_get_temp_dir(), $merchant->getDownloadRootDir());
-
-        $merchant->setDownloadRootDir(vfsStream::url('root/notexists'));
-        $this->assertEquals(sys_get_temp_dir(), $merchant->getDownloadRootDir());
-
-        $merchant->setDownloadRootDir(vfsStream::url('root/download'));
-        $this->assertEquals(vfsStream::url('root/download'), $merchant->getDownloadRootDir());
-    }
-
-    public function testDownloadOriginalLogo()
-    {
-        $merchant = $this->getMockBuilder('App\Entity\Merchant')
-            ->setMethods(['getOriginalLogo'])
-            ->getMock();
-
-        $merchant
-            ->method('getOriginalLogo')
-            ->willReturn(new File(vfsStream::url('root/download/original.gif')));
-
-        $merchant->setName('Store 123');
-        $merchant->setDownloadRootDir(vfsStream::url('root/download'));
-
-        $file = $merchant->downloadOriginalLogo();
-
-        $this->assertInstanceOf('Symfony\Component\HttpFoundation\File\File', $file);
-        $this->assertStringStartsWith(vfsStream::url('root/download'), $file->getPath());
-        $this->assertStringStartsWith($merchant->getSlug(), $file->getFilename());
     }
 
     public function testValidateCommission()
@@ -172,7 +130,7 @@ class MerchantTest extends OrmTestCase
     {
         $merchant = new Merchant();
         $merchant->setUploadRootDir(vfsStream::url('root/web'));
-        $file = new File(vfsStream::url('root/download/valid.gif'));
+        $file = new File(vfsStream::url('root/local/image1.gif'));
 
         mkdir(vfsStream::url('root/web/logo'));
         copy(vfsStream::url('root/web/cached.png'), vfsStream::url('root/web/logo/cached.png'));
@@ -216,7 +174,7 @@ class MerchantTest extends OrmTestCase
         $this->assertEquals([], $trash->getValue($merchant));
 
         // set a new file, current logo is deleted
-        $merchant->setLogoFile(new File(vfsStream::url('root/download/original.gif')));
+        $merchant->setLogoFile(new File(vfsStream::url('root/web/other.gif')));
         $this->assertNull($merchant->getLogoPath());
         $this->assertEquals([vfsStream::url('root/web/logo/test.png')], $trash->getValue($merchant));
     }
@@ -249,32 +207,32 @@ class MerchantTest extends OrmTestCase
         $merchant->setUploadRootDir(vfsStream::url('root/web'));
 
         $merchant->setLogoFile(new File(__DIR__.'/notimage.txt'));
-        $errors = $this->validator->validate($merchant, ['logo']);
+        $errors = $this->validator->validateProperty($merchant, 'logoFile');
         $this->assertEquals(1, count($errors));
         $this->assertEquals('This file is not a valid image.', $errors[0]->getMessage());
 
         $merchant->setLogoFile(new File(__DIR__.'/blank.gif'));
-        $errors = $this->validator->validate($merchant, ['logo']);
+        $errors = $this->validator->validateProperty($merchant, 'logoFile');
         $this->assertEquals(1, count($errors));
         $this->assertRegExp('/The image width is too small/', $errors[0]->getMessage());
 
         $merchant->setLogoFile(new File(__DIR__.'/wide.png'));
-        $errors = $this->validator->validate($merchant, ['logo']);
+        $errors = $this->validator->validateProperty($merchant, 'logoFile');
         $this->assertEquals(1, count($errors));
         $this->assertRegExp('/The image height is too small/', $errors[0]->getMessage());
 
         $merchant->setLogoFile(new File(__DIR__.'/portrait.jpg'));
-        $errors = $this->validator->validate($merchant, ['logo']);
+        $errors = $this->validator->validateProperty($merchant, 'logoFile');
         $this->assertEquals(1, count($errors));
         $this->assertRegExp('/Portrait oriented images are not allowed/', $errors[0]->getMessage());
 
         $merchant->setLogoFile(new File(__DIR__.'/square.gif'));
-        $errors = $this->validator->validate($merchant, ['logo']);
+        $errors = $this->validator->validateProperty($merchant, 'logoFile');
         $this->assertEquals(1, count($errors));
         $this->assertRegExp('/Square images are not allowed/', $errors[0]->getMessage());
 
         $merchant->setLogoFile(new File(__DIR__.'/valid.gif'));
-        $errors = $this->validator->validate($merchant, ['logo']);
+        $errors = $this->validator->validateProperty($merchant, 'logoFile');
         $this->assertEquals(0, count($errors));
     }
 
@@ -282,7 +240,7 @@ class MerchantTest extends OrmTestCase
     {
         $merchant = new Merchant();
         $merchant->setName('Store 123');
-        $merchant->setLogoFile(new File(vfsStream::url('root/download/valid.gif')));
+        $merchant->setLogoFile(new File(vfsStream::url('root/local/image1.gif')));
         $merchant->setUploadRootDir(vfsStream::url('root/web'));
 
         if ($this->webPath->hasChild('logo')) {
@@ -303,10 +261,7 @@ class MerchantTest extends OrmTestCase
         $path1 = $merchant->getLogoPath();
 
         // upload an identical file
-        // must make copy because uploadLogo remove source file
-        $tempPath = sys_get_temp_dir().'/'.uniqid(mt_rand(0, 1000)).'.gif';
-        copy(__DIR__.'/valid.gif', $tempPath);
-        $merchant->setLogoFile(new File($tempPath));
+        $merchant->setLogoFile(new File(vfsStream::url('root/local/image1_copy.gif')));
         $merchant->uploadLogo();
         // nothing is uploaded
         $this->assertEquals(1, count($this->webPath->getChild('logo')->getChildren()));
@@ -316,7 +271,7 @@ class MerchantTest extends OrmTestCase
         $this->assertEquals(0, count($merchant->getTrash()));
 
         // upload a different file
-        $merchant->setLogoFile(new File(vfsStream::url('root/download/original.gif')));
+        $merchant->setLogoFile(new File(vfsStream::url('root/local/image2.png')));
         $merchant->uploadLogo();
         // new logo is uploaded, now contains 2 files
         $this->assertEquals(2, count($this->webPath->getChild('logo')->getChildren()));
@@ -332,7 +287,7 @@ class MerchantTest extends OrmTestCase
         $merchant = new Merchant();
         $merchant->setNetworkMerchantId(1);
         $merchant->setName('Store 123');
-        $merchant->setLogoFile(new File(vfsStream::url('root/download/valid.gif')));
+        $merchant->setLogoFile(new File(vfsStream::url('root/local/image1.gif')));
         $merchant->setUploadRootDir(vfsStream::url('root/web'));
 
         if ($this->webPath->hasChild('logo')) {
@@ -347,10 +302,7 @@ class MerchantTest extends OrmTestCase
         $path1 = $merchant->getLogoPath();
 
         // upload an identical file
-        // must make copy because uploadLogo remove source file
-        $tempPath = sys_get_temp_dir().'/'.uniqid(mt_rand(0, 1000)).'.gif';
-        copy(__DIR__.'/valid.gif', $tempPath);
-        $merchant->setLogoFile(new File($tempPath));
+        $merchant->setLogoFile(new File(vfsStream::url('root/local/image1_copy.gif')));
         $this->em->persist($merchant);
         $this->em->flush();
 
@@ -359,7 +311,7 @@ class MerchantTest extends OrmTestCase
         $this->assertTrue($this->webPath->getChild('logo')->hasChild($merchant->getLogoPath()));
 
         // upload a different file
-        $merchant->setLogoFile(new File(vfsStream::url('root/download/original.gif')));
+        $merchant->setLogoFile(new File(vfsStream::url('root/local/image2.png')));
         $this->em->persist($merchant);
         $this->em->flush();
 
@@ -377,32 +329,19 @@ class MerchantTest extends OrmTestCase
         $method = new \ReflectionMethod('App\Entity\Merchant', 'delete');
         $method->setAccessible(true);
 
-        $method->invoke($merchant, new File(vfsStream::url('root/download/original.gif')));
+        $method->invoke($merchant, new File(vfsStream::url('root/web/cached.png')));
         $this->assertEquals(1, count($merchant->getTrash()));
 
         // file won't be added twice
-        $method->invoke($merchant, vfsStream::url('root/download/original.gif'));
+        $method->invoke($merchant, vfsStream::url('root/web/cached.png'));
         $this->assertEquals(1, count($merchant->getTrash()));
 
-        $method->invoke($merchant, new File(vfsStream::url('root/web/cached.png')));
+        $method->invoke($merchant, new File(vfsStream::url('root/web/other.gif')));
         $this->assertEquals(2, count($merchant->getTrash()));
 
         $merchant->removeDeletedFiles();
-        $this->assertFalse($this->downloadPath->hasChild('original.gif'));
+        $this->assertFalse($this->webPath->hasChild('other.gif'));
         $this->assertFalse($this->webPath->hasChild('cached.png'));
-    }
-
-    public function testDataUrl()
-    {
-        $url = 'data:text/plain;base64,'.base64_encode('Hello!');
-        $merchant = new Merchant();
-        $merchant->setLogoUrl($url);
-        $merchant->setDownloadRootDir(vfsStream::url('root/download'));
-        $file = $merchant->downloadOriginalLogo();
-
-        $this->assertInstanceOf('Symfony\Component\HttpFoundation\File\File', $file);
-        $this->assertStringStartsWith(vfsStream::url('root/download'), $file->getPath());
-        $this->assertEquals('Hello!', $file->openFile()->current());
     }
 
     public function testHasCustomRepository()

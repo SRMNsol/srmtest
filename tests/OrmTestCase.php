@@ -11,7 +11,7 @@ use App\OrmProvider;
 use App\Entity\User;
 use Silex\Provider\ValidatorServiceProvider;
 
-class OrmTestCase
+class OrmTestCase extends \PHPUnit_Framework_TestCase
 {
     protected $em;
     protected $schemaTool;
@@ -25,8 +25,8 @@ class OrmTestCase
         $app->register(new OrmProvider());
         $app->register(new ValidatorServiceProvider());
 
-        Application::loadConfig($app, __DIR__ . '/../../../config', [
-            'root_dir' => realpath(__DIR__ . '/../../..'),
+        Application::loadConfig($app, __DIR__ . '/../config', [
+            'root_dir' => realpath(__DIR__ . '/..'),
         ]);
 
         // create in memory sqlite
