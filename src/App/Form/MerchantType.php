@@ -33,9 +33,10 @@ class MerchantType extends AbstractType
                 Merchant::COMMISSION_TYPE_PERCENTAGE_VAR => 'Variable Percentage Off',
             ],
         ]);
-        $builder->add('topStore', 'checkbox', ['required' => false]);
+        $builder->add('topStore', null, ['required' => false]);
         $builder->add('clickoutUrl', null, ['required' => false]);
-        $builder->add('active', 'checkbox', ['required' => false]);
+        $builder->add('noSubid', null, ['required' => false]);
+        $builder->add('active', null, ['required' => false]);
         $builder->add('submit', SubmitType::class, [
             'attr' => ['class' => 'btn-primary'],
         ]);

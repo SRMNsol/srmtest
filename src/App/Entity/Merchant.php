@@ -118,6 +118,11 @@ class Merchant implements GroupSequenceProviderInterface
      */
     protected $active = false;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $noSubid = false;
+
     public function getId()
     {
         return $this->id;
@@ -449,7 +454,9 @@ class Merchant implements GroupSequenceProviderInterface
 
         $metadata->addPropertyConstraint('clickoutUrl', new Assert\Regex([
             'pattern' => '/\{SUBID\}/',
+            'htmlPattern' => false,
             'message' => 'Missing {SUBID} placeholder in the url.',
+            'groups'  => ['subid']
         ]));
 
         $metadata->setGroupSequenceProvider(true);
@@ -466,6 +473,10 @@ class Merchant implements GroupSequenceProviderInterface
             || $this->getCommissionType() === self::COMMISSION_TYPE_PERCENTAGE_VAR
         ) {
             $groups[] = 'percentage';
+        }
+
+        if ($this->getNoSubid() === false) {
+            $groups[] = 'subid';
         }
 
         return $groups;
@@ -736,5 +747,17 @@ class Merchant implements GroupSequenceProviderInterface
         $param = isset($subid) ? $subid->encode() : '';
 
         return str_replace('{SUBID}', $param, $this->clickoutUrl);
+    }
+
+    public function getNoSubid()
+    {
+        return $this->noSubid;
+    }
+
+    public function setNoSubid($value)
+    {
+        $this->noSubid = $value;
+
+        return $this;
     }
 }

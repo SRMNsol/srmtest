@@ -1,7 +1,7 @@
 <?php
 
 use Doctrine\ORM\Tools\Console\ConsoleRunner;
-use Symfony\Component\Console\Helper\DialogHelper;
+use Symfony\Component\Console\Helper\QuestionHelper;
 use Doctrine\DBAL\Migrations\Tools\Console\Command as Migrations;
 
 $app = require __DIR__ . '/../src/app.php';
@@ -15,7 +15,7 @@ $db->getConfiguration()->setFilterSchemaAssetsExpression('/^(?!(cashback|email|c
 $helperSet = ConsoleRunner::createHelperSet($app['orm.em']);
 
 // add dialog
-$helperSet->set(new DialogHelper(), 'dialog');
+$helperSet->set(new QuestionHelper(), 'question');
 
 // add migrations commands
 $commands[] = new Migrations\DiffCommand();
