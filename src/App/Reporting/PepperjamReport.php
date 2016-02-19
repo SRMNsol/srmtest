@@ -73,8 +73,8 @@ class PepperjamReport extends BaseReport
 
             // values
             if ($transaction->getHistory()->count() === 0) {
-                $transaction->setTotal($item->sale_amount);
-                $transaction->setCommission($item->commission);
+                $transaction->setTotal($this->parseMoney($item->sale_amount));
+                $transaction->setCommission($this->parseMoney($item->commission));
             }
 
             // status
@@ -157,8 +157,8 @@ class PepperjamReport extends BaseReport
                     // map values
                     $history->setRegisteredAt(new \DateTime($item->date));
                     $history->setItemNumber($item->item_id);
-                    $history->setTotal($item->sale_amount);
-                    $history->setCommission($item->commission);
+                    $history->setTotal($this->parseMoney($item->sale_amount));
+                    $history->setCommission($this->parseMoney($item->commission));
 
                     $this->em->persist($history);
 
@@ -169,7 +169,7 @@ class PepperjamReport extends BaseReport
             // remove non existent history
             while ($iterator->valid()) {
                 $history = $iterator->current();
-                $this->em->remove($history);
+                $transaction->removeHistory($history);
                 $iterator->next();
             }
 

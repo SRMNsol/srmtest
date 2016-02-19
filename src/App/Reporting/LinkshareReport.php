@@ -99,8 +99,8 @@ class LinkshareReport extends BaseReport
                 // map values
                 $history->setRegisteredAt(\DateTime::createFromFormat('m/d/Y H:i', $row['Process Date'] . ' ' . $row['Process Time']));
                 $history->setItemNumber($row['SKU Number']);
-                $history->setTotal($row['Sales']);
-                $history->setCommission($row['Commissions']);
+                $history->setTotal($this->parseMoney($row['Sales']));
+                $history->setCommission($this->parseMoney($row['Commissions']));
 
                 $this->em->persist($history);
 
@@ -110,7 +110,7 @@ class LinkshareReport extends BaseReport
             // remove non existent history
             while ($iterator->valid()) {
                 $history = $iterator->current();
-                $this->em->remove($history);
+                $transaction->removeHistory($history);
                 $iterator->next();
             }
 

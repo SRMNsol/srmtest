@@ -100,8 +100,8 @@ class CommissionJunctionReport extends BaseReport
 
                 // set values on original transactions and no history
                 if ($isOriginal && $transaction->getHistory()->count() === 0) {
-                    $transaction->setTotal($node->filter('sale-amount')->text());
-                    $transaction->setCommission($node->filter('commission-amount')->text());
+                    $transaction->setTotal($this->parseMoney($node->filter('sale-amount')->text()));
+                    $transaction->setCommission($this->parseMoney($node->filter('commission-amount')->text()));
                 } else {
                     $updates[$index] = $transaction;
                 }
@@ -150,8 +150,8 @@ class CommissionJunctionReport extends BaseReport
                 // map values
                 $history->setRegisteredAt(new \DateTime($node->filter('posting-date')->text()));
                 $history->setItemNumber($node->filter('sku')->text());
-                $history->setTotal(round(($isCorrection ? -1 : 1) * $node->filter('sale-amount')->text(), 2));
-                $history->setCommission(round(($isCorrection ? -1 : 1) * $node->filter('publisher-commission')->text(), 2));
+                $history->setTotal(round(($isCorrection ? -1 : 1) * $this->parseMoney($node->filter('sale-amount')->text()), 2));
+                $history->setCommission(round(($isCorrection ? -1 : 1) * $this->parseMoney($node->filter('publisher-commission')->text()), 2));
 
                 $this->em->persist($history);
 
@@ -161,7 +161,7 @@ class CommissionJunctionReport extends BaseReport
             // remove non existent history
             while ($iterator->valid()) {
                 $history = $iterator->current();
-                $this->em->remove($history);
+                $transaction->removeHistory($history);
                 $iterator->next();
             }
 

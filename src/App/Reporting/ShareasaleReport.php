@@ -121,8 +121,8 @@ class ShareasaleReport extends BaseReport
 
                 // set values
                 if ($transaction->getHistory()->count() === 0) {
-                    $transaction->setTotal($node->filter('transamount')->text());
-                    $transaction->setCommission($node->filter('commission')->text());
+                    $transaction->setTotal($this->parseMoney($node->filter('transamount')->text()));
+                    $transaction->setCommission($this->parseMoney($node->filter('commission')->text()));
                 }
 
                 // status
@@ -190,8 +190,8 @@ class ShareasaleReport extends BaseReport
 
                 // map values
                 $history->setRegisteredAt(\DateTime::createFromFormat('Y-m-d H:i:s.u', $node->filter('dt')->text()));
-                $history->setTotal($node->filter('orderimpact')->text());
-                $history->setCommission($node->filter('impact')->text());
+                $history->setTotal($this->parseMoney($node->filter('orderimpact')->text()));
+                $history->setCommission($this->parseMoney($node->filter('impact')->text()));
 
                 $em->persist($history);
 
@@ -201,7 +201,7 @@ class ShareasaleReport extends BaseReport
             // remove non existent history
             while ($iterator->valid()) {
                 $history = $iterator->current();
-                $em->remove($history);
+                $transaction->removeHistory($history);
                 $iterator->next();
             }
 
