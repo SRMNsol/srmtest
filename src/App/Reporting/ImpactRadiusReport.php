@@ -94,8 +94,8 @@ class ImpactRadiusReport extends BaseReport
             $transaction->setMerchant($merchant);
 
             // set values
-            $transaction->setTotal($item['Amount']);
-            $transaction->setCommission($item['Payout']);
+            $transaction->setTotal($this->parseMoney($item['Amount']));
+            $transaction->setCommission($this->parseMoney($item['Payout']));
             switch ($item['State']) {
                 case 'PENDING' :
                     $transaction->setStatus(Transaction::STATUS_REGISTERED);

@@ -59,4 +59,17 @@ abstract class BaseReport extends BaseClient
 
         return $transaction;
     }
+
+    /**
+     * Parse numeric money value, allowing US format (1,234.56) and normal format (1234.56)
+     */
+    protected function parseMoney($value)
+    {
+        $formatter = new \NumberFormatter('en_US', \NumberFormatter::DECIMAL);
+        if (false !== $parsedValue = $formatter->parse($value)) {
+            return $parsedValue;
+        }
+
+        throw new \Exception(sprintf('Invalid money value "%s"', $value));
+    }
 }

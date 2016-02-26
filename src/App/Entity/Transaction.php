@@ -75,7 +75,7 @@ class Transaction implements GroupSequenceProviderInterface
     protected $tag;
 
     /**
-     * @ORM\OneToMany(targetEntity="TransactionHistory", mappedBy="transaction")
+     * @ORM\OneToMany(targetEntity="TransactionHistory", mappedBy="transaction", orphanRemoval=true)
      */
     protected $history;
 
