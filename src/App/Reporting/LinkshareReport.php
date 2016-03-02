@@ -8,9 +8,10 @@ use App\Entity\Transaction;
 use App\Entity\TransactionHistory;
 
 /**
- * Linkshare Reporting
+ * Linkshare (Rakuten Marketing) Reporting
  *
- * @link http://helpcenter.linkshare.com/publisher/categories.php?categoryid=34
+ * @link https://developers.rakutenmarketing.com/subscribe/apis/info?name=AdvancedReports&version=1.0&provider=LinkShare (NEW)
+ * @link http://helpcenter.linkshare.com/publisher/categories.php?categoryid=34 (OLD)
  */
 class LinkshareReport extends BaseReport
 {
@@ -25,7 +26,7 @@ class LinkshareReport extends BaseReport
     public static function create($securityToken, EntityManager $em, array $plugins = null)
     {
         return self::createClient(
-            'https://reportws.linksynergy.com/downloadreport.php',
+            'https://api.rakutenmarketing.com/advancedreports/1.0',
             [
                 'request.options' => [
                     'query' => ['token' => $securityToken],

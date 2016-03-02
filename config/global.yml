@@ -54,6 +54,7 @@ orm.proxies_dir: %root_dir%/data/cache/doctrine
 orm.default_cache: apc
 orm.auto_generate_proxies: false
 orm.em.options:
+  cache_namespace: ~
   result_cache:
     driver: memcache
     host: localhost
@@ -86,3 +87,12 @@ swiftmailer.options:
 # aws.config:
 #   key: ACCESS_KEY
 #   secret: SECRET
+
+# rakuten oauth2
+rakuten_oauth2_url: https://api.rakutenmarketing.com/token
+rakuten_oauth2_config:
+  username: ~
+  password: ~
+  client_id: ~
+  client_secret: ~
+  scope: 3077380
