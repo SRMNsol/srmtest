@@ -39,6 +39,7 @@ $console->addCommands([
     new App\Console\S3TestCommand(),
     new App\Console\PopshopsMerchantIdCommand(),
     new App\Console\ExportCategoriesCommand(),
+    new App\Console\BackupLogsCommand(),
 
     /* Transaction related */
     new App\Console\LinkshareTransactionReportCommand(),

@@ -30,13 +30,13 @@ class Application extends SilexApplication
         $app->register(new MailerProvider());
         $app->register(new ValidatorServiceProvider());
         $app->register(new AwsProvider());
+        $app->register(new MonologServiceProvider());
     }
 
     public static function registerWebServices(Application $app)
     {
         $app->register(new TemplatingProvider());
         $app->register(new SessionServiceProvider());
-        $app->register(new MonologServiceProvider());
         $app->register(new FormServiceProvider());
         $app->register(new DoctrineOrmManagerRegistryProvider());
         $app->register(new TranslationServiceProvider());

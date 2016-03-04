@@ -42,6 +42,8 @@ class ImpactRadiusTransactionReportCommand extends Command
 
         $output->writeln(sprintf('Downloading from %s to %s', $startDate->format('Y-m-d'), $endDate->format('Y-m-d')));
 
+        $app['reporting.logger']->addInfo(sprintf('IMPACT RADIUS %s %s', $startDate->format('Y-m-d'), $endDate->format('Y-m-d')));
+
         $transactions = $report->getActionsReport($startDate, $endDate);
 
         $table = new Table($output);

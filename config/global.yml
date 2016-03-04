@@ -28,9 +28,11 @@ assetic.options:
 
 # monolog
 monolog.logfile: %root_dir%/data/log/app_%date%.log
+monolog.level: ERROR
 
 # reporting
-reporting.cache_dir: %root_dir%/data/cache/reports
+reporting.logfile: %root_dir%/data/log/reporting_%date%.log
+reporting.http_logfile: %root_dir%/data/log/reporting_http_%date%.log
 linkshare_security_token: 8a2fe0db57eb01d3da33c506c103ec99148c604e480ee8a90a756ed5049ce806
 cj_developer_key: 00b9fcc0e776e331ea6fa3c394e0debafea79d05c9085a654c2e8da8ca35fdc429a37c7c30d0d70c8db81335b04e4b13b0bd3783162706bb337870048d0ef2f845/6c1874dd9281959f55e76e62f7173cc38913802b4949909a686c38efddd571ce694058b7ecddef8b48fd4287a48f1a3a9e45051c09d6415dc7d213140cb40ef9
 pepperjam_publisher_api_key: 38e200f9c64df81f9eaf6fc38d1df40e311748469a357ed4e00e196011f2c0bb

@@ -43,6 +43,8 @@ class PepperjamTransactionReportCommand extends Command
 
         $output->writeln(sprintf('Downloading from %s to %s', $startDate->format('Y-m-d'), $endDate->format('Y-m-d')));
 
+        $app['reporting.logger']->addInfo(sprintf('PEPPERJAM %s %s', $startDate->format('Y-m-d'), $endDate->format('Y-m-d')));
+
         $transactions = $input->getOption('update')
             ? $report->getTransactionDeltaReport($startDate, $endDate)
             : $report->getTransactionDetailsReport($startDate, $endDate);
