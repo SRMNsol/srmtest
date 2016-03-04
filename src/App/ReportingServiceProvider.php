@@ -4,6 +4,7 @@ namespace App;
 
 use Silex\Application as SilexApp;
 use Silex\ServiceProviderInterface;
+use Guzzle\Http\Client;
 use Guzzle\Plugin\Cache\CachePlugin;
 use Guzzle\Plugin\Cache\SkipRevalidation;
 use Guzzle\Plugin\Cache\DefaultCacheStorage;
@@ -19,35 +20,25 @@ use App\Reporting\CommissionJunctionReport;
 use App\Reporting\PepperjamReport;
 use App\Reporting\ShareasaleReport;
 use App\Reporting\ImpactRadiusReport;
+use CommerceGuys\Guzzle\Plugin\Oauth2\Oauth2Plugin;
+use CommerceGuys\Guzzle\Plugin\Oauth2\GrantType\PasswordCredentials;
+use CommerceGuys\Guzzle\Plugin\Oauth2\GrantType\RefreshToken;
 
 class ReportingServiceProvider implements ServiceProviderInterface
 {
     public function register(SilexApp $app)
     {
-        $app['reporting.cache_storage'] = $app->share(function () use ($app) {
-            $cacheDir = isset($app['reporting.cache_dir']) ? $app['reporting.cache_dir'] : sys_get_temp_dir();
-
-            if (file_exists($cacheDir) && is_dir($cacheDir)) {
-                $storage = new FilesystemCache([
-                    'cacheDir' => $cacheDir,
-                    'dirPermission' => 0777,
-                    'filePermission' => 0666,
-                ]);
-
-                return $storage;
-            }
-
-            return null;
-        });
-
         $app['reporting.cache_plugin'] = $app->share(function () use ($app) {
-            $storage = $app['reporting.cache_storage'];
+            $storage = $app['cache.default_storage'];
 
             if ($storage !== null) {
-                return new CachePlugin([
-                    'storage' => new DefaultCacheStorage(CacheAdapterFactory::fromCache($storage)),
-                    'revalidation' => new SkipRevalidation(),
-                ]);
+                $options['storage'] = new DefaultCacheStorage(CacheAdapterFactory::fromCache($storage));
+
+                if ($app['debug']) {
+                    $options['revalidation'] = new SkipRevalidation();
+                }
+
+                return new CachePlugin($options);
             }
 
             return null;
@@ -82,14 +73,54 @@ class ReportingServiceProvider implements ServiceProviderInterface
             ]);
         });
 
+        $app['rakuten_oauth2_url'] = '';
+
+        $app['rakuten_oauth2_config'] = [
+            'username' => null,
+            'password' => null,
+            'client_id' => null,
+            'client_secret' => null,
+            'scope' => null,
+        ];
+
+        $app['rakuten_oauth2_plugin'] = $app->share(function () use ($app) {
+            $oauth2Client = new Client($app['rakuten_oauth2_url']);
+            $grantType = new PasswordCredentials($oauth2Client, $app['rakuten_oauth2_config']);
+            $refreshTokenGrantType = new RefreshToken($oauth2Client, $app['rakuten_oauth2_config']);
+            $oauth2Plugin = new Oauth2Plugin($grantType, $refreshTokenGrantType);
+
+            if ($app['reporting.debug']) {
+                $oauth2Client->addSubscriber(LogPlugin::getDebugPlugin());
+            }
+
+            // get cached token
+            $storage = $app['cache.default_storage'];
+            $cacheKey = 'rakuten_oauth2_access_token';
+            $storedAccessToken = null;
+
+            if ($storage->contains($cacheKey)) {
+                $storedAccessToken = $storage->fetch($cacheKey);
+                $oauth2Plugin->setAccessToken($storedAccessToken);
+            }
+
+            $accessToken = $oauth2Plugin->getAccessToken();
+
+            if ($storedAccessToken !== $accessToken) {
+                $storage->save($cacheKey, $accessToken, $ttl = $accessToken['expires'] - time());
+            }
+
+            return $oauth2Plugin;
+        });
+
         $app['linkshare_security_token'] = null;
 
         $app['linkshare_report'] = $app->share(function () use ($app) {
-            return LinkshareReport::create(
-                $app['linkshare_security_token'],
-                $app['orm.em'],
-                $app['reporting.default_plugins']
-            );
+            $plugins = $app['reporting.default_plugins'];
+
+            // add oauth2 plugin for rakuten
+            $plugins[] = $app['rakuten_oauth2_plugin'];
+
+            return LinkshareReport::create($app['linkshare_security_token'], $app['orm.em'], $plugins);
         });
 
         $app['cj_developer_key'] = null;

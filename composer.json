@@ -24,7 +24,8 @@
     "saxulum/saxulum-doctrine-orm-manager-registry-provider": "2.1.0",
     "symfony/doctrine-bridge": "~2.5",
     "swiftmailer/swiftmailer": "~4.1.2",
-    "aws/aws-sdk-php": "~2.7"
+    "aws/aws-sdk-php": "~2.7",
+    "commerceguys/guzzle-oauth2-plugin": "1.0.0"
   },
   "require-dev": {
     "doctrine/data-fixtures": "~1.0",
