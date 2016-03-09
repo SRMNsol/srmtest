@@ -39,9 +39,11 @@ class DownloadAllTransactionsCommand extends Command
 
         $yesterday = new \DateTime('yesterday');
         $yesterday->setTime(0, 0);
+
         if ($last >= $yesterday) {
             /* because last will be +1 day, maximum yesterday */
             $last = new \DateTime('2 days ago');
+            $last->setTime(0, 0);
         } elseif ($last instanceof \DateTime) {
             /* clone to avoid modifying network */
             $last = clone $last;
@@ -49,7 +51,7 @@ class DownloadAllTransactionsCommand extends Command
 
         if ($args['start-date'] === null && $args['end-date'] === null) {
             $args['start-date'] = $last ? $last->add(\DateInterval::createFromDateString('+1 day'))->format('Y-m-d') : null;
-            $args['end-date']   = $last ? 'yesterday' : null;
+            $args['end-date']   = $last ? $yesterday->format('Y-m-d') : null;
         }
 
         return $args;

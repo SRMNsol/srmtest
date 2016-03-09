@@ -36,6 +36,10 @@ class LinkshareTransactionReportCommand extends Command
             ? new \DateTime($input->getArgument('end-date'))
             : clone $startDate;
 
+        // normalize time
+        $startDate->setTime(0, 0);
+        $endDate->setTime(0, 0);
+
         $output->writeln(sprintf('Downloading from %s to %s', $startDate->format('Y-m-d'), $endDate->format('Y-m-d')));
 
         $transactions = $report->getSignatureOrderReport($startDate, $endDate);

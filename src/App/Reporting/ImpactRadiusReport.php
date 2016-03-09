@@ -57,6 +57,10 @@ class ImpactRadiusReport extends BaseReport
      */
     public function getActionsReport(\DateTime $from, \DateTime $to)
     {
+        // normalize time
+        $from->setTime(0, 0);
+        $to->setTime(0, 0);
+
         $end = clone $to;
         $end->add(\DateInterval::createFromDateString('1 day'));
 
