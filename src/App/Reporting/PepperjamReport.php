@@ -50,6 +50,10 @@ class PepperjamReport extends BaseReport
      */
     public function getTransactionDetailsReport(\DateTime $from, \DateTime $to)
     {
+        // normalize time
+        $from->setTime(0, 0);
+        $to->setTime(0, 0);
+
         $json = $this->request([
             'publisher/report/transaction-details{?startDate,endDate}', [
                 'startDate' => $from->format('Y-m-d'),
@@ -96,6 +100,10 @@ class PepperjamReport extends BaseReport
 
     public function getTransactionDeltaReport(\DateTime $from, \DateTime $to)
     {
+        // normalize time
+        $from->setTime(0, 0);
+        $to->setTime(0, 0);
+
         $requests = [];
         $start = clone $from;
 

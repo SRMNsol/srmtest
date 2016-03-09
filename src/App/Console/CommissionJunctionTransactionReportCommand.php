@@ -38,6 +38,10 @@ class CommissionJunctionTransactionReportCommand extends Command
             : clone $startDate;
         $updateAll = $input->getOption('update-all');
 
+        // normalize time
+        $startDate->setTime(0, 0);
+        $endDate->setTime(0, 0);
+
         $output->writeln(sprintf('Downloading from %s to %s', $startDate->format('Y-m-d'), $endDate->format('Y-m-d')));
 
         $transactions = $report->getCommissionDetailReport($startDate, $endDate, $updateAll);
@@ -60,6 +64,5 @@ class CommissionJunctionTransactionReportCommand extends Command
 
         $table->render();
         $output->writeln(sprintf('Total %d transactions', count($transactions)));
-
     }
 }

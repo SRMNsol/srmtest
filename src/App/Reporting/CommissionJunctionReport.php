@@ -55,6 +55,10 @@ class CommissionJunctionReport extends BaseReport
      */
     public function getCommissionDetailReport(\DateTime $from, \DateTime $to)
     {
+        // normalize time
+        $from->setTime(0, 0);
+        $to->setTime(0, 0);
+
         $to = clone $to;
         $to->add(\DateInterval::createFromDateString('1 day'));
 

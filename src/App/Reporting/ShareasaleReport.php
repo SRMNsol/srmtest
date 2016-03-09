@@ -71,6 +71,10 @@ class ShareasaleReport extends BaseReport
 
     public function getActivityDetailsReport(\DateTime $from, \DateTime $to)
     {
+        // normalize time
+        $from->setTime(0, 0);
+        $to->setTime(0, 0);
+
         $requests = [];
         $start = clone $from;
 
@@ -153,6 +157,10 @@ class ShareasaleReport extends BaseReport
 
     public function getLedgerReport(\DateTime $from , \DateTime $to)
     {
+        // normalize time
+        $from->setTime(0, 0);
+        $to->setTime(0, 0);
+
         $crawler = $this->request([
             '{?action,dateStart,dateEnd,includeOrderDetails}', [
                 'action' => 'ledger',

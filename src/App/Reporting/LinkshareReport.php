@@ -52,6 +52,10 @@ class LinkshareReport extends BaseReport
 
     public function getSignatureOrderReport(\DateTime $from, \DateTime $to)
     {
+        // normalize time
+        $from->setTime(0, 0);
+        $to->setTime(0, 0);
+
         $csv = $this->request(['{?bdate,edate,reportid}', [
             'bdate' => $from->format('Ymd'),
             'edate' => $to->format('Ymd'),
