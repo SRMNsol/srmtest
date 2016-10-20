@@ -43,6 +43,8 @@ class ShareasaleTransactionReportCommand extends Command
 
         $output->writeln(sprintf('Downloading from %s to %s', $startDate->format('Y-m-d'), $endDate->format('Y-m-d')));
 
+        $app['reporting.logger']->addInfo(sprintf('SHAREASALE %s %s', $startDate->format('Y-m-d'), $endDate->format('Y-m-d')));
+
         $transactions = $input->getOption('update')
             ? $report->getLedgerReport($startDate, $endDate)
             : $report->getActivityDetailsReport($startDate, $endDate);

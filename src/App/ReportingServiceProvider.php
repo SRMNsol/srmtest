@@ -44,33 +44,45 @@ class ReportingServiceProvider implements ServiceProviderInterface
             return null;
         });
 
-        $app['reporting.log_plugin'] = $app->share(function () use ($app) {
-            $logDir = $app['log_dir'];
+        $app['reporting.log_handler'] = $app->share(function () use ($app) {
+            return new StreamHandler($app['reporting.logfile'], Logger::DEBUG);
+        });
 
-            if (file_exists($logDir) && is_dir($logDir)) {
-                $log = new Logger('reporting.api-client');
-                $level = $app['debug'] ? Logger::DEBUG : Logger::ERROR;
-                $logFile = $logDir . '/reporting.' . date('Ymd') . '.log';
+        $app['reporting.logger'] = $app->share(function () use ($app) {
+            $logger = new Logger('reporting');
+            $logger->pushHandler($app['reporting.log_handler']);
 
-                if (!file_exists($logFile)) {
-                    touch($logFile);
-                    chmod($logFile, 0666);
-                }
+            // add to default logger to get sql debugging and other things
+            $app['monolog']->pushHandler($app['reporting.log_handler']);
 
-                $log->pushHandler(new StreamHandler($logFile, Logger::DEBUG));
+            return $logger;
+        });
 
-                return new LogPlugin(new PsrLogAdapter($log), MessageFormatter::SHORT_FORMAT);
+        $app['reporting.log_plugins'] = $app->share(function () use ($app) {
+            // normal reporting log
+            $plugins[] = new LogPlugin(new PsrLogAdapter($app['reporting.logger']), MessageFormatter::DEBUG_FORMAT);
+
+            // debug plugins for verbose mode cli
+            if ($app['reporting.debug']) {
+                $plugins[] = LogPlugin::getDebugPlugin();
             }
+
+            // raw http request and response logging
+            $plugins[] = LogPlugin::getDebugPlugin(true, fopen($app['reporting.http_logfile'], 'a'));
+
+            return $plugins;
         });
 
         $app['reporting.debug'] = false;
 
         $app['reporting.default_plugins'] = $app->share(function () use ($app) {
-            return array_filter([
-                $app['reporting.cache_plugin'],
-                $app['reporting.log_plugin'],
-                $app['reporting.debug'] ? LogPlugin::getDebugPlugin() : null,
-            ]);
+            $plugins[] = $app['reporting.cache_plugin'];
+
+            foreach ($app['reporting.log_plugins'] as $plugin) {
+                $plugins[] = $plugin;
+            }
+
+            return $plugins;
         });
 
         $app['rakuten_oauth2_url'] = '';
@@ -89,8 +101,9 @@ class ReportingServiceProvider implements ServiceProviderInterface
             $refreshTokenGrantType = new RefreshToken($oauth2Client, $app['rakuten_oauth2_config']);
             $oauth2Plugin = new Oauth2Plugin($grantType, $refreshTokenGrantType);
 
-            if ($app['reporting.debug']) {
-                $oauth2Client->addSubscriber(LogPlugin::getDebugPlugin());
+            // add log plugins
+            foreach ($app['reporting.log_plugins'] as $plugin) {
+                $oauth2Client->addSubscriber($plugin);
             }
 
             // get cached token
@@ -106,7 +119,7 @@ class ReportingServiceProvider implements ServiceProviderInterface
             $accessToken = $oauth2Plugin->getAccessToken();
 
             if ($storedAccessToken !== $accessToken) {
-                $storage->save($cacheKey, $accessToken, $ttl = $accessToken['expires'] - time());
+                $storage->save($cacheKey, $accessToken, 7*24*60*60); // store for 7 days
             }
 
             return $oauth2Plugin;

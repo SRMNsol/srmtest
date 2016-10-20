@@ -18,6 +18,12 @@ abstract class BaseClient
 
     public static function createCLient($baseUrl, $config, EntityManager $em, array $plugins = null)
     {
+        $requestOptions = isset($config['request.options']) ? $config['request.options'] : [];
+        $config['request.options'] = array_merge([
+            'timeout' => 120,
+            'connect_timeout' => 5,
+        ], $requestOptions);
+
         $client = new HttpClient($baseUrl, $config);
 
         if (is_array($plugins)) {

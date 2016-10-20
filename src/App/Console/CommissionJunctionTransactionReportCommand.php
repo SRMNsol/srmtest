@@ -44,6 +44,8 @@ class CommissionJunctionTransactionReportCommand extends Command
 
         $output->writeln(sprintf('Downloading from %s to %s', $startDate->format('Y-m-d'), $endDate->format('Y-m-d')));
 
+        $app['reporting.logger']->addInfo(sprintf('COMMISSION JUNCTION %s %s', $startDate->format('Y-m-d'), $endDate->format('Y-m-d')));
+
         $transactions = $report->getCommissionDetailReport($startDate, $endDate, $updateAll);
 
         $table = new Table($output);
