@@ -109,21 +109,29 @@ class DownloadAllTransactionsCommand extends Command
         /**
          * Linkshare (ID 4)
          */
-        $output->writeln('Linkshare');
-
         $network = $app['orm.em']->getRepository('App\Entity\Network')->findOneByPopshopsId(4);
+
+        $output->writeln('<comment>Linkshare</comment>');
         $args = $this->getTransactionDownloadArguments($input, $network);
         $ret = $this->getApplication()->find('linkshare:transactions')->run(new ArrayInput([
             'command' => 'linkshare:transactions',
         ] + $args), $output);
         $this->updateDownloadDate($network, $args);
 
+        $output->writeln('<comment>Linkshare (update)</comment>');
+        $args = $this->getTransactionDownloadArguments($input, $network, 'history');
+        $ret = $this->getApplication()->find('linkshare:transactions')->run(new ArrayInput([
+            'command' => 'linkshare:transactions',
+            '--update' => true,
+        ] + $args), $output);
+        $this->updateDownloadDate($network, $args, 'history');
+
         /**
          * Comission Junction(ID 2)
          */
-        $output->writeln('CJ');
-
         $network = $app['orm.em']->getRepository('App\Entity\Network')->findOneByPopshopsId(2);
+
+        $output->writeln('<comment>Commission Junction</comment>');
         $args = $this->getTransactionDownloadArguments($input, $network);
         $ret = $this->getApplication()->find('cj:transactions')->run(new ArrayInput([
             'command' => 'cj:transactions',
@@ -133,15 +141,16 @@ class DownloadAllTransactionsCommand extends Command
         /**
          * EBay Enterprise (ID 8)
          */
-        $output->writeln('Pepperjam');
-
         $network = $app['orm.em']->getRepository('App\Entity\Network')->findOneByPopshopsId(8);
+
+        $output->writeln('<comment>Pepperjam</comment>');
         $args = $this->getTransactionDownloadArguments($input, $network);
         $ret = $this->getApplication()->find('pepperjam:transactions')->run(new ArrayInput([
             'command' => 'pepperjam:transactions',
         ] + $args), $output);
         $this->updateDownloadDate($network, $args);
 
+        $output->writeln('<comment>Pepperjam (update)</comment>');
         $args = $this->getTransactionDownloadArguments($input, $network, 'history');
         $ret = $this->getApplication()->find('pepperjam:transactions')->run(new ArrayInput([
             'command' => 'pepperjam:transactions',
@@ -152,15 +161,16 @@ class DownloadAllTransactionsCommand extends Command
         /**
          * Share A Sale (ID 1)
          */
-        $output->writeln('Shareasale');
-
         $network = $app['orm.em']->getRepository('App\Entity\Network')->findOneByPopshopsId(1);
+
+        $output->writeln('<comment>Shareasale</comment>');
         $args = $this->getTransactionDownloadArguments($input, $network);
         $ret = $this->getApplication()->find('shareasale:transactions')->run(new ArrayInput([
             'command' => 'shareasale:transactions',
         ] + $args), $output);
         $this->updateDownloadDate($network, $args);
 
+        $output->writeln('<comment>Shareasale (update)</comment>');
         $args = $this->getTransactionDownloadArguments($input, $network, 'history');
         $ret = $this->getApplication()->find('shareasale:transactions')->run(new ArrayInput([
             'command' => 'shareasale:transactions',
@@ -171,9 +181,9 @@ class DownloadAllTransactionsCommand extends Command
         /**
          * Impact Radius (ID 15)
          */
-        $output->writeln('Impact Radius');
-
         $network = $app['orm.em']->getRepository('App\Entity\Network')->findOneByPopshopsId(15);
+
+        $output->writeln('<comment>Impact Radius</comment>');
         $args = $this->getTransactionDownloadArguments($input, $network);
         $ret = $this->getApplication()->find('impactradius:transactions')->run(new ArrayInput([
             'command' => 'impactradius:transactions',
