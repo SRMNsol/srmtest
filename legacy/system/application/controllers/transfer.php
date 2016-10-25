@@ -35,7 +35,7 @@ class Transfer extends Controller
             $logged_in = $this->user->login_status();
             $skip = $this->uri->segment(4);
             if ($skip || $logged_in) {
-                $this->store($id);
+                $this->store($id, $skip);
             } else {
                 $this->guest($id);
             }
@@ -111,7 +111,7 @@ class Transfer extends Controller
         $this->parser->parse('transfer/guest', $data);
     }
 
-    public function store($id)
+    public function store($id, $skip = null)
     {
         $data = $this->getMerchantData($id);
 
@@ -119,8 +119,10 @@ class Transfer extends Controller
             show_404();
         }
 
-        $data['cookie_url'] = $data['url'];
-        $data['destination_url'] = $data['cookie_url'];
+        if ($skip === 'out') {
+            redirect($data['url']);
+        }
+
         $this->parser->parse('transfer/store', $data);
     }
 

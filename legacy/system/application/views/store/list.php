@@ -48,29 +48,29 @@ class=uppercase href="/stores/storelist/w">w</A> <A
 class=uppercase href="/stores/storelist/x">x</A> <A 
 class=uppercase href="/stores/storelist/y">y</A> <A 
 class=uppercase href="/stores/storelist/z">z</A> </DIV></DIV>
-<DIV id=sitemap>
-<UL class=sitemap-col>
-<?php if($stores1){?>
-{stores1}
-  <LI><A href="/stores/details/{id}">{name}</A></LI>
-{/stores1}
-<?php }?>
-</UL>
-<UL class=sitemap-col>
-<?php if($stores2){?>
-{stores2}
-  <LI><A href="/stores/details/{id}">{name}</A></LI>
-{/stores2}
-<?php }?>
-</UL>
-<UL class=sitemap-col>
-<?php if($stores3){?>
-{stores3}
-  <LI><A href="/stores/details/{id}">{name}</A></LI>
-{/stores3}
-<?php }?>
-</UL>
-</DIV>
+<div id=sitemap>
+    <ul class=sitemap-col>
+    <?php if ($stores1) { ?>
+        {stores1}
+          <li><a href="/transfer/stores/{id}/out" target="_blank">{name}</a></li>
+        {/stores1}
+    <?php } ?>
+    </ul>
+    <ul class=sitemap-col>
+    <?php if ($stores2) { ?>
+        {stores2}
+          <li><a href="/transfer/stores/{id}/out" target="_blank">{name}</a></li>
+        {/stores2}
+    <?php } ?>
+    </ul>
+    <ul class=sitemap-col>
+    <?php if ($stores3) { ?>
+        {stores3}
+          <li><a href="/transfer/stores/{id}/out" target="_blank">{name}</a></li>
+        {/stores3}
+    <?php } ?>
+    </ul>
+</div>
 <DIV style="HEIGHT: 10px; CLEAR: both"></DIV></DIV>
 		
 
