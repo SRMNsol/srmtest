@@ -63,7 +63,7 @@
                 </div>
                 <div style="clear: both; height: 20px;"></div>
             </div>
-            <div id="manualRedirect"><a href="{destination_url}">If you are not automatically redirected, click here</a></div>
+            <div id="manualRedirect"><a href="{url}">If you are not automatically redirected, click here</a></div>
         </div>
         <div style="width:300px; display:inline-block;"><?php echo googletag_ad('BS_coupon_300x600_2', 'none') ?></div>
     </div>
@@ -75,7 +75,7 @@ $(document).ready(function() {
 });
 
 function transfer() {
-    window.location = '{cookie_url}';
+    window.location = '{url}';
 }
 </script>
 </body>
