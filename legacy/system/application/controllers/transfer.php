@@ -34,7 +34,8 @@ class Transfer extends Controller
             $id = $this->uri->segment(3);
             $logged_in = $this->user->login_status();
             $skip = $this->uri->segment(4);
-            if ($skip || $logged_in) {
+
+            if ($skip === 'skip' || $logged_in) {
                 $this->store($id, $skip);
             } else {
                 $this->guest($id);
