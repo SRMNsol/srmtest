@@ -28,11 +28,11 @@ function s3rotate($url)
 {
     static $counter = 0;
 
-    if (0 !== strpos($url, 'http://static0.beesavy.com')) {
+    if (0 !== strpos($url, 'https://static0.beesavy.com')) {
         return $url;
     }
 
-    $url = str_replace('http://static0', 'http://static'.$counter, $url);
+    $url = str_replace('https://static0', 'https://static'.$counter, $url);
     $counter += ($counter < 3) ? 1 : -3;
 
     return $url;

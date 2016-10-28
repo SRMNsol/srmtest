@@ -14,7 +14,7 @@ temp_dir:         %root_dir%/data/temp
 # storage
 bucket_dir: %root_dir%/legacy/public
 bucket_url: "" # relative url
-# bucket_url: http://static0.beesavy.com # rotated
+# bucket_url: https://static0.beesavy.com # rotated
 
 # twig
 twig.path: %root_dir%/views

@@ -15,7 +15,7 @@ apt-get update
 
 # apache
 apt-get install -y apache2
-a2enmod rewrite
+a2enmod rewrite ssl
 service apache2 restart
 
 # memcache
@@ -62,15 +62,35 @@ curl -s https://getcomposer.org/installer | php
 mv composer.phar /usr/local/bin/composer
 chmod u+x /usr/local/bin/composer
 
-# front-end web 
+# https
+# https://www.digitalocean.com/community/tutorials/how-to-create-a-ssl-certificate-on-apache-for-ubuntu-14-04
+# http://crohr.me/journal/2014/generate-self-signed-ssl-certificate-without-prompt-noninteractive-mode.html
+openssl genrsa -des3 -passout pass:x -out server.pass.key 2048
+openssl rsa -passin pass:x -in server.pass.key -out server.key
+openssl req -new -key server.key -out server.csr -subj '/C=ES/ST=BCN/L=BCN/O=DEV/OU=DEV/CN=localhost'
+openssl x509 -req -days 365 -in server.csr -signkey server.key -out server.crt
+rm server.pass.key server.csr
+mv server.crt /etc/ssl/certs/
+mv server.key /etc/ssl/private/
+
+# front-end web (https)
 cat <<CONF > /etc/apache2/sites-available/001-app.conf
-<VirtualHost *:80>
+<VirtualHost *:443>
   DocumentRoot "$APP_ROOT/legacy/public"
   SetEnv APP_ENV devel
   <Directory "$APP_ROOT/legacy/public">
     AllowOverride All
     Require all granted
   </Directory>
+
+  SSLEngine on
+  SSLCertificateFile /etc/ssl/certs/server.crt
+  SSLCertificateKeyFile /etc/ssl/private/server.key
+  <FilesMatch "\.php$">
+    SSLOptions +StdEnvVars
+  </FilesMatch>
+  BrowserMatch "MSIE [2-6]" nokeepalive ssl-unclean-shutdown downgrade-1.0 force-response-1.0
+  BrowserMatch "MSIE [17-9]" ssl-unclean-shutdown
 </VirtualHost>
 CONF
 a2ensite 001-app
