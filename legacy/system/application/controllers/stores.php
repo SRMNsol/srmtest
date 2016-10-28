@@ -117,7 +117,23 @@ class Stores extends Controller
         $this->parser->parse('store/search', $data);
     }
 
+    /**
+     * Normal all stores page
+     */
     public function storelist()
+    {
+        return $this->stores('storelist');
+    }
+
+    /**
+     * All stores for link checker
+     */
+    public function allstores()
+    {
+        return $this->stores('allstores');
+    }
+
+    protected function stores($action)
     {
         $search = $this->uri->segment(3);
         if (!isset($search)) {
@@ -149,6 +165,8 @@ class Stores extends Controller
         $data['stores1'] = $split[0];
         $data['stores2'] = $split[1];
         $data['stores3'] = $split[2];
+        $data['action'] = $action;
+        $data['skip'] = $action === 'allstores' ? '/direct' : '';
 
         $this->load->vars($data);
         $this->parser->parse('store/list', $data);

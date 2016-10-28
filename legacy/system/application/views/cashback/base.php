@@ -175,7 +175,7 @@ $(document).ready(function(){
     <div style="clear: both;"></div>
 
 <div id="ftr" class="ftrLeftCol">
-		<p id="links" style="height: 20px; line-height: 20px;">Copyright © 2010 BeeSavy, LLC. All Rights Reserved. <a href="/stores/storelist">All Stores</a> |  <a href="/info/terms">Terms of Service</a> | <a href="/info/privacy">Privacy Policy</a> | <a href="/info/contact">Contact Us</a></p>
+		<p id="links" style="height: 20px; line-height: 20px;">Copyright © 2010 BeeSavy, LLC. All Rights Reserved. <a href="/stores/allstores">All Stores</a> |  <a href="/info/terms">Terms of Service</a> | <a href="/info/privacy">Privacy Policy</a> | <a href="/info/contact">Contact Us</a></p>
 		<a href="http://twitter.com/" target="_blank" class="socialMedia twitter">Follow Us On Twitter</a>
 		<a href="http://facebook.com/" target="_blank" class="socialMedia facebook">Like Us on Facebook</a>
 		<div style="clear: both;"></div>

@@ -25,25 +25,25 @@ class Blocks extends Model
         $categories = cached_categories();
 
         $data['banner'] = $this->parser->parse($banner['page'], $banner['vars'],TRUE);
-        if ($class=="product" && $method =="compare") {
-            $data['header'] = $this->parser->parse('blocks/header_compare',array(), TRUE);
-        } elseif ($class=="stores" && $method =="details") {
-            $data['header'] = $this->parser->parse('blocks/header_compare',array(), TRUE);
-        } elseif ($class=="cashback") {
-            $data['header'] = $this->parser->parse('blocks/header_account',array(), TRUE);
-        } elseif ($class=="tools") {
-            $data['header'] = $this->parser->parse('blocks/header_tools',array(), TRUE);
-        } elseif ($class=="account") {
-            $data['header'] = $this->parser->parse('blocks/header_account',array(), TRUE);
-        } elseif ($class=="stores" && $method =="storelist") {
-            $data['header'] = $this->parser->parse('blocks/header_sitemap',array(), TRUE);
-        } elseif ($class=="info") {
-            $data['header'] = $this->parser->parse('blocks/header_info',array(), TRUE);
+        if ($class === 'product' && $method == 'compare') {
+            $data['header'] = $this->parser->parse('blocks/header_compare', array(), TRUE);
+        } elseif ($class === 'stores' && $method === 'details') {
+            $data['header'] = $this->parser->parse('blocks/header_compare', array(), TRUE);
+        } elseif ($class === 'cashback') {
+            $data['header'] = $this->parser->parse('blocks/header_account', array(), TRUE);
+        } elseif ($class === 'tools') {
+            $data['header'] = $this->parser->parse('blocks/header_tools', array(), TRUE);
+        } elseif ($class === 'account') {
+            $data['header'] = $this->parser->parse('blocks/header_account', array(), TRUE);
+        } elseif ($class === 'stores' && ($method === 'storelist' || $method === 'allstores')) {
+            $data['header'] = $this->parser->parse('blocks/header_sitemap', array(), TRUE);
+        } elseif ($class === 'info') {
+            $data['header'] = $this->parser->parse('blocks/header_info', array(), TRUE);
         } else {
-            $data['header'] = $this->parser->parse('blocks/header',array(), TRUE);
+            $data['header'] = $this->parser->parse('blocks/header', array(), TRUE);
         }
-        $data['nav_bar'] = $this->parser->parse('blocks/nav_bar',array('categories' => $categories), TRUE);
-        $data['footer'] = $this->parser->parse('blocks/footer',array(), TRUE);
+        $data['nav_bar'] = $this->parser->parse('blocks/nav_bar', array('categories' => $categories), TRUE);
+        $data['footer'] = $this->parser->parse('blocks/footer', array(), TRUE);
 
         return $data;
     }
