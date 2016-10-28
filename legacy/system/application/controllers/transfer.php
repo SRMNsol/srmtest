@@ -26,16 +26,16 @@ class Transfer extends Controller
     public function _remap()
     {
         $type = $this->uri->segment(2);
-        if ($type=="login") {
+        if ($type === 'login') {
             $this->login();
-        } elseif ($type=="register") {
+        } elseif ($type === 'register') {
             $this->register();
         } else {
             $id = $this->uri->segment(3);
             $logged_in = $this->user->login_status();
             $skip = $this->uri->segment(4);
 
-            if ($skip === 'skip' || $logged_in) {
+            if ($skip === 'direct' || $skip === 'skip' || $logged_in) {
                 $this->store($id, $skip);
             } else {
                 $this->guest($id);
@@ -120,7 +120,7 @@ class Transfer extends Controller
             show_404();
         }
 
-        if ($skip === 'out') {
+        if ($skip === 'direct') {
             redirect($data['url']);
         }
 
