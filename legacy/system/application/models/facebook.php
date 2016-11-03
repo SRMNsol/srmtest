@@ -94,7 +94,7 @@ class Facebook extends Model {
         $q = $q->result_array();
         $user = $q[0];
             $client_id = $this->id;
-            return "http://www.facebook.com/dialog/oauth?client_id=$client_id&redirect_uri=".urlencode($ruri)."&scope=email,offline_access,publish_stream";
+            return "https://www.facebook.com/dialog/oauth?client_id=$client_id&redirect_uri=".urlencode($ruri)."&scope=email,offline_access,publish_stream";
     }
     function get_access_token($uid){
         $error = $this->input->get('error');
@@ -106,7 +106,7 @@ class Facebook extends Model {
         $clientsecret = $this->secret;
         $code = $this->input->get('code');
         if($this->input->get('code')){
-            $ruri = "http://www.beesavy.com/account/add_facebook";
+            $ruri = "https://www.beesavy.com/account/add_facebook";
             $ruri = urlencode($ruri);
             $url = "https://graph.facebook.com/oauth/access_token?client_id=$clientid&redirect_uri=".$ruri."&client_secret=$clientsecret&code=$code";
 

@@ -90,7 +90,7 @@ class Twitter extends Model {
             $this->db->where('id', $uid);
             $this->db->update('user', array('twitter_token_secret'=>$responseArray['oauth_token_secret']));
 
-            return "http://api.twitter.com/oauth/authorize?oauth_token=$oauth_token";
+            return "https://api.twitter.com/oauth/authorize?oauth_token=$oauth_token";
         }
     }
     function get_access_token($uid){

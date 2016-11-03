@@ -26,8 +26,21 @@ Vagrant.configure("2") do |config|
   config.vm.provision :shell, path: "provision.sh"
 
   # networking
-  config.vm.network "forwarded_port", guest: 80, host: 8080
   config.vm.network "forwarded_port", guest: 81, host: 8081
+  config.vm.network "forwarded_port", guest: 443, host: 8443
+
+  # forward host port using vagrant trigger
+  # http://salvatore.garbesi.com/vagrant-port-forwarding-on-mac/
+  # $ vagrant plugin install vagrant-triggers
+  config.trigger.after [:provision, :up, :reload] do
+    system('echo "
+rdr pass on lo0 inet proto tcp from any to 127.0.0.1 port 443 -> 127.0.0.1 port 8443
+" | sudo pfctl -ef - > /dev/null 2>&1; echo "==> Fowarding Ports: 443 -> 8443"')
+  end
+
+  config.trigger.after [:halt, :destroy, :suspend] do
+    system("sudo pfctl -f /etc/pf.conf > /dev/null 2>&1; echo '==> Removing Port Forwarding'")
+  end
 
   # make application folder writable by web server
   config.vm.synced_folder "./", "/var/www/app",
