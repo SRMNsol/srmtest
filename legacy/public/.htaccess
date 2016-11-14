@@ -1,4 +1,8 @@
 RewriteEngine On
+
+RewriteCond %{HTTP:X-Forwarded-Proto} =http
+RewriteRule . https://%{HTTP:Host}%{REQUEST_URI} [L,R=permanent]
+
 RewriteRule ^.git - [F,L]
 RewriteBase /
 RewriteCond %{ENV:REDIRECT_APP_PATH} !^$
