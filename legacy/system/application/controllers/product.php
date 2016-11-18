@@ -23,20 +23,17 @@ class Product extends Controller
         $store = $this->input->get('q');
         $this->load->helper('url');
 
-        $merchants = $this->container['orm.em']->getRepository('App\Entity\Merchant')->getActiveMerchants();
-        $matches = array_filter($merchants, function ($merchant) use ($store) {
-            if (strtolower($store) === strtolower($merchant->getName())) {
-                return $merchant;
-            }
-        });
-
-        if (count($matches) > 0) {
-            redirect('/stores/details/' . current($matches)->getId());
+        if (empty($store)) {
+            $merchants = array();
+        }
+        else {
+            $merchants = $this->container['orm.em']->getRepository('App\Entity\Merchant')->searchActiveMerchants($store);
         }
 
         $data = $this->blocks->getBlocks();
         $data['search'] = $store;
-        $this->parser->parse('product/noproduct', $data);
+        $data['merchants'] = $merchants;
+        $this->parser->parse('product/search', $data);
     }
 
     public function category()
