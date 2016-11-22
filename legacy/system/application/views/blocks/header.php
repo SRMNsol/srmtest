@@ -32,10 +32,15 @@
 <link rel="stylesheet" type="text/css" href="<?php echo s3path("/styles/deals.css") ?>" media="screen"/>
 <link rel="stylesheet" type="text/css" href="<?php echo s3path("/styles/shopping.css") ?>" media="screen"/>
 <link rel="stylesheet" type="text/css" href="<?php echo s3path("/styles/colorbox.css") ?>" media="screen"/>
+<link rel="stylesheet" href="/css/custom.css">
+<link rel="stylesheet" href="/css/select2.css">
 
 <script type="text/javascript" src="<?php echo s3path("/script_files/jquery_004.js") ?>"></script>
 <script type="text/javascript" src="<?php echo s3path("/colorbox/jquery.colorbox.js") ?>"></script>
 <script type="text/javascript" src="<?php echo s3path("/script_files/nav_bar.js") ?>"></script>
+
+<script src="/js/select2.js"></script>
+<script src="/js/autocomplete.js"></script>
 
 <?php if (in_array($this->router->class, ["product", "stores", "coupon"])) { ?>
     <link rel="stylesheet" type="text/css" href="<?php echo s3path("/scroll/styles/jScrollPane.css") ?>" media="all"/>

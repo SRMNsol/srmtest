@@ -5,7 +5,7 @@
         <div id="nav-SearchLabel">I'M SHOPPING FOR</div>
         <form id="nav-search-form" action="/search" method="get" accept-charset="utf-8">
             <div id="nav-search">
-                <input id="nav-search-input" class="input-box input-focus ac_input" name="q" value="Search for Store" type="text"/>
+                <input id="autocomplete" name="q" />
                 <input id="nav-search-form-submit" class="nav-button" type="submit" value="SEARCH" />
             </div>
         </form>
