@@ -58,6 +58,9 @@ class CI_Parser {
 			{
 				$template = $this->_parse_pair($key, $val, $template);		
 			}
+			elseif(is_object($val)) {
+				continue;
+			}
 			else
 			{
 				$template = $this->_parse_single($key, $val, $template);
