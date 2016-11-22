@@ -1,0 +1,26 @@
+#nav-search-form-submit {
+  margin-left: 2px !important;
+}
+
+#nav-search .select2-results { 
+  color: #444 !important;
+}
+
+#nav-search .select2-highlighted {
+    background: #df6c57 !important;
+}
+
+#nav-search .select2-container {
+  margin-top: 5px;
+  width: 280px !important;
+  float: left;
+}
+
+#nav-search .select2-container > a {
+  height: 30px;
+}
+
+#nav-search .select2-container span {
+  height: 30px;
+  line-height: 30px;
+}
