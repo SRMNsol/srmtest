@@ -34,6 +34,11 @@
 <script type="text/javascript" src="<?php echo s3path("/script_files/nav_bar.js") ?>"></script>
 <script type="text/javascript" src="<?php echo s3path("/script_files/ZeroClipboard.js") ?>"></script>
 
+<link rel="stylesheet" href="/css/custom.css">
+<link rel="stylesheet" href="/css/select2.css">
+<script src="/js/select2.js"></script>
+<script src="/js/autocomplete.js"></script>
+
 <script type="text/javascript">
     var clip = null;
 
