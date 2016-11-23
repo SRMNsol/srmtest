@@ -18,25 +18,49 @@ class Product extends Controller
     {
     }
 
+    public function autocomplete()
+    {
+        $store = $this->input->get('q');
+        if ($store) {
+            $merchants = $this->container['orm.em']->getRepository('App\Entity\Merchant')->searchActiveMerchants($store);
+        }
+        else {
+            $merchants = array();
+        }
+
+        $stores = array();
+
+        foreach ($merchants as $merchant) {
+            $stores[] = array(
+                'name' => $merchant->getName(),
+            );
+        }
+
+        $this->parser->parse('product/autocomplete', array(
+            'stores' => $stores,
+        ));
+    }
+
     public function search()
     {
         $store = $this->input->get('q');
         $this->load->helper('url');
 
-        $merchants = $this->container['orm.em']->getRepository('App\Entity\Merchant')->getActiveMerchants();
-        $matches = array_filter($merchants, function ($merchant) use ($store) {
-            if (strtolower($store) === strtolower($merchant->getName())) {
-                return $merchant;
-            }
-        });
+        $rate = $this->container['orm.em']->getRepository('App\Entity\Rate')->getCurrentRate();
 
-        if (count($matches) > 0) {
-            redirect('/stores/details/' . current($matches)->getId());
+        if (empty($store)) {
+            $merchants = array();
         }
+        else {
+            $merchants = $this->container['orm.em']->getRepository('App\Entity\Merchant')->searchActiveMerchants($store);
+        }
+        
 
         $data = $this->blocks->getBlocks();
         $data['search'] = $store;
-        $this->parser->parse('product/noproduct', $data);
+        $data['merchants'] = $merchants;
+        $data['rate'] = $rate;
+        $this->parser->parse('product/search', $data);
     }
 
     public function category()

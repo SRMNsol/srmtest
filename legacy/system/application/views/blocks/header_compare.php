@@ -38,6 +38,11 @@
 <script type="text/javascript" src="<?php echo s3path("/script_files/money.js") ?>"></script>
 <script type="text/javascript" src="<?php echo s3path("/script_files/jquery.pagination.js") ?>"></script>
 
+<link rel="stylesheet" href="/css/custom.css">
+<link rel="stylesheet" href="/css/select2.css">
+<script src="/js/select2.js"></script>
+<script src="/js/autocomplete.js"></script>
+
 <script type="text/javascript">
 $(document).ready(function(){
     ZeroClipboard.setMoviePath('<?php echo s3path("/zeroclipboard/ZeroClipboard.swf") ?>');

@@ -13,7 +13,11 @@
 <link href="<?php echo s3path("/styles/button.css") ?>" media="screen" rel="stylesheet" type="text/css" />
 <link href="<?php echo s3path("/styles/view.css") ?>" media="screen" rel="stylesheet" type="text/css" />
 <link media="screen" rel="stylesheet" href="<?php echo s3path("/styles/colorbox.css") ?>" />
+<link rel="stylesheet" href="/css/custom.css">
+<link rel="stylesheet" href="/css/select2.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
+<script src="/js/select2.js"></script>
+<script src="/js/autocomplete.js"></script>
 <script src="<?php echo s3path("/colorbox/jquery.colorbox.js") ?>"></script>
 <script type='text/javascript' src="<?php echo s3path("/script_files/nav_bar.js") ?>"></script>
 </head>
