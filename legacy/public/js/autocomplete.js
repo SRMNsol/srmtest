@@ -1,12 +1,11 @@
 $(document).ready(function() {
     $('#nav-search-form').submit(function(event) {
         event.preventDefault();
-
         window.location = '/search?q=' + window.keyword;
     });
 
-    $("#autocomplete").select2({
-        placeholder: {name: "Enter keyword"},
+    var autocomplete = $("#autocomplete").select2({
+        placeholder: {name: "Enter store name"},
         minimumInputLength: 2,
         allowClear: true,
         ajax: { // instead of writing the function to execute the request we use Select2's convenient helper
@@ -32,5 +31,9 @@ $(document).ready(function() {
             window.keyword = store.name
             return store.name;
         }
+    });
+
+    autocomplete.change(function(val) {
+        window.location = '/search?q=' + window.keyword;
     });
 });

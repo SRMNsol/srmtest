@@ -2,7 +2,7 @@
     <div id="nav-left-curve"></div>
     <div class="nav-bg">
         <div id="nav-ShopByCategory-bt"><a onclick="$('#catDropdown1').slideToggle();">SHOP BY CATEGORY</a></div>
-        <div id="nav-SearchLabel">I'M SHOPPING FOR</div>
+        <div id="nav-SearchLabel">FIND A STORE</div>
         <form id="nav-search-form" action="/search" method="get" accept-charset="utf-8">
             <div id="nav-search">
                 <input id="autocomplete" name="q" />
