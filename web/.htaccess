@@ -3,8 +3,8 @@
 
   RewriteEngine On
   
-  RewriteCond %{HTTP:X-Forwarded-Proto} =http
-  RewriteRule . https://%{HTTP:Host}%{REQUEST_URI} [L,R=permanent]
+  #RewriteCond %{HTTP:X-Forwarded-Proto} =http
+  #RewriteRule . https://%{HTTP:Host}%{REQUEST_URI} [L,R=permanent]
 
   #RewriteBase /path/to/app
   RewriteCond %{REQUEST_FILENAME} !-f
