@@ -340,7 +340,13 @@ class Payable
                 $this->status = self::STATUS_PENDING;
             }
         } else {
+
             $this->status = $status;
+
+            
+			
+
+			
         }
     }
 

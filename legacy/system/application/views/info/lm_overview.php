@@ -1,54 +1,69 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-{header}
+  <?php $this->load->view('blocks/header'); ?>
 <body>
 <div id="container">
-<!-- Header -->
-{banner}
-<!-- /Header -->
+    <!-- Navigation bar -->
+    <?php if($this->db_session->userdata('login')['login']){ 
 
-<!-- Navigation bar -->
-{nav_bar}
-<!-- /Navigation bar -->
+    ?>
 
-<?php echo googletag_ad('BS_help_728x90_1') ?>
+<?php $this->load->view('blocks/admin-topbar'); ?>
+<?php }else{
 
+     ?>
+       <?php $this->load->view('blocks/nav_bar'); ?>
+   
+<?php } ?>
+    <!-- /Navigation bar -->
+    <!-- content -->
+    <?php  // print_r($terms)  echo 'ddddddddd'; exit;?>
+<div class="space20"></div>     <div class="space20"></div>     
 <!-- content -->
-<div class="BGLeftCol">
-    <!-- page Title -->
-    <div id="pageTitle">
-        <div id="pageTitleLeft"></div>
-        <h1>Help</h1>
-        <div id="pageTitleRight"></div>
+<section id="help">
+    <div class="container">
+    <div class="row padding-top">
+              <div class="col-md-3">
+                        <div class="row">
+
+                             <?php $this->load->view('blocks/left_nav'); ?>
+                           
+                         
+                           
+                        </div>
+                    </div>    
+ 
+<div class="col-md-9">
+                        <div class="panel panel-successxxx">
+
+                            <div class="panel-body inner">
+                                <div class="row">
+                                    <h3> <?php echo $overview['page_name']; ?></h3>
+                                    <br>
+                                    <div class="col-md-12">
+                                        <div class="panel panel-infoxxx">
+                                            <div class="panel-body">
+                                            <?php echo $overview['page_desc']; ?>
+                                            </div>
+                                        </div>
+                                    </div>      
+
+                                </div>    
+
+                            </div>
+                        </div>
+
+                    </div> 
+
+    
+    </div>    
     </div>
-    <!-- /page Title -->
-
-    <!-- Left category -->
-    {side_nav}
-    <!-- /Left category -->
-
-    <!-- Right side -->
-    <div id="results" class="help" >
-        <div class="title">Learn More - Overview</div>
-        <div style="float:left;width:100%;"><hr color="#e96d08" style="margin-left:10px;"></div>
-        <p><strong><strong>Have you always wanted a personal shopper, but didn't have the money for your own assistant?</strong></strong> &nbsp;BeeSavy is your digital shopping assistant — that pays <strong><STRONG>YOU</STRONG></strong> for the privilege of serving you! &nbsp;BeeSavy scours the internet to ensure that you get the lowest prices on the products you want at the stores <strong><STRONG>YOU </STRONG></strong>love. &nbsp;</p>
-        <p><strong>Are you a coupon clipper?</strong> &nbsp;Let BeeSavy do the work for you. &nbsp;We'll do the legwork and find any applicable coupons to lower your price even further.</p>
-        <p><strong>Want an even sweeter deal?</strong> &nbsp;We'll pay you cash back on your purchases!</p>
-        <p><strong>What could be better than getting paid to shop?</strong> &nbsp;Getting paid when other people shop! &nbsp;Tell your friends about BeeSavy, and we'll pay you commission on all of their purchases <strong>. . .</strong> <STRONG>FOREVER!</STRONG> &nbsp;We'll even provide you with the tools to make getting the buzz out easy.
-        <br><br><iframe width="425" height="349" src="http://www.youtube.com/embed/XFqy-8xjcpw?hl=en&fs=1" frameborder="0" allowfullscreen></iframe><br><br>
-    </div>
-    <div style="clear: both;"></div>
-</div>
-<div style="clear: both;"></div>
-
-<!-- Right side -->
-
-
+    
+    </section>
 <!-- /content -->
 
 <!-- footer -->
-{footer}
-<?php echo googletag_ad('BS_help_728x90_2') ?>
+<?php $this->load->view('blocks/footer'); ?>
+<?php $this->load->view('blocks/footer_script'); ?>
+
 <!-- /footer -->
 
 </body>

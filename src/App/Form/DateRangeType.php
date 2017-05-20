@@ -12,6 +12,7 @@ class DateRangeType extends AbstractType
     {
         $builder->add('start_date', 'date', ['widget' => 'single_text']);
         $builder->add('end_date', 'date', ['widget' => 'single_text']);
+
         $builder->setMethod('GET');
     }
 

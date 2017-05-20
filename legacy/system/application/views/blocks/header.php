@@ -1,6 +1,7 @@
-<html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<!DOCTYPE html>
+<html>
 <head>
-<meta name="generator" content="HTML Tidy for Linux (vers 6 November 2007), see www.w3.org" />
+ <meta name="generator" content="HTML Tidy for Linux (vers 6 November 2007), see www.w3.org" />
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <meta name="description" content="Save money on millions of products from thousands of top online stores at BeeSavy.com with comparison shopping, cash back, and coupons." />
 <title>BeeSavy – Taking the sting out of online shopping</title>
@@ -21,34 +22,26 @@
 <?php echo googletag_head() ?>
 
 <!-- pinterest -->
+<link rel="shortcut icon" href="<?php echo s3path("/images/favicon.ico") ?>" />
+
+	<meta charset="UTF-8">
+	<meta name="author" content="nSol">
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<meta name="description" content="Save money on millions of products from thousands of top online stores at BeeSavy.com with comparison shopping, cash back, and coupons." />
+	<meta name="keywords" content="HTML,CSS,XML,JavaScript">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
 <meta name="p:domain_verify" content="625b87a98e72ecd64457d22d9521191d"/>
 
-<link rel="shortcut icon" href="<?php echo s3path("/images/favicon.ico") ?>" />
-<link rel="stylesheet" type="text/css" href="<?php echo s3path("/styles/main.css") ?>" media="screen"/>
-<link rel="stylesheet" type="text/css" href="<?php echo s3path("/styles/home.css") ?>" media="screen"/>
-<link rel="stylesheet" type="text/css" href="<?php echo s3path("/styles/results.css") ?>" media="screen"/>
-<link rel="stylesheet" type="text/css" href="<?php echo s3path("/styles/button.css") ?>" media="screen"/>
-<link rel="stylesheet" type="text/css" href="<?php echo s3path("/styles/account.css") ?>" media="screen"/>
-<link rel="stylesheet" type="text/css" href="<?php echo s3path("/styles/deals.css") ?>" media="screen"/>
-<link rel="stylesheet" type="text/css" href="<?php echo s3path("/styles/shopping.css") ?>" media="screen"/>
-<link rel="stylesheet" type="text/css" href="<?php echo s3path("/styles/colorbox.css") ?>" media="screen"/>
-<link rel="stylesheet" href="/css/custom.css">
-<link rel="stylesheet" href="/css/select2.css">
+<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="<?php echo s3path("/styles/css/bootstrap.min.css") ?>">
+	<link rel="stylesheet" type="text/css" href="<?php echo s3path("/styles/css/font-awesome.css") ?>">
+	<link rel="stylesheet" type="text/css" href="<?php echo s3path("/styles/css/animate.css") ?>">
+	<link rel="stylesheet" type="text/css" href="<?php echo s3path("/styles/css/style.css") ?>">
 
-<script type="text/javascript" src="<?php echo s3path("/script_files/jquery_004.js") ?>"></script>
-<script type="text/javascript" src="<?php echo s3path("/colorbox/jquery.colorbox.js") ?>"></script>
-<script type="text/javascript" src="<?php echo s3path("/script_files/nav_bar.js") ?>"></script>
 
-<script src="/js/select2.js"></script>
-<script src="/js/autocomplete.js"></script>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <?php if (in_array($this->router->class, ["product", "stores", "coupon"])) { ?>
-    <link rel="stylesheet" type="text/css" href="<?php echo s3path("/scroll/styles/jScrollPane.css") ?>" media="all"/>
-    <link rel="stylesheet" type="text/css" href="<?php echo s3path("/scroll/styles/scrollstyles.css") ?>" media="all"/>
-    <link rel="stylesheet" type="text/css" href="<?php echo s3path("/styles/pagination.css") ?>" media="screen"/>
-    <script type="text/javascript" src="<?php echo s3path("/scroll/scripts/jquery.mousewheel.js") ?>"></script>
-    <script type="text/javascript" src="<?php echo s3path("/scroll/scripts/jScrollPane.js") ?>"></script>
-    <script type="text/javascript" src="<?php echo s3path("/script_files/jquery.pagination.js") ?>"></script>
     <script>
         $(function() {
             // this initialises the demo scollpanes on the page.
@@ -105,6 +98,7 @@
     </script>
 
     <script type="text/javascript">
+	
     var _gaq = _gaq || [];
     _gaq.push(['_setAccount', 'UA-4329126-1']);
     _gaq.push(['_setCustomVar', 5, 'Member', 81230, 3]);

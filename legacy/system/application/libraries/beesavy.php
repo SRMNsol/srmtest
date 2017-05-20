@@ -19,7 +19,41 @@ class Beesavy
 
     public function __construct()
     {
-        $ci = get_instance();
+
+
+    $ci = get_instance();
+
+   // $ci->load->library('facebook');
+
+
+/*
+            $config = array();
+            $config['appId'] = '117040755037895';
+            $config['secret'] = '04ced89742cf2754a630775cdc956081';
+            $config['fileUpload'] = false; // optional
+
+            $fb = new Facebook($config);
+           // $query = 'SELECT * FROM user WHERE uid="11952"';
+
+
+$params = array(
+  "access_token" => "EAABqcqyg1scBABdPOd3wAzUZArqYyd7rJt4fj2I1G66AymhPyDeXf75MbrcTuvxfpDvIDr01HdQidBXupevnkpN1IyDlZCRocB6r9Tf0cfGZB1nEl1nAr2JMBgNnKZAL62ewCT7t21k9qzB8VPrWp7G7ZAZCJcKFIZD",
+  "message" => "ddddddddddddd",
+  "description" => "aaaaaaaaaaaaaa."
+);
+
+ 
+try {
+  $ret = $fb->api('/YOUR_FACEBOOK_ID/feed', 'POST', $params);
+  echo 'Successfully posted to Facebook';
+} catch(Exception $e) {
+  echo $e->getMessage();
+}
+
+*/
+
+
+     
         $ci->load->database();
         $this->db = $ci->db;
         $ci->load->helper('bridge');
@@ -87,10 +121,14 @@ class Beesavy
 
     public function getUserStats($id)
     {
+
         $em = $this->container['orm.em'];
         $user = $em->getReference('App\Entity\User', $id);
+
         $summary = $em->getRepository('App\Entity\Payable')->calculateUserSummary($user);
+
         $cashback = $em->getRepository('App\Entity\Cashback')->calculateUserSummary($user);
+        
         $extra = $em->getRepository('App\Entity\Payable')->calculateExtraUserSummary($user);
         $referral = $em->getRepository('App\Entity\Referral')->calculateUserSummary($user);
 
@@ -133,7 +171,15 @@ class Beesavy
                 return self::PAYMENT_MISSING_DATA;
             }
 
+
+          
+
+
             $payment = $em->getRepository('App\Entity\Payment')->createPaymentForUser($user);
+
+
+
+
 
             return $payment;
         } catch (Exception $e) {

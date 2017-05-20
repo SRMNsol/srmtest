@@ -16,6 +16,7 @@ class MerchantType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        //$builder->add('expiryDate', 'date', ['required' => false, 'widget' => 'single_text']);
         $builder->add('name');
         $builder->add('alternativeName');
         $builder->add('category');

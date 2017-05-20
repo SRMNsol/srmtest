@@ -21,23 +21,64 @@ class Tools extends Controller
         $home = $this->user->get_home(0);
         $banner = $this->user->get_banner(0);
         $data = array_merge($data,$this->blocks->getBlocks());
+			$categories = cached_categories();
+        $data['categories'] = $categories;
     }
 
     public function index()
     {
+		if(!$this->db_session->userdata('login')['login']){ 
+
+		  redirect('main/joinlogin');
+		 }
         if (!$this->user->login_status()) {
             redirect('main/signin?user=&code=20');
         }
+		
         $data = array_merge(
             $this->defaultcache->library('beesavy', 'getUserStats', array($this->user_id), 3600),
             $this->defaultcache->library('beesavy', 'getUser', array($this->user_id,'', TRUE), 3600)
         );
         $this->__get_header($data);
+		
+		$data['allref']= $this->user->getReffral();
+
+		$totalref=$data['allref'];
+		
+		for($i=0; $i<4; $i++) {
+			$users [$i] = $this->user->checksign($totalref[$i]['email']);
+			
+		}
+		$data['users'] = $users;
+		
         $this->parser->parse('tools/overview', $data);
+    }
+    public function checkpopup()
+    {
+       
+        $data['popupstatus']= $this->user->popupstatus(); 
+        return $data['popupstatus'];         
+    }
+  public function loadreferrals()
+    {
+        $limit= $this->input->post('data');
+
+        $data= $this->user->loadReffral($limit);
+      
+        for($i=0; $i<count($data); $i++) {?>
+        <tr> 
+            <td><?php echo $data[$i]['email']; ?></td>
+            <td><i class="fa <?php  if ($data[$i]==0) echo "fa-times"; else echo  "fa-check"; ?> "></i></td>
+            <td><i class="fa <?php if($data[$i]['purchase_exempt']==0) echo 'fa-times'; else echo 'fa-check';?>"></i></td>
+            <td><h1 class="label label-danger"><?php echo $data[$i]['countid']; ?></h1></td>  
+        </tr>
+        <?php  } 
+
     }
 
     public function referrals()
     {
+		
         if (!$this->user->login_status()) {
             redirect('main/signin?user=&code=20');
         }
@@ -48,6 +89,7 @@ class Tools extends Controller
         $data3 = $this->beesavy->getUserReferrals($this->user_id);
         $data = array_merge($data, $data3);
         $this->__get_header($data);
+		
         $this->parser->parse('tools/referrals', $data);
     }
 
@@ -240,7 +282,8 @@ class Tools extends Controller
             $this->user->set_setting($setting, $value);
             $this->index();
 
-    }
+    } 		
+
     public function add_facebook()
     {
         $success = $this->facebook->get_access_token($this->user_id);

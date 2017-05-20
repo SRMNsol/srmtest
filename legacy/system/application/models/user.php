@@ -11,7 +11,7 @@ use App\Entity\User as UserEntity;
  */
 class User extends Model
 {
-    public $table = "user";
+   public $table = "user";
 
     public $uinterface = array(
         'uid', 'email', 'first_name', 'last_name', 'facebook_auto', 'twitter_auto',
@@ -38,6 +38,220 @@ class User extends Model
             return array('page'=>'blocks/banner','vars'=>array());
         }
     }
+
+    public function checklogin($email){
+
+       $sql = 'SELECT status FROM user WHERE email ='.'"'.$email.'"'.' ';
+        
+		$query = $this->db->query($sql);
+        $result = $query->result_array();
+        return $result[0];
+		//return $result[0];
+
+        }
+
+    public function newaccount()
+    {
+       /*
+      $date=date('Y-m-d');
+
+           $prev_date = date("Y-m-d H:i:s", strtotime($date .' -14 day'));
+
+
+
+          
+      
+        echo $sql = 'SELECT email FROM user WHERE created >= '.'"'.$prev_date.'"'.'';
+       exit;
+        $query = $this->db->query($sql);
+        $result = $query->result_array();
+        print_r($result[0]); exit;
+        return $result[0];
+        */
+        //return $result[0]; 
+        
+
+    } 
+    public function popupstatus()
+    {
+       $sql = 'SELECT popup_status FROM user WHERE uid = 10';
+        
+        $query = $this->db->query($sql);
+        $result = $query->result_array();
+        return $result[0];
+        //return $result[0];
+
+    }     
+	public function updatepayment($user_id){
+		
+
+		$sql = "SELECT processing , sum(available) as totalavail FROM Payable where user_id=$user_id";
+  		$query = $this->db->query($sql);
+        $result = $query->result_array();
+		//$total=$result[0]);
+		$abc=$result[0];
+		$cdf=$abc['totalavail'];
+		$sql = "UPDATE Payable set processing=processing+$cdf where user_id=$user_id limit 1";
+	
+		$query = $this->db->query($sql);
+
+       
+		$sql = "UPDATE Payable set available='0' where user_id=$user_id";
+	
+		$query = $this->db->query($sql);
+
+		$sql = "SELECT email , first_name FROM user where uid=$user_id";
+	
+		$query = $this->db->query($sql);
+		$result = $query->result_array();
+	
+		$email=$result[0];
+		
+
+		$this->load->library('email');
+		$this->email->from($email['email']);
+		$this->email->to('developer@gmail.com');
+		$this->email->subject('Payment Request');
+		$this->email->message('Payment Request');
+		$this->email->send();
+
+        }	
+		
+	
+    public function onreffral(){
+
+        $sql = 'SELECT referral_status FROM user WHERE id = 157476 ';
+        $query = $this->db->query($sql);
+        $result = $query->result_array();
+        return $result[0];
+
+        }
+
+    public function loadReffral($limit)
+    {       
+$q =$this->db->query("SELECT u.*, Count(r.ref_id) as countid FROM user u JOIN refer r on u.uid = r.ref_id  GROUP BY ref_id ORDER BY u.uid DESC limit
+    $limit");
+        return $q->result_array();
+    }
+
+
+    public function mprivacy(){
+
+        $sql = 'SELECT *  FROM pages WHERE page_id = 1 ';
+        $query = $this->db->query($sql);
+        $result = $query->result_array();
+        return $result[0];
+
+
+        }
+
+  public function moverview(){
+
+        $sql = 'SELECT *  FROM pages WHERE page_id = 7 ';
+        $query = $this->db->query($sql);
+        $result = $query->result_array();
+        return $result[0];
+
+
+        }
+
+public function mreferel(){
+
+        $sql = 'SELECT *  FROM pages WHERE page_id = 9 ';
+        $query = $this->db->query($sql);
+        $result = $query->result_array();
+        return $result[0];
+
+
+        }
+
+public function mfaq(){
+
+        $sql = 'SELECT *  FROM Faqs INNER JOIN Faq_cate  ON Faqs.faq_cate= Faq_cate.cate_id';
+
+        $query = $this->db->query($sql);
+        $result = $query->result_array();
+
+       return $result;
+    
+    // /    return $result[0];
+
+
+        }
+
+
+
+
+
+
+public function mguide(){
+
+        $sql = 'SELECT *  FROM pages WHERE page_id = 2 ';
+        $query = $this->db->query($sql);
+        $result = $query->result_array();
+        return $result[0];
+
+
+        }
+
+public function mcompare(){
+
+        $sql = 'SELECT *  FROM pages WHERE page_id = 11 ';
+        $query = $this->db->query($sql);
+        $result = $query->result_array();
+        return $result[0];
+
+
+        }
+
+
+public function mjoin(){
+
+        $sql = 'SELECT *  FROM pages WHERE page_id = 10 ';
+        $query = $this->db->query($sql);
+        $result = $query->result_array();
+        return $result[0];
+
+
+        }
+
+
+    public function mterms(){
+
+        $sql = 'SELECT *  FROM pages WHERE page_id = 4 ';
+        $query = $this->db->query($sql);
+        $result = $query->result_array();
+        return $result[0];
+
+
+        }
+    public function mabout(){
+
+        $sql = 'SELECT *  FROM pages WHERE page_id = 3 ';
+        $query = $this->db->query($sql);
+        $result = $query->result_array();
+        return $result[0];
+
+
+        }
+    public function mhelp(){
+
+        $sql = 'SELECT *  FROM pages WHERE page_id = 6 ';
+        $query = $this->db->query($sql);
+        $result = $query->result_array();
+        return $result[0];
+
+
+        }
+        public function mcashback(){
+
+        $sql = 'SELECT *  FROM pages WHERE page_id = 5 ';
+        $query = $this->db->query($sql);
+        $result = $query->result_array();
+        return $result[0];
+
+
+        }
 
     public function get_home($auth)
     {
@@ -67,11 +281,15 @@ class User extends Model
         }
     }
 
+    
     //User login methods
     public function login($email, $password)
     {
         $res = $this->db->get_where('user', array('email'=>$email));
         $res = $res->result_array();
+		
+		
+		
         if (empty($res)) {
             $id = '';
         } else {
@@ -106,9 +324,10 @@ class User extends Model
         $this->db_session->set_userdata('login','');
     }
 
-    //User methods
-    public function add_user($email, $referral, $password)
+   //User methods
+    public function add_user($email, $referral, $password,$refcode,$refstatus)
     {
+        
         #Check if a referral was not given
         #If not given check if a user came to site through a referral
         if (!$referral) {
@@ -132,7 +351,7 @@ class User extends Model
                 }
         }
 
-        $this->db->insert('user', array(
+             $this->db->insert('user', array(
             'email' => $email,
             'password' => $password,
             'created' => date('Y-m-d H:i:s'),
@@ -140,12 +359,59 @@ class User extends Model
             'status' => 'active',
         ));
 
-        $userId = $this->db->insert_id();
+        $userId =$this->db->insert_id(); 
+
+        if($refstatus==1)
+        {
+            $sql = 'SELECT bonus , status, bonus_thems, id FROM user WHERE alias = '.'"'.$refcode.'"';
+            $query = $this->db->query($sql);
+            $result = $query->result_array();
+			//print_r($result[0]['bonus']); exit;
+            $userstatus=$result[0];
+			
+			 $idd=$userstatus['id'];
+			
+			
+			
+		   if($userstatus['status']=='active')
+		   if($userstatus['bonus']=='active')
+          {
+	
+			  
+            $this->db->insert('Payment', array(
+            'user_id' => $userId,
+            'amount' => 5,
+            'requestedAt' => date('Y-m-d H:i:s'),
+            'status' => 'pending',
+        ));
+		  }
+		  if($userstatus['status']=='active')
+		  if($userstatus['bonus_thems']=='active')
+		  {
+			  
+		     $this->db->insert('Payment', array(
+            'user_id' => $idd,
+            'amount' => 5,
+            'requestedAt' => date('Y-m-d H:i:s'),
+            'status' => 'pending',
+        ));
+		
+			
+          }
+  
+	    }
+		
+
+
+
+
+
         $this->db->where('uid', $userId);
         $this->db->update('user', array(
             'alias' => sprintf('U%d', $userId)
         ));
     }
+
 
     public function last_password_reset($email, $timelength)
     {
@@ -219,7 +485,41 @@ class User extends Model
 
         return $res;
     }
+	
+	
+	
+	public function morestore($offset, $limit)
+    {
 
+		$q =$this->db->query("SELECT * FROM Merchant WHERE id BETWEEN '$offset' AND '$limit'");
+		return $q->result_array();
+    }
+	
+	
+	public function getReffral()
+    {		
+		$q =$this->db->query("SELECT u.*, Count(r.ref_id) as countid FROM user u JOIN refer r on u.uid = r.ref_id  GROUP BY ref_id ORDER BY u.uid DESC limit 4");
+		return $q->result_array();
+    }
+	public function checksign($email)
+    {		
+		$q =$this->db->query("SELECT * FROM user WHERE email='$email'");
+		return  $q->num_rows;
+
+    }	
+	 public function recentOrder()
+    {		//echo 'sssssss'; exit;
+		$q =$this->db->query("SELECT c.* , m.logoPath ,m.id FROM cashback c INNER JOIN Merchant m ON c.merchant_id=m.id ORDER BY c.merchant_id DESC limit 2"  );
+		return $q->result_array();
+    }	
+	
+ 
+	
+	public function allOrder()
+    {		
+		$q =$this->db->query("SELECT c.* , m.logoPath FROM cashback c INNER JOIN Merchant m ON c.merchant_id=m.id");
+		return $q->result_array();
+    }	
     public function ebinfo_user($id)
     {
         $id = $id;
@@ -323,6 +623,8 @@ class User extends Model
 
     public function check_referral($id)
     {
+			$id=trim($id);
+		
         if (!$id) {
             return True;
         }
@@ -330,12 +632,14 @@ class User extends Model
         $q = "select * from user where uid='$id' OR alias='$id';";
         $res = $this->db->query($q);
         $res = $res->result_array();
+		//print_r($res); exit;
 
-        if (!empty($res)) {
+        if (count($res)) {
             $res = $res[0];
             return $res['uid'];
         }
 
         return False;
     }
+
 }

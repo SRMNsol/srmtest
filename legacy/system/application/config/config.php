@@ -1,5 +1,4 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
 /*
 |--------------------------------------------------------------------------
 | Base Site URL
@@ -11,7 +10,8 @@
 |	http://example.com/
 |
 */
-$config['base_url']	= "https://" . ($_SERVER['HTTP_HOST'] ?: 'www.beesavy.com') . "/";
+//$config['base_url']	= "http://" . ($_SERVER['HTTP_HOST'] ?: 'www.beesavy.com') . "/";
+$config['base_url']	= SURL;
 
 /*
 |--------------------------------------------------------------------------

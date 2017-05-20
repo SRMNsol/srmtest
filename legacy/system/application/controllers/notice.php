@@ -6,7 +6,7 @@ class Notice extends Controller
     public function Notice()
     {
         parent::Controller();
-        $this->load->model('emailer');
+        $this->load->library('EmailSender');
         $this->load->model('twitter');
         $this->load->model('facebook');
 
@@ -85,7 +85,7 @@ class Notice extends Controller
             $email = $res[0]['email'];
             $msg = $this->parser->parse('email/cashback', $data, True);
             $tmsg = $this->parser->parse('email/cashbackt', $data, True);
-            $this->emailer->sendMessage($msg,$tmsg, $email, "BeeSavy - You've got cash back!");
+            $this->emailsender->send($email, "BeeSavy - You've got cash back!",$msg);
             $link = base_url().$res[0]['alias'];
             $this->twitter->post_cashback($data['cashback_amount'], $id, $link);
             $this->facebook->post_cashback($data['cashback_amount'], $id, $link);

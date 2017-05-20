@@ -1,52 +1,86 @@
-    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-{header}
+
+  <?php $this->load->view('blocks/header'); ?>
 <body>
 <div id="container">
-<!-- Header -->
-{banner}
-<!-- /Header -->
+    <!-- Navigation bar -->
+	<?php if($this->db_session->userdata('login')['login']){ 
 
-<!-- Navigation bar -->
-{nav_bar}
-<!-- /Navigation bar -->
+	?>
 
-<?php echo googletag_ad('BS_help_728x90_1') ?>
+<?php $this->load->view('blocks/admin-topbar'); ?>
+<?php }else{
+
+	 ?>
+       <?php $this->load->view('blocks/nav_bar'); ?>
+   
+<?php } ?>
+
+    <!-- /Navigation bar -->
+    <div class="space20"></div>     <div class="space20"></div>    
+    <!-- content -->
+
 
 <!-- content -->
-<div class="BGLeftCol">
-    <!-- page Title -->
-    <div id="pageTitle">
-        <div id="pageTitleLeft"></div>
-        <h1>Help</h1>
-        <div id="pageTitleRight"></div>
-    </div>
-    <!-- /page Title -->
+<section id="help">
+            <div class="container">
+                <div class="row padding-top">
+                    <div class="col-md-3">
+                        <div class="row">
 
     <!-- Left category -->
-    {side_nav}
+    {left_nav}
     <!-- /Left category -->
-
-    <!-- Right side -->
-    <div id="results" class="help" style="border:0px solid #000;" >
-        <div class="title">Learn More - Shop By Store</div>
-        <div style="float:left;width:100%;"><hr color="#e96d08" style="margin-left:10px;"></div>
-        <p><strong>Already know what you want and where you want to shop?</strong> &nbsp;Use our <a href="/stores/search">Shop By Store </a>functionality to navigate to your store of choice. &nbsp;By shopping through the link on BeeSavy, you'll be earning valuable cash back on your purchase. &nbsp;Just be sure that your shopping cart is empty before linking through to the store. &nbsp;Otherwise, the store won't pay cash back if you already had items in your cart.
-        <br><iframe width="425" height="349" src="http://www.youtube.com/embed/_0TpVYLihF8" frameborder="0" allowfullscreen></iframe><br><br>
-    </div>
-    <div style="clear: both;"></div>
 </div>
-<div style="clear: both;"></div>
+                    </div>    
+<div class="col-md-9">
+                        <div class="panel panel-successxxx">
 
-<!-- Right side -->
+                            <div class="panel-body inner">
+                                <div class="row">
+                                    <h3>  Learn More - Shop By Store</h3>
+                                    <br>
+                                    <div class="col-md-12">
+                                        <div class="panel panel-infoxxx">
+                                            <div class="panel-body">
+                                                <div class="row">
+                                                <div class="space20"></div>
+                                                <h4>Already know what you want and where you want to shop?</h4>
+                                                        <p>Use our <a href="#">Shop By Store </a> functionality to navigate to your store of choice.  By shopping through the link on BeeSavy, you'll be earning valuable cash back on your purchase.  Just be sure that your shopping cart is empty before linking through to the store.  Otherwise, the store won't pay cash back if you already had items in your cart.</p>
+                                                </div>
+                                               
+                                                 
+                                            </div>
+                                        </div>
+                                    </div>      
+
+                                </div>    
+
+                            </div>
+                        </div>  
+                        <div style="background-color: rgba(0, 0, 0, 0.05);">
+                            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- Shop By Store -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-9625495144632502"
+     data-ad-slot="5504554979"
+     data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+                        </div> 
+                    </div>   
+                </div>    
+            </div>
+
+        </section>
+    
 
 
 <!-- /content -->
 
 <!-- footer -->
-{footer}
-<?php echo googletag_ad('BS_help_728x90_2') ?>
-<!-- /footer -->
-
+<?php $this->load->view('blocks/footer'); ?>
+<?php $this->load->view('blocks/footer_script'); ?>
 </body>
 </html>

@@ -30,14 +30,22 @@ class Cashback extends Controller
 
     public function index()
     {
+		  if(!$this->db_session->userdata('login')['login']){ 
+
+		  redirect('main/joinlogin');
+		 }
+
         $data = $this->beesavy->getUserStats($this->user_id);
-        $this->__get_header($data);
+     
+		$this->__get_header($data);
         #Have columns: Month, Type, Status, Cash Back, Payment date
 
         $em = $this->container['orm.em'];
 
+
         $result = $em->getRepository('App\Entity\Cashback')->getMostRecentUserCashback(
             $em->getReference('App\Entity\User', $this->user_id)
+			
         );
 
         $data['transactions'] = array_map(function (App\Entity\Cashback $cashback) {
@@ -64,6 +72,11 @@ class Cashback extends Controller
             return $data;
         }, $result);
 
+		$categories = cached_categories();
+        $data['categories'] = $categories;
+		$data['allorder']= $this->user->allOrder();
+		//echo '<pre>'; print_r($data['allorder']); exit;
+		
         $this->parser->parse('cashback/base', $data);
     }
 

@@ -3,7 +3,6 @@
  * Integrate composer
  */
 require_once __DIR__ . '/../../vendor/autoload.php';
-
 /*
 |---------------------------------------------------------------
 | PHP ERROR REPORTING LEVEL
@@ -15,7 +14,8 @@ require_once __DIR__ . '/../../vendor/autoload.php';
 |
 */
     error_reporting(getenv('APP_ENV') === 'devel' ? E_ALL : 0);
-
+    error_reporting(E_ALL);
+	error_reporting(0);
 /*
 |---------------------------------------------------------------
 | SYSTEM FOLDER NAME
@@ -29,6 +29,7 @@ require_once __DIR__ . '/../../vendor/autoload.php';
 |
 */
     $system_folder = realpath(__DIR__ . "/../system");
+	
 
 /*
 |---------------------------------------------------------------
@@ -46,6 +47,7 @@ require_once __DIR__ . '/../../vendor/autoload.php';
 |
 */
     $application_folder = "application";
+	
 
 /*
 |===============================================================

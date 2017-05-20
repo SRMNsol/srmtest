@@ -8,14 +8,18 @@ class Info extends Controller
     {
         parent::__construct();
         $this->load->library('beesavy');
-        $this->load->model('emailer');
+        
+        $this->load->library('EmailSender');
         $this->data = array();
-        $info = end($this->uri->segments);
+         $this->load->model('user');
+       $info = end($this->uri->segments);
         $this->data = $this->blocks->getBlocks();
         $this->data['side_nav'] = $this->parser->parse('blocks/side_bar', ['info' => $info], true);
-
+		$categories = cached_categories();
+        $this->data['categories'] = $categories;
         $this->load->helper('bridge');
         $this->container = silex();
+		session_start();
     }
 
     public function index()
@@ -48,57 +52,85 @@ class Info extends Controller
 
     public function faq()
     {
-        $this->parser->parse('info/faq', $this->data);
+		$this->data['faqs']= $this->user->mfaq();
+        $this->load->view('info/faq', $this->data);
+    }
+    public function checkpopup()
+    {
+       
+        $data['popupstatus']= $this->user->popupstatus(); 
+        return $data['popupstatus'];         
     }
 
+    public function notfound()
+    {
+		
+        $this->parser->parse('info/notfound', $this->data);
+    }
     public function privacy()
     {
-        $this->parser->parse('info/privacy', $this->data);
-    }
+               $this->data['privacy']= $this->user->mprivacy();
+        $this->load->view('info/privacy', $this->data);
 
+}
     public function aboutus()
     {
-        $this->parser->parse('info/aboutus', $this->data);
+       $this->data['about']= $this->user->mabout();
+        $this->load->view('info/aboutus', $this->data);
     }
 
     public function how()
     {
-        $this->parser->parse('info/how', $this->data);
+        $this->data['how']= $this->user->mhelp();
+        $this->load->view('info/how', $this->data);
     }
+
 
     public function terms()
     {
-        $this->parser->parse('info/terms', $this->data);
+
+         $this->data['terms']= $this->user->mterms();
+        $this->load->view('info/terms', $this->data);
+       
     }
 
     public function lm_cashback()
     {
-        $this->parser->parse('info/lm_cashback', $this->data);
+        $this->data['cashback']= $this->user->mcashback();
+        $this->load->view('info/lm_cashback', $this->data);
     }
 
     public function lm_compare()
     {
-        $this->parser->parse('info/lm_compare', $this->data);
+        $this->data['compare']= $this->user->mcompare();
+        $this->load->view('info/lm_compare', $this->data);
     }
 
     public function lm_guide()
     {
-        $this->parser->parse('info/lm_guide', $this->data);
+        $this->data['guide']= $this->user->mguide();
+        $this->load->view('info/lm_guide', $this->data);
     }
 
     public function lm_join()
     {
-        $this->parser->parse('info/lm_join', $this->data);
+        $this->data['join']= $this->user->mjoin();
+        $this->load->view('info/lm_join', $this->data);
     }
 
     public function lm_overview()
     {
-        $this->parser->parse('info/lm_overview', $this->data);
+         $this->data['overview']= $this->user->moverview();
+        $this->load->view('info/lm_overview', $this->data);
+       
     }
+
+
 
     public function lm_referral()
     {
-        $this->parser->parse('info/lm_referral', $this->data);
+        $this->data['referel']= $this->user->mreferel();
+        $this->load->view('info/lm_referral', $this->data);
     }
 
     public function lm_shop()
@@ -111,12 +143,28 @@ class Info extends Controller
         $this->parser->parse('info/makehome', array());
     }
 
+
+
+  public function captcha() {
+				
+				$code=rand(1000,9999);
+				$_SESSION["code"]=$code;
+				$im = imagecreatetruecolor(50, 24);
+				$bg = imagecolorallocate($im, 22, 86, 165);
+				$fg = imagecolorallocate($im, 255, 255, 255);
+				imagefill($im, 0, 0, $bg);
+				imagestring($im, 5, 5, 5,  $code, $fg);
+				header("Cache-Control: no-cache, must-revalidate");
+				header('Content-type: image/png');
+				imagepng($im);
+				imagedestroy($im);
+  }
+
     public function contact_submit()
     {
-        $this->load->library('recaptcha');
 
-        $this->recaptcha->recaptcha_check_answer($_SERVER['REMOTE_ADDR'],$this->input->post('recaptcha_challenge_field'),$this->input->post('recaptcha_response_field'));
-        if ($this->recaptcha->is_valid) {
+      //  $this->recaptcha->recaptcha_check_answer($_SERVER['REMOTE_ADDR'],$this->input->post('recaptcha_challenge_field'),$this->input->post('recaptcha_response_field'));
+        if(isset($_POST["captcha"])&&$_POST["captcha"]!=""&&$_SESSION["code"]==$_POST["captcha"]) {
             $name = $this->input->post('name');
             $email = $this->input->post('email');
             $subject = $this->input->post('subject');
@@ -128,6 +176,7 @@ class Info extends Controller
                 'message' => $message
             ];
             if ($subject === "Where is My Cash Back?") {
+				
                 $order_num = $this->input->post('order_number');
                 $store = $this->input->post('store_name');
                 $subtotal = $this->input->post('purchase_subtotal');
@@ -141,21 +190,31 @@ class Info extends Controller
                 $data['order_num'] = $order_num;
                 $msg = $this->parser->parse('email/missing_cashback', $data, true);
                 $tmsg = $this->parser->parse('email/missing_cashback', $data, true);
-                $this->emailer->sendMessage($msg, $tmsg, $email, "Contact us: $subject");
-                $this->emailer->sendMessage($msg, $tmsg, "help@beesavy.com", "Contact us: $subject");
+                $this->emailsender->send($email,"Contact us: $subject",$msg);
+                $this->emailsender->send("help@beesavy.com","Contact us: $subject",$msg);
             } else {
+				
                 $msg = $this->parser->parse('email/incomplete', $data, True);
                 $tmsg = $this->parser->parse('email/incompletet', $data, True);
                 if ($subject == "Biz dev/advertising/media") {
-                    $this->emailer->sendMessage($msg, $tmsg, $email,"Contact us: $subject");
-                    $this->emailer->sendMessage($msg, $tmsg, "rhoner@beesavy.com", "Contact us: $subject");
+					
+                    $this->emailsender->send($email,"Contact us: $subject",$msg);
+                    $this->emailsender->send("rhoner@beesavy.com", "Contact us: $subject",$msg);
                 } else {
-                    $this->emailer->sendMessage($msg, $tmsg, $email,"Contact us: $subject");
-                    $this->emailer->sendMessage($msg, $tmsg, "help@beesavy.com", "Contact us: $subject");
+					
+                    $this->emailsender->send($email,"Contact us: $subject",$msg);
+				
+                    $this->emailsender->send("help@beesavy.com", "Contact us: $subject",$msg);
+					
                 }
             }
+			//echo 'ddddddddd'; exit;
+		//	$data['msg']='success';
+			 //$this->load->view('info/contact', $data);
             redirect("info/contact?success=1");
         } else {
+			//$data['msg']='error';
+			 //  $this->load->view('info/contact', $data);
             redirect("info/contact?error=1");
         }
     }

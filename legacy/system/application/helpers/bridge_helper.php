@@ -65,6 +65,7 @@ function result_merchants($merchants, Rate $rate, Subid $subid = null)
  */
 function result_categories($categories)
 {
+    //print_r($categories); exit;
     return array_map(function (Category $category) {
         return [
             'id' => $category->getId(),
@@ -78,13 +79,18 @@ function result_categories($categories)
  */
 function cached_categories()
 {
+    
     $container = silex();
     $cache = $container['cache.default_storage'];
     $key = 'WWW_CATEGORIES';
     if ($cache->contains($key)) {
         return $cache->fetch($key);
     }
+    
     $categories = result_categories($container['orm.em']->getRepository('App\Entity\Category')->findBy([], ['name' => 'ASC']));
+    
+    //echo "<pre>"; print_r($categories); exit;
+   
     $cache->save($key, $categories, 3600);
     return $categories;
 }

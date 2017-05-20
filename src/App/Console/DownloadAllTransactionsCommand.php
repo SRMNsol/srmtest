@@ -109,29 +109,21 @@ class DownloadAllTransactionsCommand extends Command
         /**
          * Linkshare (ID 4)
          */
-        $network = $app['orm.em']->getRepository('App\Entity\Network')->findOneByPopshopsId(4);
+        $output->writeln('Linkshare');
 
-        $output->writeln('<comment>Linkshare</comment>');
+        $network = $app['orm.em']->getRepository('App\Entity\Network')->findOneByPopshopsId(4);
         $args = $this->getTransactionDownloadArguments($input, $network);
         $ret = $this->getApplication()->find('linkshare:transactions')->run(new ArrayInput([
             'command' => 'linkshare:transactions',
         ] + $args), $output);
         $this->updateDownloadDate($network, $args);
 
-        $output->writeln('<comment>Linkshare (update)</comment>');
-        $args = $this->getTransactionDownloadArguments($input, $network, 'history');
-        $ret = $this->getApplication()->find('linkshare:transactions')->run(new ArrayInput([
-            'command' => 'linkshare:transactions',
-            '--update' => true,
-        ] + $args), $output);
-        $this->updateDownloadDate($network, $args, 'history');
-
         /**
          * Comission Junction(ID 2)
          */
-        $network = $app['orm.em']->getRepository('App\Entity\Network')->findOneByPopshopsId(2);
+        $output->writeln('CJ');
 
-        $output->writeln('<comment>Commission Junction</comment>');
+        $network = $app['orm.em']->getRepository('App\Entity\Network')->findOneByPopshopsId(2);
         $args = $this->getTransactionDownloadArguments($input, $network);
         $ret = $this->getApplication()->find('cj:transactions')->run(new ArrayInput([
             'command' => 'cj:transactions',
@@ -141,16 +133,15 @@ class DownloadAllTransactionsCommand extends Command
         /**
          * EBay Enterprise (ID 8)
          */
-        $network = $app['orm.em']->getRepository('App\Entity\Network')->findOneByPopshopsId(8);
+        $output->writeln('Pepperjam');
 
-        $output->writeln('<comment>Pepperjam</comment>');
+        $network = $app['orm.em']->getRepository('App\Entity\Network')->findOneByPopshopsId(8);
         $args = $this->getTransactionDownloadArguments($input, $network);
         $ret = $this->getApplication()->find('pepperjam:transactions')->run(new ArrayInput([
             'command' => 'pepperjam:transactions',
         ] + $args), $output);
         $this->updateDownloadDate($network, $args);
 
-        $output->writeln('<comment>Pepperjam (update)</comment>');
         $args = $this->getTransactionDownloadArguments($input, $network, 'history');
         $ret = $this->getApplication()->find('pepperjam:transactions')->run(new ArrayInput([
             'command' => 'pepperjam:transactions',
@@ -161,16 +152,15 @@ class DownloadAllTransactionsCommand extends Command
         /**
          * Share A Sale (ID 1)
          */
-        $network = $app['orm.em']->getRepository('App\Entity\Network')->findOneByPopshopsId(1);
+        $output->writeln('Shareasale');
 
-        $output->writeln('<comment>Shareasale</comment>');
+        $network = $app['orm.em']->getRepository('App\Entity\Network')->findOneByPopshopsId(1);
         $args = $this->getTransactionDownloadArguments($input, $network);
         $ret = $this->getApplication()->find('shareasale:transactions')->run(new ArrayInput([
             'command' => 'shareasale:transactions',
         ] + $args), $output);
         $this->updateDownloadDate($network, $args);
 
-        $output->writeln('<comment>Shareasale (update)</comment>');
         $args = $this->getTransactionDownloadArguments($input, $network, 'history');
         $ret = $this->getApplication()->find('shareasale:transactions')->run(new ArrayInput([
             'command' => 'shareasale:transactions',
@@ -181,9 +171,9 @@ class DownloadAllTransactionsCommand extends Command
         /**
          * Impact Radius (ID 15)
          */
-        $network = $app['orm.em']->getRepository('App\Entity\Network')->findOneByPopshopsId(15);
+        $output->writeln('Impact Radius');
 
-        $output->writeln('<comment>Impact Radius</comment>');
+        $network = $app['orm.em']->getRepository('App\Entity\Network')->findOneByPopshopsId(15);
         $args = $this->getTransactionDownloadArguments($input, $network);
         $ret = $this->getApplication()->find('impactradius:transactions')->run(new ArrayInput([
             'command' => 'impactradius:transactions',

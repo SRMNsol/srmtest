@@ -28,6 +28,14 @@ class Social extends Controller
         redirect($redirect);
         echo $redirect;
     }
+
+
+    public function checkpopup()
+    {
+       
+        $data['popupstatus']= $this->user->popupstatus(); 
+        return $data['popupstatus'];         
+    }
     public function product($type, $id)
     {
         $products = $this->cache->library('beesavy', 'compareprices', array($id), 3600);

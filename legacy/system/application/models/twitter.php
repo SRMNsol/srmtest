@@ -53,6 +53,7 @@ class Twitter extends Model {
      * Methods for gaining permissions for a facebook user
      */
     function request_permissions($ruri,$uid){
+       
         #Request permissions only if we do not already have them
         $q = $this->db->get_where('user', array('id'=>$uid));
         $q = $q->result_array();
@@ -90,7 +91,7 @@ class Twitter extends Model {
             $this->db->where('id', $uid);
             $this->db->update('user', array('twitter_token_secret'=>$responseArray['oauth_token_secret']));
 
-            return "https://api.twitter.com/oauth/authorize?oauth_token=$oauth_token";
+            return "http://api.twitter.com/oauth/authorize?oauth_token=$oauth_token";
         }
     }
     function get_access_token($uid){

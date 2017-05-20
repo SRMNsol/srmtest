@@ -1,12 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
-<head>
-<meta name="generator" content="HTML Tidy for Linux (vers 6 November 2007), see www.w3.org" />
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<meta name="description" content="Save money on millions of products from thousands of top online stores at beesavy.com with comparison shopping, cash back, and coupons." />
-<link rel="shortcut icon" href="<?php echo s3path("/images/favicon.ico") ?>" />
-<title>BeeSavy - Taking the sting out of online shopping</title>
+
+  <?php 
+
+
+   $this->load->view('blocks/header'); ?>
+<body>
+<div id="container">
+    <!-- Navigation bar -->
+
 <script type="text/javascript">
 
   var _gaq = _gaq || [];
@@ -20,62 +20,88 @@
   })();
 
 </script>
-
-<link rel="stylesheet" type="text/css" href="<?php echo s3path("/styles/main.css") ?>" media="screen"/>
-<link rel="stylesheet" type="text/css" href="<?php echo s3path("/styles/home.css") ?>" media="screen"/>
-<link rel="stylesheet" type="text/css" href="<?php echo s3path("/styles/transfer.css") ?>" media="screen"/>
-<link rel="stylesheet" type="text/css" href="<?php echo s3path("/styles/account.css") ?>" media="screen"/>
-<link rel="stylesheet" type="text/css" href="<?php echo s3path("/styles/button.css") ?>" media="screen"/>
-
-<script type="text/javascript" src="<?php echo s3path("/script_files/jquery_004.js") ?>"></script>
-
 <?php echo googletag_head() ?>
 
-</head>
-<body>
-<div id="container" style="width:100%;">
-    <?php echo googletag_ad('BS_coupon_728x90', 'none') ?>
-    <div style="margin:auto; width:1210px;">
-        <div style="width:300px; display:inline-block;"><?php echo googletag_ad('BS_coupon_300x600_1', 'none') ?></div>
-        <div style="margin:auto; width:602px; display:inline-block; vertical-align:top;">
-            <div id="transfer" style="margin:0;">
-                <div id="title">
-                    <h1 class="oneLine">Transferring You to <strong>{name}</strong></h1>
-                    <img src="<?php echo s3path("/images/loading.gif") ?>">
-                </div>
-                <div style="height:30px; clear: both;"></div>
-                <div class="div"></div>
-                <div class="thumb" id="merchantThumb">
-                    <img class="cdn-image" src="{logo_thumb}" alt="{name}" onload="
-                        var width = 100;
-                        var height = 32;
-                        var ratio = Math.min(width/this.width, height/this.height);
-                        var nwidth = ratio*this.width;
-                        var nheight = ratio*this.height;
-                        this.width = nwidth;
-                        this.height = nheight;"
-                    onerror="this.src='<?php echo s3path("/images/no-image-100px.gif") ?>'">
-                    <!-- Load cookie -->
-                    <!-- End cookie-->
-                </div>
-                <div id="equation">
-                    <div id="cashBackTransfer" class="tall"><strong>{cashback_text} Cash Back</strong> will be posted to your BeeSavy account in 1 - 4 days</div>
-                </div>
-                <div style="clear: both; height: 20px;"></div>
-            </div>
-            <div id="manualRedirect"><a href="{url}">If you are not automatically redirected, click here</a></div>
-        </div>
-        <div style="width:300px; display:inline-block;"><?php echo googletag_ad('BS_coupon_300x600_2', 'none') ?></div>
-    </div>
-</div>
 
+<style type="text/css">
+ .store-heading
+ {   text-align: center;}
+</style>
+
+<section id="add">
+    <div class="container">
+       <div class="row">
+    <div class="col-md-3">
+      <div class="row show_tv_only">
+                               <div style="background-color: rgba(0, 0, 0, 0.05);">
+                               <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- transfer 1 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-9625495144632502"
+     data-ad-slot="5364954177"
+     data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+                            </div>  
+                        </div>
+    </div>
+    <div class="col-md-6">
+      <div class="panel panel-default" style="border: none;     box-shadow: none;">
+      <br>
+          <div class="row" style="text-align:center; border-bottom:solid 5px #d9534f;">
+          <img class="img-responsive" src="<?php echo s3path("/img/logo.png");?>" style=" margin-bottom: 15px; ">
+          </div>
+           <div class="row">
+           <div class="col-md-12">
+             <h4 class="store-heading" style="padding:15px 0;">Transferring you to {name}</h4> <img src="<?php echo s3path("/img/1.gif");?>"
+              style="height:50px; margin-left:60px;">
+           </div>
+           
+           </div>
+              <div class="row" style="padding:4% 0;">
+         <div class="col-md-4" style="border:solid 1px #c7c7c7;     margin-left: 10px;
+    padding: 20px;">
+       <img class="img-responsive" src="{logo_thumb}"  alt="{name}">
+    </div>
+            <div class="col-md-6 col-md-offset-1 ">
+            <P class="cash_back pull-right">{cashback_text} Cash Back will be posted to your BeeSavy account in 1 - 4 days</P>
+            </div>
+        </div>
+      
+      </div>
+        
+    </div>
+        
+    <div class="col-md-3">
+    <div class="row show_tv_only">
+                               <div style="background-color: rgba(0, 0, 0, 0.05);">
+                               <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- transfer 2 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-9625495144632502"
+     data-ad-slot="6841687375"
+     data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+                            </div>  
+                        </div>
+    </div>
+        </div>
+    
+    </div>
+    
+    </section>
 <script>
 $(document).ready(function() {
     setTimeout("transfer()", 3000);
 });
 
 function transfer() {
-    window.location = '{url}';
+    window.location = '{cookie_url}';
 }
 </script>
 </body>

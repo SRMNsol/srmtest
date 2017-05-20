@@ -16,11 +16,13 @@ class ReferralCashbackController
 
     public function __construct(EntityManager $em)
     {
+			
         $this->em = $em;
     }
 
     public function display(Request $request, Application $app)
     {
+		
         $em = $app['orm.em'];
 
         $rateRepository = $em->getRepository('App\Entity\Rate');

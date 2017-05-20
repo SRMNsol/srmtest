@@ -14,6 +14,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  */
 class User
 {
+	
     /**
      * @ORM\Id @ORM\Column(name="uid", type="integer") @ORM\GeneratedValue
      */

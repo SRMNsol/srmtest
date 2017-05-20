@@ -32,7 +32,7 @@ class Category
     }
 
     public function getId()
-    {
+    {   
         return $this->id;
     }
 

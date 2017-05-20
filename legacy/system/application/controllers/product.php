@@ -10,35 +10,14 @@ class Product extends Controller
     {
         parent::__construct();
         $this->load->model('refer');
+        $this->load->model('user');
         $this->load->helper('bridge');
         $this->container = silex();
     }
 
     public function index()
     {
-    }
-
-    public function autocomplete()
-    {
-        $store = $this->input->get('q');
-        if ($store) {
-            $merchants = $this->container['orm.em']->getRepository('App\Entity\Merchant')->searchActiveMerchants($store);
-        }
-        else {
-            $merchants = array();
-        }
-
-        $stores = array();
-
-        foreach ($merchants as $merchant) {
-            $stores[] = array(
-                'name' => $merchant->getName(),
-            );
-        }
-
-        $this->parser->parse('product/autocomplete', array(
-            'stores' => $stores,
-        ));
+        echo "Product index"; exit;
     }
 
     public function search()
@@ -46,26 +25,32 @@ class Product extends Controller
         $store = $this->input->get('q');
         $this->load->helper('url');
 
-        $rate = $this->container['orm.em']->getRepository('App\Entity\Rate')->getCurrentRate();
+        $merchants = $this->container['orm.em']->getRepository('App\Entity\Merchant')->getActiveMerchants();
+        $matches = array_filter($merchants, function ($merchant) use ($store) {
+            if (strtolower($store) === strtolower($merchant->getName())) {
+                return $merchant;
+            }
+        });
 
-        if (empty($store)) {
-            $merchants = array();
+        if (count($matches) > 0) {
+            redirect('/stores/details/' . current($matches)->getId());
         }
-        else {
-            $merchants = $this->container['orm.em']->getRepository('App\Entity\Merchant')->searchActiveMerchants($store);
-        }
-        
 
         $data = $this->blocks->getBlocks();
         $data['search'] = $store;
-        $data['merchants'] = $merchants;
-        $data['rate'] = $rate;
-        $this->parser->parse('product/search', $data);
+        $this->parser->parse('product/noproduct', $data);
     }
-
+    public function checkpopup()
+    {
+       
+        $data['popupstatus']= $this->user->popupstatus(); 
+        return $data['popupstatus'];         
+    }
     public function category()
     {
         //Grab information
+		$ccategory = $this->input->get('category');
+		
         $categoryId = $this->input->get('category') ?: null;
         $page = $this->input->get('page') ?: 1;
         $limit = $this->input->get('limit') ?: 25;
@@ -94,7 +79,9 @@ class Product extends Controller
         $data['category_tree'] = null;
         $data['base_url'] = "/product/category?";
         $data['query_string'] = ['search' => '', 'category' => $category, 'page' => $page];
-
-        $this->parser->parse('product/category_search', $data);
+		//$data['onecat']= $this->user->onecat($categoryId);
+        
+		
+		$this->parser->parse('product/category_search', $data);
     }
 }

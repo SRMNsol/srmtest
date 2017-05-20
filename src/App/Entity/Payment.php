@@ -56,6 +56,7 @@ class Payment
 
     public function __construct()
     {
+
         $this->payables = new ArrayCollection();
     }
 
@@ -169,6 +170,7 @@ class Payment
      */
     public function addPayable(\App\Entity\Payable $payable)
     {
+	
         $this->payables[] = $payable;
         $payable->setPayment($this);
 
@@ -185,6 +187,7 @@ class Payment
         $this->payables->removeElement($payable);
         $payable->setPayment(); //null
     }
+
 
     /**
      * Get payables

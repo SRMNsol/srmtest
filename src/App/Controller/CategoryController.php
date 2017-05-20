@@ -16,15 +16,31 @@ class CategoryController
     protected $em;
 
     public function __construct(EntityRepository $categoryRepository, EntityManager $em)
-    {
+    {         
         $this->categoryRepository = $categoryRepository;
         $this->em = $em;
     }
 
     public function listCategories(Application $app)
-    {
+    {   
         $categories = $this->categoryRepository->findBy([], ['name' => 'ASC']);
+/*
 
+            $em = $app['orm.em'];
+            $connection = $em->getConnection();
+
+            $RAW_QUERY = 'SELECT * , count(m.category_id) as tot FROM Category as c  INNER JOIN Merchant as m ON c.id=m.category_id GROUP BY m.category_id';
+
+            $statement = $connection->prepare($RAW_QUERY);
+            $statement->execute();
+            $custom = $statement->fetchAll();
+echo '<pre>';
+            echo count($custom ); exit;
+*/
+
+     
+     
+       
         return new Response($app['twig']->render('category_list.html.twig', [
             'categories' => $categories,
         ]));

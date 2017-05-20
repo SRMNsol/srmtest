@@ -22,6 +22,7 @@ class Emailer extends Model
             'message'=>$message,
             'txt_message'=>$txt_message,
             'to_addr'=>$email,
+           // 'from_addr'=>'no-reply@beesavy.com',
             'from_addr'=>'no-reply@beesavy.com',
         );
         $this->db->insert('email', $data);

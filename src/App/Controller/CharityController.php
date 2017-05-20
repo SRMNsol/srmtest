@@ -58,6 +58,16 @@ class CharityController
 
     public function deleteCharity(Charity $charity, Request $request, Application $app)
     {
+		 $url = $request->getUri();
+        $tokens = explode('/', $url);
+       $cha_id=$tokens[sizeof($tokens)-1]; 
+	           $em = $app['orm.em'];
+        $connection = $em->getConnection();
+	  	$RAW_QUERY = 'DELETE  FROM Charity  WHERE id= '.$cha_id.''; 
+        $statement = $connection->prepare($RAW_QUERY);
+        $statement->execute();
+		
+		
         try {
             $app['orm.em']->remove($charity);
             $app['orm.em']->flush();

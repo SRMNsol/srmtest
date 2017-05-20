@@ -6,17 +6,28 @@ use App\Entity\User;
  */
 class Account extends Controller
 {
+ 
+
     public function Account()
     {
+		
+
         parent::Controller();
-        $this->load->library('beesavy');
+
+		
+        $this->load->library('beesavy');        
+		 $this->load->library('EmailSender');
         $this->load->model('user');
-        $this->load->model('code');
+        $this->load->helper('bridge');
+        $this->load->model('code'); 
         $this->load->model('facebook');
         $this->load->model('twitter');
-        $this->load->model('emailer');
+    	
         $this->error = array();
         $this->user_id = $this->user->get_field('id');
+		
+		
+		
     }
 
     public function __get_header()
@@ -40,11 +51,31 @@ class Account extends Controller
 
         return $settings;
     }
+    public function checkpopup()
+    {
+       
+        $data['popupstatus']= $this->user->popupstatus(); 
+        return $data['popupstatus'];         
+    }
 
+    public function procestoavail()
+    {
+		 
+		$data['message']=$this->user->updatepayment($this->user_id);
+		
+    }
     public function index($success = False, $notice=False, $error = "")
     {
+		 if(!$this->db_session->userdata('login')['login']){
+			 
+			  redirect('main/joinlogin');
+
+ }
+		
+		
         $data = $this->__get_header();
         $data['errors'] = $this->code->get_errors($this->error);
+		
         if ($success && empty($this->error)) {
             $data['success'] = "Account settings updated";
         }
@@ -72,7 +103,9 @@ class Account extends Controller
 
         $container = silex();
         $data['charities'] = $container['orm.em']->getRepository('App\Entity\Charity')->findBy([], ['name' => 'ASC']);
-
+	$categories = cached_categories();
+        $data['categories'] = $categories;
+		
         $this->parser->parse('account/account', $data);
     }
 
@@ -97,18 +130,58 @@ class Account extends Controller
             $subject = sprintf('[Payment Requested] %s', $payment->getUser()->getEmail());
             $message = $this->parser->parse('email/paymentreqt', $data, true);
             $to = 'help@beesavy.com';
-            $this->emailer->sendMessage(null, $message, $to, $subject);
+            $this->emailsender->send($to, $subject,$message);
+			
             redirect('/account/index/0/4');
         }
     }
+		
+		
+    public function joinnow()
+    {
+	
+
+	
+        $data = $this->blocks->getBlocks();
+		
+		
+        $data['email'] = $this->input->get('email');
+        $data['referral'] = $this->input->get('referral');
+        if (!$data['referral']) {
+            $data['referral'] = $this->db_session->userdata('referral');
+        }
+
+        if ($this->input->get('errors')) {
+            $data['codes'] = explode(",",$this->input->get('errors'));
+        } else {
+            $data['codes'] = array();
+        }
+        $data['errors'] = $this->code->get_errors($data['codes']);
+        $this->parser->parse('/home/joinnow', $data);
+    }
+		
 
     public function register()
     {
+		
+
         $email = $this->input->post("email");
         $referral = $this->input->post("referral");
         $porig = $this->input->post("password");
         $pass  = User::passwordHash($this->input->post("password"));
         $passC = User::passwordHash($this->input->post("password_confirm"));
+		
+
+ 		$data = $this->user->checklogin($email);
+		
+		 if($data['status']=='inactive')
+		 {
+			$abc['statussign']='inactive';
+			$error= array('code'=>20, 'user'=>$email);
+			 $this->load->view('home/joinlogin',$abc);
+		}
+		else {
+			
 
         #Error check
         $errors = array();
@@ -120,16 +193,24 @@ class Account extends Controller
         }
         if($pass != $passC)
             $errors[] = $this->code->get_code('password_mismatch');
+        $data= $this->user->onreffral();
+
+
+       if($data['referral_status']==1) {
+
         if (empty($referral) || !$rid = $this->user->check_referral($referral)) {
             $errors[] = $this->code->get_code('invalid_referral');
         }
+		
+        }
 
+            $refcode=trim($referral);
         if ($rid == 1) {
             $rid = 0;
         }
 
         if (empty($errors)) {
-            $error = $this->user->add_user($email, $rid, $pass);
+            $error = $this->user->add_user($email, $rid, $pass,$refcode, $data['referral_status']);
             if ($error) {
                 //return;
                 $errors[] = $this->code->get_code('fail');
@@ -139,14 +220,19 @@ class Account extends Controller
         if (empty($errors)) {
             $this->user->login($email,$pass);
             $data = array('email'=>$email);
-            $msg = $this->parser->parse('email/join', $data, True);
-            $tmsg = $this->parser->parse('email/joint', $data, True);
-            $this->emailer->sendMessage($msg, $tmsg, $data['email'], "BeeSavy - Welcome to BeeSavy!");
-            redirect('/account/index/0/1');
+            $msg = $this->parser->parse('email/join', $data, true);
+
+
+              //print_r($msg); exit;     
+
+
+			$this->emailsender->send($email,'BeeSavy - Welcome to BeeSavy!',$msg);
+            redirect('/account/index/0/1?email='.$email);
         } else {
             $error_str = implode(",",$errors);
             redirect("/main/joinnow?email=$email&referral=$referral&errors=$error_str");
         }
+		}
     }
 
     public function logout()
@@ -166,7 +252,7 @@ class Account extends Controller
                         $data = array('email' => $email, 'password' => $newPassword);
                         $msg = $this->parser->parse('email/newpassword', $data, True);
                         $txtmsg = $this->parser->parse('email/newpasswordt', $data, True);
-                        $this->emailer->sendMessage($msg, $txtmsg, $data['email'], "BeeSavy - New password request");
+						$this->emailsender->send($data['email'],'BeeSavy - New password request',$msg);
                         redirect("/main/forgot/1/$email");
                         return;
                     }
@@ -183,16 +269,42 @@ class Account extends Controller
     }
 
     public function login()
-    {
+    { 
+        $data = $this->blocks->getBlocks();
+
         $email = $this->input->post('email');
         $password = User::passwordHash($this->input->post('password'));
-        $error = $this->user->login($email,$password);
+		
+		 $data = $this->user->checklogin($email);
+		
+		 if($data['status']=='inactive')
+		 {
+			$error= array('code'=>20, 'user'=>$email);
+
+            $this->parser->parse('/home/joinlogin', $data);
+
+
+			 //$this->load->view('home/joinlogin',$data);
+		}
+		else {
+			
+        	$error = $this->user->login($email,$password);
+			
+		}
+		
         if ($error) {
+
+
+
             $user = urlencode($error['user']);
             $code = $error['code'];
-            redirect("/main/signin?user=$user&code=$code");
+                   redirect("main/forgotp");
+                   // $this->parser->parse('/home/forgot', $data);
+
+            //redirect("main/forgot");
+         
         } else {
-            redirect("");
+        redirect("");
         }
     }
 
@@ -268,16 +380,56 @@ class Account extends Controller
 
         $this->index(1);
     }
-
+/*	public function flogin()
+		{
+		 $this->load->library('facebook');
+			$data['user'] = array();
+	
+			
+			if ($this->facebook->is_authenticated())
+			{
+				
+				
+				$user = $this->facebook->request('get', '/me?fields=id,name,email');
+				if (!isset($user['error']))
+				{
+					$data['user'] = $user;
+				}
+	
+			}
+			
+		$this->load->view('home/joinnow', $data);
+	} */
+	
     public function set_email()
     {
         $new =$this->input->post('email');
+        $to =$this->input->post('oldemail');
         $conf=$this->input->post('email_confirm');
         if (filter_var($new, FILTER_VALIDATE_EMAIL)==FALSE) {
             $this->error[] = $this->code->get_code('invalid_email');
         } else {
             if ($new==$conf) {
                 $e = $this->user->set_setting('email', $new);
+
+
+
+                if($e!='in_use') {
+                  
+
+                $msg = $this->parser->parse('email/setemail', $data, true);
+                //$msg = $this->parser->parse('email/setreferal', $data, true);
+                
+
+              //print_r($msg); exit;
+
+
+                $this->emailsender->send($to,'BeeSavy - Change email!',$msg);
+                //$this->emailsender->send($to,'BeeSavy - Change email!',$msg);
+
+                }
+
+
                 if ($e) {
                 $this->error[] = $this->code->get_code($e);
                 }
@@ -290,36 +442,68 @@ class Account extends Controller
 
     public function set_password()
     {
-        $current = User::passwordHash($this->input->post('password_current'));
-        $new = User::passwordHash($this->input->post('password_new'));
+         $current = User::passwordHash($this->input->post('password_current'));
+         $to = $this->input->post('passemail');
+        
+         $new = User::passwordHash($this->input->post('password_new'));
         $conf= User::passwordHash($this->input->post('password_confirm'));
         $info = $this->user->info();
         if ($current !== $info['password']) {
+			
             $this->error[] = $this->code->get_code('invalid_password');
         } elseif (strlen($this->input->post("password_new"))<6) {
+			
             $this->error[] = $this->code->get_code('invalid_password');
         } elseif ($new !== $conf) {
+			
             $this->error[] = $this->code->get_code('password_mismatch');
         } else {
+			
             $this->user->set_password($new, $current);
+
+
+                $subject = 'Change password';
+                $message = 'Your password has been changed successfully  ';
+                $this->emailsender->send($to, $subject,$message);
+
+
         }
         $this->index(1);
     }
 
     public function set_setting()
     {
-        $setting =$this->input->post('setting');
-        $value =$this->input->post('value');
 
+         $setting='facebook_auto';
+         $value=1;
         if ($setting == "facebook_auto" && $value) {
-            $url = $this->facebook->request_permissions(base_url()."account/add_facebook", $this->user_id);
+
+            $rurai = "http://dev.nsol.sg/projects/beesavy_new/legacy/public/account/add_facebook";
+            $url = $this->facebook->request_permissions( $rurai, $this->user_id);
             if ($url) {
                 redirect($url);
             }
         }
 
+
+        $this->user->set_setting($setting, $value);
+        $this->index();
+
+    }
+
+    public function sett_setting()
+    {
+
+         $setting='twitter_auto';
+         $value=1;
         if ($setting == "twitter_auto" && $value) {
-            $url = $this->twitter->request_permissions(base_url()."account/add_twitter", $this->user_id);
+
+         // echo base_url(); exit();
+         // http://dev.nsol.sg/projects/beesavy_new/legacy/public/
+        $bas_ur="https://dev.nsol.sg/projects/beesavy_new/legacy/public/account/add_twitter";
+                      
+
+            $url = $this->twitter->request_permissions($bas_ur, $this->user_id);
             if ($url) {
                 redirect($url);
             }
@@ -332,11 +516,55 @@ class Account extends Controller
 
     public function add_facebook()
     {
-        $success = $this->facebook->get_access_token($this->user_id);
+
+        $clientid = "117040755037895";
+        $clientsecret = '04ced89742cf2754a630775cdc956081';
+        $code = $this->input->get('code');
+        if($this->input->get('code')){
+
+
+            $ruri = "http://dev.nsol.sg/projects/beesavy_new/legacy/public/account/add_facebook";
+            $ruri = urlencode($ruri);
+            $url = "https://graph.facebook.com/oauth/access_token?client_id=$clientid&redirect_uri=".$ruri."&client_secret=$clientsecret&code=$code";
+
+            $ch = curl_init();
+
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+            curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, TRUE);
+            curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+
+
+            $data = curl_exec($ch);
+
+
+           
+            $arr = array();
+            parse_str($data, $arr);
+           $retunface=json_decode($data);
+          
+              
+      }  if($retunface->access_token){
+            $uid= $this->user_id;
+
+            $this->db->where('uid', $uid);
+            $this->db->update('user', array('fb_access_token'=>$retunface->access_token));
+            $success= True;
+
+        }else{
+            $success= False;
+        }
+
+
         if (!$success) {
+            
+
             $error = '5';
             redirect("/account");
         } else {
+            
+
+
             $setting = "facebook_auto";
             $value = 1;
             $this->user->set_setting($setting, $value);
@@ -346,6 +574,8 @@ class Account extends Controller
 
     public function add_twitter()
     {
+        
+
         $success = $this->twitter->get_access_token($this->user_id);
         if (!$success) {
             $error = '5';
@@ -360,10 +590,33 @@ class Account extends Controller
 
     public function set_email_setting()
     {
+
         $send_updates = $this->input->post('send_updates');
         $send_reminders = $this->input->post('send_reminders');
         $this->user->set_setting("send_reminders", $send_reminders);
         $this->user->set_setting("send_updates", $send_updates);
         $this->index(1);
     }
+	public function invite_multiple_friends(){
+	
+		$emails = $this->input->post('emails');
+	
+		$link = $this->input->post('link');
+			if (empty($emails[0]) AND empty($emails[1]) AND empty($emails[2])) {
+				
+				echo 0;
+			}else{
+				
+			foreach($emails as $key => $email){
+				$subject = 'Beesavy Invitation';
+                //$message = 'Link: '.$link;
+				$msg = $this->parser->parse('email/setreferal', $data, true);
+				$to = $emails[$key];
+				$this->emailsender->send($to, $subject,$msg);
+			}
+			
+				echo 1;
+                return;
+			}
+	}
 }

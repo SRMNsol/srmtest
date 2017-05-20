@@ -1,5 +1,7 @@
-<?php $this->load->view('blocks/openpage');?>
+<?php $this->load->view('blocks/openpage');
 
+
+?>
 
 <!-- shopping pic -->
    <div class="shopping-pic"><img src="/images/feature-product.jpg"  width="930" height="335" alt="** PLEASE DESCRIBE THIS IMAGE **"/></div>

@@ -9,7 +9,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 class UserSearchType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
-    {
+    {   
         $builder->add('email', 'email');
         $builder->add('startDate', 'date', ['required' => false, 'widget' => 'single_text']);
         $builder->add('endDate', 'date', ['required' => false, 'widget' => 'single_text']);

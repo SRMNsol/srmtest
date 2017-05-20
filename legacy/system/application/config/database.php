@@ -34,6 +34,7 @@
 | the active record class
 */
 
+
 $opsworks = new OpsWorks();
 
 $active_group = "default";
@@ -43,6 +44,8 @@ $db['default']['hostname'] = $opsworks->db->host;
 $db['default']['username'] = $opsworks->db->username;
 $db['default']['password'] = $opsworks->db->password;
 $db['default']['database'] = $opsworks->db->database;
+
+
 $db['default']['dbdriver'] = "mysql";
 $db['default']['dbprefix'] = "";
 $db['default']['pconnect'] = FALSE;

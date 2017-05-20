@@ -95,7 +95,12 @@ class Merchant implements GroupSequenceProviderInterface
     protected $logoPath;
 
     protected $logoFile;
-
+    
+    /**
+     * @@ORM\Column(nullable=true)
+     */
+    protected $expiryDate;
+    
     protected $uploadedLogoHash;
 
     /**
@@ -139,7 +144,7 @@ class Merchant implements GroupSequenceProviderInterface
 
         return $this;
     }
-
+    
     public function getNetworkMerchantId()
     {
         return $this->networkMerchantId;
@@ -172,6 +177,20 @@ class Merchant implements GroupSequenceProviderInterface
     public function setName($name)
     {
         $this->name = $name;
+
+        return $this;
+    }
+    
+    
+    
+    public function getexpiryDate()
+    {
+        return $this->expiryDate;
+    }
+
+    public function setexpiryDate($expiryDate)
+    {
+        $this->expiryDate = $expiryDate;
 
         return $this;
     }

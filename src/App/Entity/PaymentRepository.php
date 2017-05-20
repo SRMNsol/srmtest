@@ -4,7 +4,6 @@ namespace App\Entity;
 
 use Doctrine\ORM\EntityRepository;
 use Doctrine\Common\Collections\Criteria;
-
 /**
  * PaymentRepository
  *
@@ -28,9 +27,19 @@ class PaymentRepository extends EntityRepository
             $payable->setAvailable(0);
         }
 
+
+
+          //  print_r($payable);
+            //print_r($user);
+
+        
+
+
         $em = $this->getEntityManager();
         $em->persist($payment);
         $em->flush();
+
+
 
         return $payment;
     }

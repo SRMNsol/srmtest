@@ -122,7 +122,7 @@ alt='$store' onerror="this.src="<?php echo s3path("/../images/no-image-100px.gif
              <table cellspacing=0 cellpadding=0>
                <tr><td>
 
-             <div class="ClickToCopyCode"><div style="position:relative;overflow:auto;0" class="click-contain ClickToCopyCode-Bt">
+             <div class="ClickToCopyCode"><div style="position:relative;overflow:auto; 0" class="click-contain ClickToCopyCode-Bt">
             <a class="button click-button" class='transfer-link' href='<?php echo $coupon['link'] ?>' target='_blank' rel='nofollow'>
             <?php echo $coupon['action_text'] ?>
             </a>

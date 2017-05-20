@@ -9,15 +9,19 @@ class Transfer extends Controller
     public function __construct()
     {
         parent::__construct();
+
         $this->load->model('user');
         $this->load->model('admin');
         $this->load->helper('url_helper');
-        $this->load->model('emailer');
+        $this->load->library('EmailSender');
         $is_user = $this->user->login_status();
         if ($is_user) {
             $this->user_id = $this->user->get_field('id');
         } else {
-            $this->user_id = $this->admin->getDefault();
+            
+            redirect('main/joinlogin');
+
+            //$this->user_id = $this->admin->getDefault();
         }
         $this->load->helper('bridge');
         $this->container = silex();
@@ -26,17 +30,16 @@ class Transfer extends Controller
     public function _remap()
     {
         $type = $this->uri->segment(2);
-        if ($type === 'login') {
+        if ($type=="login") {
             $this->login();
-        } elseif ($type === 'register') {
+        } elseif ($type=="register") {
             $this->register();
         } else {
             $id = $this->uri->segment(3);
             $logged_in = $this->user->login_status();
             $skip = $this->uri->segment(4);
-
-            if ($skip === 'direct' || $skip === 'skip' || $logged_in) {
-                $this->store($id, $skip);
+            if ($skip || $logged_in) {
+                $this->store($id);
             } else {
                 $this->guest($id);
             }
@@ -57,7 +60,12 @@ class Transfer extends Controller
             redirect("/transfer/$type/$id");
         }
     }
-
+    public function checkpopup()
+    {
+       
+        $data['popupstatus']= $this->user->popupstatus(); 
+        return $data['popupstatus'];         
+    }
     public function register()
     {
         $this->load->helper('string');
@@ -87,7 +95,7 @@ class Transfer extends Controller
             $data = array('email'=>$email, 'password'=>$password);
             $msg = $this->parser->parse('email/joininfo', $data, True);
             $txtmsg = $this->parser->parse('email/joininfot', $data, True);
-            $this->emailer->sendMessage($msg, $txtmsg, $data['email'], "BeeSavy - Welcome to BeeSavy");
+            $this->emailsender->send($data['email'], "BeeSavy - Welcome to BeeSavy",$msg);
             redirect("/transfer/$type/$id");
         } else {
             $error_str = implode(",",$errors);
@@ -112,7 +120,7 @@ class Transfer extends Controller
         $this->parser->parse('transfer/guest', $data);
     }
 
-    public function store($id, $skip = null)
+    public function store($id)
     {
         $data = $this->getMerchantData($id);
 
@@ -120,10 +128,8 @@ class Transfer extends Controller
             show_404();
         }
 
-        if ($skip === 'direct') {
-            redirect($data['url']);
-        }
-
+        $data['cookie_url'] = $data['url'];
+        $data['destination_url'] = $data['cookie_url'];
         $this->parser->parse('transfer/store', $data);
     }
 

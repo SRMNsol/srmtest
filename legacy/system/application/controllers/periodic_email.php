@@ -7,7 +7,7 @@ class Periodic_Email extends Controller
     {
         parent::Controller();
         $this->load->library('beesavy');
-        $this->load->model('emailer');
+        $this->load->library('EmailSender');
         $this->load->model('user');
     }
     public function index()
@@ -24,7 +24,7 @@ class Periodic_Email extends Controller
             $data = array('email'=>$email);
             $msg = $this->parser->parse('email/cbinfo', $data, True);
             $tmsg = $this->parser->parse('email/cbinfot', $data, True);
-            $this->emailer->sendMessage($msg, $tmsg, $data['email'], "Share the buzz on BeeSavy.");
+            $this->emailsender->send( $data['email'], "Share the buzz on BeeSavy.",$msg);
         }
 
         //Update any last_casshback =0
@@ -45,7 +45,7 @@ class Periodic_Email extends Controller
             $this->db->query($sql);
             $msg = $this->parser->parse('email/60day', $data, True);
             $tmsg = $this->parser->parse('email/60dayt', $data, True);
-            $this->emailer->sendMessage($msg, $tmsg, $data['email'], "Congratulations! You have referral cash back.");
+            $this->emailsender->send( $data['email'], "Congratulations! You have referral cash back.",$msg);
 
         }
         //Check for 83 daqy inactivity
@@ -62,7 +62,7 @@ class Periodic_Email extends Controller
             $this->db->query($sql);
             $msg = $this->parser->parse('email/83day', $data, True);
             $tmsg = $this->parser->parse('email/83dayt', $data, True);
-            $this->emailer->sendMessage($msg, $tmsg, $data['email'], "Congratulations! You have referral cash back.");
+            $this->emailsender->send($data['email'], "Congratulations! You have referral cash back.",$msg);
 
         }
     }

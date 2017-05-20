@@ -1,52 +1,80 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-{header}
+  <?php $this->load->view('blocks/header'); ?>
 <body>
 <div id="container">
-<!-- Header -->
-{banner}
-<!-- /Header -->
+    <!-- Navigation bar -->
+    <?php if($this->db_session->userdata('login')['login']){ 
 
-<!-- Navigation bar -->
-{nav_bar}
-<!-- /Navigation bar -->
+    ?>
 
-<?php echo googletag_ad('BS_help_728x90_1') ?>
+<?php $this->load->view('blocks/admin-topbar'); ?>
+<?php }else{
 
+     ?>
+       <?php $this->load->view('blocks/nav_bar'); ?>
+   
+<?php } ?>
+    <!-- /Navigation bar -->
+    <!-- content -->
+    <?php  // print_r($terms)  echo 'ddddddddd'; exit;?>
+<div class="space20"></div>     <div class="space20"></div>     
 <!-- content -->
-<div class="BGLeftCol">
-    <!-- page Title -->
-    <div id="pageTitle">
-        <div id="pageTitleLeft"></div>
-        <h1>Help</h1>
-        <div id="pageTitleRight"></div>
-    </div>
-    <!-- /page Title -->
+<section id="help">
+    <div class="container">
+    <div class="row padding-top">
+              <div class="col-md-3">
+                        <div class="row">
 
-    <!-- Left category -->
-    {side_nav}
-    <!-- /Left category -->
+                             <?php $this->load->view('blocks/left_nav'); ?>
+                           
+                         
+                           
+                        </div>
+                    </div>    
+ 
+<div class="col-md-9">
+                        <div class="panel panel-successxxx">
 
-    <!-- Right side -->
-    <div id="results" class="help" style="border:0px solid #000;" >
-        <div class="title">Learn More - Join For Free</div>
-        <div style="float:left;width:100%;"><hr color="#e96d08" style="margin-left:10px;"></div>
-        <p>Actually, BeeSavy is <STRONG>BETTER THAN FREE!</STRONG> &nbsp;We pay you to use the site! &nbsp;Rest assured that this <STRONG>IS NOT</STRONG> an introductory offer. &nbsp;BeeSavy will always be free. &nbsp;All of the cash back that we pay to you is covered by the retailers themselves and the ads you see on this site.</p>
-        <p><strong>There is no catch. &nbsp;</strong>There are no minimum spending requirements, no minimum number of people you need to refer, etc.</p>
-        <p><iframe width="425" height="349" src="http://www.youtube.com/embed/zxlBxFNfPSU?hl=en&fs=1" frameborder="0" allowfullscreen></iframe></p>
-    </div>
-    <div style="clear: both;"></div>
+                            <div class="panel-body inner">
+                                <div class="row">
+                                    <h3> <?php echo $join['page_name']; ?></h3>
+                                    <br>
+                                    <div class="col-md-12">
+                                        <div class="panel panel-infoxxx">
+                                            <div class="panel-body">
+                                            <?php echo $join['page_desc']; ?>
+                                            </div>
+                                        </div>
+                                    </div>      
+
+                                </div>    
+
+                            </div>
+                        </div>
+<div style="background-color: rgba(0, 0, 0, 0.05);">
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- Join For Free -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-9625495144632502"
+     data-ad-slot="2551088576"
+     data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
 </div>
-<div style="clear: both;"></div>
+                    </div> 
 
-<!-- Right side -->
-
-
+    
+    </div>    
+    </div>
+    
+    </section>
 <!-- /content -->
 
 <!-- footer -->
-{footer}
-<?php echo googletag_ad('BS_help_728x90_2') ?>
+<?php $this->load->view('blocks/footer'); ?>
+<?php $this->load->view('blocks/footer_script'); ?>
+
 <!-- /footer -->
 
 </body>

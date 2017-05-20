@@ -40,6 +40,7 @@ class UserAccount implements GroupSequenceProviderInterface
 
     public function getUser()
     {
+      //  echo 'Sdsfafdaf';
         return $this->user;
     }
 

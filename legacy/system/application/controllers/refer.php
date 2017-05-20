@@ -5,12 +5,13 @@ class Refer extends Controller
 {
     public function Refer()
     {
+		
         parent::Controller();
         $this->load->model('user');
     }
 
     public function r($id)
-    {
+    { 	
         if (is_numeric($id)) {
             $sql = "select * from refer where id=$id;";
             $res = $this->db->query($sql);
@@ -28,6 +29,7 @@ class Refer extends Controller
     }
     public function ref($alias)
     {
+	
         #check if valid alias
         $alias = addslashes($alias);
         if (is_numeric($alias)) {
@@ -44,8 +46,14 @@ class Refer extends Controller
             redirect("");
         }
     }
-    public function base($id)
+        public function checkpopup()
     {
+       
+        $data['popupstatus']= $this->user->popupstatus(); 
+        return $data['popupstatus'];         
+    }
+    public function base($id)
+    { 
         if (is_numeric($id)) {
             redirect('');
         }

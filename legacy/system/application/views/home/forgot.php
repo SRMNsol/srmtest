@@ -1,75 +1,199 @@
-	<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-{header}
+  <?php $this->load->view('blocks/header'); ?>
 <body>
 <div id="container">
-<!-- Header -->      
-{banner}
-<!-- /Header -->
+    <!-- Navigation bar -->
+	<?php if($this->db_session->userdata('login')['login']){ 
+
+	?>
+
+<?php $this->load->view('blocks/admin-topbar'); ?>
+<?php }else{
+
+	 ?>
+       <?php $this->load->view('blocks/nav_bar'); ?>
+   
+<?php } 
 
 
-<!-- Navigation bar -->
-{nav_bar}
-<!-- /Navigation bar -->
 
-
+?>
 <!-- content -->
-<?php if(isset($success)) { ?>
-<div style="clear:both" class="message success">
-{success}
-</div>
-<?php } ?>
-<?php if(!empty($errors)) {  ?>
-<div style="clear:both" class="message error">
-{errors}
-{message}
-{/errors}
-</div>
-<?php } ?>
-		<!-- page Title -->
 
-		<div id="content" class="BGNoCol">
-	<div id="pageTitle">
-	<div id="pageTitleLeft"></div>
-		<h1>Request a New Password</h1>
-	<div id="pageTitleRight"></div>
-</div>
-<div id="fullLogin">
-<div class="heading"><h3>Forgot Your Password?</h3><a href="/main/signin" class="forgotLink">Return to Login</a></div>
-    <p>Please enter the email address you use to sign in to your account.</p>
-	<div>
-		<form id="standardLoginForm" enctype="application/x-www-form-urlencoded" method="post" action="/account/forgot"><dl class="extrabux_form">
-<dt id="email-label" style="width:170px;"><label for="email" class="required">Your Email Address:</label></dt><dd id="email-element"><input name="email" id="email" type="text"></dd>
+		<!-- page Title -->
+	<section id="bee_top_joinform">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-6 col-md-offset-4">
+					<div class="bee_story_title">
+						<h3>NOT A MEMBER ? JOIN NOW</h3>
+					</div>
+				</div>
+			</div>
+            
+            <?php if(!empty($errors)){?>
+                <div class="message alert alert-danger">
+                {errors}
+                <p>{message}</p>
+                {/errors}
+                </div>
+                <?php } ?>
+
+	<?php if(isset($success)) { ?>
+	<div class="alert alert-success">            
+	{success}
+	</div>
+	<?php } ?>
+
+            <div class="row">
+              
+            <div class="col-md-12">
+               <div class="row">
+              <div class="col-md-6">
+               <form id="standardLoginForm" enctype="application/x-www-form-urlencoded" method="post" 
+                                    action=<?php echo s3path("/account/forgot"); ?>>
+										<div class="row">
+											<div class="col-md-6">
+											 <a href="<?php echo SURL?>main/glogin">	<button class="btn btn-google btn-block"><i class="fa fa-google"></i> Signin With Google</button></a>
+											</div>
+											<div class="col-md-6">
+				<a href="#">	<button class="btn btn-facebook btn-block"><i class="fa fa-facebook"></i> Signin With Facebook</button></a>
+											</div> 
+										</div>   
+										<div class="space20"></div>
+                                        
+                                      
+                                        
+										
+										<div class="row">
+											<div class="col-md-1">
+												<i class="fa fa-envelope"></i>
+											</div>  
+											<div class="col-md-11">    
+												<input required type="text" placeholder="Enter Email Address" name="email" id="email" class="form-control">
+												<input name="type" value="standard" id="type" type="hidden">
+
+<input name="return" value="/users/login" id="return" type="hidden">
+											</div>    
+										</div>
+										<br>
+										
+
+										<div class="row">
+											<div class="col-md-6 col-md-offset-3">
+
 <input name="type" value="standard" id="type" type="hidden">
 
 <input name="return" value="/users/login" id="return" type="hidden">
-<dt id="submit-label">&nbsp;</dt>
-<dd>
-<div class="SendPassword"><div class="BtnSendPasswordBg BtnSendPassword"><INPUT type="submit" name="" value=""/></div></div></dd></dl></form></div>
-	
-</div>
-<div id="fullRegister" class="borderLeft">
-	<div class="heading"><h3>Not a Member? Join BeeSavy Today </h3></div>
-	<ul>
-		<li>Get <strong>Cash Back</strong> at thousands of top online stores</li>
-	</ul>
-	<div>
-		<form id="registerForm" enctype="application/x-www-form-urlencoded" method="post" action="/account/register"><dl class="beesavy_form">
-                    	<table cellspacing=0 cellpadding=0 border=0>
-                <tr><td><dt id="email-label"><label for="email" class="required">Email Address:  *</label></dt></td><td><dd id="email-element"><input name="email" id="email" class="required email" type="text"></dd></td></tr>
-               
-                <tr><td height=60><dt><label>Referral Code: <dd><font style="font-size:8.5pt;"></font></dd></dt></label></td><td><dd id="password-element"><input name="referral" id="email" value="{referral}" class="required email" type="text"><div style="font-size:9pt;float:left;margin-top:-5px;"><i>Not Case Sensitive</i></div></dt></td></tr>
-               
-                <tr><td><dt id="password-label"><label for="password" class="required">Password:</label></dt></td><td><dd id="password-element"><input name="password" id="password" value="" class="required password" type="password"></dd></td></tr>
-<tr><td><dt id="password_confirm-label"><label for="password_confirm" class="required">Confirm Password:</label></dt></td><td><dd id="password_confirm-element"><input name="password_confirm" id="password_confirm" value="" class="required password" type="password"></dd></td></tr>
 
-                <tr><td></td><td valign=top align=right><div class="StartSaving"><div class="BtnStartSavingBg BtnStartSaving"><INPUT type="submit" name="" value=""/></div></div></td></tr>
-                </table>
-</dd></dl></form>	
+ 
+  <div class="space20"></div>
+												<button style="margin:10px 0;" class="btn btn-primary btn-block" type="submit">Submit</button>     
+											</div>
+
+										</div>
+									</form>
+              
 
 
-</div>
-</div>
+                
+              </div>  
+             <div class="col-md-6">
+                <form name="registerForm" id="registerForm" method="POST" action="<?php echo SURL?>account/register">
+                <div class="row">
+                 <div class="col-md-6">
+                   <a href="<?php echo SURL?>main/glogin"> <button type="button" class="btn btn-google btn-block">Register with Google +</button></a>
+                 </div>
+                 <div class="col-md-6">
+                 
+                  <a href="https://www.facebook.com/dialog/oauth?client_id=219918071819528&redirect_uri=http%3A%2F%2Fdev.nsol.sg%2Fprojects%2Fbeesavy_new%2Flegacy%2Fpublic%2Fmain%2Ffblogin&state=451eaed65c3c29254ada19a1bd0f1077&scope=email">  <button type="button" class="btn btn-facebook btn-block">Register with Facebook</button></a>
+                 </div>    
+                </div>
+                <div class="space20"></div>
+				
+				<?php if(($statussign=='inactive')){?>
+				<div class="message alert alert-danger">
+				<p>
+				Your account is deactivate
+			   </p>
+			   
+				</div>
+				<div class="space10"></div>
+				<?php } ?>
+				
+                <div class="row">
+                 <div class="col-md-1 ">
+                 <label class="label-gap"> <i class="fa fa-envelope"></i></label>   
+                 </div>
+                 <div class="col-md-11">
+                     <input required type="text" name="email" placeholder="Enter Email Address " value="<?php if(isset($user_prof['email']) && $user_prof['email']!='') 
+					 { echo $user_prof['email']; } ?>" id="email" class="form-control">
+                 </div>    
+                </div>
+                   <?php  if($chekref['referral_status']==1)  { ?>
+                    <div class="space20"></div>
+                       <div class="row">
+                 <div class="col-md-1">
+                 <label class="label-gap"><i class="fa fa-th"></i> </label>   
+                 </div>
+             
+                   <div class="col-md-11">
+                     <input type="text" name="referral" placeholder="Enter Referral Code" class="form-control">
+                 </div>    
+              
+
+                </div>
+                <?php } ?>
+
+
+                
+                       <div class="space20"></div>
+                   <div class="row">
+                 <div class="col-md-1">
+                 <label class="label-gap"><i class="fa fa-lock"></i> </label>   
+                 </div>
+                 <div class="col-md-11">
+                     <input required type="password" placeholder="Enter Password" name="password" id="password" class="form-control">
+                 </div>    
+                </div>
+                       <div class="space20"></div>
+                       <div class="row">
+                 <div class="col-md-1 ">
+                 <label class="label-gap"><i class="fa fa-lock"></i>  </label>   
+                 </div>
+                 <div class="col-md-11">
+                    <input required type="password" name="password_confirm" placeholder=" Confirm Password" id="password_confirm" class="form-control">
+                 </div>    
+                </div>
+                    
+                  
+                    
+                    
+                    
+                    
+                    
+                    
+                    	<div class="space20"></div>
+                           <div class="row">
+                 
+                 <div class="col-md-6 col-md-offset-3">
+                     <input type="submit" class="btn btn-saving btn-block" value="Start Saving">
+                 </div>    
+                </div>
+                    
+                    
+                    
+                    </form>
+              </div>
+             </div>
+            </div>
+            
+            </div>
+		
+		
+		</div>
+	</section>
+
+
 <script type="text/javascript">
 $(document).ready(function(){
 	$("#standardLoginForm").validate();
@@ -83,16 +207,16 @@ $(document).ready(function(){
 		
 
        <!-- Right side -->
-
+  
 
 <!-- /content -->
 
-<!-- footer -->  
-{footer}
-<!-- /footer --> 
+<!-- footer -->
+<?php $this->load->view('blocks/footer'); ?>
 
 
-
-
+<?php $this->load->view('blocks/footer_script'); ?>
+<!-- /footer -->
   </body>
   </html>
+

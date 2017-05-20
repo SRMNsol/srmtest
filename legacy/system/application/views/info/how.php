@@ -1,87 +1,86 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-{header}
+  <?php $this->load->view('blocks/header'); ?>
 <body>
 <div id="container">
-<!-- Header -->
-{banner}
-<!-- /Header -->
+    <!-- Navigation bar -->
+    <?php if($this->db_session->userdata('login')['login']){ 
 
-<!-- Navigation bar -->
-{nav_bar}
-<!-- /Navigation bar -->
+    ?>
 
-<?php echo googletag_ad('BS_help_728x90_1') ?>
+<?php $this->load->view('blocks/admin-topbar'); ?>
+<?php }else{
 
+     ?>
+       <?php $this->load->view('blocks/nav_bar'); ?>
+   
+<?php } ?>
+    <!-- /Navigation bar -->
+    <!-- content -->
+    <?php  // print_r($terms)  echo 'ddddddddd'; exit;?>
+<div class="space20"></div>     <div class="space20"></div>     
 <!-- content -->
-<div class="BGLeftCol">
-    <!-- page Title -->
-    <div id="pageTitle">
-        <div id="pageTitleLeft"></div>
-        <h1>Help</h1>
-        <div id="pageTitleRight"></div>
+<section id="help">
+    <div class="container">
+    <div class="row padding-top">
+              <div class="col-md-3">
+                        <div class="row">
+
+                             <?php $this->load->view('blocks/left_nav'); ?>
+                           
+                         <div class="row show_tv_only">
+                        <div style="background-color: rgba(0, 0, 0, 0.05);">
+                            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- How it works -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-9625495144632502"
+     data-ad-slot="8597622176"
+     data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+                        </div>
+
+                    </div>
+                           
+                        </div>
+                    </div>    
+ 
+<div class="col-md-9">
+                        <div class="panel panel-successxxx">
+
+                            <div class="panel-body inner">
+                                <div class="row">
+                                    <h3> <?php echo $how['page_name']; ?></h3>
+                                    <br>
+                                    <div class="col-md-12">
+                                        <div class="panel panel-infoxxx">
+                                            <div class="panel-body">
+                                            <?php echo $how['page_desc']; ?>
+                                            </div>
+                                        </div>
+                                    </div>      
+
+                                </div>    
+
+                            </div>
+                        </div>
+
+                    </div> 
+
+    
+    </div>    
     </div>
-    <!-- /page Title -->
-
-
-    <!-- Left category -->
-    {side_nav}
-    <!-- /Left category -->
-
-
-    <!-- Right side -->
-    <div id="results" class="about" style="border:0px solid #000;" >
-        <div class="title">How It Works </div>
-        <div style="float:left;width:100%;"><hr color="#e96d08" style="margin-left:10px;"></div>
-        <table cellspacing=0 cellpadding=0 style="margin-left:12px;float:left;">
-            <tr>
-                <td><img src="<?php echo s3path("/images/register-compare.gif") ?>"></td>
-                <td>
-                    <h2>Save Time! &nbsp;Search for stores or products</h2>
-                    <p>Compare prices on millions of products from hundreds of stores. &nbsp;BeeSavy's comparison shopping engine goes above
-                    and beyond by including not only list price, tax, and shipping, but also cash back and coupon discounts—all in one simple interface. &nbsp;</p>
-                </td>
-            </tr>
-            <tr>
-                <td><img src="<?php echo s3path("/images/register-cashback.gif") ?>"></td>
-                <td>
-                    <h2>Save Money! &nbsp;Shop online with cash back</h2>
-                    <p>When you shop online through BeeSavy, we earn a sales commission on anything you buy. &nbsp;We pass most of
-                    this commission on to you as a cash back discount. &nbsp; With one simple search, you can compare prices, find money-saving coupons, and get cash back!</p>
-                </td>
-            </tr>
-            <tr>
-                <td><img src="<?php echo s3path("/images/register-coupons.gif") ?>"></td>
-                <td>
-                    <h2> Be Savvy!  &nbsp;Save more with exclusive coupons</h2>
-                    <p>Coupon discounts will immediately be applied to your order during checkout and your cash back discount will post to your BeeSavy account within 1-4 days. &nbsp; BeeSavy will send you a check or deposit your cash back into your PayPal account once your balance reaches $10.</p>
-                </td>
-            </tr>
-            <tr>
-                <td><img src="<?php echo s3path("/images/register-refer.gif") ?>"></td>
-                <td>
-                    <h2> Earn Money!  &nbsp;Refer your friends</h2>
-                    <p>BeeSavy  pays you 10% commission on all of your referrals' cash back forever. &nbsp;  We even pay you 10% commission for all of the people they refer, up to seven levels! &nbsp;There are no hoops to jump through or other gimmicks.  </p>
-                </td>
-            </tr>
-        </table>
-        </table>
-    </div>
-    <div style="clear: both;"></div>
-</div>
-<div style="clear: both;"></div>
-
-<!-- Right side -->
-
+    
+    </section>
 <!-- /content -->
 
 <!-- footer -->
-{footer}
-
-<?php echo googletag_ad('BS_help_728x90_2') ?>
-
-</div>
-<!-- /footer -->
+<?php $this->load->view('blocks/footer'); ?>
+<?php $this->load->view('blocks/footer_script'); ?>
 
 </body>
 </html>
+
+
+<!-- /footer -->
+

@@ -26,6 +26,8 @@ define('DIR_WRITE_MODE', 0777);
 | These modes are used when working with fopen()/popen()
 |
 */
+define('SURL','http://'.$_SERVER['HTTP_HOST'].'/projects/beesavy_new/legacy/public/');
+define('ASSETURL','http://'.$_SERVER['HTTP_HOST'].'/projects/beesavy_new/legacy/public');
 
 define('FOPEN_READ', 							'rb');
 define('FOPEN_READ_WRITE',						'r+b');

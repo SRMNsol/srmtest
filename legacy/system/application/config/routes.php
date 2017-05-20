@@ -44,6 +44,9 @@ $route['default_controller'] = "main";
 $route['scaffolding_trigger'] = "";
 $route['search'] = 'product/search';
 
+$route['main/fblogin/logout'] = 'main/logout';
+$route['services/emails/sent_emails_to_friends'] = 'account/invite_multiple_friends';
+
 
 /* End of file routes.php */
 /* Location: ./system/application/config/routes.php */

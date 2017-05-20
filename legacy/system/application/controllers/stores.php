@@ -7,12 +7,15 @@ class Stores extends Controller
     public function __construct()
     {
         parent::__construct();
+                $this->load->model('user');    
+
         $this->load->helper('bridge');
         $this->container = silex();
     }
 
     public function details($id)
     {
+		
         // Coupons paging
         $page = $this->input->get('page') ?: 1;
         $limit = 25;
@@ -36,7 +39,8 @@ class Stores extends Controller
         $start = (($page - 1) * $limit) + 1;
         $count = 0;
         $end = ($start + $limit - 1 < $count) ? $start + $limit - 1 : $count;
-
+//Run the search query
+        $categories = cached_categories();
         //Load the page
         $data = $this->blocks->getBlocks();
         $data['top_stores'] = $topStores;
@@ -49,7 +53,8 @@ class Stores extends Controller
         $data['cashback_text'] = $store['cashback_text'];
         $data['link'] = $store['link'];
         $data['coupons'] = $store['coupons'];
-
+		$data['categories'] = $categories;
+		
         // coupons pagination
         $data['page'] = $page;
         $data['limit'] = $limit;
@@ -61,14 +66,30 @@ class Stores extends Controller
         $this->parser->parse('store/store', $data);
     }
 
+	public function load_more()
+    {
+        $offset = $this->input->get('offset');
+        $limit = $this->input->get('limit');
+
+        $data['morest '] = $this->model->morestore($offset, $limit);
+ 
+      $this->parser->parse('store/search', $data);
+    }
+    public function checkpopup()
+    {
+       
+        $data['popupstatus']= $this->user->popupstatus(); 
+        return $data['popupstatus'];         
+    }
     public function search()
     {
+		
         //Grab information
         $search = $this->input->get('q');
         $category = $this->input->get('category');
-        $page = $this->input->get('page') ?: 1;
+       //	$page = $this->input->get('page') ?: 1;
         $sort = $this->input->get('sort');
-        $limit = $this->input->get('limit') ?: 25;
+       // $limit = $this->input->get('limit') ?: 12;
 
         //Show all stores when search by letter
         $showAll = $search != '';
@@ -94,8 +115,19 @@ class Stores extends Controller
         $count = count($merchants);
 
         //Load the page
+        $data['stores'] = $stores;
+		$count = count($stores)/3;
+		 
+        $split = array_chunk($stores,$count);
+
+        //Load the page
         $data = $this->blocks->getBlocks();
 
+        $data['stores1'] = $split[0];
+        $data['stores2'] = $split[1];
+        $data['stores3'] = $split[2];
+		
+		$count = count($merchants);
         $data['search'] = $search;
         $data['category'] = $category;
         $data['categories'] = $categories;
@@ -109,7 +141,7 @@ class Stores extends Controller
             $end = $count;
         }
         $data['end'] = $end;
-        $data['stores'] = $stores;
+
         $data['store_list'] = $allStores;
         $data['base_url'] = "/stores/search?q=$search";
         $data['query_string'] = ['search' => $search, 'page' => $page, 'sort' => $sort];
@@ -117,23 +149,7 @@ class Stores extends Controller
         $this->parser->parse('store/search', $data);
     }
 
-    /**
-     * Normal all stores page
-     */
     public function storelist()
-    {
-        return $this->stores('storelist');
-    }
-
-    /**
-     * All stores for link checker
-     */
-    public function allstores()
-    {
-        return $this->stores('allstores');
-    }
-
-    protected function stores($action)
     {
         $search = $this->uri->segment(3);
         if (!isset($search)) {
@@ -165,8 +181,6 @@ class Stores extends Controller
         $data['stores1'] = $split[0];
         $data['stores2'] = $split[1];
         $data['stores3'] = $split[2];
-        $data['action'] = $action;
-        $data['skip'] = $action === 'allstores' ? '/direct' : '';
 
         $this->load->vars($data);
         $this->parser->parse('store/list', $data);

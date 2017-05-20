@@ -58,6 +58,21 @@ class UserRepository extends EntityRepository
         return $qb->getQuery()->getSingleScalarResult();
     }
 
+
+
+    public function getTotalReferrersList(\DateTime $start, \DateTime $end)
+    {
+        $before = clone $end;
+        $before->add(\DateInterval::createFromDateString('+1 day'));
+
+        $qb = $this->createQueryBuilder('u');
+        $qb->select('DISTINCT u');
+        $qb->join('u.referredUsers', 'r', 'WITH', $qb->expr()->andx('r.createdAt >= :after', 'r.createdAt < :before'));
+        $qb->setParameter('after', $start);
+        $qb->setParameter('before', $before);
+
+        return $qb->getQuery()->getScalarResult();
+    }
     public function getCommissionStats(\DateTime $start, \DateTime $end, array $users = null, $type = 'commission', $sum = 'amount')
     {
         $before = clone $end;

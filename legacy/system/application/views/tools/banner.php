@@ -18,11 +18,7 @@
 <link rel="stylesheet" type="text/css" media="all" href="<?php echo s3path("/scroll/styles/jScrollPane.css") ?>" />
 <link rel="stylesheet" type="text/css" media="all" href="<?php echo s3path("/scroll/styles/scrollstyles.css") ?>" />
 <link media="screen" rel="stylesheet" href="<?php echo s3path("/styles/colorbox.css") ?>" />
-<link rel="stylesheet" href="/css/custom.css">
-<link rel="stylesheet" href="/css/select2.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
-<script src="/js/select2.js"></script>
-<script src="/js/autocomplete.js"></script>
 <script src="<?php echo s3path("/colorbox/jquery.colorbox.js") ?>"></script>
 <script type="text/javascript" src="<?php echo s3path("/zeroclipboard/ZeroClipboard.js") ?>">
 </script>

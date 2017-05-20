@@ -1,197 +1,177 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-{header}
+
+  <?php $this->load->view('blocks/header'); ?>
+
 <body>
 <div id="container">
-{banner}
+    <!-- Navigation bar -->
+	<?php if($this->db_session->userdata('login')['login']){ ?>
 
-<!-- Navigation bar -->
-{nav_bar}
-<!-- /Navigation bar -->
-<!-- content -->
-		<!-- page Title -->
+<?php $this->load->view('blocks/admin-topbar'); ?>
+<?php }else{ ?>
+          <?php $this->load->view('blocks/nav_bar'); ?>
 
-		<div id="pageTitle">
-		<div id="pageTitleLeft"></div>
-		<h1>We Found {count} Stores Matching "{category_name}"</h1>
-		<div id="pageTitleRight"></div>
-	</div>
-   		<!-- /page Title -->
+<?php } 
 
+?>
+<style type="text/css">
+.form-control.btn-search {
+    margin-top: -8px !important;
+    width: 216px !important;
+    margin-left: -15px !important;
+}
+.btn-icon{    margin-top: -8px !important;}
+</style>
+    <!-- /Navigation bar -->
+    <!-- content -->
+    <section id="cash_back">
+        <div class="container">
 
-   		<!-- Left category -->
-                <div class="BGLeftCol">
-<div id="facetNav">
-<div id="category">
-    <div class="facet" >
-    	<div id="category-bt" class="cat-bg">
-        <div id="cat-left-curve"><img src="<?php echo s3path("/images/cat-left-curve.jpg") ?>" width="4" height="35" alt="** PLEASE DESCRIBE THIS IMAGE **"/></div>
-        <div id="cat-right-curve"><img src="<?php echo s3path("/images/cat-right-curve.jpg") ?>" width="4" height="35" alt="** PLEASE DESCRIBE THIS IMAGE **"/></div>
-        <div class="parent">Category</div>
-</div>
-
-    <div id="category-bg">
-
-                  <div style="clear:both;height:10px;">	</div>
-
-
-    	<div class="sub-category-txt">Category</div>
-        <div id="sub-category-bg">
-    	<div class="child">
-         <div style="clear:both;height:5px;">	</div>
-                            		<div class="holder osX">
-						<div id="pane2" class="scroll-pane">
-
-<ul class="bullets">
-<?php foreach ($categories as $item) : ?>
-<?php $category_url = '/product/category?' . http_build_query(['category' => $item['id']]) ?>
-<li style="padding-left:5px;"><a href="<?php echo escape($category_url, 'html_attr') ?>"><?php echo escape($item['name']) ?></a></li>
-<?php endforeach ?>
-</ul>
-
-                    </div>
-
-
-
-                    </div>
-
-                    </div>
-        </div>
-
-
-        </div>
-        </div>
-            </div>
-</div>
-
-       <!-- /Left category -->
-        <div id="results">
-		    <div id="featured-stores-10" class="featured-stores" style="height:auto;">
-    <div class="header">
-    <div class='title'>Featured Stores for <?php echo escape($category_name) ?>:</div>;
-        <div class="more"><a href="/stores/search">See More Stores ›</a></div>
-    </div>
-{stores}
-	    <div class="store">
-		<div class="logo">
-            <a href="/stores/details/{id}"><img class="cdn-image" src="{logo_thumb}" alt="{name}" onerror="this.src="<?php echo s3path("/images/no-image-100px.gif") ?>""/></a>
-		</div>
-		<div class="cashback">
-			<a href="/stores/details/{id}">{cashback_text} Cash Back</a>
-        </div>
-	</div>
-{/stores}
-    </div>
-</div>
-
-
-
-<div id="Pagination" class="pagination-controls"></div>
-    <div class="pagination-info">Showing results <strong>1</strong> to <strong>25</strong> of <strong>{count}</strong></div>
-	  <div style="clear: both;"></div>
-      <div style="clear: both;"></div>
-<script type="text/javascript">
-    $(function() {
-        $("input.facet-value").bind("click", function(){
-            var input = this;
-            var baseurl = '<?php $query = $query_string['search'];
-                $base_url = "/product/category?q=$query";
-                if($query_string['page'])
-                   $base_url.="&page=".$query_string['page'];
-                if($query_string['category'])
-                    $base_url.="&category=".$query_string['category'];
-                echo $base_url;?>';
-            var brandstring = '&brand=';
-            var checked_input = $("input.facet-value:checked");
-            var first= true;
-            $.each(checked_input, function(index, value){
-                if(first){
-                    first = false;
-                    brandstring += value.value;
-                }else{
-                    brandstring += '__'+value.value;
-                }
-            });
-            var url = baseurl;
-            url += brandstring;
-            $(this).removeAttr("checked");
-            document.location = url;
-        });
-        // this initialises the demo scollpanes on the page.
-    $('#pane1').jScrollPane({ showArrows: true, scrollbarWidth: 15, arrowSize: 16 });
-    $('#pane2').jScrollPane({ showArrows: true, scrollbarWidth: 15, arrowSize: 16 });
-    var isInit = true;
-    function pageselectCallback(page_index, jq){
-        if (isInit){
-            isInit = false;
-            return false;
-        }
-        // Get number of elements per pagination page from form
-        var items_per_page = $('#items_per_page').val();
-        var length = {count};
-        var max_elem = Math.min((page_index+1) * items_per_page, length);
-        var newcontent = '';
-        var page = jq.find(".current")[0].textContent;
-        if(page==undefined){
-            page = jq.find(".current")[0].innerText;
-        }
-        if (page=="Prev") {
-            page = "1";
-        }
-        var pat = new RegExp("page=[0-9]*");
-        if(pat.test(document.URL)){
-            window.location = (document.URL).replace(pat,"page="+page);
-        }
-        else {
-            var pat = new RegExp("[?]");
-            if(pat.test(document.URL)){
-            window.location = (document.URL)+"&page="+page;
-            }else{
-            window.location = (document.URL)+"?page="+page;
-            }
-        }
-        // Iterate through a selection of the content and build an HTML string
-        for(var i=page_index*items_per_page;i<max_elem;i++)
-        {
-        }
-
-        // Replace old content with new content
-
-        // Prevent click eventpropagation
-        return false;
-    }
-
-    function getOptions(){
-        var opt = {callback: pageselectCallback};
-        var page = {page_index};
-        opt["current_page"]={page_index};
-        opt["num_edge_entries"]=1;
-        opt["num_display_entries"]=5;
-        opt["items_per_page"] = {limit};
-        opt["link_to"]=document.URL;
-        return opt;
-    }
-
-    // When document has loaded, initialize pagination and form
-        // Create pagination element with options from form
-        var optInit = getOptions();
-        $("#Pagination").pagination({count}, optInit);
-});
+            <div style="background-color: rgba(0, 0, 0, 0.05);">
+                <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- Department Stores & General Merchandise -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-9625495144632502"
+     data-ad-slot="4167422575"
+     data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
 </script>
+            </div>
+		<div class="space20"></div>
+    
+					<div class="row">
+				<div class="col-md-4">
+					<div class="bee_story_title1">
+					
+					
+                        <h2>{category}</h2>
+					</div>
+				</div>
+           
+                <div class="col-md-2 ">
+
+				<div class="btn-group inline quer_btn_inl">
+			          <button type="button" class="btn btn-default dropdown-toggle bee_btn" data-toggle="dropdown">
+			            Jump to Store <span class="caret"></span>
+			          </button>
+			          <ul class="dropdown-menu" role="menu">
+			           <?php foreach($stores as $store){ ?>
+							<li><a href="<?php echo s3path('/stores/details/'.$store['id']); ?>"><?php echo $store['name']; ?></a></li>
+						<?php } ?>   
+			          </ul>
+			        </div>
+                </div>
+                     <div class="col-md-3 s_no_padding_query">
+					 	<!-- <form class="navbar-form" action="<?php echo s3path('/search'); ?>" role="search">
+							  <div class="input-group custom-search-form inline">
+							  <input type="text" class="form-control btn-search" placeholder="Search for store" name="q">
+							  <span class="input-group-btn">
+							  <button class="btn btn-default btn-icon" type="submit">
+							  <span class="glyphicon glyphicon-search "></span>
+							 </button>
+							 </span>
+						 </form> -->
+
+                         <form class="navbar-form " action="<?php echo s3path('/search'); ?>" role="search" style="margin: 0px;">
+                            <div class="input-group add-on">
+                                <input class="form-control" placeholder="Search for Store" name="q" type="text">
+
+                                <!-- <input type="text" class="form-control btn-search" placeholder="Search for store" name="q"> -->
+
+                                <div class="input-group-btn">
+                                    <button class="btn btn-search" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                                </div>
+                            </div>
+                        </form>
+
+			             </div><!-- /input-group -->
+              
+                <div class="col-md-3 ">
+				   <div class="btn-group inline">
+			          <button type="button" class="btn btn-default dropdown-toggle bee_btn" data-toggle="dropdown">
+			            Search By Category <span class="caret"></span>
+			          </button>
+			          <ul class="dropdown-menu" role="menu">
+			           <?php foreach ($categories as $item) : ?>
+						<?php $category_url = 'category?' . http_build_query(['category' => $item['id']]) ?>
+							 <li><a href="<?php echo escape($category_url, 'html_attr') ?>"><?php echo escape($item['name']) ?></a></li>
+							<?php endforeach ?>
+			          </ul>
+			        </div>
+                </div>
+			</div>
+            <div class="row">
+                <div class="band">
+                    <!-- <div class="col-md-2">
+                    <p><i class="fa fa-search"></i> Search By Alphabet<p>
+
+                    </div> -->
+                    <div class="col-md-12" style="display:none;">
+
+                        <ul class="pagination ">
+
+                            <li><a class="btn-number-page" href="#">A</a></li>
+                            <li><a class="btn-number-page" href="#">B</a></li>
+                            <li><a class="btn-number-page" href="#">C</a></li>
+                            <li><a class="btn-number-page" href="#">D</a></li>
+                            <li><a class="btn-number-page" href="#">E</a></li>
+                            <li><a class="btn-number-page" href="#">F</a></li>
+                            <li><a class="btn-number-page" href="#">G</a></li>
+                            <li><a class="btn-number-page" href="#">H</a></li>
+                            <li><a class="btn-number-page" href="#">I</a></li>
+                            <li><a class="btn-number-page" href="#">J</a></li>
+                            <li><a class="btn-number-page" href="#">K</a></li>
+                            <li><a class="btn-number-page" href="#">L</a></li>
+                            <li><a class="btn-number-page" href="#">M</a></li>
+                            <li><a class="btn-number-page" href="#">N</a></li>
+                            <li><a class="btn-number-page" href="#">O</a></li>
+                            <li><a class="btn-number-page" href="#">P</a></li>
+                            <li><a class="btn-number-page" href="#">Q</a></li>
+                            <li><a class="btn-number-page" href="#">R</a></li>
+                            <li><a class="btn-number-page" href="#">S</a></li>
+                            <li><a class="btn-number-page" href="#">T</a></li>
+                            <li><a class="btn-number-page" href="#">U</a></li>
+                            <li><a class="btn-number-page" href="#">V</a></li>
+                            <li><a class="btn-number-page" href="#">W</a></li>
+                            <li><a class="btn-number-page" href="#">X</a></li>
+                            <li><a class="btn-number-page" href="#">Y</a></li>
+                            <li><a class="btn-number-page" href="#">Z</a></li>
+
+                        </ul>
+                    </div>
+                </div>
 
 
-<!-- /content -->
+            </div>
 
+			<?php $rows = 0 ?>
+                <?php foreach($stores as $store){ ?>
+				<?php if($rows%4 == 0){ ?>
+				<div class="row">
+				<?php } ?>
+                <div class="col-md-3 col-sm-12">
+                    <div class="bee_story_box">
+                        <img class="img-responsive" src="<?php echo $store['logo_thumb']; ?>" alt="<?php echo $store['name']; ?>"
+                             onerror="this.src="<?php echo s3path("/images/no-image-100px.gif") ?>"">
+                        <h4><?php echo $store['cashback_text']; ?> Cash Back</h4>
+                        <a href="<?php echo s3path('/stores/details/'.$store['id']); ?>"></a>
+                    </div>
+                </div>
+				
+				<?php if(($rows+5)%4 == 0){ ?>
+				</div>
+				<?php } 
+				$rows = $rows+1; ?>
+                <?php } ?>
+        </div>
+    </section>
+</div>
+<?php $this->load->view('blocks/footer'); ?>
 
-
-
-<!-- footer -->
-{footer}
-   <!-- /footer -->
-
-
-
-
-
-  </body>
-  </html>
+<?php $this->load->view('blocks/footer_script'); ?>
+<!--<script src="<?php// echo s3path("/script_files/js/jquery.min.js") ?>"></script>
+<script  src="<?php // echo s3path("/script_files/js/bootstrap.min.js") ?>"></script>
+<script  src="<?php// echo s3path("/script_files/js/custom.js") ?>"></script> -->
+</body>
+</html>

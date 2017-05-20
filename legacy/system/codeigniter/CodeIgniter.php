@@ -37,6 +37,7 @@ define('CI_VERSION',	'1.7.3');
  */
 require(BASEPATH.'codeigniter/Common'.EXT);
 
+
 /*
  * ------------------------------------------------------
  *  Load the compatibility override functions
@@ -112,7 +113,6 @@ if ($EXT->_call_hook('cache_override') === FALSE)
 		exit;
 	}
 }
-
 /*
  * ------------------------------------------------------
  *  Load the remaining base classes
@@ -169,7 +169,7 @@ $BM->mark('loading_time_base_classes_end');
  *  None of the functions in the app controller or the
  *  loader class can be called via the URI, nor can
  *  controller functions that begin with an underscore
- */
+ */ 
 $class  = $RTR->fetch_class();
 $method = $RTR->fetch_method();
 
@@ -198,9 +198,13 @@ $EXT->_call_hook('pre_controller');
 // Mark a start point so we can benchmark the controller
 $BM->mark('controller_execution_time_( '.$class.' / '.$method.' )_start');
 
+
 $CI = new $class();
 
+
+
 // Is this a scaffolding request?
+
 if ($RTR->scaffolding_request === TRUE)
 {
 	if ($EXT->_call_hook('scaffolding_override') === FALSE)
@@ -230,14 +234,16 @@ else
 		{
 			show_404("{$class}/{$method}");
 		}
-
+                 
 		// Call the requested method.
 		// Any URI segments present (besides the class/function) will be passed to the method for convenience
 		call_user_func_array(array(&$CI, $method), array_slice($URI->rsegments, 2));
+               
 	}
 }
 
 // Mark a benchmark end point
+ 
 $BM->mark('controller_execution_time_( '.$class.' / '.$method.' )_end');
 
 /*
@@ -245,7 +251,9 @@ $BM->mark('controller_execution_time_( '.$class.' / '.$method.' )_end');
  *  Is there a "post_controller" hook?
  * ------------------------------------------------------
  */
+
 $EXT->_call_hook('post_controller');
+
 
 /*
  * ------------------------------------------------------

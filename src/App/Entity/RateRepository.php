@@ -48,6 +48,7 @@ class RateRepository extends EntityRepository
         $queryBuilder = $this->createQueryBuilder('r')
             ->orderBy('r.id', 'DESC')
             ->setMaxResults(1);
+			
 
         try {
             $rate = $queryBuilder->getQuery()->getSingleResult();

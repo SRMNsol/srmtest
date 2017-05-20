@@ -25,6 +25,7 @@ class Admin_Panel extends Controller
 
     public function index()
     {
+
         $users = $this->admin->getUsers();
         $settings = $this->admin->getSettings();
         $settings['users'] = $users;

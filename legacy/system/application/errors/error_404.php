@@ -13,11 +13,7 @@
 <link href="<?php echo s3path("/styles/button.css") ?>" media="screen" rel="stylesheet" type="text/css" />
 <link href="<?php echo s3path("/styles/view.css") ?>" media="screen" rel="stylesheet" type="text/css" />
 <link media="screen" rel="stylesheet" href="<?php echo s3path("/styles/colorbox.css") ?>" />
-<link rel="stylesheet" href="/css/custom.css">
-<link rel="stylesheet" href="/css/select2.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
-<script src="/js/select2.js"></script>
-<script src="/js/autocomplete.js"></script>
 <script src="<?php echo s3path("/colorbox/jquery.colorbox.js") ?>"></script>
 <script type='text/javascript' src="<?php echo s3path("/script_files/nav_bar.js") ?>"></script>
 </head>
@@ -73,8 +69,8 @@ tips:</P>
 
 	<div id="ftr" class="ftrLeftCol">
 		<p id="links" style="height: 20px; line-height: 20px;">Copyright © 2011 BeeSavy, LLC. &nbsp;All Rights Reserved. &nbsp;<a href="/stores/storelist">All Stores</a> | <a href="/info/terms">Terms of Service</a> | <a href="/info/privacy">Privacy Policy</a> | <a href="/info/contact">Contact Us</a></p>
-		<a href="https://twitter.com/beesavy" target="_blank" class="socialMedia twitter">Follow Us On Twitter</a>
-		<a href="https://www.facebook.com/pages/BeeSavy/139324182791301" target="_blank" class="socialMedia facebook">Like Us on Facebook</a>
+		<a href="http://twitter.com/beesavy" target="_blank" class="socialMedia twitter">Follow Us On Twitter</a>
+		<a href="http://www.facebook.com/pages/BeeSavy/139324182791301" target="_blank" class="socialMedia facebook">Like Us on Facebook</a>
 		<div style="clear: both;"></div>
 		<p id="disclaimer">Tax and shipping costs are estimates; &nbsp;please see the store's website for exact pricing. &nbsp;BeeSavy does not guarantee the accuracy of information provided by online stores and other third parties, including product information, prices, coupons, and availability. &nbsp;BeeSavy shall not be liable for or responsible to honor any inaccurate information shown on our website. &nbsp;Please see our <a href="/info/terms">Terms of Service</a> for more details.</p>
 	</div>

@@ -1,0 +1,24 @@
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script>
+
+$('.deleteId').on('click', function() {
+
+  var faq_id=$(this).attr('id');
+
+
+    /*
+   $.ajax({
+            type: "POST",
+            url: "{{ path('userinfo_faqdelete') }}",
+            data: { data : faq_id },
+            success: function(response, dataType)
+            {
+            alert(response);
+             
+            }
+});
+
+*/
+});
+</script>

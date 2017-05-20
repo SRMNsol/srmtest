@@ -1,192 +1,451 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-{header}
-<body>
-<div id="container">
-
 <!-- Header -->
-{banner}
+
+<?php $this->load->view('blocks/header'); ?>
 <!-- /Header -->
 
-<!-- Navigation bar -->
-{nav_bar}
+<body>
+
+<style type="text/css">
+.ref-btn{ margin-top:15px !important;}
+</style>
+
+<style>.btn_bee_savy {
+    background-color: #c23115;
+    color: #fff;
+    border-radius: 0px;
+    padding: 5px 40px;
+    border: 1px #c23115 solid;
+    vertical-align: initial;
+}.top_buttons{
+	
+}
+#more-ref{ cursor: pointer; }
+  #help_reffral{  margin-top: 40px !important; }
+}
+
+
+.btn-danger {
+    color: #fff;
+    background-color: #d9534f;
+    border-color: #d43f3a;
+}
+.btn-danger:hover {
+    color: #fff;
+    background-color: #c9302c;
+    border-color: #ac2925;
+}
+ #bee_Modal .form-horizontal .form-group{
+  margin: 0px;
+  margin-bottom: 15px;r
+   }
+ #bee_Modal .form-horizontal .form-group:last-child{
+  margin: 0px;
+  margin-bottom: 30px;r
+   }
+</style>
+<div id="container">
+    <!-- Navigation bar -->
+<?php $this->load->view('blocks/admin-topbar'); ?>
 <!-- /Navigation bar -->
-
-
 <!-- content -->
-    <div id="content">
 
+<?php // echo '<pre>'; print_r($allref); exit;?>
 
+ <section id="help_reffral">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-9">
+                            
+                            
 
-<div class="BGNoCol">
-
-	<!-- page Title -->
-	<div id="pageTitle">
-		<div id="pageTitleLeft"></div>
-		<h1 class="profile">My Account Settings</h1>
-		<div id="pageTitleRight"></div>
-		<div id="titleNav" class="large">
-			<a href="/cashback">Cash Back Summary</a>
-			<a href="/tools" id="active">Referral Tools</a>
-			<a href="/account">Account Settings</a>
-		</div>
-	</div>
-   	<!-- /page Title -->
-
-    <!-- Left Catagoty -->
-    <div class="AccountLeftside">
-		<div class="merchantView_Width" style="border:0px solid #090;">
-		<div>
-		<ul class="tabs">
-			<li><a class="active" href=""><font class="tabstext">OVERVIEW</font></a></li>
-			<li><a href="/tools/referrals">REFERRALS</a></li>
-            <li><a href="/tools/banner">BANNERS</a></li>
-            <li><a target="_blank" href="http://www.vistaprint.com/vp/gateway.aspx?sr=no&s=0642720143&email=<?php echo urlencode($email); ?>&offer={id}&fullname={first_name}%20{last_name}&fax={alias}">BEESAVY STORE</a></li>
-		</ul>
-		</div>
-		<div id="tabBorder"></div>
-        <div style="font-size:1.3em;font-weight:bold;margin:5px 5px 5px 200px;color:#000;">Refer Friends and Earn Commision Forever!</div>
-        <div id="RtoolsNav" style="border:0px solid #090;float:left;margin-left:18px;width:300px;">
-                 <form id="facetForm" name="facetForm" action="//categories?category=62" method="get">
+                            <div class="row">
+                                <div class="top_buttons">
+                               		<ul>
+                                            <li>
+                                                <a class="btn btn_bee_savy" href="<?php echo SURL?>account"> Settings </a>
+                                            </li>
+                                            <li>
+                                                <a class="btn btn_bee_savy" href="<?php echo SURL?>cashback"> Cash Back </a>
+                                            </li>
+                                            <li class="active">
+                                                <a class="btn btn_bee_savy" href="<?php echo s3path('/tools'); ?>"> Referrals </a>
+                                            </li>
+                                	</ul>
+                            	</div>
+                            </div>
+                                
+                                
+                                
+                                    <div class="space20"></div>
+                                
+                                <div class="row">
+                                    <div class="inner_title">
+                                        <h3>Refer Friends and Earn Commision Forever!</h3>
+                                    </div>
+                                    <div class="space20"></div>
+                                    
+                                    <div class="bee_payment_method">
+                                        <div class="row">
+                                         <fieldset class="feild_property">
+                                            <form id="facetForm" name="facetForm" action="//categories?category=62" method="get">
 </form>
-            	 <div class="cat-bg" style="width:300px;float:left;border:0px solid #F00;">
-		                        	<div id="cat-left-curve"><img src="<?php echo s3path("/images/cat-left-curve.jpg") ?>" width="4" height="35" alt="** PLEASE DESCRIBE THIS IMAGE **"/></div>
-			                        <div id="cat-right-curve"><img src="<?php echo s3path("/images/cat-right-curve.jpg") ?>" width="4" height="35" alt="** PLEASE DESCRIBE THIS IMAGE **"/></div>
-                          			<div class="parent">Tools</div>
-                      			</div>
-              				   <div class="outerbox">
-	 								<div class="title2">Email and Link</div>
-                                    <div class="RToolsTxt"><p>Get the buzz out! Email your friends about BeeSavy and don't forget to add a signature to your email and forum memberships where allowed.</div>
- 								<div class="innerbox">
-                                <table><tbody><tr><td rowspan=2 width=30><img src="<?php echo s3path("/images/icons/LinkChain.gif") ?>"></td><td>Share Your Unique Referral Link</td></tr><tr><td><input type=text value="<?php echo base_url(); ?>{alias}"/></td><td></td></tr></tbody></table>
+                                               
+                                                    <legend class="legend_property">
+                                                        <label class="invite_others">Invite Your Friends</label>
+                                                    </legend>
 
-                                         <table><tr><td  width=30><img src="<?php echo s3path("/images/icons/email.gif") ?>"></td><td>Email it<br><a onclick="$.get($(this).attr('href'),function(data){document.location=data;});return false;" href='/tools/email_personal/{alias}'>Personal</a></td><td>Email your friends and watch your cash back grow!</td></tr><tr><td rowspan=2 width=30><img src="<?php echo s3path("/images/icons/email.gif") ?>"></td><td>Email it<br><a onclick="$.get($(this).attr('href'),function(data){document.location=data;});return false;" href='/tools/email_business/{alias}'>Business</a></td><td>
-Email your favorite websites and watch your cash back grow!</td></tr></table>
+                                                     <h4 class="text-center">Invite By Email</h4>
+                                                     <div class="space20"></div>
 
-
-                                     <table><tbody><tr><td rowspan=2 width=30><img src="<?php echo s3path("/images/icons/pen.gif") ?>"></td><td>Add a signature to your emails and forum posts</td></tr><tr><td>
-<input id="signature" type=text value="<a href='<?php echo base_url(); ?>{alias}'><img src='<?php echo base_url() ?>Banner/Static/Version_01/234x60_final.jpg'/></a>"/></td></tr></tbody></table>
-                               <div style="margin-left:10px;"><table><tbody><tr><td width=5>
-<INPUT id=check checked=1 type=radio name=method onclick="$('#signature')[0].value='<a href=\'<?php echo base_url(); ?>{alias}\'><img src=\'<?php echo base_url() ?>Banner/Static/Version_01/234x60_final.jpg\'/></a>';"></td><td align=left>
-<LABEL for=check><p class="small">Email Signature</LABEL></td><td width=5>
-<INPUT id=check type=radio name=method onclick="$('#signature')[0].value='[URL=<?php echo base_url(); ?>{alias}][IMG]<?php echo base_url() ?>Banner/Static/Version_01/234x60_final.jpg[/IMG][/URL]';"></td><td align=left width=100>
-<LABEL for=check><p class="small">Forum Signature</LABEL></td><td></td></tr></tbody></table></div>
-        				  		    </div>
+                                                       <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="col-md-2"></div>
+                                                            <div class="input-group col-md-8 text-center">
+                                                              <input type="text" class="form-control" value="<?php echo s3path('/tools/'); ?>{alias}" placeholder="Share Your Unique Referral Link" style=" border: solid 1px #c23115; ">
+                                                              <span class="input-group-addon no-padding" id="basic-addon2" style=" border: none; ">
+        <a id='send-link' class="btn ben-default" data-toggle="modal" data-target="#bee_Modal"
+                                                              style="border: solid 1px #c23115; background: #c23115; color: white; margin: 0px; border-radius: 0;     position: relative;"><i class="fa fa-send" style="margin-right: 10px;"></i>send</a class="btn ben-default"></span>
+                                                        </div>
+                                                        </div>
+                                                    </div>
 
 
-                                    <div class="title2">Social networking</div>
-                                    <div class="RToolsTxt"><p>Build your cash back through social networks. Post a one time message or automatically let your social network know when you save money with BeeSavy!</div>
-         		                    <div class="innerbox">
-				<table><tr><td width=25 align=left><img src="<?php echo s3path("/images/facebooktop.gif") ?>" width=31 height=31></td><td>Share it on Facebook</td></tr></table>
-	<FORM id=changeNewsletterForm method=post name=changeNewsletterForm action=/tools/set_setting>
-				<input name="setting" value="facebook_auto" type="hidden">
-    <table><tr><td align=center width=10><INPUT id=newsletter value=1 onclick="this.form.submit();"
-    <?php if($facebook_auto) echo"CHECKED"?> type=checkbox name=value></td><td>Automatically post cash back messages to your Facebook wall.</td></tr></table>
-	</FORM>
+<div id="bee_Modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">Send Invitation to Friends</h3>
+      </div>
+      <div class="row modal-body">
+        <form class="form-horizontal col-sm-12" id="emailForm">
+          <div class="form-group"><label> <h4> E-Mail I</h4></label><input name="emails[]" class="form-control email" placeholder="email@you.com (so that we can contact you)" data-placement="top" data-trigger="manual" data-content="Must be a valid e-mail address (user@gmail.com)" type="text" style=" border: solid 1px #c23115; box-shadow: none;"></div>
+          <div class="form-group"><label> <h4> E-Mail I</h4></label><input name="emails[]" class="form-control email" placeholder="email@you.com (so that we can contact you)" data-placement="top" data-trigger="manual" data-content="Must be a valid e-mail address (user@gmail.com)" type="text" style=" border: solid 1px #c23115; box-shadow: none;"></div>
+          <div class="form-group"><label> <h4> E-Mail III</h4></label><input name="emails[]" class="form-control email" placeholder="email@you.com (so that we can contact you)" data-placement="top" data-trigger="manual" data-content="Must be a valid e-mail address (user@gmail.com)" type="text" style=" border: solid 1px #c23115; box-shadow: none;"></div>
+          <div class="form-group">
+          <button type="submit" id="emailBtn" data-loading-text="Sending..." class="btn btn-danger pull-right">Send Email</button> 
+          <input type="hidden" name="link" value="<?php echo s3path('/tools'); ?>/{alias}">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>
+                                                   <!--  <div class="row">
+                                                        <h4 class="text-center">Invite by Email</h4>
+                                                        <div class="space20"></div>
+                                                        <div class=" col-md-offset-3 col-md-5">
+                                                         <input type="text" placeholder="Enter email addresses separated by commas" class="form-control" id="name" style="border: solid 1px #c23115;">
+                                                        </div>
+                                                        <div class=" col-md-3 no-padding">
+                                                        <a class="btn btn-danger" data-toggle="modal" data-target="#bee_Modal"><i class="fa fa-send"></i> Send </a>
+                                                        </div> </div> -->
 
-                <table><tr><td width=10></td><td><p class=small>Ex. I just saved $5.22 by shopping with Beesavy.</td></tr></table>
+
+                                                         
+                                                   
+                                                    <div class="space30"></div>
+                                                    <h4 class="text-center">Share Your Personal Link</h4>
+                                                    <div class="space20"></div>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="col-md-2"></div>
+                                                            <div class="input-group col-md-8 text-center">
+
+                                                              <input id="persnol-share" type="text"  class="form-control" placeholder="Share Your Unique Referral Link" style=" border: solid 1px #c23115;" id="signature" value="<a href='<?php echo s3path('/tools'); ?>/{alias} ' >Beesavy</a>" >
+
+                                                              <span class="input-group-addon no-padding" id="basic-addon2" style=" border: none; ">
+                                    <a id="share1-btn" class="btn ben-default" style="border: solid 1px #c23115; background: #c23115; color: white; margin: 0px; border-radius: 0;     position: relative; left: -4px;" href='#'>Copy</a class="btn ben-default"></span>
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="space30"></div>
+                                                    
+                                                   
+                                                    
+                                           
+                                                    <h4 class="text-center">Share on Social Media</h4>
+                                                    <div class="space30"></div>
+                                                    <div class="row">
+                                                                                                        
+                    <form id="changeNewsletterForm" method="post" name="changeNewsletterForm" action="<?php echo s3path('/account/set_setting'); ?>">
+                                                  <input name="setting" value="facebook_auto" type="hidden">
+                                                  <input name="value" value="1" type="hidden">
+                                                        <div class="col-md-6">
+                                                            <div class="share_on_social">
+                                                                <a href="https://www.facebook.com/sharer/sharer.php?app_id=272771746485230&sdk=joey&u=<?php echo s3path('/tools'); ?>/{alias} &display=popup&ref=plugin&src=share_button" onclick="return !window.open(this.href, 'Facebook', 'width=640,height=580')" class="btn bee_btn_small"  style="margin-bottom: 15px"><i class="fa fa-facebook"></i> Share on Facebook</a>
+                                                            </div>
+                                                        </div>
+                                                        
+                                                    </form> 
+                                                    
+    
+                                                    
+               <form id="changeNewsletterForm" method="post" name="changeNewsletterForm" action="<?php echo s3path('/account/set_setting'); ?>">
+                                                      <input name="setting" value="twitter_auto" type="hidden">
+                                                       <input name="value" value="1" type="hidden">
+                                                        <div class="col-md-6">
+                                                            <div class="share_on_social">
+                                      
+                                                                <a href="https://twitter.com/intent/tweet?status=<?php echo s3path('/tools'); ?>/{alias}"  class="btn bee_btn_small" style="margin-bottom: 15px"><i class="fa fa-twitter"></i> Share on Twitter</a>
+                                                            </div>
+                                                        </div>
+                                                   
+                                                    </div>
+                                                    <div class="space30"></div>
+                                          </fieldset>      
+                                        </div>
+                                    </div>
 
 
-				<table border=0><tr><td width=25 align=left><img src="<?php echo s3path("/images/twittertop.gif") ?>" width=31 height=31></td><td>Tweet it</td></tr></table>
-	<FORM id=changeNewsletterForm method=post name=changeNewsletterForm action=/tools/set_setting>
-				<input name="setting" value="twitter_auto" type="hidden">
-    <table><tr><td align=center width=10><INPUT onclick="this.form.submit(); return false;" id=newsletter value=1 <?php if($twitter_auto) echo"CHECKED"?> type=checkbox name=value></td><td>Automatically tweet cash back messages to your Twitter account.</td></tr></table><br>
+                                    <div class="bee_payment_method">
+                                        <div class="row">
+                                            <form lpformnum="1">
+                                                <fieldset class="feild_property">
+                                                    <legend class="legend_property">
+                                                        <label class="invite_others">Recent Refferals</label>
+                                                    </legend>
+                                                    
+                                                    <div class="row">
+                                                        <div class="panel panel-successs">
+                        <div class="panel-body">
+                            
+                           
+                            <div class="row" style=" width: 100%; ">
+                            <div class=" table-responsive">
+                                <table class="table  table-bordered">
+                                    <thead class="head-table">
+                                        <tr>
+                                            <th>Invited</th>
+                                            <th>Joined</th>
+                                            <th>Shopped</th>
+                                            <th>Referrals</th>  
+                                        </tr>
+                                    </thead>
+                                    <tbody id='ref-table'>
+                                    <?php  for($i=0; $i<4; $i++) {?>
+                                        <tr> 
+                                            <td><?php echo $allref[$i]['email']; ?></td>
+                                            <td><i class="fa <?php  if ($users[$i]==0) echo "fa-times"; else echo  "fa-check"; ?> "></i></td>
+                                     <td><i class="fa <?php if($allref[$i]['purchase_exempt']==0) echo 'fa-times'; else echo 'fa-check';?>"></i></td>
+                                            <td><h1 class="label label-danger"><?php echo $allref[$i]['countid']; ?></h1></td>  
+                                        </tr>
+                                        
+												<?php  } ?>
+                                        
+                                        
+                                    </tbody>
+                                </table> 
+                                </div>   
 
-	</FORM>
+                            </div> 
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="recent_orders">
+                                    <input type="hidden" value="4" id="hidden-id" name="numberof">
+                                        <a id="more-ref" class="bee_btn_small  ref-btn" style="padding-left: 25px;"> More  </a>
+                                    </div>
+                                </div>
+                            </div>
+                            
 
-                <table><tr><td width=10></td><td><p class=small>Ex. I just saved $5.22 by shopping with Beesavy.</td></tr></table>
-				<table><tr><td><p class=small><strong>Note: </strong>No personal information such as where you shoppped or what you purchased will be shared.</td></tr></table>
-        				  	        </div>
-
-                            		<div style="clear:both;height:10px;"></div>
-							   </div>
-           	 </div>
-
-
-             <!-- FAQ  -->
-             <div class="OverviewBox">
-	         	<div class="CurveBox">
-			 		<div class="FAQtitle2">FAQ</div>
-                    	<div class="RToolsFAQTxt">
-                        <p class="orange">How does it work?</p>
-<p style="margin-top:10px;">Every time you refer someone to BeeSavy, you get credit for the referral.  This means that you earn commission on all of their spending forever!  You also earn on the people they refer down to seven levels deep!<br>
-
-                        <p class="orange">What are the rules?</p>
-<p style="margin-top:10px;">If someone joins BeeSavy  within 14 days after clicking your link, OR if they enter your referral code upon registration, we'll credit you with the referral. You can refer as many people as you like. Please be courteous and follow proper internet etiquette when referring people.  This means no spamming and only "family friendly" sites.
-<br>
-
-                        <p class="orange">What is the catch?</p>
-<p style="margin-top:10px;">There is no catch!  There are no minimum spending requirements and no minimum number of referrals.  Simply use BeeSavy to do your usual online shopping and, if you like it, tell your friends and earn referral cash back.  To claim your referral cash back, the only requirement is that your account be active.  An active account is one that has made a purchase (any purchase) in the past 90 days.<br>
                         </div>
-                                            <div style="clear:both;height:10px;"></div>
-  					</div>
 
-           	   </div>
-             <!-- /FAQ  -->
-
-
-   </div>
-	</div>
-	<!-- /Left Catagoty -->
+                    </div>
+                                                    </div>
+                                                    
+                                                </fieldset>
+                                            </form>
+                                        </div>
+                                    </div>
 
 
-<!-- Right Catagoty -->
-<div class="AccountRightside">
-<!--
-<div class="RightBanner">
-<script type='text/javascript'>
-    OA_show(3);
-</script><noscript><a target='_blank' href='http://50.16.95.24/openx/www/delivery/ck.php?n=a88fd39'><img border='0' alt='' src='http://50.16.95.24/openx/www/delivery/avw.php?zoneid=1&amp;n=a88fd39' /></a></noscript>
-<!--<img src="<?php echo s3path("/images/rightbanner.jpg") ?>">
-</div>-->
-
-<!-- Referral Overview -->
-<div class="TotalBox">
-<div  class="blockgradiant-bg">
-	<div id="cat-left-curve"><img src="<?php echo s3path("/images/cat-left-curve.jpg") ?>" width="4" height="35" alt="** PLEASE DESCRIBE THIS IMAGE **"/></div>
-	<div id="cat-right-curve"><img src="<?php echo s3path("/images/cat-right-curve.jpg") ?>" width="4" height="35" alt="** PLEASE DESCRIBE THIS IMAGE **"/></div>
-	<div class="title1">Referral Overview</div>
-</div>
-{total}
-<div class="outerbox">
-	<div class="title2">Personal Cash Back</div>
-	<div class="innerbox">
-	<table><tbody><tr><td><strong>Level 1 Referrals:</storng></td><td>{referralcountdirect}</td></tr></tbody><tfoot><tr><td colspan=2>@10% Commission</td></tr></tfoot></table>
-	<table><tbody><tr><td><strong>Level 2 to 7 Referrals:</storng></td><td>{referralcountindirect}</td></tr></tbody><tfoot><tr><td colspan=2>@10% Commission</td></tr></tfoot></table>
-    <table><tbody><tr><td><strong>Total Referral Network:</storng></td><td><?php echo $total[0]['referralcountdirect'] + $total[0]['referralcountindirect']?></td></tr></tbody></table>
-	</div>
-	<div class="title2">Referral Cash Back</div>
-	<div class="innerbox">
-    <table><tbody><tr><td><strong>Total to Date:</storng></td><td>$<?php echo $total[0]['referralavailable']+$total[0]['referralpending'] ?></td></tr></tbody></table>
-	<table><tbody><tr><td><strong>Available:</storng></td><td>${referralavailable}</td></tr></tbody></table>
-	</div>
-<?php
-if((float)$total[0]['available'] > 10){ ?>
-        <div class="Request"><div class="BtnRequestBg BtnRequest"><a class="button" href="/account/index/0/2" rel="nofollow">REQUEST A PAYMENT</a></div></div>
-        <div class="RequestNote">You can now request a payment!</div>
-<?php } else {
-    $dif = number_format(10 - (float)$total[0]['available'],2);
-?>
-
-        <div class="Request"><img style="padding-left:50px;padding-top:10px;" src="<?php echo s3path("/images/btn-request-payment-gray.gif") ?>"/></div>
-        <div class="RequestNote">You need an additional $<?php echo $dif ?> to request a payment.</div>
-<?php } ?>
-	<div style="clear:both;height:10px;"></div>
-</div>
-{/total}
-</div>
-<!-- Referral Overview -->
-</div>
-<!-- Right category -->
 
 
-	<div style="clear: both;"></div>
-	</div>
+
+                                    <!-- <div class="bee_payment_method">
+                                        <div class="row">
+                                            <form lpformnum="1">
+                                                <fieldset class="feild_property">
+                                                    <legend class="legend_property">
+                                                        <label class="invite_others">Refferal</label>
+                                                    </legend>
+                                                    <div class="space10"></div>
+                                                    <div class="row">
+                                                        <div class="row bee_center">
+                                                            <div class="col-md-6">
+                                                                <h4>Email Address</h4>
+                                                                <p>zohaibshabir92@gmail.com</p>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <h4>Referral Date</h4>
+                                                                <p>02/01/2017</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="space10"></div>
+                                                </fieldset>
+                                            </form>
+                                        </div>
+                                    </div> -->
+
+
+                                    <div class="bee_payment_method">
+                                        <div class="row">
+                                            <form lpformnum="1">
+                                                <fieldset class="feild_property">
+                                                    <legend class="legend_property">
+                                                        <label class="invite_others">Beesavy Blogger Button</label>
+                                                    </legend>
+                                                    <div class="space10"></div>
+                                                    <div class="row">
+                                                        <div class="own_beesavy_class">
+                                                        <p class="text-center">Are you a blogger or power influencer? Copy this code to display our Referral Button on your site.</p>
+                                                          <div class="space10"></div>
+                                                        <div class="image_center_adds">
+                                                        <img src="<?php echo s3path('/img/b-shop.png'); ?>" class="img-responsive">
+                                                        </div>
+                                                        <div class="space20"></div>
+                                                          <div class="input-group">
+                                                              <input id="img-link" type="text" class="form-control" 
+                                                              value="<a href='<?php echo s3path(''); ?>'><img src='<?php echo s3path('/img/b-shop.png'); ?>'    
+class='img-responsive'></a>" aria-describedby="basic-addon2">
+                                                              <span class="input-group-addon no-padding" id="basic-addon2" style=" border: none; ">
+                                                              <a class="btn ben-default" id="copy-imge" style="border: solid 1px #c23115; background: #c23115; color: white; margin: 0px; border-radius: 0;     position: relative; left: -4px;">Copy</a class="btn ben-default"></span>
+                                                        </div>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="space10"></div>
+                                                </fieldset>
+                                            </form>
+                                        </div>
+                                    </div>
+
+
+                                   
+
+                                    
+
+                            
+                                </div>
+
+                                
+                            </div>
+                            <div class="col-md-3">
+                    <!-- rightnav-included -->
+                    <?php
+      $this->load->view('blocks/rightnav');
+                    ?> 
+
+                    <div style="background-color: rgba(0, 0, 0, 0.05);"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- Refer Friends -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-9625495144632502"
+     data-ad-slot="3888220977"
+     data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script></div>
+
+                </div>
+                        </div>
+                        
+                    </div>
+                </section>
+
 <!-- /content -->
 
 
 
+{footer_script}
 {footer}
+
+
+
+<script>
+
+$('#copy-imge').click(function(){
+
+  $("#img-link").select();
+  document.execCommand("copy");
+
+});
+
+
+
+$('#share1-btn').click(function(){
+
+  $("#persnol-share").select();
+  document.execCommand("copy");
+
+});
+
+
+$('#more-ref').click(function(){
+   var check = $('#hidden-id').val();
+        check++;
+        check++;
+        check++;
+        check++;
+   $('#hidden-id').val(check);
+     
+
+   var rowCount =  $("tbody > tr").length;
+   rowCount++;
+   rowCount++;
+   rowCount++;
+   rowCount++;
+   if(rowCount < check)
+   {
+        $("#more-ref").css("display", "none");
+   }
+
+    $.ajax({
+            type: "POST",
+            url: "tools/loadreferrals",
+            data: { data : check },
+            success: function(data, dataType)
+            {
+                $("#ref-table >tr ").remove();
+               $("#ref-table").append(data);
+              // alert(data);
+                
+            }
+});
+});
+</script>
+
+
+<script>
+    $(document).ready(function(){
+        $('#emailForm').submit(function(e){
+            e.preventDefault();
+            $('#emailBtn').attr('disabled',true);
+            $.ajax({
+                type:'POST',
+                url: 'services/emails/sent_emails_to_friends',
+                data: $(this).serialize(),
+                success:function(data){
+
+                    if(data == 0)
+                        alert('Sorry! email fields should not be empty');
+                    else if(data == 1)
+                        alert('Congrats! email has been sent successfully');
+
+            $('#emailBtn').attr('disabled',false);
+                },
+                error:function(data){
+                    alert('Sorry! server not responding, please try later');
+                }
+            });
+        });
+
+    });
+</script>
 
 	<script>
 $(window).load(function() {
@@ -194,17 +453,11 @@ $(window).load(function() {
 });
 
 function mCustomScrollbars(){
-	/*
-	malihu custom scrollbar function parameters:
-	1) scroll type (values: "vertical" or "horizontal")
-	2) scroll easing amount (0 for no easing)
-	3) scroll easing type
-	4) extra bottom scrolling space for vertical scroll type only (minimum value: 1)
-	5) scrollbar height/width adjustment (values: "auto" or "fixed")
-	6) mouse-wheel support (values: "yes" or "no")
-	7) scrolling via buttons support (values: "yes" or "no")
-	8) buttons scrolling speed (values: 1-20, 1 being the slowest)
-	*/
+
+
+
+
+
 	$("#mcs_container").mCustomScrollbar("vertical",400,"easeOutCirc",1.05,"auto","yes","yes",10);
 	$("#mcs2_container").mCustomScrollbar("vertical",0,"easeOutCirc",1.05,"auto","yes","no",0);
 	$("#mcs3_container").mCustomScrollbar("vertical",900,"easeOutCirc",1.05,"auto","no","no",0);

@@ -18,16 +18,21 @@ class S3TestCommand extends Command
     {
         $this->setName('dev:test-s3');
         $this->setDescription('Test read and write to S3 bucket');
-        $this->addArgument('bucket-name', InputArgument::REQUIRED, 'S3 bucket name');
+        $this->addOption('prod', null, InputOption::VALUE_NONE, 'Push to production S3');
     }
 
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $app = $this->getSilexApplication();
 
-        $bucket = 's3://'.$input->getArgument('bucket-name');
+        $bucket = $input->getOption('prod')
+            ? 's3://static.beesavy.com'
+            : 's3://static-dev.beesavy.com';
 
-        $output->writeln(sprintf('Using bucket <info>%s</info>', $bucket));
+        $output->writeln(sprintf('Using <comment>%s</comment> bucket <info>%s</info>',
+            $input->getOption('prod') ? 'PRODUCTION' : 'DEV',
+            $bucket
+        ));
 
         $credentials = $app['aws.s3']->getCredentials();
         if (null === $credentials) {

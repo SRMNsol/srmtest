@@ -16,17 +16,37 @@ class PaymentRequestController
 
     public function __construct(EntityManager $em)
     {
+	
         $this->em = $em;
     }
 
     public function display(Request $request, Application $app)
     {
+		 $data = $request->request->all();
+		 $newarr=$data['payment_selector']['payments'];
+		 
+		$em = $app['orm.em'];
+        $connection = $em->getConnection();
+		 
+		 for($i=0; $i<count($newarr); $i++)
+		 {
+			 $RAW_QUERY = 'Update Payment SET status="paid" WHERE id= '.$newarr[$i].'';
+               
+				$statement = $connection->prepare($RAW_QUERY);
+                $statement->execute();
+				$app['session']->getFlashBag()->add('success', 'Payment marked as paid');
+				
+				
+		 }
+
         $payments = $this->em->getRepository('App\Entity\Payment')->getPendingPayments();
 
         $collection = new PaymentCollection();
         $selector = $app['form.factory']->create(new PaymentSelectorType(), $collection, [
             'payments' => $payments,
         ]);
+
+		
 
         $selector->handleRequest($request);
         if ($selector->isValid()) {

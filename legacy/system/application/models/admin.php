@@ -46,6 +46,7 @@ class Admin extends Model
 
     public function getUsers()
     {
+    	//echo 'dddddddddddd'; exit;
         $this->db->order_by('email', 'asc');
         $users = $this->db->get('user');
         $users = $users->result_array();

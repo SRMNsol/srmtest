@@ -1,92 +1,217 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-{header}
+  <?php $this->load->view('blocks/header'); ?>
 <body>
-<div id="container">
-<!-- Header -->
-{banner}
-<!-- /Header -->
 
-
-<!-- Navigation bar -->
-{nav_bar}
-<!-- /Navigation bar -->
-
-
-<!-- content -->
-<?php if(!empty($errors)){?>
-<div style="clear:both" class="message error">
-{errors}
-<p>{message}</p>
-{/errors}
-</div>
-<?php } ?>
-		<!-- page Title -->
-<div id="content" class="BGNoCol">
-	<div id="pageTitle">
-	<div id="pageTitleLeft"></div>
-		<h1>Log In or Sign Up for a Free BeeSavy.com Account</h1>
-	<div id="pageTitleRight"></div>
-</div>
-
-<div id="fullRegister" class="borderRight">
-	  <div class="heading"><h3>Not a Member? Join BeeSavy Today </h3></div>
-
-	<div>
-		<form id="registerForm" enctype="application/x-www-form-urlencoded" method="post" action="/account/register"><dl class="beesavy_form">
-                    	<table cellspacing=0 cellpadding=0 border=0>
-                <tr><td><dt id="email-label"><label for="email" class="required">Email Address: *</label></dt></td><td><dd id="email-element"><input name="email" id="email" class="required email" type="text" value="{email}"></dd></td></tr>
-
-                <tr><td height=60><dt><label>Referral Code: *<br><span style="font-weight: normal;">(Who referred you?)</span></label></dt></td><td><dd id="password-element"><input name="referral" id="email" class="required email" value="{referral}" type="text"><div style="font-size:9pt;float:left;margin-top:-5px;"><i>Not Case Sensitive</i></div></dt></td></tr>
-
-                <tr><td width=150px><dt id="password-label"><label for="password" class="required">Password: *</label></dt></td><td><dd id="password-element"><input name="password" id="password" value="" class="required password" type="password"></dd></td></tr>
-<tr><td><dt id="password_confirm-label"><label for="password_confirm" class="required">Confirm Password: * </label></dt></td><td><dd id="password_confirm-element"><input name="password_confirm" id="password_confirm" value="" class="required password" type="password"></dd></td></tr>
-
-                <tr><td><font size=2>* Required Field </font></td><td valign=top align=right><div class="StartSaving"><div class="BtnStartSavingBg BtnStartSaving"><INPUT type="submit" value="START SAVING!" class="button"/></div></div></td></tr>
-                </table>
-</dd></dl></form>
-</div>
-</div>
-<div id="registerText">
-  <div id="compare">
-    <h4>Compare prices on millions of products</h4>
-    <p>BeeSavy’s comparison shopping engine goes above and beyond by including not only list price, tax, and shipping, but also cash back and coupon discounts—all
-      in one simple interface.</p>
-  </div>
-  <div id="cashback">
-    <h4>Get cash back at thousands of top online stores</h4>
-    <p>When you shop online through BeeSavy, we earn a sales commission on anything you buy. We pass most of this commission to you as a cash back discount.</p>
-  </div>
-  <div id="coupons">
-    <h4>Find hundreds of exclusive coupons</h4>
-    <p>Not only does our system integrate store coupons into every product price, we also have a coupon section where you can browse through all of our available    coupons.</p>
-  </div>
-
-    <div id="refer">
-    <h4 style="margin-left:83px;margin-top:-3px;">Get paid to refer your friends</h4>
-    <p style="margin-left:83px;position:relative;"> BeeSavy  pays you 10% commission on all of your referrals' cash back forever.  We even pay you 10% commission for all of the people they refer up to seven levels!</p>
-  </div>
-</div>
-<DIV style="CLEAR: left"></DIV>
-<div id="securityNotice">BeeSavy will always be free, and your E-Mail address will never be shared with anyone</div>
 <script type="text/javascript">
-$(document).ready(function(){
-	$("#standardLoginForm").validate();
-	$("#registerForm").validate();
-	$("#registerForm .email").focus();
-});
+window.sendinblue=window.sendinblue||[];window.sendinblue.methods=["identify","init","group","track","page","trackLink"];window.sendinblue.factory=function(e){return function(){var t=Array.prototype.slice.call(arguments);t.unshift(e);window.sendinblue.push(t);return window.sendinblue}};for(var i=0;i<window.sendinblue.methods.length;i++){var key=window.sendinblue.methods[i];window.sendinblue[key]=window.sendinblue.factory(key)}window.sendinblue.load=function(){if(document.getElementById("sendinblue-js"))return;var e=document.createElement("script");e.type="text/javascript";e.id="sendinblue-js";e.async=true;e.src=("https:"===document.location.protocol?"https://":"http://")+"s.sib.im/automation.js";var t=document.getElementsByTagName("script")[0];t.parentNode.insertBefore(e,t)};window.sendinblue.SNIPPET_VERSION="1.0";window.sendinblue.load();window.sendinblue.client_key="1n0l4my1w3ubrs1l0iy5j";window.sendinblue.page();
+
 </script>
-<div style="clear: both;"></div>
-	<div style="clear: both; height: 10px;"></div>
-	</div>
 
-       <!-- Right side -->
 
+<?php
+
+
+ // echo $login_url .'ddddddddd';  exit;?>
+<div id="container">
+    <!-- Navigation bar -->
+	<?php if($this->db_session->userdata('login')['login']){ 
+
+	?>
+
+<?php $this->load->view('blocks/admin-topbar'); ?>
+<?php }else{
+
+	 ?>
+       <?php $this->load->view('blocks/nav_bar'); ?>
+   
+<?php } ?>
+
+<?php // print_r($chekref['referral_status']); exit(); ?>
+
+
+<?php /*  if(isset($user_prof['email'])) { print_r($user_prof);  exit; } if(isset($user_prof['email']) && $user_prof['email']!='') 
+					{ echo $user_prof['email'];  exit; } */ ?>
+<style type="text/css">
+.btn-google {
+
+    font-size: 16px;
+
+}
+.btn-facebook {
+
+    font-size: 16px !important;
+
+
+.form-control1 {
+    color: black !important;
+ 
+}
+.formpadding {
+    padding: 2% !important;
+}
+.message.alert.alert-danger {
+     width: 50%;
+    margin: 0 auto !important;
+}
+</style>
+
+
+
+
+
+		<section id="bee_top_joinform">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-6 col-md-offset-4">
+					<div class="bee_story_title">
+						<h3>NOT A MEMBER ? JOIN NOW</h3>
+					</div>
+				</div>
+			</div>
+            
+            <?php if(!empty($errors)){?>
+                <div class="message alert alert-danger">
+                {errors}
+                <p>{message}</p>
+                {/errors}
+                </div>
+                <?php } ?>
+            
+            <div class="row">
+            
+                      
+                
+            <div class="col-md-8 col-md-offset-2 formouter join-center">
+                <form name="registerForm" id="registerForm" method="POST" action="<?php echo SURL?>account/register">
+                <div class="row" >
+                 <div class="col-md-6">
+                   <a href="<?php echo SURL?>main/glogin"> <button type="button" class="btn btn-google btn-block">Register with Google +</button></a>
+                 </div>
+                 <div class="col-md-6">
+        
+                  <?php if(isset($output['email']) && $output['email']!='')
+				  { echo $output['logout']; 
+				  } else { 
+				  print_r($output); }?>
+                 </div>    
+                </div>
+                <div class="space20"></div>
+                <div class="row">
+                 <div class="col-md-1 ">
+                 <label class="label-gap"> <i class="fa fa-envelope"></i></label>   
+                 </div>
+                 <div class="col-md-11">
+                     <input type="text" name="email" placeholder="Enter Email Address " 
+                     value="<?php if(isset($output['email']) && $output['email']!='') { echo $output['email'];} ?>" id="email" class="form-control">
+                 </div>    
+                </div>
+         
+                   <?php  if($chekref['referral_status']==1)  { ?>
+                    <div class="space20"></div>
+                       <div class="row">
+                 <div class="col-md-1">
+                 <label class="label-gap"><i class="fa fa-th"></i> </label>   
+                 </div>
+             
+                   <div class="col-md-11">
+                     <input type="text" name="referral" placeholder="Enter Referral Code" class="form-control">
+                 </div>    
+              
+
+                </div>
+                <?php } ?>
+                      <div class="space20"></div>
+                   <div class="row">
+                 <div class="col-md-1">
+                 <label class="label-gap"><i class="fa fa-lock"></i> </label>   
+                 </div>
+                 <div class="col-md-11">
+                     <input type="password" placeholder="Enter Password" name="password" id="password" class="form-control">
+                 </div>    
+                </div>
+                    
+                      <div class="space20"></div>
+                       <div class="row">
+                 <div class="col-md-1">
+                 <label class="label-gap"><i class="fa fa-lock"></i>  </label>   
+                 </div>
+                 <div class="col-md-11">
+                    <input type="password" name="password_confirm" placeholder=" Confirm Password" id="password_confirm" class="form-control">
+                 </div>    
+                </div>
+                           
+                    <div class="space20"></div>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                           <div class="row">
+                 
+                 <div class="col-md-12">
+                     <input type="submit" class="btn btn-saving btn-block" value="Start Saving">
+                 </div>    
+                </div>
+                    
+                    
+                    
+                    </form> 
+                
+            </div>
+            
+            </div>
+		
+		
+		</div>
+	</section>
+ 
+    <section id="bee_service">
+    <div class="container">
+
+   
+    <div class="row botoom-service">
+        <div class="col-md-6">
+        <div class="row">
+        <div class="col-md-3">
+            <img src="<?php echo SURL?>images/user-icon.png" class="img-responsive cashimg">
+        </div>
+        <div class="col-md-9">
+            <h4>Get cash back at thousands of top online stores</h4>
+            <p>When you shop online through BeeSavy, we earn a sales commission on anything you buy. We pass most of this commission to you as a cash back discount.</p>
+        </div>    
+        </div>
+        </div>
+        <div class="col-md-6">
+        <div class="row">
+        <div class="col-md-3">
+             <img src="<?php echo SURL?>images/user-icon.png" class="img-responsive cashimg">
+        </div>
+        <div class="col-md-9">
+             <h4>Get paid to refer your friends</h4>
+            <p>BeeSavy pays you 10% commission on all of your referrals' cash back forever. We even pay you 10% commission for all of the people they refer up to seven levels!.</p>
+        </div>    
+        </div>
+        </div>
+    </div>
+        
+    </div>    
+    </section>
+    <?php if(isset($_GET['fb']) == 'true'){ ?>
+	<script type="text/javascript">
+        $(document).ready(function(){
+            window.location.href = $('#fbb').attr('href');
+        });
+    </script>
+    <?php } ?>
 
 <!-- /content -->
 
 <!-- footer -->
-{footer}
+
+<?php $this->load->view('blocks/footer'); ?>
+
+<?php $this->load->view('blocks/footer_script'); ?>
 <!-- /footer -->
 
 

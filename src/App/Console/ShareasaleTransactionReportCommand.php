@@ -43,8 +43,6 @@ class ShareasaleTransactionReportCommand extends Command
 
         $output->writeln(sprintf('Downloading from %s to %s', $startDate->format('Y-m-d'), $endDate->format('Y-m-d')));
 
-        $app['reporting.logger']->addInfo(sprintf('SHAREASALE %s %s', $startDate->format('Y-m-d'), $endDate->format('Y-m-d')));
-
         $transactions = $input->getOption('update')
             ? $report->getLedgerReport($startDate, $endDate)
             : $report->getActivityDetailsReport($startDate, $endDate);
@@ -52,13 +50,7 @@ class ShareasaleTransactionReportCommand extends Command
         $table = new Table($output);
         $table->setHeaders(['#', 'Date', 'Merchant', 'Order #', 'Total', 'Commission', 'Tag', 'Status']);
 
-        $salesTotal = 0;
-        $commissionTotal = 0;
-
         foreach ($transactions as $transaction) {
-            $salesTotal += $transaction->getTotal();
-            $commissionTotal += $transaction->getCommission();
-
             $table->addRow([
                 $transaction->getId(),
                 $transaction->getRegisteredAt()->format('m/d/Y H:i'),
@@ -72,6 +64,6 @@ class ShareasaleTransactionReportCommand extends Command
         }
 
         $table->render();
-        $output->writeln(sprintf('Total %d transactions, sales $%.2f, commission $%.2f', count($transactions), $salesTotal, $commissionTotal));
+        $output->writeln(sprintf('Total %d transactions', count($transactions)));
     }
 }

@@ -28,7 +28,7 @@
 <!-- /Header -->
 
 <!-- Navigation bar -->
-{nav_bar}
+ <?php $this->load->view('blocks/nav_bar'); ?>
 <!-- /Navigation bar -->
 
 
