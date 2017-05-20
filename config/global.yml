@@ -45,10 +45,10 @@ impactradius_auth_token: fjG9mLxBfZZRHLH4tQ4vZh569ftUUxQ2
 # dbal
 db.options:
   driver:   pdo_mysql
-  dbname:   DB_NAME
-  host:     DB_HOST
-  user:     DB_USER
-  password: DB_PASSWORD
+  host:   'production.ckhhuprlmkts.us-east-1.rds.amazonaws.com'
+  dbname:     'popshops'
+  user:     'root'
+  password: '6K-Z8W5a7530K^z'
   charset:  utf8
 
 # orm
