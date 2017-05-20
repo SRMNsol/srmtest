@@ -40,11 +40,15 @@ $opsworks = new OpsWorks();
 $active_group = "default";
 $active_record = TRUE;
 
-$db['default']['hostname'] = $opsworks->db->host;
+$db['default']['hostname'] = "production.ckhhuprlmkts.us-east-1.rds.amazonaws.com";
+$db['default']['username'] = "root";
+$db['default']['password'] = "6K-Z8W5a7530K^z";
+$db['default']['database'] = "popshops";
+
+/*$db['default']['hostname'] = $opsworks->db->host;
 $db['default']['username'] = $opsworks->db->username;
 $db['default']['password'] = $opsworks->db->password;
-$db['default']['database'] = $opsworks->db->database;
-
+$db['default']['database'] = $opsworks->db->database;*/
 
 $db['default']['dbdriver'] = "mysql";
 $db['default']['dbprefix'] = "";
