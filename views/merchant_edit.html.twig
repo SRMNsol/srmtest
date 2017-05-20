@@ -1,4 +1,9 @@
+
 {% extends 'common/layout.html.twig' %}
+
+
+
+
 
 {% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
 {% form_theme form.commission _self %}
@@ -8,6 +13,7 @@
 {% block form_group_class %}col-sm-4{% endblock %}
 
 {% block content %}
+<link href="https://silviomoreto.github.io/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
 
 {% if not form.vars.valid %}
 <div class="alert alert-danger">
@@ -22,14 +28,49 @@
   <h1>Create Merchant</h1>
   {% endif %}
 </div>
-
 <div class="row">
   <div class="col-md-9">
     {{ form_start(form, { attr: { class: 'merchant-edit' } }) }}
-      {{ form_errors(form) }}
+      {{ form_errors(form)  }}
+     
+      {#{{ form_row(form.expiryDate, { label: 'Expiry Date' }) }}#}
+      
+      <div class="form-group">
+          <label class="col-sm-2 control-label" for="merchant_expiryDate">Expiry Date</label>
+          <div class="col-sm-10"><input type="date" id="expiryDate" name="expiryDate" class="form-control">
+          </div>
+    </div>
+            
       {{ form_row(form.name, { label: 'Name' }) }}
       {{ form_row(form.alternativeName, { label: 'Display name' }) }}
-      {{ form_row(form.category) }}
+
+      
+      <div class="form-group"><label class="col-sm-2 control-label" for="merchant_network">
+      Category</label>
+
+
+
+      <div class="col-sm-10">
+
+            {% if editselect==0 %}
+
+               {{ ecategory | raw  }}
+
+           {% else %}
+
+          <select id="merchant_mcategory" name="mcategory[]" class="form-control selectpicker" multiple>
+                {% for category  in categories %}
+                              
+                      <option value="{{category.id}}"> {{category.name}} </option>           
+
+                {% endfor %}
+
+               {% endif %}
+</select>
+
+          </div>
+      </div> 
+
       {{ form_row(form.network) }}
       {{ form_row(form.networkMerchantId) }}
 
@@ -76,11 +117,37 @@
     {{ form_end(form) }}
   </div>
   <div class="col-md-3 text-right">
+    
     {% if merchant %}
       <form method="post" action="{{ path('merchant_delete', { merchant: merchant.id }) }}" class="form-mini">
         <button type="button" class="btn btn-danger merchant-delete" data-merchant-name="{{ merchant.name }}">Delete Merchant</button>
       </form>
     {% endif %}
+
+
   </div>
 </div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://silviomoreto.github.io/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<script>
+var abc=$.noConflict();
+abc(document).ready(function() {
+
+abc('#merchant_category option:eq(1)').attr('selected', 'selected')
+
+  $('#merchant_category').parent().parent().hide();
+    //$('#merchant_category').parents('div').hide();
+
+
+});
+
+</script>
+
+
 {% endblock %}
+

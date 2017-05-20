@@ -1,0 +1,77 @@
+{% extends 'common/layout.html.twig' %}
+
+{% form_theme searchForm 'common/form_inline.html.twig' %}
+
+{% block content %}
+<div class="page-header">
+  <h1>Shopping <small>By Store</small></h1>
+</div>
+
+<div class="row">
+     <div class="col-md-6">
+    Total {{ user|length }} record(s)
+    </div>
+  <div class="col-md-9">
+      
+      
+    {{ form_start(searchForm, { attr: { class: 'user-search' } }) }}
+      {{ form_errors(searchForm) }}
+      Stores:
+      <select id="user_search_type" name="merchantid" class="form-control ">
+      {% for stores in store %}
+         <option value="{{ stores.id }}">{{ stores.name }}</option>
+      {% endfor %}
+      </select>
+      
+      
+    
+      {#{{ form_row(searchForm.type) }} #}
+      {{ form_row(searchForm.startDate) }}
+      {{ form_row(searchForm.endDate) }}
+
+      <div class="form-group">
+        <div class="col-md-6 col-md-offset-2">
+          <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+      </div>
+    {{ form_end(searchForm) }}
+  </div>
+  
+</div>
+  
+{% if user %}
+<br>
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th class="col-md-1">Sn</th>
+      <th class="col-md-1">Merchant Name</th>
+      <th class="col-md-3">User Email</th>
+      <th class="col-md-1"> Amount</th>
+      <th class="col-md-1">Commission</th>
+      <th class="col-md-1">Status</th>
+      <th class="col-md-1">Date</th>
+      
+    </tr>
+  </thead>
+  <tbody>
+       {% for key,users in user %}
+    <tr>
+      <td>{{ key+1 }}</td>
+      <td>{{ users.merchant_name }}</td>
+      <td>{{ users.user_email }}</td>
+      <td>{{ users.total }}</td>
+      <td>{{ users.commission }}</td>
+      <td>{{ users.status }}</td>
+      <td>{{ users.registeredAt|date('d-M-Y') }}</td>
+         
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+
+
+{% endif %}
+
+{% endblock content %}

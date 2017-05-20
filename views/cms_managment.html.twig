@@ -1,0 +1,98 @@
+  {% extends 'common/layout.html.twig' %}
+
+{% block content %}
+<div class="page-header">
+  <h1>CMS Management</small></h1>
+</div>
+ <script src="http://js.nicedit.com/nicEdit-latest.js" type="text/javascript"></script>
+<script type="text/javascript">bkLib.onDomLoaded(nicEditors.allTextAreas);</script>
+
+   <form method="post" action="{{ path('userinfo_updatepage') }}" class="form-horizontal">
+      
+<div class='row'> 
+   <div class="col-sm-8">
+    <select id='page-select' name='page'class="form-control">
+   
+    {% for page in pages %}
+    
+       <option  value='{{ page.page_id }}'> {{ page.page_name }}</option>
+    
+    {% endfor %}
+    </select>
+    </div>
+
+    </div>
+
+<br>
+<div class='row'>
+    <div class="col-sm-8">
+
+    <input type='text' id='page_title' name='title' class="form-control" value=''>
+ 	</div>
+ 	</div>
+<br>
+
+
+
+
+
+
+<div class='row'>
+    <div class="col-sm-8">
+
+     <textarea class="form-control" name='description' id='desc_id' rows='8'>
+    </textarea>
+ 	</div>
+ 	</div>
+<br>
+
+<div class='row'>
+ 	<div class="col-sm-8">
+
+      <input  type="date" id="expiryDate"  value='' name="expiryDate" class="form-control">
+
+ 	</div>
+
+</div>
+ 	<br>
+<div class='row'>
+<div class="col-sm-8">
+       <button type="submit" class="btn-primary btn merchant-exp">Update Page</button>
+ </div>
+</div>
+
+</form>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script>
+	var abc=$.noConflict();
+
+abc('#page-select').on('change', function() {
+
+	var page_id=$(this).val();
+		
+   abc.ajax({
+            type: "POST",
+            url: "{{ path('userinfo_ajaxdesc') }}",
+            data: { data : page_id },
+            success: function(response, dataType)
+            {
+           		var name=response['page']['page_name'];
+           		var desc=response['page']['page_desc'];
+           		var date=response['page']['page_date'];
+           		
+		        abc("#page_title").val(name);   
+		        abc(".nicEdit-main").text(desc);
+				
+				
+		        abc("#expiryDate").val(date);   
+            }
+
+
+});
+});
+</script>
+
+
+
+{% endblock %}

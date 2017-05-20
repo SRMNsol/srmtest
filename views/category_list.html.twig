@@ -26,7 +26,11 @@
         {% for category in categories %}
         <tr>
           <td>{{ category.name }}</td>
+          
+
           <td>{{ category.merchants.count }}</td>
+
+
           <td class="text-right">
             <a href="{{ path('category_edit', { category: category.id }) }}" class="btn btn-default btn-xs">Edit</a>
             <form method="post" action="{{ path('category_delete', { category: category.id }) }}" class="form-mini">

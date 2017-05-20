@@ -1,0 +1,43 @@
+  {% extends 'common/layout.html.twig' %}
+
+{% block content %}
+<div class="page-header">
+  <h1>Referral <small>List</small></h1>
+</div>
+
+<div class="row">
+  <div class="col-md-6">
+    Total  {{ refeuser|length }} Referral
+  </div>
+</div>
+
+<br>
+<div class="row">
+  <div class="col-md-12">
+    <table id="example" class="table table-bordered">
+      <thead>
+        <tr>
+          <th class="col-md-4">User Id</th>
+          <th class="col-md-4"> Email</th>
+        </tr>
+      </thead>
+      </tbody>
+        {% for user in refeuser %}
+        <tr>
+          <td>{{ user.u_id }}</td>
+            <td><a href="{{ path('user_info', {'user_search[email]': user.u_email }) }}" >{{ user.u_email }}</a></td>
+
+      
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+
+
+
+
+{% endblock %}

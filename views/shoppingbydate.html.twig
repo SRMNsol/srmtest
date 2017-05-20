@@ -1,0 +1,157 @@
+{% extends 'common/layout.html.twig' %}
+
+{% form_theme searchForm 'common/form_inline.html.twig' %}
+
+{% block content %}
+<div class="page-header">
+  <h1>Shopping <small>By Date</small></h1>
+</div>
+
+<div class="row">
+     <div class="col-md-6">
+    Total {{ user|length }} record(s)
+    </div>
+  <div class="col-md-9">
+    {{ form_start(searchForm, { attr: { class: 'user-search' } }) }}
+      {{ form_errors(searchForm) }}
+      {# {{ form_row(searchForm.alias, { attr: { placeholder: 'Enter user alias' } }) }} #}
+      {{ form_row(searchForm.startDate) }}
+      {{ form_row(searchForm.endDate) }}
+
+      <div class="form-group">
+        <div class="col-md-6 col-md-offset-2">
+          <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+      </div>
+    {{ form_end(searchForm) }}
+  </div>
+  
+</div>
+  
+{% if user %}
+<br>
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th class="col-md-1">Sn</th>
+      <th class="col-md-1">Merchant Name</th>
+      <th class="col-md-3">User Email</th>
+      <th class="col-md-1"> Amount</th>
+      <th class="col-md-1">Commission</th>
+      <th class="col-md-1">Status</th>
+      <th class="col-md-1">Date</th>
+      
+    </tr>
+  </thead>
+  <tbody>
+       {% for key,users in user %}
+    <tr>
+      <td>{{ key+1 }}</td>
+      <td>{{ users.merchant_name }}</td>
+      <td><a href="{{ path('user_info', {'user_search[email]': users.user_email }) }}" >{{ users.user_email }}</a></td>
+      {#<td>{{ users.user_email }}</td>#}
+      <td>{{ users.total }}</td>
+      <td>{{ users.commission }}</td>
+      <td>{{ users.status }}</td>
+      <td>{{ users.registeredAt|date('d-M-Y') }}</td>
+         
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{#<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th class="col-md-1">Spend</th>
+      <th class="col-md-3">Personal Cashback Earned</th>
+      <th class="col-md-3">Referral Cashback Earned</th>
+      <th class="col-md-3">Total Cashback Earned</th>
+      <th class="col-md-2">Paid</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>$ {{ totalSpending|number_format(2) }}</td>
+      <td>
+        $ {{ (totalCashback + totalExtraCashback)|number_format(2) }}
+        {% if totalExtraCashback > 0 %}
+        <span class="text-success">*</span>
+        {% endif %}
+      </td>
+      <td>$ {{ totalReferral|number_format(2) }}</td>
+      <td>$ {{ totalEarning|number_format(2) }}</td>
+      <td>$ {{ totalPayment|number_format(2) }}</td>
+    </tr>
+  </tbody>
+</table>
+
+{% if totalExtraCashback > 0 %}
+<p class="text-success"><small>* including ${{ totalExtraCashback|number_format(2) }} Extrabux adjustment amount</small></p>
+{% endif %}
+
+<div class="row" style="margin-bottom: 12px;">
+  <div class="col-md-9">
+    <h4>Transactions</h4>
+  </div>
+  <div class="col-md-3">
+    <a href="{{ path('transaction_create', { user: user.id }) }}" class="btn btn-default pull-right">Add transaction</a>
+  </div>
+</div>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th class="col-md-1">Date</th>
+      <th class="col-md-3">Store</th>
+      <th class="col-md-3">Order</th>
+      <th class="col-md-1">Amount</th>
+      <th class="col-md-2">Cashback</th>
+      <th class="col-md-2">Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for cashback in cashbackList %}
+    <tr>
+      <td>{{ cashback.transactionDate|date('m/d/Y') }}</td>
+      <td>{{ cashback.concept }}</td>
+      <td>{{ cashback.orderNumber }}</td>
+      <td>$ {{ cashback.totalPurchase|number_format(2) }}</td>
+      <td>$ {{ cashback.amount|number_format(2) }}</td>
+      <td>
+        {% if cashback.transaction.manual %}
+        <span class="pull-right">
+          <a href="{{ path('transaction_edit', { user: cashback.user.id, transaction: cashback.transaction.id }) }}" class="btn btn-default btn-xs">Edit</a>
+          <form method="post" action="{{ path('transaction_delete', { user: cashback.user.id, transaction: cashback.transaction.id }) }}" class="form-mini">
+            <button type="button" class="btn btn-default btn-xs transaction-delete" data-transaction-detail="{{ cashback.transaction.merchantName ~ ' $' ~ cashback.totalPurchase|number_format(2)}}">Delete</button>
+          </form>
+        </span>
+        {% endif %}
+        {{ cashback.status }}
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<h4>Level 1 referrals ({{ user.referredUsers.count }} users)</h4>
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <td class="col-md-1">Id</td>
+      <td class="col-md-11">Email</td>
+    </tr>
+  </thead>
+  <tbody>
+    {% for referredUser in user.referredUsers %}
+    <tr>
+      <td>{{ referredUser.id }}</td>
+      <td>{{ referredUser.email }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>#}
+
+{% endif %}
+
+{% endblock content %}

@@ -3,13 +3,19 @@
   <head>
     <meta charset="utf-8">
     <title>{% block title %}Admin{% endblock %}</title>
-
-    {% stylesheets "@bootstrap_css" "@custom_css" filter="?yui_css" output="/assets/css/styles-combined.min.css" %}
-      <link href="{{ asset_url }}" type="text/css" rel="stylesheet">
-    {% endstylesheets %}
+	{#			
+    {% stylesheets "@bootstrap_css" "@custom_css" filter="?yui_css" output="/projects/beesavy/web/assets/css/styles-combined.min.css" %}
+		
+       <link href="{{ asset_url }}" type="text/css" rel="stylesheet">
+    
+	{% endstylesheets %}
+	#}
+	{#<link href="http://192.168.1.201/projects/beesavy/web/assets/css/styles-combined.min.css" type="text/css" rel="stylesheet">#}
+	<link href="https://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css" type="text/css" rel="stylesheet">
+	<link href="/projects/beesavy/web/assets/css/styles-combined.min.css" type="text/css" rel="stylesheet">
   </head>
 
-  <body>
+  <body style="padding-top:0px;">
     {% block body %}
       {% include 'common/navbar.html.twig' %}
       <div class="container">
@@ -19,11 +25,15 @@
     {% endblock %}
 
     {% block scripts %}
-      <script src="/bower_components/jquery/dist/jquery.min.js"></script>
-      <script src="/bower_components/bootbox.js/bootbox.js"></script>
-      {% javascripts "@custom_js" "@bootstrap_js" filter="?yui_js" output="/assets/js/scripts-combined.min.js" %}
+      <script src="/projects/beesavy/web/bower_components/jquery/dist/jquery.min.js"></script>
+      <script src="/projects/beesavy/web/bower_components/bootbox.js/bootbox.js"></script>
+	  {#	
+      {% javascripts "@custom_js" "@bootstrap_js" filter="?yui_js" output="/projects/beesavy/web/assets/js/scripts-combined.min.js" %}
         <script src="{{ asset_url }}"></script>
       {% endjavascripts %}
+	  #}
+	  <script src="/projects/beesavy/web/assets/js/scripts-combined.min.js"></script>
+	  
     {% endblock scripts%}
   </body>
 </html>

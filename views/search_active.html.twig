@@ -1,0 +1,137 @@
+  {% extends 'common/layout.html.twig' %}
+
+{% block content %}
+<div class="page-header">
+  <h1>Active <small>User</small></h1>
+</div>
+
+<div class="row">
+  <div class="col-md-6">
+    Total Active {{ dateuser|length }}  User
+  </div>
+</div>
+
+<div class="col-md-9">
+    <form name="user_search" method="get" class="form-inline user-search" role="form">
+      
+      <div class="form-group"><label class="sr-only" for="user_search_startDate">Start date</label><input type="date" id="user_search_startDate"  {% if dataform.sfirstdate %} value='{{dataform.sfirstdate}}' {% endif %} name="user_search[startDate]" class="form-control "></div>
+      <div class="form-group"><label class="sr-only" for="user_search_endDate">End date</label><input type="date" id="user_search_endDate"  {% if dataform.senddate %}  value='{{dataform.senddate}}' {% endif %} name="user_search[endDate]" class="form-control "></div>
+
+      <div class="form-group">
+        <div class="col-md-6 col-md-offset-2">
+          <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+
+<br><br>
+<div class="row">
+  <div class="col-md-12">
+    <table id="example" class="table table-bordered table-hover display">
+      <thead>
+        <tr>
+          <th class="col-md-4">USer Id</th>
+          <th class="col-md-4">USer Name</th>
+          <th class="col-md-1">Created Date</th>
+        
+        </tr>
+      </thead>
+      </tbody>
+        {% for user in dateuser %}
+        <tr>
+          <td>{{ user.uid }}</td>
+          <td>{{ user.email }}</td>
+           <td>{{ user.created }}</td>
+                  
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-6">
+    Total {{ shoping|length }}  User 
+  </div>
+</div>
+<br>
+<div class="row">
+  <div class="col-md-12">
+    <table id="shop-page" class="table table-bordered">
+      <thead>
+        <tr>
+          <th class="col-md-4">USer Id</th>
+          <th class="col-md-4">USer Name</th>
+          <th class="col-md-1">Created Date</th>
+        
+        </tr>
+      </thead>
+      </tbody>
+        {% for shop in shoping %}
+        <tr>
+          <td>{{ shop.uid }}</td>
+          <td>{{ shop.email }}</td>
+           <td>{{ shop.created }}</td>
+                  
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<div class="row">
+  <div class="col-md-6">
+    Total {{ newreffral|length }}  Refferal 
+  </div>
+</div>
+<br>
+<div class="row">
+  <div class="col-md-12">
+    <table id="ref-page" class="table table-bordered table-hover display">
+      <thead>
+        <tr>
+          <th class="col-md-4">User Id</th>
+          <th class="col-md-4">User Email</th>
+          <th class="col-md-4">Refferal Email</th>
+        
+        </tr>
+      </thead>
+      </tbody>
+        {% for oneref in newreffral %}
+        <tr>
+          <td>{{ oneref.userid }}</td>
+          <td>{{ oneref.email }}</td>
+          <td>{{ oneref.refemail }}</td>
+                  
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+
+<script>
+var abc=$.noConflict();
+abc(document).ready(function() {
+
+	abc('#example_filter').css('display', 'none');
+    abc('#example').DataTable();
+    abc('#ref-page').DataTable();
+	
+    abc('#shop-page').DataTable();
+} );
+
+
+
+abc('table').dataTable({bFilter: false, bInfo: false});
+</script>
+
+
+{% endblock %}

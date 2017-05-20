@@ -1,0 +1,86 @@
+  {% extends 'common/layout.html.twig' %}
+
+{% block content %}
+<div class="page-header">
+  <h1>User <small>List</small></h1>
+</div>
+
+<div class="row">
+  <div class="col-md-6">
+    Total  {{ users|length }} Users
+  </div>
+</div>
+
+<br>
+<div class="row">
+  <div class="col-md-12">
+    <table class="table table-bordered table-hover">
+      <thead>
+        <tr>
+          <th class="col-md-4">User Id</th>
+          <th class="col-md-4">User Email</th>
+          <th class="col-md-4">User Refferal</th>
+          <th class="col-md-2">Bonus</th>
+        </tr>
+      </thead>
+      </tbody>
+        {% for user in users %}
+        <tr>
+          <td>{{ user.id }}</td>
+          <td>{{ user.email }}</td>
+          <td  class='refcode-{{user.id }}'>{{ user.alias }}</td>
+                  
+          <td class="text-right">
+
+          <input type='checkbox' {% if user.bonus=='active'%} checked {% endif %} class='active-user' id="{{user.id }}" >
+           
+           </td>
+
+
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script>
+
+$('.active-user').click(function(){
+
+var userid=$(this).attr('id');
+
+
+if ($(this).is(':checked')) {
+
+      var status='active';
+    
+    }
+    else
+    {
+      var status='inactive';
+    }
+
+
+    $.ajax({
+            type: "POST",
+            url: "{{ path('userinfo_bonusstatus') }}",
+            data: {status: status, userid: userid},
+            success: function(data, dataType)
+            {
+               
+            }
+});
+});
+</script>
+
+
+
+
+
+
+
+{% endblock %}

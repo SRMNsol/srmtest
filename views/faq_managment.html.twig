@@ -1,0 +1,72 @@
+  {% extends 'common/layout.html.twig' %}
+
+{% block content %}
+<div class="page-header">
+  <h1>FAQS <small>List</small></h1>
+</div>
+
+<div class="row">
+  <div class="col-md-6">
+    Total  {{ faqs|length }} faqs
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+ <a href="{{ path('userinfo_addfaq') }}">  <button type="submit" class="btn-primary btn merchant-exp">Add FAQ</button></a>
+    
+
+  </div>
+
+</div>
+
+<br>
+<div class="row">
+  <div class="col-md-12">
+    <table class="table table-bordered table-hover">
+      <thead>
+        <tr>
+          <th class="col-md-4">FAQ Id</th>
+          <th class="col-md-4">FAQ Name</th>
+          <th class="col-md-4">FAQ Description</th>
+          <th class="col-md-4">FAQ Category</th>
+          <th class="col-md-2">Edit</th>
+          <th class="col-md-2">Delete</th>
+        </tr>
+      </thead>
+      </tbody>
+        {% for faq in faqs %}
+        <tr>
+          <td>{{ faq.faq_id }}</td>
+          <td>{{ faq.faq_name }}</td>
+          <td>{{ faq.faq_desc }}</td>
+           <td>{{ faq.cate_name }}</td>
+                  
+          <td class="text-right">
+
+          <a href="{{ path('userinfo_faqedit', {faq: faq.faq_id }) }}" class="btn btn-default btn-xs">Edit</a>
+           
+           </td>
+
+          <td class="text-right">
+                    <a href="{{ path('userinfo_faqdelete', {faq: faq.faq_id }) }}" class="btn btn-default btn-xs">Delete</a>
+
+
+         
+
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+{% endblock %}

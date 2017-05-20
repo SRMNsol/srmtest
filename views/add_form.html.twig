@@ -1,0 +1,51 @@
+  {% extends 'common/layout.html.twig' %}
+
+{% block content %}
+<div class="page-header">
+  <h1>Add Page</small></h1>
+</div>
+
+ <script src="http://js.nicedit.com/nicEdit-latest.js" type="text/javascript"></script>
+<script type="text/javascript">bkLib.onDomLoaded(nicEditors.allTextAreas);</script>
+						
+
+   <form method="post" action="{{ path('userinfo_pageadd') }}" class="form-horizontal">
+      
+
+<div class='row'>
+    <div class="col-sm-8">
+
+    <input type='text' id='page_title' placeholder='Enter Page Title' name='title' class="form-control" value=''>
+ 	</div>
+ 	</div>
+<br>
+
+<div class='row'>
+    <div class="col-sm-8">
+
+     <textarea class="form-control" placeholder='Enter Page Description' name='description' id='desc_id' rows='8'></textarea>
+ 	</div>
+ 	</div>
+<br>
+
+<div class='row'>
+ 	<div class="col-sm-8">
+
+      <input  type="date" id="expiryDate"  value='' name="expiryDate" class="form-control">
+
+ 	</div>
+
+</div>
+ 	<br>
+<div class='row'>
+<div class="col-sm-8">
+       <button type="submit" class="btn-primary btn merchant-exp">Update Page</button>
+ </div>
+</div>
+
+</form>
+
+
+
+
+{% endblock %}

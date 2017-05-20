@@ -1,0 +1,147 @@
+{% extends 'common/layout.html.twig' %}
+
+{% form_theme date_form 'common/form_inline.html.twig' %}
+
+{% macro sorter(text, type, context) %}
+  {% if type == context.sort %}
+  <b class="glyphicon glyphicon-chevron-{{ (context.dir == 'asc') ? 'up' : 'down' }}"></b>
+  {% endif %}
+  <a href="{{
+    path('statistics', {
+      'date_range[start_date]': context.start_date|date('Y-m-d'),
+      'date_range[end_date]': context.end_date|date('Y-m-d'),
+      'dir': (context.sort == type) ? ((context.dir == 'asc') ? 'desc' : 'asc') : 'desc',
+      'sort': type
+    })
+  }}">{{ text }}</a>
+{% endmacro sorter %}
+
+{% import _self as stats %}
+
+{% block content %}
+<div class="page-header">
+  <h1>Site Statistics <small></small></h1>
+</div>
+ {% if display %}
+<div class="row">
+  <div class="col-md-6">
+    Total    {{ top_users|length }}Users
+  </div>
+</div>
+{% endif %}
+
+<form name="date_range" method="get" id='hidden-form' role="form" class="form-inline action="{{ path('statistics_activeuser') }} ">
+      
+      <input type="hidden" id="start_date" name="date_range[start_date]" value="">
+	  <input type="hidden" id="end_date"   name="date_range[end_date]" value="">
+
+</form>
+
+
+
+<br>
+
+{% if display %}
+
+<h4>Active Users</h4>
+<table class="table table-bordered">
+  <thead>
+    <th class="col-md-1">Id</th>
+    <th class="col-md-3">Email</th>
+    <th class="col-md-1">{{ stats.sorter('Total cash back', 'commission', _context) }}</th>
+    <th class="col-md-1">{{ stats.sorter('Referral cash back', 'referral', _context) }}</th>
+    <th class="col-md-1">{{ stats.sorter('Personal cash back', 'cashback', _context) }}</th>
+    <th class="col-md-1">{{ stats.sorter('Spend', 'transaction', _context) }}</th>
+    <th class="col-md-1">{{ stats.sorter('Total referrals', 'network', _context) }}</th>
+    <th class="col-md-1">{{ stats.sorter('Level 1 referrals', 'direct', _context) }}</th>
+    <th class="col-md-1">{{ stats.sorter('Paid', 'payment', _context) }}</th>
+    <th class="col-md-1">{{ stats.sorter('Referrals paid', 'taxable', _context) }}</th>
+    <th class="col-md-1">{{ stats.sorter('Date', 'taxable', _context) }}</th>
+  </thead>
+  <tbody>
+    {% for data in top_users %}
+	  {% if data[0].status=='active' %}
+      <tr>
+        <td>{{ data[0].id }}</td>
+
+		 <td><a href="{{ path('user_info', {'user_search[email]': data[0].email }) }}" >{{ data[0].email }}</a></td>
+		 
+        <td>$ {{ data.commission|number_format(2) }}</td>
+        <td>$ {{ data.referral|number_format(2) }}</td>
+        <td>$ {{ data.cashback|number_format(2) }}</td>
+        <td>$ {{ data.transaction|number_format(2) }}</td>
+        <td>{{ data.network }}</td>
+        <td>{{ data.direct }}</td>
+        <td>$ {{ data.payment|number_format(2) }}</td>
+        <td>$ {{ data.taxable|number_format(2) }}</td>
+        <td>$ {{ 0000 }}</td>
+      </tr>
+	  {% endif %}
+    {% else %}
+      <tr>
+        <td colspan="10" class="text-danger">No users found</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endif %}
+<style type='text/css'>
+#active-user {
+    cursor: pointer !important;
+}
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<script>
+var abc=$.noConflict();
+abc(document).ready(function() {
+
+
+var sum = 0;
+abc('.total-cash').each(function(){
+    var valueppp= $(this).text();
+	var newValue = valueppp.replace('$', '');
+	 sum += parseFloat(newValue); 
+
+});
+abc('.top-totl').text(sum);
+
+
+var d = new Date();
+
+var month = d.getMonth()+1;
+var day = d.getDate();
+
+var output = d.getFullYear() + '-' +
+    (month<10 ? '0' : '') + month + '-' +
+    (day<10 ? '0' : '') + day;
+	
+	abc('#end_date').val(output);
+      
+
+var d = new Date();
+
+var month = d.getMonth()+0;
+var day = d.getDate();
+
+var second = d.getFullYear() + '-' +
+    (month<10 ? '0' : '') + month + '-' +
+    (day<10 ? '0' : '') + day;
+	
+	  
+	  
+abc('#start_date').val(second);
+
+
+abc('#active-user').click(function(){
+
+  abc('#hidden-form').submit();
+  
+  
+});
+
+} );
+
+</script>
+
+{% endblock content %}

@@ -1,0 +1,55 @@
+  {% extends 'common/layout.html.twig' %}
+
+{% block content %}
+<div class="page-header">
+  <h1>Update FAQs</small></h1>
+</div>
+ <script src="http://js.nicedit.com/nicEdit-latest.js" type="text/javascript"></script>
+<script type="text/javascript">bkLib.onDomLoaded(nicEditors.allTextAreas);</script>
+  {% for faq in faqs %}
+
+   <form method="post" action="{{ path('userinfo_faqupdate') }}" class="form-horizontal">
+      
+
+      <div class="col-sm-8">
+        <select name="faqCate" class="form-control">
+          
+            {% for cate in category %}
+          
+                <option {% if cate.cate_id== faq.faq_cate%} selected {% endif %} value='{{  cate.cate_id }}'>{{ cate.cate_name }}</option> 
+            
+          {% endfor %}
+
+        </select>
+            </div>
+
+<br><br>
+
+             <div class="col-sm-8">
+              <input  type="text" id="faqName"  value='{{ faq.faq_name }}' name="faqName" class="form-control">
+            </div>
+
+<br><br>
+
+
+<div class="col-sm-8">
+              <textarea  type="text" id="description"name="faqDesc" class="form-control">{{ faq.faq_desc }}
+			  </textarea>
+            </div>
+
+<br><br>
+
+
+<div class="col-sm-8">
+              <input  type="hidden" id="hidden"  value='{{ faq.faq_id }}' name="hidden" class="form-control">
+            </div>
+
+<br><br>
+
+    <div class="col-sm-10">
+       <button type="submit" class="btn-primary btn merchant-exp">Update Date</button>
+ </div>
+</form>
+  
+{% endfor %}
+{% endblock %}

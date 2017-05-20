@@ -22,7 +22,45 @@
 <div class="page-header">
   <h1>Site Statistics <small></small></h1>
 </div>
+ {% if display %}
+<div class="row">
+  <div class="col-md-6">
+    Total    {{ top_users|length }}Users
+  </div>
+</div>
+{% endif %}
 
+<form name="date_range" method="get" id='hidden-form' role="form" class="form-inline action="{{ path('statistics_activeuser') }} ">
+      
+      <input type="hidden" id="start_date" name="date_range[start_date]" value="">
+	  <input type="hidden" id="end_date"   name="date_range[end_date]" value="">
+	  <input type="hidden" id="hiddenid"  name="hiddenid" value="1">
+
+</form>
+
+<form name="date_range" method="get" id='new-form' role="form" class="form-inline action="{{ path('statistics_activeuser') }} ">
+      
+      <input type="hidden" id="start_sdate" name="date_range[start_date]" value="">
+    <input type="hidden" id="end_edate"   name="date_range[end_date]" value="">
+    <input type="hidden" id="newid"  name="newid" value="1">
+
+</form>
+
+<form name="date_range" method="get" id='refferal-form' role="form" class="form-inline action="{{ path('statistics_activeuser') }} ">
+      
+      <input type="hidden" id="ref_sdate" name="date_range[start_date]" value="">
+    <input type="hidden" id="ref_edate"   name="date_range[end_date]" value="">
+    <input type="hidden" id="refid"  name="refid" value="1">
+
+</form>
+
+<form name="date_range" method="get" id='cash-form' role="form" class="form-inline action="{{ path('statistics_activeuser') }} ">
+      
+      <input type="hidden" id="cash_sdate" name="date_range[start_date]" value="">
+    <input type="hidden" id="cash_edate"   name="date_range[end_date]" value="">
+    <input type="hidden" id="cashid"  name="cashid" value="1">
+
+</form>
 <div class="row">
   <div class="col-md-9">
     {{ form_start(date_form) }}
@@ -44,13 +82,25 @@
 {% if display %}
 <table class="table table-bordered">
   <tr>
-    <th class="col-md-2">Cashback earned</th>
+    
+    <th class="col-md-2" id='cashback-user'>Cashback earned</th>
+
     <td class="col-md-1">$ {{ total_cashback|number_format(2) }}</td>
-    <th class="col-md-2">Active users</th>
+    <th class="col-md-2" id='active-user'> Active users</th>
     <td class="col-md-1">{{ total_shoppers|number_format }}</td>
-    <th class="col-md-2">New users</th>
+
+
+    
+    <th class="col-md-2" id='new-user'>New users</th>
+
+
+    
     <td class="col-md-1">{{ total_new_users|number_format }}</td>
-    <th class="col-md-2">Referral users</th>
+
+    <th class="col-md-2" id='new-referral'>Referral users</th>
+
+
+
     <td class="col-md-1">{{ total_referrers|number_format }}</td>
   </tr>
 </table>
@@ -73,8 +123,10 @@
     {% for data in top_users %}
       <tr>
         <td>{{ data[0].id }}</td>
-        <td>{{ data[0].email }}</td>
-        <td>$ {{ data.commission|number_format(2) }}</td>
+
+		 <td><a href="{{ path('user_info', {'user_search[email]': data[0].email }) }}" >{{ data[0].email }}</a></td>
+		 
+        <td class='total-cash' id='{{ data[0].id }}-{{ data.commission|number_format(2) }}'>$ {{ data.commission|number_format(2) }}</td>
         <td>$ {{ data.referral|number_format(2) }}</td>
         <td>$ {{ data.cashback|number_format(2) }}</td>
         <td>$ {{ data.transaction|number_format(2) }}</td>
@@ -91,4 +143,149 @@
   </tbody>
 </table>
 {% endif %}
+
+<style type='text/css'>
+
+#active-user {
+    cursor: pointer !important;
+}
+
+#cashback-user{
+    cursor: pointer !important;
+}
+#new-user{
+  cursor: pointer !important;
+}
+#new-referral{
+   cursor: pointer !important;
+   } 
+
+
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<script>
+var abc=$.noConflict();
+abc(document).ready(function() {
+
+
+
+
+abc('#cashback-user').click(function(){
+
+var activefdate=abc('#date_range_start_date').val();
+var activeedate=abc('#date_range_end_date').val();
+
+
+abc('#cash_sdate').val(activefdate);
+abc('#cash_edate').val(activeedate);
+  
+ abc('#cash-form').submit();
+
+});
+
+abc('#new-referral').click(function(){
+
+var activefdate=abc('#date_range_start_date').val();
+var activeedate=abc('#date_range_end_date').val();
+
+
+abc('#ref_sdate').val(activefdate);
+abc('#ref_edate').val(activeedate);
+  
+ abc('#refferal-form').submit();
+
+});
+
+
+
+
+
+abc('#new-user').click(function(){
+
+var activefdate=abc('#date_range_start_date').val();
+var activeedate=abc('#date_range_end_date').val();
+
+
+abc('#start_sdate').val(activefdate);
+abc('#end_edate').val(activeedate);
+  
+ abc('#new-form').submit();
+
+});
+
+
+var sum = 0;
+$('.total-cash').each(function(){
+    var valueppp= $(this).text();
+	var newValue = valueppp.replace('$', '');
+	 sum += parseFloat(newValue); 
+
+});
+
+var d = new Date();
+
+var month = d.getMonth()+1;
+var day = d.getDate();
+
+var output = d.getFullYear() + '-' +
+    (month<10 ? '0' : '') + month + '-' +
+    (day<10 ? '0' : '') + day;
+	
+	abc('#end_date').val(output);
+      
+
+var d = new Date();
+
+var month = d.getMonth()+0;
+var day = d.getDate();
+
+var second = d.getFullYear() + '-' +
+    (month<10 ? '0' : '') + month + '-' +
+    (day<10 ? '0' : '') + day;
+	
+	  
+	  
+abc('#start_date').val(second);
+
+
+abc('#active-user').click(function(){
+
+var d = new Date();
+
+var month = d.getMonth()+1;
+var day = d.getDate();
+
+var output = d.getFullYear() + '-' +
+    (month<10 ? '0' : '') + month + '-' +
+    (day<10 ? '0' : '') + day;
+	
+	abc('#end_date').val(output);
+      
+
+var d = new Date();
+
+var month = d.getMonth()+0;
+var day = d.getDate();
+
+var second = d.getFullYear() + '-' +
+    (month<10 ? '0' : '') + month + '-' +
+    (day<10 ? '0' : '') + day;
+	
+	  
+	  
+abc('#start_date').val(second);
+
+
+  abc('#hidden-form').submit();
+  
+  
+});
+
+} );
+
+</script>
+
+
+
 {% endblock content %}

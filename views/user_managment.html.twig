@@ -1,0 +1,165 @@
+  {% extends 'common/layout.html.twig' %}
+
+{% block content %}
+<div class="page-header">
+  <h1>User <small>List</small></h1>
+</div>
+
+<div class="row">
+  <div class="col-md-6">
+    Total  {{ users|length }} Users
+  </div>
+</div>
+
+<br>
+<link href="https://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css" type="text/css" rel="stylesheet">
+<div class="row">
+  <div class="col-md-12">
+    <table id="example" class="table table-bordered">
+      <thead>
+        <tr>
+          <th class="col-md-4">User Id</th>
+          <th class="col-md-4">User Alias</th>
+          <th class="col-md-4">User Email</th>
+          <th class="col-md-2">Active</th>
+		   <th class="col-md-2">Bonus</th>
+		   <th class="col-md-2">Bonus Themselves </th>
+        </tr>
+      </thead>
+      </tbody>
+        {% for user in users %}
+        <tr>
+          <td>{{ user.uid }}</td>
+          <td>{{ user.alias }}</td>
+          <td>{{ user.email }}</td>
+                  
+          <td class="text-right">
+
+          <input type='checkbox' {% if user.status=='active'%} checked {% endif %} class='active-user' id="user-{{user.uid }}" >
+           
+           </td>
+ <td class="text-right">
+
+          <input type='checkbox' {% if user.bonus=='active'%} checked {% endif %} class='active-bonus' id="{{user.uid }}" >
+           
+           </td>
+
+		    <td class="text-right"> 
+<input type='checkbox' {% if user.bonus_thems=='active'%} checked {% endif %} class='active_bonus_thems' id="bonus-{{user.uid }}" >
+
+     
+           
+           </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script>
+
+  var abc=$.noConflict();
+
+abc('.active-user').click(function(){
+
+var userid=$(this).attr('id');
+
+
+
+if (abc(this).is(':checked')) {
+
+      var status='active';
+    
+    }
+    else
+    {
+      var status='inactive';
+    }
+	
+	var userid = userid.split("-");
+var id= userid[1];
+
+    abc.ajax({
+            type: "POST",
+            url: "{{ path('userinfo_userstatus') }}",
+            data: {status: status, userid: id},
+            success: function(data, dataType)
+            {
+			
+			 alert(data);
+           //     alert('Successfully updated'); 
+            }
+});
+});
+
+abc('.active-bonus').click(function(){
+
+
+var userid=$(this).attr('id');
+
+if (abc(this).is(':checked')) {
+
+      var status='active';
+    
+    }
+    else
+    {
+      var status='inactive';
+    }
+
+
+    abc.ajax({
+            type: "POST",
+            url: "{{ path('userinfo_bonusstatus') }}",
+            data: {status: status, userid: userid},
+            success: function(data, dataType)
+            {
+                alert('Successfully updated');
+            }
+});
+});
+
+
+abc('.active_bonus_thems').click(function(){
+
+
+var userid=$(this).attr('id');
+
+
+if (abc(this).is(':checked')) {
+
+      var status='active';
+    
+    }
+    else
+    {
+      var status='inactive';
+    }
+		var userid = userid.split("-");
+var id= userid[1];
+
+    abc.ajax({
+            type: "POST",
+            url: "{{ path('userinfo_bonusthems') }}",
+            data: {status: status, userid: id},
+            success: function(data, dataType)
+            {
+               alert('Successfully updated');
+            }
+});
+});
+
+
+</script>
+
+
+
+
+
+
+
+
+{% endblock %}

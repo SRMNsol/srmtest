@@ -1,62 +1,249 @@
 {% extends 'common/layout.html.twig' %}
 
 {% block content %}
-<div class="page-header">
-  <h1>Dashboard <small>Beesavy Backoffice</small></h1>
-</div>
 
-<div class="row">
-  <div class="col-md-3">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title">Merchants</h3>
-      </div>
-      <table class="table">
-        <tr>
-          <td>Total Merchants</td>
-          <td><b class="pull-right">{{ merchants.total }}</b></td>
-        </tr>
-        <tr>
-          <td>No Cashback</td>
-          <td><b class="pull-right">{{ merchants.totalNoCashback }}</b></td>
-        </tr>
-        <tr>
-          <td>Logo Downloads</td>
-          <td><b class="pull-right">{{ merchants.totalLogoDownloaded }}</b></td>
-        </tr>
-        <tr>
-          <td>Invalid Original Logo</td>
-          <td><b class="pull-right">{{ merchants.totalLogoInvalid }}</b></td>
-        </tr>
-        <tr>
-          <td></td>
-          <td><a href="{{ path('merchant_list') }}" class="btn btn-default btn-xs pull-right">Edit</a></td>
-        </tr>
-      </table>
+    <div class="page-header">
+        <h1><span class="glyphicon glyphicon glyphicon-th"></span> Dashboard <small>Beesavy Backoffice</small> <span class="pull-right"><small>Activate Referral Code </small> &nbsp&nbsp
+		<input id='ref-button' type="Checkbox" {% if refcheck %}  checked='checked' {% endif %} value='1' name='acref'></span></h1>
+<span class="pull-right"> Activate Popup  
+        <input id='pop-button' type="Checkbox" {% if popup %}  checked='checked' {% endif %} value='1' name='acref'>
+   </span>
     </div>
-  </div>
-  <div class="col-md-6">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title">Transaction Download</h3>
-      </div>
-      <table class="table">
-        <thead>
-          <tr>
-            <th class="col-md-6">Network</th>
-            <th class="col-md-3">Last Transaction Download</th>
-            <th class="col-md-3">Last Transaction Update Download</th>
-          </tr>
-        </thead>
-        {% for network in networks %}
-        <tr>
-          <td>{{ network.name }}</td>
-          <td>{{ network.lastTransactionDownloadAt is empty ? '-' : network.lastTransactionDownloadAt|date('m/d/Y') }}</td>
-          <td>{{ network.lastTransactionHistoryDownloadAt is empty ? '-' : network.lastTransactionHistoryDownloadAt|date('m/d/Y') }}</td>
-        </tr>
-        {% endfor %}
-      </table>
+	
+    <div class="row">
+    	<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+			<div class="offer offer-radius offer-info">
+				<div class="shape">
+					<div class="shape-text">
+						<span class="glyphicon glyphicon glyphicon-eye-open"></span>							
+					</div>
+				</div>
+				<div class="offer-content">
+					<h3 class="lead">
+					Merchants <br><label class="label label-info">{{ merchants.total }}</label>
+					</h3>
+					<p>
+						
+                        <div class="progress" style="display:none;">
+             <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%" >
+                     60%
+                        </div>
+                   </div>
+					</p>
+				</div>
+			</div>
+		</div>
+		<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+			<div class="offer offer-radius offer-info">
+				<div class="shape">
+					<div class="shape-text">
+						<span class="glyphicon glyphicon glyphicon-th"></span>							
+					</div>
+				</div>
+				<div class="offer-content">
+					<h3 class="lead">
+						 No Cashback <label class="label label-info"> {{ merchants.totalNoCashback }}</label>
+					</h3>
+					<p>
+						
+                        <div class="progress" style="display:none;">
+             <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 40%" >
+                     60%
+                        </div>
+                   </div>
+					</p>
+				</div>
+			</div>
+		</div>
+		<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+			<div class="offer offer-radius offer-info">
+				<div class="shape">
+					<div class="shape-text">
+						<span class="glyphicon  glyphicon-user"></span>							
+					</div>
+				</div>
+				<div class="offer-content">
+					<h3 class="lead">
+						 Total Processing <label class="label label-info"> {{ cashbackamount.total_processing }}</label>
+					</h3>
+					<p>
+						 
+                        <div class="progress" style="display:none;">
+             <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 40%" >
+                     60%
+                        </div>
+                   </div>
+					</p>
+				</div>
+			</div>
+		</div>
+		<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+			<div class="offer offer-radius offer-info">
+				<div class="shape">
+					<div class="shape-text">
+						<span class="glyphicon  glyphicon-home"></span>							
+					</div>
+				</div>
+				<div class="offer-content">
+					<h3 class="lead">
+						Total Pending <label class="label label-info"> {{ cashbackamount.total_pending }}</label>
+					</h3>
+					<p>
+						
+                        <div class="progress" style="display:none;">
+             <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 40%" >
+                     60%
+                        </div>
+                   </div>
+					</p>
+				</div>
+			</div>
+		</div>
+        </div>
+	
+	
+    <div class="row">
+        <div class="col-md-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Merchants</h3>
+                </div>
+                <table class="table">
+                    <tr>
+                        <td>Total Merchants</td>
+                        <td><b class="pull-right">{{ merchants.total }}</b></td>
+                    </tr>
+                    <tr>
+                        <td>No Cashback</td>
+                        <td><b class="pull-right">{{ merchants.totalNoCashback }}</b></td>
+                    </tr>
+                    <tr>
+                        <td>Logo Downloads</td>
+                        <td><b class="pull-right">{{ merchants.totalLogoDownloaded }}</b></td>
+                    </tr>
+                    <tr>
+                        <td>Invalid Original Logo</td>
+                        <td><b class="pull-right">{{ merchants.totalLogoInvalid }}</b></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><a href="{{ path('merchant_list') }}" class="btn btn-default btn-xs pull-right">Edit</a></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Transaction Download</h3>
+                </div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th class="col-md-6">Network</th>
+                            <th class="col-md-3">Last Transaction Download</th>
+                            <th class="col-md-3">Last Transaction Update Download</th>
+                        </tr>
+                    </thead>
+                    {% for network in networks %}
+                        <tr>
+                            <td>{{ network.name }}</td>
+                            <td>{{ network.lastTransactionDownloadAt is empty ? '-' : network.lastTransactionDownloadAt|date('m/d/Y') }}</td>
+                            <td>{{ network.lastTransactionHistoryDownloadAt is empty ? '-' : network.lastTransactionHistoryDownloadAt|date('m/d/Y') }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+		
+        <div class="col-md-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">CashBacks</h3>
+                </div>
+                <table class="table">
+                    <tr>
+                        <td>Total Processing</td>
+                        <td><b class="pull-right">${{ cashbackamount.total_processing }}</b></td>
+                    </tr>
+                    <tr>
+                        <td>Total Pending</td>
+                        <td><b class="pull-right">${{ cashbackamount.total_pending }}</b></td>
+                    </tr>
+                    <tr>
+                        <td>Total Paid</td>
+                        <td><b class="pull-right">${{ cashbackamount.total_paid }}</b></td>
+                    </tr>
+                    <tr>
+                        <td>Total Available</td>
+                        <td><b class="pull-right">${{ cashbackamount.count_available }}</b></td>
+                    </tr>
+                    
+                     
+                     
+                    <tr>
+                        <td></td>
+                        <td><a href="{{ path('cashbackreport') }}" class="btn btn-default btn-xs pull-right">Detail</a></td>
+                    </tr>
+                    
+                </table>
+            </div>
+        </div>
+
+
+
     </div>
-  </div>
-</div>
-{% endblock %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script>
+$('#pop-button').click(function(){
+
+if ($('#pop-button').is(':checked')) {
+            var check=1;
+        }
+        else 
+        {
+         var check=0;
+        }
+        
+    $.ajax({
+            type: "POST",
+            url: "{{ path('userinfo_popupcheck') }}",
+            data: { data : check },
+            success: function(data, dataType)
+            {
+                alert(data);
+            }
+});
+});
+
+
+$('#ref-button').click(function(){
+
+if ($('#ref-button').is(':checked')) {
+
+			var check=1;
+		
+		}
+		else 
+		{
+		var check=0;
+		}
+		
+    $.ajax({
+            type: "POST",
+            url: "{{ path('userinfo_refcheck') }}",
+            data: { data : check },
+            success: function(data, dataType)
+            {
+                alert(data);
+            }
+});
+});
+
+</script>
+
+	
+	
+	{% endblock %}
+
+

@@ -1,0 +1,58 @@
+  {% extends 'common/layout.html.twig' %}
+
+{% block content %}
+<div class="page-header">
+  <h1>Add FAQ</small></h1>
+</div>
+
+ <script src="http://js.nicedit.com/nicEdit-latest.js" type="text/javascript"></script>
+<script type="text/javascript">bkLib.onDomLoaded(nicEditors.allTextAreas);</script>
+ 
+
+   <form method="post" action="{{ path('userinfo_faqadd') }}" class="form-horizontal">
+      
+<div class='row'> 
+   <div class="col-sm-8">
+    <select id='faq-select' name='faq_cat'class="form-control">
+   
+   
+      {% for cate in category %}
+       <option  value='{{cate.cate_id}}'> {{cate.cate_name}}</option>
+       
+    
+{% endfor %}
+    </select>
+    </div>
+
+    </div>
+    <br>
+
+<div class='row'>
+    <div class="col-sm-8">
+
+    <input type='text' id='faq_title' placeholder='Enter Faq Title' name='title' class="form-control" value=''>
+ 	</div>
+ 	</div>
+<br>
+
+
+<div class='row'>
+    <div class="col-sm-8">
+
+     <textarea class="form-control" placeholder='Enter Faq Description' name='description' id='desc_id' rows='8'></textarea>
+ 	</div>
+ 	</div>
+<br>
+
+<div class='row'>
+<div class="col-sm-8">
+       <button type="submit" class="btn-primary btn merchant-exp">Add Faq</button>
+ </div>
+</div>
+
+</form>
+
+
+
+
+{% endblock %}

@@ -1,0 +1,113 @@
+{% extends 'common/layout.html.twig' %}
+
+{% form_theme searchForm 'common/form_selector.html.twig' %}
+
+{% block content %}
+<div class="page-header">
+  <h1>Caskbacks</h1>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+  <form method="post" action="{{ path('reporting_cashsearch') }}">
+    
+
+   
+    <div class="col-md-4">
+      <input  type="email" id="cashbach-email"  {% if returnform.email %} value='{{returnform.email}}' {% endif %}  name="email" class="form-control">
+    </div>
+   
+    <div class="col-md-4">
+      <button type="submit" class="btn-primary btn merchant-exp">Search</button>
+    </div>
+
+
+
+</form>
+
+  </div>
+
+</div>
+
+<table id='example' class="table table-bordered">
+  <thead>
+    <tr>
+      <th class="col-md-1">Sn</th>
+      <th class="col-md-1">User Id</th>
+      <th class="col-md-8">Email</th>
+      <th class="col-md-2">Processing</th>
+      <th class="col-md-2">Pending</th>
+      <th class="col-md-2">Paid</th>
+      <th class="col-md-2">Available</th>
+    </tr>
+  </thead>
+  <tbody>
+      {% set count_available = 0 %}
+      {% set total_processing  = 0 %}
+      {% set total_pending = 0 %}
+      {% set total_paid = 0 %}
+  {% for key,cashbackusers  in cashbackuser %}
+    {% set count_available = count_available + cashbackusers.count_available %}
+    {% set total_processing = total_processing + cashbackusers.total_processing %}
+    {% set total_pending = total_pending + cashbackusers.total_pending %}
+    {% set total_paid = total_paid + cashbackusers.total_paid %}
+    <tr>
+        
+      <td>{{ key+1 }}</td>
+      <td>{{ cashbackusers.user_id }}</td>
+	  
+	   <td><a href="{{ path('user_info', {'user_search[email]': cashbackusers.user_email }) }}" >{{ cashbackusers.user_email }}</a></td>
+	  
+
+	  
+       <td style=" text-align: right; ">${{ cashbackusers.total_processing }}</td>
+        <td style=" text-align: right; ">${{ cashbackusers.total_pending }}</td>
+         <td style=" text-align: right; ">${{ cashbackusers.total_paid }}</td>
+      <td style=" text-align: right; ">${{ cashbackusers.count_available }}</td>
+      
+    </tr>
+  {% else %}
+    <tr>
+      <td colspan="7" class="text-danger">No pending payment requests</td>
+    </tr>
+  {% endfor %}
+
+  </tbody>
+</table>
+{#<button type="submit" class="btn btn-primary">Mark as paid</button>#}
+{#{{ form_end(selector) }}#}
+<table>
+
+    <tr>
+      <td class="text-danger" style=" text-align: right; ">Total CashBacks</td>
+      <td class="text-danger" style=" text-align: right; ">Total Pending</td>
+      <td class="text-danger" style=" text-align: right; ">Total Paid</td>
+      <td class="text-danger" style=" text-align: right; ">Total Available</td>
+    </td>
+
+<tbody>	
+    <tr>
+      <td class="text-danger" style=" text-align: right; ">${{ total_processing }}</td>
+      <td class="text-danger" style=" text-align: right; ">${{ total_pending }}</td>
+      <td class="text-danger" style=" text-align: right; ">${{ total_paid }}</td>
+      <td class="text-danger" style=" text-align: right; ">${{ count_available }}</td>
+    </tr>
+	</tbody>	
+</table>	
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+
+<script>
+var abc=$.noConflict();
+abc(document).ready(function() {
+
+
+		abc('#example_filter').css('display', 'none');
+
+    abc('#example').DataTable();
+} );
+abc('table').dataTable({bFilter: false, bInfo: false});
+</script>
+
+
+{% endblock content %}

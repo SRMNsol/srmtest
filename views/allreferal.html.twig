@@ -4,16 +4,22 @@
 
 {% block content %}
 <div class="page-header">
-  <h1>User Info <small></small></h1>
+  <h1>Users <small>Database</small></h1>
 </div>
-
+<style type="text/css">
+.emailclass{width:30% !important;}
+</style>
 <div class="row">
+     <div class="col-md-6">
+    Total {{ user|length }} users
+    </div>
   <div class="col-md-9">
     {{ form_start(searchForm, { attr: { class: 'user-search' } }) }}
       {{ form_errors(searchForm) }}
-      {{ form_row(searchForm.email, { attr: { placeholder: 'Enter user email' } }) }}
-      {{ form_row(searchForm.startDate) }}
-      {{ form_row(searchForm.endDate) }}
+       {{ form_row(searchForm.alias, { attr: { placeholder: 'Enter user alias'} }) }} 
+       {{ form_row(searchForm.email, { attr: { placeholder: 'Enter user email'} }) }} 
+     {# {{ form_row(searchForm.startDate) }}
+      {{ form_row(searchForm.endDate) }}#}
 
       <div class="form-group">
         <div class="col-md-6 col-md-offset-2">
@@ -22,39 +28,42 @@
       </div>
     {{ form_end(searchForm) }}
   </div>
-  <div class="col-md-3">
+  {#<div class="col-md-3">
     {% if user is not null %}
     <a href="{{ path('user_edit', { userId: user.id }) }}" class="btn btn-default pull-right">Edit user account</a>
     {% endif %}
-  </div>
+  </div>#}
 </div>
-
-{% if user is not null %}
+  
+{% if user %}
 <br>
 <table class="table table-bordered">
   <thead>
     <tr>
       <th class="col-md-1">User ID</th>
-      <th class="col-md-3">Email Address</th>
-      <th class="col-md-3">Referral Alias</th>
-      <th class="col-md-5">Referred By</th>
-      <th class="col-md-5">Total Cashback</th>
+      <th class="col-md-3">User Email </th>
+      <th class="col-md-3">Reffered By Email </th>
+      <th class="col-md-1"> Alias</th>
+      {#<th class="col-md-3">Referred By</th>
+      <th class="col-md-7">Actions</th>#}
     </tr>
   </thead>
   <tbody>
+       {% for users in user %}
     <tr>
-      <td>{{ user.id }}</td>
-      <td>{{ user.email }}</td>
-      <td>{{ user.alias }}</td>
-      <td>{{ user.referredBy.email }}</td>
-
-      <td>{{ totalReferral|number_format(2) + totalEarning|number_format(2)+ (totalCashback + totalExtraCashback)|number_format(2) }}</td>
-   
+      <td>{{ users.uid }}</td>
+      <td><a href="{{ path('user_info', {'user_search[email]': users.email }) }}" >{{ users.email }}</a></td>
+      {#<td>{{ users.email }}</td>#}
+      <td><a href="{{ path('user_info', {'user_search[email]': refferedbyemail.refemail }) }}" >{{ refferedbyemail.refemail }}</a></td>
+      {#<td>{{ refferedbyemail.refemail }}</td>#}
+      <td>{{ users.alias }}</td>
+          
     </tr>
+    {% endfor %}
   </tbody>
 </table>
 
-<table class="table table-bordered">
+{#<table class="table table-bordered">
   <thead>
     <tr>
       <th class="col-md-1">Spend</th>
@@ -72,7 +81,7 @@
         {% if totalExtraCashback > 0 %}
         <span class="text-success">*</span>
         {% endif %}
-      </td> 
+      </td>
       <td>$ {{ totalReferral|number_format(2) }}</td>
       <td>$ {{ totalEarning|number_format(2) }}</td>
       <td>$ {{ totalPayment|number_format(2) }}</td>
@@ -85,28 +94,12 @@
 {% endif %}
 
 <div class="row" style="margin-bottom: 12px;">
-  <div class="col-md-6">
+  <div class="col-md-9">
     <h4>Transactions</h4>
   </div>
-  <div class="col-md-6 btn-all-merchant ">
-  <div class='row'>
-  <div class="col-md-4"></div>
   <div class="col-md-3">
-    <a href="{{ path('transaction_create', { user: user.id }) }}" class="btn btn-default">Add transaction</a>
-	</div>
-	<div class="col-md-5">
-	<div class='all-merchant'>
-	<select class='form-control all-merchant'>
-		{% for merchant in allmerchant %}
-		<option>{{merchant.name}}</option>
-	  {% endfor %}
-
-	</select>
-	</div>
-	</div>
-	</div>
+    <a href="{{ path('transaction_create', { user: user.id }) }}" class="btn btn-default pull-right">Add transaction</a>
   </div>
-  
 </div>
 
 <table class="table table-bordered">
@@ -149,98 +142,27 @@
   <thead>
     <tr>
       <td class="col-md-1">Id</td>
-      <td class="col-md-8">Email</td>
-      <td class="col-md-3">Referral Count</td>
-      <td class="col-md-3">Total Cashback</td>
+      <td class="col-md-11">Email</td>
     </tr>
   </thead>
   <tbody>
-    {% for allusers in alluser %}
+    {% for referredUser in user.referredUsers %}
     <tr>
-      <td>{{ allusers.refid }}</td>
-      <td><a href="{{ path('user_info', {'user_search[email]': allusers.refemail }) }}" >{{ allusers.refemail }}</a></td>
-      <td>{{ allusers.countref }}</td>
-	  <td>{{ allusers.cashback }}</td> 
+      <td>{{ referredUser.id }}</td>
+      <td>{{ referredUser.email }}</td>
     </tr>
     {% endfor %}
   </tbody>
-</table>
-
-<h4>Level 2 referrals ({{ level_two_users_count }} users)</h4>
-<table class="table table-bordered">
-  <thead>
-    <tr>
-      <td class="col-md-1">Id</td>
-      <td class="col-md-8">Email</td>
-      <td class="col-md-3">Referral Count</td>
-    </tr>
-  </thead>
-  <tbody>
-    {% for level_two_user in level_two_users %}
-    <tr>
-      <td>{{ level_two_user.refid }}</td>
-      <td><a href="{{ path('user_info', {'user_search[email]': level_two_user.refemail }) }}" >{{ level_two_user.refemail }}</a></td>
-      <td>{{ level_two_user.countref }}</td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
-
-<h4>Level 3 referrals </h4>
-
-<table class="table table-bordered">
-  <thead>
-    <tr>
-      <td class="col-md-1">Id</td>
-      <td class="col-md-8">Email</td>
-      <td class="col-md-3">Referral Count</td>
-    </tr>
-  </thead>
-  <tbody>
-    {% for allusers in alluser %}
-  {% if allusers.countref >=5 %}
-    <tr>
-      <td>{{ allusers.refid }}</td>
-      <td><a href="{{ path('user_info', {'user_search[email]': allusers.refemail }) }}" >{{ allusers.refemail }}</a></td>
-      <td>{{ allusers.countref }}</td>
-    </tr>
-  {% endif %}
-    {% endfor %}
-  </tbody>
-</table>
-
-
-<h4>Level 4 referrals ({{ level_four_users_count }} users)</h4>
-<table class="table table-bordered">
-  <thead>
-    <tr>
-      <td class="col-md-1">Id</td>
-      <td class="col-md-8">Email</td>
-      <td class="col-md-3">Referral Count</td>
-    </tr>
-  </thead>
-  <tbody>
-    {% for level_four_user in level_four_users %}
-    <tr>
-      <td>{{ level_four_user.refid }}</td>
-      <td><a href="{{ path('user_info', {'user_search[email]': level_four_user.refemail }) }}" >{{ level_four_user.refemail }}</a></td>
-      <td>{{ level_four_user.countref }}</td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
-
+</table>#}
 
 {% endif %}
-
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script>
 $( document ).ready(function() {
    
+document.getElementById("user_search_alias").required = false;
 document.getElementById("user_search_email").required = false;
-document.getElementById("user_search_startDate").required = false;
-document.getElementById("user_search_endDate").required = false;
 
 
 

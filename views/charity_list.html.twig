@@ -12,18 +12,29 @@
 <div class="row">
   <div class="col-md-8">
     <table class="table table-bordered">
+	  <thead>
+    <tr>
+      <th class="col-md-6">Charity Name</th>
+      <th class="col-md-1">Actions </th>
+      
+    </tr>
+  </thead>
       <tbody>
         {% for charity in charities %}
           <tr>
+		  <td>
+              {{ charity.name }}
+            </td>
             <td>
-              <div class="pull-right">
-                <a href="{{ path('charity_edit', { charity : charity.id }) }}" class="btn btn-default btn-xs">Edit</a>
+            
+               
+			   <a href="{{ path('charity_edit', { charity : charity.id }) }}" class="btn btn-default btn-xs">Edit</a>
                 <form method="post" action="{{ path('charity_delete', { charity: charity.id }) }}" class="form-mini">
                   <button type="button" class="btn btn-default btn-xs charity-delete" data-charity-name="{{ charity.name }}">Delete</button>
                 </form>
-              </div>
-              {{ charity.name }}
-            </td>
+             
+			   </td>
+			  
           </tr>
         {% endfor %}
       </tbody>

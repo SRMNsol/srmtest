@@ -1,0 +1,23 @@
+  {% extends 'common/layout.html.twig' %}
+
+{% block content %}
+<div class="page-header">
+  <h1>Expiry Date</small></h1>
+</div>
+
+  {% for merchant in merchants %}
+
+   <form method="post" action="{{ path('merchant_update', { merchant: merchant.id }) }}" class="form-horizontal">
+      
+             <div class="col-sm-6">
+          <input  type="date" id="expiryDate"  value='{{ merchant.expiryDate }}' name="expiryDate" class="form-control">
+        </div>
+
+<br><br>
+    <div class="col-sm-10">
+       <button type="submit" class="btn-primary btn merchant-exp">Update Date</button>
+ </div>
+</form>
+  
+{% endfor %}
+{% endblock %}
